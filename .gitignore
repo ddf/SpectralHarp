@@ -10,3 +10,11 @@
 *.lai
 *.la
 *.a
+
+# xcode user junk
+xcuserdata
+*.pbxuser
+*.perspectivev3
+
+# other
+.DS_Store
