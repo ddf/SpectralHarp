@@ -1,0 +1,18 @@
+DEFO:
+
+* magnitude applied to each "string" when plucked should be determined by speed of swipe, not Y position.
+* integrate auto-rotation code from WaveShaper
+* try out using apple sliders on the toolbar
+*** if they look ugly in context, then at very least replace slider labels with better font
+* make a splash screen (iPhone, iPhone Retina, iPad, iPad Retina)
+* make an icon (all resolutions)
+
+MAYBE:
+
+* look into how to do shaders for OpenGL ES 2.0 so maybe we can have fullscreen anti-alias
+* add a recording function.
+* add sharing to soundcloud
+* add sharing to dropbox
+* add sharing to audio-paste
+* idea for sharing: create a library that provides a super straight-forward interface
+	to sharing using typical methods for use in multiple apps. open source it if possible.
