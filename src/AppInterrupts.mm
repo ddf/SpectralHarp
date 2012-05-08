@@ -54,7 +54,8 @@ void AudioRouteChangeListener( void                      *inClientData,
 							  const void                *inPropertyValue
 							  )
 {
-	if ( inID == kAudioSessionProperty_AudioRouteChange )
+    if ( 0 )
+	//if ( inID == kAudioSessionProperty_AudioRouteChange )
 	{
 		App * pApp = static_cast<App*>( inClientData );
 		
@@ -113,14 +114,17 @@ void App::gotMemoryWarning()
 
 void App::deviceOrientationChanged(int newOrientation)
 {
-	printf( "Orientation changed to %d.\n", newOrientation );
-	
-	if ( newOrientation == UIDeviceOrientationLandscapeLeft )
-	{
-        ofxiPhoneGetUIWindow().transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
-	}
-	else if ( newOrientation == UIDeviceOrientationLandscapeRight )
-	{
-        ofxiPhoneGetUIWindow().transform = CGAffineTransformIdentity;
-	}
+    UIApplication * app = [UIApplication sharedApplication];
+    // status bar orientations are reversed from device orientations
+    // so that we can use OF coordinates to layout UIKit widgets.
+    if ( newOrientation == UIDeviceOrientationLandscapeLeft )
+    {
+        [app setStatusBarOrientation: UIInterfaceOrientationLandscapeRight 
+                            animated:NO];
+    }
+    else if ( newOrientation == UIDeviceOrientationLandscapeRight )
+    {
+        [app setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft 
+                            animated:NO];
+    }
 }

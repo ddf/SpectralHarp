@@ -1,9 +1,5 @@
 DEFO:
 
-* magnitude applied to each "string" when plucked should be determined by speed of swipe, not Y position.
-* integrate auto-rotation code from WaveShaper
-* try out using apple sliders on the toolbar
-*** if they look ugly in context, then at very least replace slider labels with better font
 * make a splash screen (iPhone, iPhone Retina, iPad, iPad Retina)
 * make an icon (all resolutions)
 

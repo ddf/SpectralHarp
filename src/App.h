@@ -47,8 +47,7 @@ private:
 	
 	// INPUT
 	UIPinchGestureRecognizer *	mPinchGestureRecognizer;
-    int prevX[10];
-    int prevY[10];
+    ofTouchEventArgs prevTouch[32];
 	
 	// SOUND
 	Minim::AudioSystem *	  mAudioSystem;
@@ -62,6 +61,7 @@ private:
     Slider                         mBandSpacingSlider;
     Slider                         mBandOffsetSlider;
     Slider                         mBandDecaySlider;
+    ofTrueTypeFont                 mFont;
 	
 	bool						   m_bWasPlaying; // keep track of whether we were playing or not when audio got paused.
 };

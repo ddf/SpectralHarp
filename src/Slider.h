@@ -32,7 +32,8 @@ public:
     Box& box() { return mBox; }
     
     // returns true if handled
-    bool handleTouch( const int id, const float x, const float y );
+    bool handleTouchDown( const int id, const float x, const float y );
+    bool handleTouchMoved( const int id, const float x, const float y );
     bool handleTouchUp( const int id, const float x, const float y );
     
 private:

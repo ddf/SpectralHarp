@@ -19,32 +19,31 @@ extern int   kToolbarHeight;
 //--------------------------------------------------------------
 void App::touchDown(ofTouchEventArgs &touch)
 {
-    if ( mBandSpacingSlider.handleTouch(touch.id, touch.x, touch.y) )
+    if ( mBandSpacingSlider.handleTouchDown(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandOffsetSlider.handleTouch(touch.id, touch.x, touch.y) )
+    if ( mBandOffsetSlider.handleTouchDown(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandDecaySlider.handleTouch(touch.id, touch.x, touch.y) )
+    if ( mBandDecaySlider.handleTouchDown(touch.id, touch.x, touch.y) )
         return;
     
     if ( touch.y > ofGetHeight()-kToolbarHeight )
         return;
     
-    prevX[touch.id] = touch.x;
-    prevY[touch.id] = touch.y;
+    prevTouch[touch.id] = touch;
 }
 
 //--------------------------------------------------------------
 void App::touchMoved(ofTouchEventArgs &touch)
 {
-    if ( mBandSpacingSlider.handleTouch(touch.id, touch.x, touch.y) )
+    if ( mBandSpacingSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandOffsetSlider.handleTouch(touch.id, touch.x, touch.y) )
+    if ( mBandOffsetSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandDecaySlider.handleTouch(touch.id, touch.x, touch.y) )
+    if ( mBandDecaySlider.handleTouchMoved(touch.id, touch.x, touch.y) )
         return;
     
     if ( touch.y > ofGetHeight()-kToolbarHeight )
@@ -53,15 +52,16 @@ void App::touchMoved(ofTouchEventArgs &touch)
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
         float x = ofMap( b, Settings::BandOffset, lastBand, 10, ofGetWidth()-10 );
-        if ( (prevX[touch.id] < x && touch.x > x) || (touch.x < x && prevX[touch.id] > x) )
+        if ( (prevTouch[touch.id].x < x && touch.x > x) || (touch.x < x && prevTouch[touch.id].x > x) )
         {
-            float mag = ofMap(touch.y, ofGetHeight(), 0, 0, kMaxSpectralAmp);
+            float speed = fabs(touch.x - prevTouch[touch.id].x) / (ofGetElapsedTimeMillis() - prevTouch[touch.id].time);
+            float mag   = ofMap(speed, 0, 10, 0, kMaxSpectralAmp, true);
             specGen.setBandMagnitude( b, mag );
         }
     }
-    
-    prevX[touch.id] = touch.x;
-    prevY[touch.id] = touch.y;
+                                                             
+    prevTouch[touch.id] = touch;
+    prevTouch[touch.id].time = ofGetElapsedTimeMillis();
 }
 
 //--------------------------------------------------------------

@@ -14,7 +14,7 @@
 // SLIDER 
 // 
 /////////////////////////////////////////
-void Slider::draw()
+void Slider::draw( )
 {
     // label
     {
@@ -29,7 +29,6 @@ void Slider::draw()
     }
     
     // fill
-    if ( mValue > mMinValue )
     {        
         const float normValue = ofNormalize(mValue, mMinValue, mMaxValue);
         // adjust brightness based on amt of fill
@@ -47,14 +46,14 @@ void Slider::draw()
         
         ofSetColor(color);
         
-        float fW = mBox.mW * normValue;
+        float fW = fmax( mBox.mW * normValue, 1 );
         
         ofRect( mBox.mMinX, mBox.mMinY, fW, mBox.mH );
     }
 }
 
 //----------------------------------
-bool Slider::handleTouch(const int id, const float x, const float y)
+bool Slider::handleTouchDown(const int id, const float x, const float y)
 {
     // if inside our box, start tracking
     const bool bInside = mBox.contains( x, y ); 
@@ -62,20 +61,23 @@ bool Slider::handleTouch(const int id, const float x, const float y)
     {
         //printf( "Value Slider started tracking %d.\n", id );
         mTouch = id;
+        
+        // apply value
+        handleTouchMoved(id, x, y);
     }
     
+    return bInside;
+}
+
+//----------------------------------
+bool Slider::handleTouchMoved(const int id, const float x, const float y)
+{
     bool bTracked = (id == mTouch);
     
     if ( bTracked )
     {
         mValue = ofMap( (x - mBox.mMinX) / mBox.mW, 0, 1, mMinValue, mMaxValue, true );
         mValueChangedCallback(mValue);
-        
-        if ( !bInside )
-        {
-            mTouch = -1;
-            bTracked = false;
-        }
     }
     
     return bTracked;

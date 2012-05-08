@@ -16,11 +16,43 @@
 
 App* gApp = NULL;
 
+// barebones UIViewController so we can control allowed orientations of SoundCloud interface.
+@interface LandscapeViewController : UIViewController 
+{
+}
+@end
+
+@implementation LandscapeViewController
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if ( UIInterfaceOrientationIsLandscape(toInterfaceOrientation) )
+    {
+        return YES;
+    }
+
+    return NO;
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // snap to new rotation
+    [UIView setAnimationsEnabled:NO];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation 
+{
+    // animations back on so we get the nice slide-ons for the keyboard and so forth
+    [UIView setAnimationsEnabled:YES];
+}
+
+@end
+
 // global tweaks
 const int kOutputBufferSize = 1024;
 const int kStreamBufferSize = 512;
 const int kSpectralGenSize  = 1024 * 4;
-float kMaxSpectralAmp = 64.0f;
+float kMaxSpectralAmp = 16.0f;
 int   kToolbarHeight  = 60;
 
 int       lastBand;
@@ -51,19 +83,19 @@ void decayChanged( float value )
 App::App()
 : ofxiPhoneApp()
 , specGen(kSpectralGenSize)
-, mBandSpacingSlider( "Spacing",
+, mBandSpacingSlider( "",
                      100, ofGetHeight()-25, // position
                      150, 30, // size
                      120, // hue
                      Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 
                      bandSpacingChanged )
-, mBandOffsetSlider( "Root",
+, mBandOffsetSlider( "",
                      300, ofGetHeight()-25, //position
                      150, 30, // size
                      120, //hue
                     Settings::BandOffset, Settings::BandOffsetMin, Settings::BandOffsetMax,
                     bandOffsetChanged )
-, mBandDecaySlider( "Decay",
+, mBandDecaySlider( "",
                    500, ofGetHeight()-25, //position
                    150, 30, //size
                    120, //hue
@@ -122,6 +154,32 @@ void App::setup()
 	//-- UI ---------------------------
 	{
 		mActionHandler = [[UIActionHandler alloc] init:this];
+        
+        // remove the glview from the UIWindow, which is where openFrameworks puts it
+        [ofxiPhoneGetGLView() removeFromSuperview];
+
+        // create a plain old UIView that is the same size as the app
+        // just use OF sizes as our reference, everything should work out
+        CGRect mainFrame = CGRectMake(0, 0, ofGetWidth(), ofGetHeight());
+        UIView* mainView = [[UIView alloc] initWithFrame:mainFrame];
+
+        // grab the glView and rotate/position it so it looks correct
+        UIView* glView      = ofxiPhoneGetGLView();
+        glView.transform    = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI_2);
+        glView.center       = mainView.center;
+
+        // glView goes on our main view to prevent wonky resizing
+        [mainView addSubview:glView];
+
+        // root controller has main view as its view
+        LandscapeViewController* rootViewController = [[LandscapeViewController alloc] init];
+        rootViewController.view                     = mainView;
+
+        // and finally we set the root view controller
+        // which will make mMainView the window's primary view
+        // all other views are then added as subviews of mMainView
+        // NOT as subviews of the UIWindow or the EAGLView
+        ofxiPhoneGetUIWindow().rootViewController = rootViewController;
 		
 		// action sheet shown sometimes
         if ( 0 )
@@ -140,6 +198,49 @@ void App::setup()
 			mPinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:mActionHandler action:@selector(handlePinchGesture:)];
 			[ofxiPhoneGetUIWindow() addGestureRecognizer:mPinchGestureRecognizer];
 		}
+        
+        // slider labels
+        // spacing
+        {
+            Box& box = mBandSpacingSlider.box();
+            CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
+            UILabel* label = [[UILabel alloc] initWithFrame:frame];
+            label.font     = [UIFont systemFontOfSize:14];
+            label.text     = @"Spacing";
+            label.textColor = [UIColor grayColor];
+            label.shadowColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+            label.shadowOffset = CGSizeMake(1,1);
+            label.backgroundColor = [UIColor clearColor];
+            [mainView addSubview:label];
+        }
+        
+        // root
+        {
+            Box& box = mBandOffsetSlider.box();
+            CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
+            UILabel* label = [[UILabel alloc] initWithFrame:frame];
+            label.font     = [UIFont systemFontOfSize:14];
+            label.text     = @"Root";
+            label.textColor = [UIColor grayColor];
+            label.shadowColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+            label.shadowOffset = CGSizeMake(1,1);
+            label.backgroundColor = [UIColor clearColor];
+            [mainView addSubview:label];
+        }
+        
+        // decay
+        {
+            Box& box = mBandDecaySlider.box();
+            CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
+            UILabel* label = [[UILabel alloc] initWithFrame:frame];
+            label.font     = [UIFont systemFontOfSize:14];
+            label.text     = @"Decay";
+            label.textColor = [UIColor grayColor];
+            label.shadowColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+            label.shadowOffset = CGSizeMake(1,1);
+            label.backgroundColor = [UIColor clearColor];
+            [mainView addSubview:label];
+        }
 	}
 	
 	//-- DONE ---------------------------
@@ -200,9 +301,9 @@ void App::draw()
     }
     ofEndShape();
     
-    mBandSpacingSlider.draw();
-    mBandOffsetSlider.draw();
-    mBandDecaySlider.draw();
+    mBandSpacingSlider.draw( );
+    mBandOffsetSlider.draw( );
+    mBandDecaySlider.draw( );
         
     
     ofSetColor(255, 255, 255);
