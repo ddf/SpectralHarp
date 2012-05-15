@@ -9,6 +9,7 @@
 #include "SpectralGen.h"
 #include "FourierTransform.h"
 #include <stdio.h>
+#include <string> // for memset
 
 SpectralGen::SpectralGen( const int inTimeSize )
 : UGen()
@@ -24,7 +25,11 @@ SpectralGen::SpectralGen( const int inTimeSize )
     output   = new float[timeSize];
     
     amplitudes = new float[specSize];
+    memset( amplitudes, 0, sizeof(float)*specSize );
     phases     = new float[specSize];
+    memset( phases, 0, sizeof(float)*specSize );
+    phaseSteps = new float[specSize];
+    memset( phaseSteps, 0, sizeof(float)*specSize );
 }
 
 SpectralGen::~SpectralGen()
@@ -35,6 +40,7 @@ SpectralGen::~SpectralGen()
     delete [] output;
     delete [] amplitudes;
     delete [] phases;
+    delete [] phaseSteps;
 }
 
 void SpectralGen::uGenerate(float* out, const int numChannels)
@@ -53,6 +59,8 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
                 specReal[timeSize - b] = specReal[b];
                 specImag[timeSize - b] = -specImag[b];
             }
+            
+            //phases[b] += phaseSteps[b];
         }
         
         fft.Minim::FourierTransform::inverse(specReal, specImag, inverse);
@@ -60,8 +68,14 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
         
         for( int s = 0; s < timeSize; ++s )
         {
-            int o = (s + outIndex) % timeSize;
-            output[o] += inverse[s];
+            int ind = (s + outIndex) % timeSize;
+            
+            output[ind] += inverse[s];
+            
+            // soft-clip
+//            static float clipFactor = 2;
+//            static float invClipFactor = 1.f / clipFactor;
+//            output[ind] = invClipFactor * atanf( clipFactor * output[ind] );
         }
     }
     

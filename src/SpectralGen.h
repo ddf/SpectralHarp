@@ -30,6 +30,8 @@ public:
     void    setBandPhase( const int b, const float phase ) { phases[b] = phase; }
     float   getBandPhase( const int b ) const { return phases[b]; }
     
+    void    setBandPhaseStep( const int b, const float phaseStep ) { phaseSteps[b] = phaseStep; }
+    
 protected:
     
     virtual void uGenerate( float* out, const int numChannels );
@@ -46,6 +48,7 @@ private:
     // amplitudes and phases of bands in the spectrum
     float*  amplitudes;
     float*  phases;
+    float*  phaseSteps;
     
     int     timeSize;
     int     specSize;

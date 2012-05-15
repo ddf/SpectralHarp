@@ -15,6 +15,7 @@
 extern int lastBand;
 extern float kMaxSpectralAmp;
 extern int   kToolbarHeight;
+extern float kFirstBandInset;
 
 //--------------------------------------------------------------
 void App::touchDown(ofTouchEventArgs &touch)
@@ -51,12 +52,14 @@ void App::touchMoved(ofTouchEventArgs &touch)
     
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
-        float x = ofMap( b, Settings::BandOffset, lastBand, 10, ofGetWidth()-10 );
+        float x = ofMap( b, Settings::BandOffset, lastBand, kFirstBandInset, ofGetWidth()-kFirstBandInset );
         if ( (prevTouch[touch.id].x < x && touch.x > x) || (touch.x < x && prevTouch[touch.id].x > x) )
         {
             float speed = fabs(touch.x - prevTouch[touch.id].x) / (ofGetElapsedTimeMillis() - prevTouch[touch.id].time);
-            float mag   = ofMap(speed, 0, 10, 0, kMaxSpectralAmp, true);
+            float mag   = ofMap(speed, 0, 10, kMaxSpectralAmp*0.2f, kMaxSpectralAmp, true);
             specGen.setBandMagnitude( b, mag );
+            float ps    = ofMap( touch.y, 0, ofGetHeight(), M_PI/24, M_PI_2, true );
+            specGen.setBandPhaseStep( b, ps );
         }
     }
                                                              

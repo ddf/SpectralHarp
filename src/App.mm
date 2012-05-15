@@ -52,8 +52,9 @@ App* gApp = NULL;
 const int kOutputBufferSize = 1024;
 const int kStreamBufferSize = 512;
 const int kSpectralGenSize  = 1024 * 4;
-float kMaxSpectralAmp = 16.0f;
+float kMaxSpectralAmp = 128.0f;
 int   kToolbarHeight  = 60;
+float kFirstBandInset = 30;
 
 int       lastBand;
 
@@ -271,7 +272,7 @@ void App::draw()
     
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
-        float x = ofMap( b, Settings::BandOffset, lastBand, 10, ofGetWidth() - 10 );
+        float x = ofMap( b, Settings::BandOffset, lastBand, kFirstBandInset, ofGetWidth() - kFirstBandInset );
         float p = specGen.getBandPhase(b);
         float m = specGen.getBandMagnitude(b);
         
@@ -306,10 +307,10 @@ void App::draw()
     mBandDecaySlider.draw( );
         
     
-    ofSetColor(255, 255, 255);
-    string fps("FPS: ");
-    fps += ofToString( ofGetFrameRate() );
-    ofDrawBitmapString(fps, 5, 15);
+//    ofSetColor(255, 255, 255);
+//    string fps("FPS: ");
+//    fps += ofToString( ofGetFrameRate() );
+//    ofDrawBitmapString(fps, 5, 15);
 }
 
 //--------------------------------------------------------------
