@@ -58,6 +58,7 @@ private:
 	// UI
 	UIActionHandler				 * mActionHandler;
 	UIActionSheet			     * mActionSheet; // so we can ask things
+    float                          mSliderWidth;
     Slider                         mBandSpacingSlider;
     Slider                         mBandOffsetSlider;
     Slider                         mBandDecaySlider;

@@ -52,9 +52,9 @@ App* gApp = NULL;
 const int kOutputBufferSize = 1024;
 const int kStreamBufferSize = 512;
 const int kSpectralGenSize  = 1024 * 4;
-float kMaxSpectralAmp = 128.0f;
-int   kToolbarHeight  = 60;
-float kFirstBandInset = 30;
+float kMaxSpectralAmp       = 128.0f;
+int   kToolbarHeight        = 60;
+float kFirstBandInset       = 30;
 
 int       lastBand;
 
@@ -84,21 +84,22 @@ void decayChanged( float value )
 App::App()
 : ofxiPhoneApp()
 , specGen(kSpectralGenSize)
+, mSliderWidth(200 * (ofGetWidth() / 1024.0f))
 , mBandSpacingSlider( "",
-                     100, ofGetHeight()-25, // position
-                     150, 30, // size
+                     mSliderWidth*0.6f, ofGetHeight()-25, // position
+                     mSliderWidth, 30, // size
                      120, // hue
                      Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 
                      bandSpacingChanged )
 , mBandOffsetSlider( "",
-                     300, ofGetHeight()-25, //position
-                     150, 30, // size
+                     mSliderWidth*0.6f + mSliderWidth*1.25f, ofGetHeight()-25, //position
+                     mSliderWidth, 30, // size
                      120, //hue
                     Settings::BandOffset, Settings::BandOffsetMin, Settings::BandOffsetMax,
                     bandOffsetChanged )
 , mBandDecaySlider( "",
-                   500, ofGetHeight()-25, //position
-                   150, 30, //size
+                   mSliderWidth*0.6f + mSliderWidth*1.25f*2, ofGetHeight()-25, //position
+                   mSliderWidth, 30, //size
                    120, //hue
                    Settings::Decay, Settings::DecayMin, Settings::DecayMax,
                    decayChanged )
@@ -154,6 +155,8 @@ void App::setup()
 	
 	//-- UI ---------------------------
 	{
+        kFirstBandInset = 30 * (ofGetWidth()/1024.f);
+        
 		mActionHandler = [[UIActionHandler alloc] init:this];
         
         // remove the glview from the UIWindow, which is where openFrameworks puts it

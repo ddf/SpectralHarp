@@ -10,7 +10,14 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon72.png</string>
+		<string>Default.png</string>
+		<string>Default-Landscape@2x~ipad.png</string>
+		<string>Default-Landscape@2x~ipad.png</string>
+		<string>Default@2x.png</string>
+		<string>Icon@2x.png</string>
+		<string>Icon.png</string>
+		<string>Icon-72@2x.png</string>
+		<string>Icon-72.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -18,8 +25,17 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>Icon72.png</string>
+				<string>Default.png</string>
+				<string>Default-Landscape@2x~ipad.png</string>
+				<string>Default-Landscape@2x~ipad.png</string>
+				<string>Default@2x.png</string>
+				<string>Icon@2x.png</string>
+				<string>Icon.png</string>
+				<string>Icon-72@2x.png</string>
+				<string>Icon-72.png</string>
 			</array>
+			<key>UIPrerenderedIcon</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
@@ -42,6 +58,8 @@
 	<string>YES</string>
 	<key>UIInterfaceOrientation</key>
 	<string>UIInterfaceOrientationLandscapeRight</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
