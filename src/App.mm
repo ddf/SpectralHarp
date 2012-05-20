@@ -80,10 +80,16 @@ void decayChanged( float value )
     Settings::Decay = value;
 }
 
+void bitCrushChanged( float value )
+{
+    Settings::BitCrush = value;
+}
+
 //--------------------------------------------------------------
 App::App()
 : ofxiPhoneApp()
 , specGen(kSpectralGenSize)
+, bitCrush(24, Settings::BitCrush)
 , mSliderWidth(200 * (ofGetWidth() / 1024.0f))
 , mBandSpacingSlider( "",
                      mSliderWidth*0.6f, ofGetHeight()-25, // position
@@ -103,6 +109,12 @@ App::App()
                    120, //hue
                    Settings::Decay, Settings::DecayMin, Settings::DecayMax,
                    decayChanged )
+, mBitCrushSlider( "",
+                   mSliderWidth*0.6f + mSliderWidth*1.25f*3, ofGetHeight()-25, // position
+                   mSliderWidth, 30, // size
+                   120, // hue
+                   Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax,
+                   bitCrushChanged )
 {
 	gApp = this;
 }
@@ -116,6 +128,8 @@ void App::setup()
 	ofSetBackgroundAuto(false);
 	
 	ofEnableAlphaBlending();
+    
+    ofEnableSmoothing();
 	
 	// register touch events
 	ofRegisterTouchEvents(this);
@@ -150,7 +164,7 @@ void App::setup()
         
         computeLastBand();
         
-        specGen.patch( *mOutput );
+        specGen.patch( bitCrush ).patch( *mOutput );
 	}
 	
 	//-- UI ---------------------------
@@ -224,7 +238,7 @@ void App::setup()
             CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
             UILabel* label = [[UILabel alloc] initWithFrame:frame];
             label.font     = [UIFont systemFontOfSize:14];
-            label.text     = @"Root";
+            label.text     = @"Pitch";
             label.textColor = [UIColor grayColor];
             label.shadowColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
             label.shadowOffset = CGSizeMake(1,1);
@@ -245,10 +259,29 @@ void App::setup()
             label.backgroundColor = [UIColor clearColor];
             [mainView addSubview:label];
         }
+        
+        // bit crush
+        {
+            Box& box = mBitCrushSlider.box();
+            CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
+            UILabel* label = [[UILabel alloc] initWithFrame:frame];
+            label.font     = [UIFont systemFontOfSize:14];
+            label.text     = @"Crush";
+            label.textColor = [UIColor grayColor];
+            label.shadowColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+            label.shadowOffset = CGSizeMake(1,1);
+            label.backgroundColor = [UIColor clearColor];
+            [mainView addSubview:label];
+        }
 	}
 	
 	//-- DONE ---------------------------
 	m_bWasPlaying			= false;
+}
+
+float expoEaseOut( float t, float b, float c, float d )
+{
+	return c * ( -powf( 2, -10 * t/d ) + 1 ) + b;
 }
 
 //--------------------------------------------------------------
@@ -262,16 +295,17 @@ void App::update()
         specGen.setBandMagnitude(b, m);
         specGen.setBandPhase( b, specGen.getBandPhase(b) + ofRandom(M_PI/24, M_PI_4) );
     }
+    
+    float t = ofMap(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
+    float crush = expoEaseOut( t, Settings::BitCrushMin, Settings::BitCrushMax - Settings::BitCrushMin, 1 );
+    printf( "crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue() );
+    bitCrush.bitRate.setLastValue( crush );
 }
 
 //--------------------------------------------------------------
 void App::draw() 
 {	
-    //ofBackground(20, 20, 20);
-    ofSetColor( 10, 10, 10, 96 );
-    ofRect( -1, -1, ofGetWidth()+1, ofGetHeight()+1 );
-    
-    //ofSetLineWidth(1);
+    ofBackground(20, 20, 20);
     
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
@@ -283,15 +317,21 @@ void App::draw()
         ofSetColor( 255.f * br );
         
         float w = ofMap( m, 0, kMaxSpectralAmp, 0, 6 );
-        float segLength = ofGetHeight()/64;
+        float segLength = ofGetHeight()/32;
+        ofPolyline string;
         for( float y = 0; y < ofGetHeight(); y += segLength )
         {
             float s1 = y/ofGetHeight() * M_PI * 8 + p;
-            float s2 = (y+segLength)/ofGetHeight() * M_PI * 8 + p;
-            ofLine( x + w*sinf(s1), y, x + w*sinf(s2), y + segLength );
+            //float s2 = (y+segLength)/ofGetHeight() * M_PI * 8 + p;
+            string.addVertex( ofPoint(x + w*sinf(s1),y) );
+            //ofLine( x + w*sinf(s1), y, x + w*sinf(s2), y + segLength );
         }
+        
+        string.draw();
     }
     
+    ofEnableAlphaBlending();
+        
     ofSetColor(10, 10, 10, 192);
     ofRect(0, ofGetHeight()-kToolbarHeight-5, ofGetWidth(), ofGetHeight()-kToolbarHeight);
     
@@ -308,6 +348,7 @@ void App::draw()
     mBandSpacingSlider.draw( );
     mBandOffsetSlider.draw( );
     mBandDecaySlider.draw( );
+    mBitCrushSlider.draw();
         
     
 //    ofSetColor(255, 255, 255);

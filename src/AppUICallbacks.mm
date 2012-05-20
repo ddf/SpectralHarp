@@ -29,6 +29,9 @@ void App::touchDown(ofTouchEventArgs &touch)
     if ( mBandDecaySlider.handleTouchDown(touch.id, touch.x, touch.y) )
         return;
     
+    if ( mBitCrushSlider.handleTouchDown(touch.id, touch.x, touch.y) )
+        return;
+    
     if ( touch.y > ofGetHeight()-kToolbarHeight )
         return;
     
@@ -45,6 +48,9 @@ void App::touchMoved(ofTouchEventArgs &touch)
         return;
     
     if ( mBandDecaySlider.handleTouchMoved(touch.id, touch.x, touch.y) )
+        return;
+    
+    if ( mBitCrushSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
         return;
     
     if ( touch.y > ofGetHeight()-kToolbarHeight )
@@ -78,6 +84,9 @@ void App::touchUp(ofTouchEventArgs &touch)
     
     if ( mBandDecaySlider.handleTouchUp(touch.id, touch.x, touch.y) )
         return;
+    
+    if ( mBitCrushSlider.handleTouchUp(touch.id, touch.x, touch.y) )
+        return;    
 }
 
 //--------------------------------------------------------------
@@ -96,6 +105,9 @@ void App::touchCancelled(ofTouchEventArgs &touch)
         return;
     
     if ( mBandDecaySlider.handleTouchUp(touch.id, touch.x, touch.y) )
+        return; 
+    
+    if ( mBitCrushSlider.handleTouchUp(touch.id, touch.x, touch.y) )
         return; 
 }
 

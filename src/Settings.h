@@ -23,6 +23,9 @@ public:
     static float        Decay;
     static float        DecayMin;
     static float        DecayMax;
+    static float        BitCrush;
+    static float        BitCrushMin;
+    static float        BitCrushMax;
 
 };
 
