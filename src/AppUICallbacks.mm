@@ -23,7 +23,10 @@ void App::touchDown(ofTouchEventArgs &touch)
     if ( mBandSpacingSlider.handleTouchDown(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandOffsetSlider.handleTouchDown(touch.id, touch.x, touch.y) )
+//    if ( mBandOffsetSlider.handleTouchDown(touch.id, touch.x, touch.y) )
+//        return;
+    
+    if ( mPitchSlider.handleTouchDown(touch.id, touch.x, touch.y) )
         return;
     
     if ( mBandDecaySlider.handleTouchDown(touch.id, touch.x, touch.y) )
@@ -44,7 +47,10 @@ void App::touchMoved(ofTouchEventArgs &touch)
     if ( mBandSpacingSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandOffsetSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
+//    if ( mBandOffsetSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
+//        return;
+    
+    if ( mPitchSlider.handleTouchMoved(touch.id, touch.x, touch.y) )
         return;
     
     if ( mBandDecaySlider.handleTouchMoved(touch.id, touch.x, touch.y) )
@@ -64,8 +70,9 @@ void App::touchMoved(ofTouchEventArgs &touch)
             float speed = fabs(touch.x - prevTouch[touch.id].x) / (ofGetElapsedTimeMillis() - prevTouch[touch.id].time);
             float mag   = ofMap(speed, 0, 10, kMaxSpectralAmp*0.2f, kMaxSpectralAmp, true);
             specGen.setBandMagnitude( b, mag );
-            float ps    = ofMap( touch.y, 0, ofGetHeight(), M_PI/24, M_PI_2, true );
+            float ps    = ofMap( touch.y, 0, ofGetHeight(), M_PI/64, M_PI/32, true );
             specGen.setBandPhaseStep( b, ps );
+            specGen.setBandPhase( b, ofRandom(M_PI) );
         }
     }
                                                              
@@ -79,7 +86,10 @@ void App::touchUp(ofTouchEventArgs &touch)
     if ( mBandSpacingSlider.handleTouchUp(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandOffsetSlider.handleTouchUp(touch.id, touch.x, touch.y) )
+//    if ( mBandOffsetSlider.handleTouchUp(touch.id, touch.x, touch.y) )
+//        return;
+    
+    if ( mPitchSlider.handleTouchUp(touch.id, touch.x, touch.y) )
         return;
     
     if ( mBandDecaySlider.handleTouchUp(touch.id, touch.x, touch.y) )
@@ -101,7 +111,10 @@ void App::touchCancelled(ofTouchEventArgs &touch)
     if ( mBandSpacingSlider.handleTouchUp(touch.id, touch.x, touch.y) )
         return;
     
-    if ( mBandOffsetSlider.handleTouchUp(touch.id, touch.x, touch.y) )
+//    if ( mBandOffsetSlider.handleTouchUp(touch.id, touch.x, touch.y) )
+//        return;
+
+    if ( mPitchSlider.handleTouchUp(touch.id, touch.x, touch.y) )
         return;
     
     if ( mBandDecaySlider.handleTouchUp(touch.id, touch.x, touch.y) )

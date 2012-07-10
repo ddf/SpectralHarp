@@ -26,6 +26,9 @@ public:
     static float        BitCrush;
     static float        BitCrushMin;
     static float        BitCrushMax;
+    static float        Pitch;
+    static float        PitchMin;
+    static float        PitchMax;
 
 };
 

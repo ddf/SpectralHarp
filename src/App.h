@@ -4,6 +4,7 @@
 #include "ofxiPhone.h"
 #include "SpectralGen.h"
 #include "BitCrush.h"
+#include "TickRate.h"
 #include "Slider.h"
 
 // forward declares
@@ -56,6 +57,7 @@ private:
     
     SpectralGen               specGen;
     Minim::BitCrush           bitCrush;
+    Minim::TickRate           tickRate;
 	
 	// UI
 	UIActionHandler				 * mActionHandler;
@@ -65,6 +67,7 @@ private:
     Slider                         mBandOffsetSlider;
     Slider                         mBandDecaySlider;
     Slider                         mBitCrushSlider;
+    Slider                         mPitchSlider;
     ofTrueTypeFont                 mFont;
 	
 	bool						   m_bWasPlaying; // keep track of whether we were playing or not when audio got paused.

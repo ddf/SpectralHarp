@@ -8,6 +8,8 @@
 
 #include "SpectralGen.h"
 #include "FourierTransform.h"
+#include "Settings.h"
+#include "ofMath.h"
 #include <stdio.h>
 #include <string> // for memset
 
@@ -47,6 +49,7 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 {
     if ( outIndex % windowSize == 0 )
     {
+        //float decay = (Settings::DecayMax - Settings::Decay) * 16;
         for( int b = 0; b < specSize; ++b )
         {
             float amp   = amplitudes[b];
@@ -60,7 +63,8 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
                 specImag[timeSize - b] = -specImag[b];
             }
             
-            //phases[b] += phaseSteps[b];
+            //amplitudes[b]    = fmaxf( amplitudes[b] - decay, 0);
+            phases[b]       += phaseSteps[b]*ofRandom(0.8f,1.2f);
         }
         
         fft.Minim::FourierTransform::inverse(specReal, specImag, inverse);

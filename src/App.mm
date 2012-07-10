@@ -51,7 +51,7 @@ App* gApp = NULL;
 // global tweaks
 const int kOutputBufferSize = 1024;
 const int kStreamBufferSize = 512;
-const int kSpectralGenSize  = 1024 * 4;
+const int kSpectralGenSize  = 1024 * 8;
 float kMaxSpectralAmp       = 128.0f;
 int   kToolbarHeight        = 60;
 float kFirstBandInset       = 30;
@@ -85,11 +85,17 @@ void bitCrushChanged( float value )
     Settings::BitCrush = value;
 }
 
+void pitchChanged( float value )
+{
+    Settings::Pitch = value;
+}
+
 //--------------------------------------------------------------
 App::App()
 : ofxiPhoneApp()
 , specGen(kSpectralGenSize)
 , bitCrush(24, Settings::BitCrush)
+, tickRate( Settings::Pitch )
 , mSliderWidth(200 * (ofGetWidth() / 1024.0f))
 , mBandSpacingSlider( "",
                      mSliderWidth*0.6f, ofGetHeight()-25, // position
@@ -115,6 +121,12 @@ App::App()
                    120, // hue
                    Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax,
                    bitCrushChanged )
+, mPitchSlider   ( "",
+                    mSliderWidth*0.6f + mSliderWidth*1.25f, ofGetHeight()-25, //position
+                    mSliderWidth, 30, // size
+                    120, //hue
+                    Settings::Pitch, Settings::PitchMin, Settings::PitchMax,
+                    pitchChanged )
 {
 	gApp = this;
 }
@@ -164,7 +176,10 @@ void App::setup()
         
         computeLastBand();
         
-        specGen.patch( bitCrush ).patch( *mOutput );
+        tickRate.value.setLastValue( Settings::Pitch );
+        tickRate.setInterpolation( true );
+        
+        specGen.patch( tickRate ).patch( bitCrush ).patch( *mOutput );
 	}
 	
 	//-- UI ---------------------------
@@ -233,6 +248,7 @@ void App::setup()
         }
         
         // root
+        if ( 0 )
         {
             Box& box = mBandOffsetSlider.box();
             CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
@@ -273,6 +289,20 @@ void App::setup()
             label.backgroundColor = [UIColor clearColor];
             [mainView addSubview:label];
         }
+        
+        // pitch
+        {
+            Box& box = mPitchSlider.box();
+            CGRect frame    = CGRectMake(box.mMinX, box.mMinY-20, box.mW, 20);
+            UILabel* label = [[UILabel alloc] initWithFrame:frame];
+            label.font     = [UIFont systemFontOfSize:14];
+            label.text     = @"Pitch";
+            label.textColor = [UIColor grayColor];
+            label.shadowColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+            label.shadowOffset = CGSizeMake(1,1);
+            label.backgroundColor = [UIColor clearColor];
+            [mainView addSubview:label];
+        }
 	}
 	
 	//-- DONE ---------------------------
@@ -293,13 +323,15 @@ void App::update()
     {
         float m = ofClamp( specGen.getBandMagnitude(b) * ofRandom( Settings::Decay - 0.3f, Settings::Decay), 0, kMaxSpectralAmp );
         specGen.setBandMagnitude(b, m);
-        specGen.setBandPhase( b, specGen.getBandPhase(b) + ofRandom(M_PI/24, M_PI_4) );
+        //specGen.setBandPhase( b, specGen.getBandPhase(b) + ofRandom(M_PI/24, M_PI_4) );
     }
     
     float t = ofMap(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
     float crush = expoEaseOut( t, Settings::BitCrushMin, Settings::BitCrushMax - Settings::BitCrushMin, 1 );
     printf( "crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue() );
     bitCrush.bitRate.setLastValue( crush );
+    
+    tickRate.value.setLastValue( Settings::Pitch );
 }
 
 //--------------------------------------------------------------
@@ -346,9 +378,10 @@ void App::draw()
     ofEndShape();
     
     mBandSpacingSlider.draw( );
-    mBandOffsetSlider.draw( );
+    //mBandOffsetSlider.draw( );
     mBandDecaySlider.draw( );
     mBitCrushSlider.draw();
+    mPitchSlider.draw();
         
     
 //    ofSetColor(255, 255, 255);
