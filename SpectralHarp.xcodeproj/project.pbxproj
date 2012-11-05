@@ -29,8 +29,6 @@
 		77903B8114F201160073280F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77903B8014F201160073280F /* Accelerate.framework */; };
 		77B2CED21561F773000A6187 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CED11561F773000A6187 /* Default-Landscape@2x~ipad.png */; };
 		77B2CED41561F78E000A6187 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CED31561F78E000A6187 /* Default-Landscape~ipad.png */; };
-		77B2CED51561F886000A6187 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECC1561F684000A6187 /* Default@2x.png */; };
-		77B2CED61561F889000A6187 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECB1561F684000A6187 /* Default.png */; };
 		77B2CEDE156206ED000A6187 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CED7156206ED000A6187 /* Icon-72.png */; };
 		77B2CEDF156206ED000A6187 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CED8156206ED000A6187 /* Icon-72@2x.png */; };
 		77B2CEE0156206ED000A6187 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CED9156206ED000A6187 /* Icon-Small-50.png */; };
@@ -40,6 +38,9 @@
 		77B2CEE4156206ED000A6187 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CEDD156206ED000A6187 /* Icon.png */; };
 		77B2CEE615620748000A6187 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CEE515620748000A6187 /* Icon@2x.png */; };
 		77F12D9D14698F3C00F8C32F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 77F12D9C14698F3C00F8C32F /* Config.xcconfig */; };
+		77FC831C164421C400487194 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77FC831B164421C400487194 /* Default-568h@2x.png */; };
+		77FC831E16442ACA00487194 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECB1561F684000A6187 /* Default.png */; };
+		77FC831F16442ACB00487194 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECC1561F684000A6187 /* Default@2x.png */; };
 		BB0ECA6310F55E7900A35406 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0ECA6210F55E7900A35406 /* MapKit.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
@@ -119,6 +120,7 @@
 		77F12D7614698EF900F8C32F /* iPhone+OF Lib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "iPhone+OF Lib.xcodeproj"; path = "../../../../Developer/Frameworks/openFrameworks_iOS/libs/openFrameworksCompiled/project/iphone/iPhone+OF Lib.xcodeproj"; sourceTree = DEVELOPER_DIR; };
 		77F12D7F14698F0900F8C32F /* MinimTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MinimTouch.xcodeproj; path = "../../../../Developer/Frameworks/minim-cpp/MinimTouch.xcodeproj"; sourceTree = DEVELOPER_DIR; };
 		77F12D9C14698F3C00F8C32F /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		77FC831B164421C400487194 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BB0ECA6210F55E7900A35406 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB16EBD80F2B2AB500518274 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -166,6 +168,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				77FC831B164421C400487194 /* Default-568h@2x.png */,
 				77B2CEE515620748000A6187 /* Icon@2x.png */,
 				77B2CED31561F78E000A6187 /* Default-Landscape~ipad.png */,
 				77B2CED7156206ED000A6187 /* Icon-72.png */,
@@ -385,8 +388,6 @@
 				7741E37814996C1500F660A7 /* HelveticaBold.ttf in Resources */,
 				77B2CED21561F773000A6187 /* Default-Landscape@2x~ipad.png in Resources */,
 				77B2CED41561F78E000A6187 /* Default-Landscape~ipad.png in Resources */,
-				77B2CED51561F886000A6187 /* Default@2x.png in Resources */,
-				77B2CED61561F889000A6187 /* Default.png in Resources */,
 				77B2CEDE156206ED000A6187 /* Icon-72.png in Resources */,
 				77B2CEDF156206ED000A6187 /* Icon-72@2x.png in Resources */,
 				77B2CEE0156206ED000A6187 /* Icon-Small-50.png in Resources */,
@@ -395,6 +396,9 @@
 				77B2CEE3156206ED000A6187 /* Icon-Small@2x.png in Resources */,
 				77B2CEE4156206ED000A6187 /* Icon.png in Resources */,
 				77B2CEE615620748000A6187 /* Icon@2x.png in Resources */,
+				77FC831C164421C400487194 /* Default-568h@2x.png in Resources */,
+				77FC831E16442ACA00487194 /* Default.png in Resources */,
+				77FC831F16442ACB00487194 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +446,6 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
 				OTHER_CFLAGS = "-DPOSIX";
 				PRODUCT_NAME = SpectralHarp;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -459,7 +462,7 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DPOSIX";
 				PRODUCT_NAME = SpectralHarp;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -475,6 +478,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -492,7 +496,7 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.2;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DPOSIX";
 				PRODUCT_NAME = SpectralHarp;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -510,6 +514,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -526,6 +531,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;

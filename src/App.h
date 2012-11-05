@@ -5,6 +5,7 @@
 #include "SpectralGen.h"
 #include "BitCrush.h"
 #include "TickRate.h"
+#include "MoogFilter.h"
 #include "Slider.h"
 
 // forward declares
@@ -58,6 +59,7 @@ private:
     SpectralGen               specGen;
     Minim::BitCrush           bitCrush;
     Minim::TickRate           tickRate;
+    Minim::MoogFilter         highPass;
 	
 	// UI
 	UIActionHandler				 * mActionHandler;

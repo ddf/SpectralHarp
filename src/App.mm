@@ -49,14 +49,18 @@ App* gApp = NULL;
 @end
 
 // global tweaks
-const int kOutputBufferSize = 1024;
-const int kStreamBufferSize = 512;
-const int kSpectralGenSize  = 1024 * 8;
-float kMaxSpectralAmp       = 128.0f;
-int   kToolbarHeight        = 60;
+const int   kOutputBufferSize = 1024;
+const int   kStreamBufferSize = 512;
+const int   kSpectralGenSize  = 1024 * 8;
+
+float kMaxSpectralAmp   = 128.0f;
+int   kToolbarHeight    = 60;
+
+// not actually constant because it needs to be set relative to actual width
 float kFirstBandInset       = 30;
 
-int       lastBand;
+int       lastBand        = 1;
+float     stringAnimation = 0;
 
 void computeLastBand()
 {
@@ -96,6 +100,7 @@ App::App()
 , specGen(kSpectralGenSize)
 , bitCrush(24, Settings::BitCrush)
 , tickRate( Settings::Pitch )
+, highPass( 30, 0, Minim::MoogFilter::HP )
 , mSliderWidth(200 * (ofGetWidth() / 1024.0f))
 , mBandSpacingSlider( "",
                      mSliderWidth*0.6f, ofGetHeight()-25, // position
@@ -317,7 +322,13 @@ float expoEaseOut( float t, float b, float c, float d )
 //--------------------------------------------------------------
 void App::update() 
 {
-    // const float dt  = 1.0f / ofGetFrameRate();
+    const float dt  = 1.0f / ofGetFrameRate();
+    
+    stringAnimation += dt * TWO_PI * 2;
+    if ( stringAnimation > TWO_PI )
+    {
+        stringAnimation -= TWO_PI;
+    }
     
     for( int b = 0; b < kSpectralGenSize/2; ++b )
     {
@@ -328,7 +339,7 @@ void App::update()
     
     float t = ofMap(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
     float crush = expoEaseOut( t, Settings::BitCrushMin, Settings::BitCrushMax - Settings::BitCrushMin, 1 );
-    printf( "crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue() );
+    //printf( "crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue() );
     bitCrush.bitRate.setLastValue( crush );
     
     tickRate.value.setLastValue( Settings::Pitch );
@@ -342,7 +353,7 @@ void App::draw()
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
         float x = ofMap( b, Settings::BandOffset, lastBand, kFirstBandInset, ofGetWidth() - kFirstBandInset );
-        float p = specGen.getBandPhase(b);
+        float p = specGen.getBandPhase(b) + stringAnimation;
         float m = specGen.getBandMagnitude(b);
         
         float br = ofMap( m, 0, kMaxSpectralAmp, 0.4f, 1 );
