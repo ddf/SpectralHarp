@@ -19,7 +19,7 @@ namespace Minim
 }
 
 
-class App : public ofxiPhoneApp 
+class App : public ofxiOSApp
 {
 	
 public:
@@ -71,6 +71,7 @@ private:
     Slider                         mBitCrushSlider;
     Slider                         mPitchSlider;
     ofTrueTypeFont                 mFont;
+    ofPolyline                     mString;
 	
 	bool						   m_bWasPlaying; // keep track of whether we were playing or not when audio got paused.
 };

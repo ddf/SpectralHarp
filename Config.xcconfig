@@ -1,14 +1,15 @@
 //THE PATH TO THE ROOT OF OUR OF PATH RELATIVE TO THIS PROJECT.
 //THIS NEEDS TO BE DEFINED BEFORE CoreOF.xcconfig IS INCLUDED
-OF_PATH = /Developer/Frameworks/openFrameworks_iOS
+OF_PATH = /Developer/Frameworks/of_v0.8.0_ios_release
 MINIM_PATH = /Developer/Frameworks/minim-cpp
 
 //THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
-#include "/Developer/Frameworks/openFrameworks_iOS/libs/openFrameworksCompiled/project/iphone/CoreOF.xcconfig"
+#include "/Developer/Frameworks/of_v0.8.0_ios_release/libs/openFrameworksCompiled/project/ios/CoreOF.xcconfig"
 
 OTHER_LDFLAGS = $(OF_CORE_LIBS) 
 HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(MINIM_PATH)/src/**
+OTHER_CFLAGS = -DPOSIX
 
 COMPRESS_PNG_FILES = NO
 GCC_THUMB_SUPPORT = NO
-IPHONEOS_DEPLOYMENT_TARGET = 3.1
+IPHONEOS_DEPLOYMENT_TARGET = 4.3

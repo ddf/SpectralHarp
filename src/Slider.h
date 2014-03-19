@@ -15,6 +15,12 @@
 class Slider
 {
 public:
+    Slider()
+    : mLabel( "" )
+    , mBox(0,0,0,0)
+    {
+    }
+    
     Slider( string label, float x, float y, float w, float h, int hue, float defaultv, float minv, float maxv, void(*ValueChanged)(float) )
     : mLabel( label )
     , mBox( x, y, w, h )

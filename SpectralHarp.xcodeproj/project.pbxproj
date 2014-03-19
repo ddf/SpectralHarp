@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,7 +23,6 @@
 		7741E37014994B2F00F660A7 /* treble_clef.png in Resources */ = {isa = PBXBuildFile; fileRef = 7741E36E14994B2F00F660A7 /* treble_clef.png */; };
 		7741E37814996C1500F660A7 /* HelveticaBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7741E37714996C1500F660A7 /* HelveticaBold.ttf */; };
 		775358A9151B9AE3006D89C4 /* libMinimTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 775358A4151B9ACE006D89C4 /* libMinimTouch.a */; };
-		775358B5151B9B36006D89C4 /* libofxiPhone_iphoneos_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 775358B2151B9B2C006D89C4 /* libofxiPhone_iphoneos_Debug.a */; };
 		7788FE3415576D55006789E6 /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7788FE3315576D55006789E6 /* SpectralGen.cpp */; };
 		7788FE4115578288006789E6 /* Slider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7788FE4015578288006789E6 /* Slider.cpp */; };
 		77903B8114F201160073280F /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77903B8014F201160073280F /* Accelerate.framework */; };
@@ -37,6 +36,7 @@
 		77B2CEE3156206ED000A6187 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CEDC156206ED000A6187 /* Icon-Small@2x.png */; };
 		77B2CEE4156206ED000A6187 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CEDD156206ED000A6187 /* Icon.png */; };
 		77B2CEE615620748000A6187 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CEE515620748000A6187 /* Icon@2x.png */; };
+		77D847F218D8AD8A00240595 /* libofxiOS_iphoneos_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D847EF18D8AD2900240595 /* libofxiOS_iphoneos_Debug.a */; };
 		77F12D9D14698F3C00F8C32F /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 77F12D9C14698F3C00F8C32F /* Config.xcconfig */; };
 		77FC831C164421C400487194 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77FC831B164421C400487194 /* Default-568h@2x.png */; };
 		77FC831E16442ACA00487194 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECB1561F684000A6187 /* Default.png */; };
@@ -64,16 +64,16 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = MinimTouch;
 		};
-		775358B1151B9B2C006D89C4 /* PBXContainerItemProxy */ = {
+		77D847EE18D8AD2900240595 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 77F12D7614698EF900F8C32F /* iPhone+OF Lib.xcodeproj */;
+			containerPortal = 77D847EA18D8AD2900240595 /* iOS+OFLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BB24DED610DA7A3F00E9C588;
 			remoteInfo = "iPhone+OF Static Library";
 		};
-		775358B3151B9B32006D89C4 /* PBXContainerItemProxy */ = {
+		77D847F018D8AD5900240595 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 77F12D7614698EF900F8C32F /* iPhone+OF Lib.xcodeproj */;
+			containerPortal = 77D847EA18D8AD2900240595 /* iOS+OFLib.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = BB24DE5C10DA7A3F00E9C588;
 			remoteInfo = "iPhone+OF Static Library";
@@ -117,7 +117,7 @@
 		77B2CEDC156206ED000A6187 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		77B2CEDD156206ED000A6187 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		77B2CEE515620748000A6187 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		77F12D7614698EF900F8C32F /* iPhone+OF Lib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "iPhone+OF Lib.xcodeproj"; path = "../../../../Developer/Frameworks/openFrameworks_iOS/libs/openFrameworksCompiled/project/iphone/iPhone+OF Lib.xcodeproj"; sourceTree = DEVELOPER_DIR; };
+		77D847EA18D8AD2900240595 /* iOS+OFLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "iOS+OFLib.xcodeproj"; path = "../../../../Developer/Frameworks/of_v0.8.0_ios_release/libs/openFrameworksCompiled/project/ios/iOS+OFLib.xcodeproj"; sourceTree = "<group>"; };
 		77F12D7F14698F0900F8C32F /* MinimTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MinimTouch.xcodeproj; path = "../../../../Developer/Frameworks/minim-cpp/MinimTouch.xcodeproj"; sourceTree = DEVELOPER_DIR; };
 		77F12D9C14698F3C00F8C32F /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		77FC831B164421C400487194 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				775358B5151B9B36006D89C4 /* libofxiPhone_iphoneos_Debug.a in Frameworks */,
+				77D847F218D8AD8A00240595 /* libofxiOS_iphoneos_Debug.a in Frameworks */,
 				775358A9151B9AE3006D89C4 /* libMinimTouch.a in Frameworks */,
 				77903B8114F201160073280F /* Accelerate.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -168,6 +168,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				77D847EA18D8AD2900240595 /* iOS+OFLib.xcodeproj */,
 				77FC831B164421C400487194 /* Default-568h@2x.png */,
 				77B2CEE515620748000A6187 /* Icon@2x.png */,
 				77B2CED31561F78E000A6187 /* Default-Landscape~ipad.png */,
@@ -181,37 +182,16 @@
 				77B2CED11561F773000A6187 /* Default-Landscape@2x~ipad.png */,
 				77B2CECB1561F684000A6187 /* Default.png */,
 				77B2CECC1561F684000A6187 /* Default@2x.png */,
-				77903B8014F201160073280F /* Accelerate.framework */,
 				77F12D9C14698F3C00F8C32F /* Config.xcconfig */,
 				6DA14D011308406E003685EC /* Resources-iPad */,
 				BB24DDC910DA781C00E9C588 /* ofxiphone-Info.plist */,
 				BB16F3A50F2B73B000518274 /* src */,
-				BB16F26B0F2B646B00518274 /* addons */,
 				BB24DD8B10DA77E000E9C588 /* data */,
-				BB24E1F710DAA51900E9C588 /* openFrameworks */,
-				BB16E9930F2B1E5900518274 /* libs */,
+				BB16E9930F2B1E5900518274 /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				77F12D7F14698F0900F8C32F /* MinimTouch.xcodeproj */,
 			);
 			name = CustomTemplate;
-			sourceTree = "<group>";
-		};
-		29B97323FDCFA39411CA2CEA /* core frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */,
-				BB16EBD80F2B2AB500518274 /* QuartzCore.framework */,
-				BB16EBD10F2B2A9500518274 /* OpenGLES.framework */,
-				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
-				53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */,
-				5326AEA710A23A0500278DE6 /* CoreLocation.framework */,
-				BB0ECA6210F55E7900A35406 /* MapKit.framework */,
-				6D36251D1403606F005493CF /* AVFoundation.framework */,
-				6D36252114036088005493CF /* CoreVideo.framework */,
-				6D362535140360DD005493CF /* CoreMedia.framework */,
-			);
-			name = "core frameworks";
 			sourceTree = "<group>";
 		};
 		6DA14D011308406E003685EC /* Resources-iPad */ = {
@@ -229,28 +209,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		775358AE151B9B2C006D89C4 /* Products */ = {
+		77D847EB18D8AD2900240595 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				775358B2151B9B2C006D89C4 /* libofxiPhone_iphoneos_Debug.a */,
+				77D847EF18D8AD2900240595 /* libofxiOS_iphoneos_Debug.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BB16E9930F2B1E5900518274 /* libs */ = {
+		BB16E9930F2B1E5900518274 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				77F12D7F14698F0900F8C32F /* MinimTouch.xcodeproj */,
-				BBE5E94E0F497BD800F28951 /* core */,
+				77903B8014F201160073280F /* Accelerate.framework */,
+				BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */,
+				BB16EBD80F2B2AB500518274 /* QuartzCore.framework */,
+				BB16EBD10F2B2A9500518274 /* OpenGLES.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */,
+				5326AEA710A23A0500278DE6 /* CoreLocation.framework */,
+				BB0ECA6210F55E7900A35406 /* MapKit.framework */,
+				6D36251D1403606F005493CF /* AVFoundation.framework */,
+				6D36252114036088005493CF /* CoreVideo.framework */,
+				6D362535140360DD005493CF /* CoreMedia.framework */,
 			);
-			name = libs;
-			sourceTree = "<group>";
-		};
-		BB16F26B0F2B646B00518274 /* addons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = addons;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BB16F3A50F2B73B000518274 /* src */ = {
@@ -285,22 +269,6 @@
 			path = bin/data;
 			sourceTree = "<group>";
 		};
-		BB24E1F710DAA51900E9C588 /* openFrameworks */ = {
-			isa = PBXGroup;
-			children = (
-				77F12D7614698EF900F8C32F /* iPhone+OF Lib.xcodeproj */,
-			);
-			name = openFrameworks;
-			sourceTree = "<group>";
-		};
-		BBE5E94E0F497BD800F28951 /* core */ = {
-			isa = PBXGroup;
-			children = (
-				29B97323FDCFA39411CA2CEA /* core frameworks */,
-			);
-			name = core;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -315,7 +283,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				775358B4151B9B32006D89C4 /* PBXTargetDependency */,
+				77D847F118D8AD5900240595 /* PBXTargetDependency */,
 				775358A6151B9ADC006D89C4 /* PBXTargetDependency */,
 			);
 			name = iPad;
@@ -329,10 +297,10 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SpectralHarp" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -345,8 +313,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 775358AE151B9B2C006D89C4 /* Products */;
-					ProjectRef = 77F12D7614698EF900F8C32F /* iPhone+OF Lib.xcodeproj */;
+					ProductGroup = 77D847EB18D8AD2900240595 /* Products */;
+					ProjectRef = 77D847EA18D8AD2900240595 /* iOS+OFLib.xcodeproj */;
 				},
 				{
 					ProductGroup = 775358A0151B9ACE006D89C4 /* Products */;
@@ -368,11 +336,11 @@
 			remoteRef = 775358A3151B9ACE006D89C4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		775358B2151B9B2C006D89C4 /* libofxiPhone_iphoneos_Debug.a */ = {
+		77D847EF18D8AD2900240595 /* libofxiOS_iphoneos_Debug.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libofxiPhone_iphoneos_Debug.a;
-			remoteRef = 775358B1151B9B2C006D89C4 /* PBXContainerItemProxy */;
+			path = libofxiOS_iphoneos_Debug.a;
+			remoteRef = 77D847EE18D8AD2900240595 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -428,10 +396,10 @@
 			name = MinimTouch;
 			targetProxy = 775358A5151B9ADC006D89C4 /* PBXContainerItemProxy */;
 		};
-		775358B4151B9B32006D89C4 /* PBXTargetDependency */ = {
+		77D847F118D8AD5900240595 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "iPhone+OF Static Library";
-			targetProxy = 775358B3151B9B32006D89C4 /* PBXContainerItemProxy */;
+			targetProxy = 77D847F018D8AD5900240595 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -449,6 +417,7 @@
 				OTHER_CFLAGS = "-DPOSIX";
 				PRODUCT_NAME = SpectralHarp;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
@@ -462,10 +431,10 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DPOSIX";
 				PRODUCT_NAME = SpectralHarp;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Release;
 		};
@@ -496,11 +465,11 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				GCC_THUMB_SUPPORT = NO;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DPOSIX";
 				PRODUCT_NAME = SpectralHarp;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Distribution;
 		};

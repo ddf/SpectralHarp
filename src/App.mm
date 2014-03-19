@@ -50,7 +50,7 @@ App* gApp = NULL;
 
 // global tweaks
 const int   kOutputBufferSize = 1024;
-const int   kStreamBufferSize = 512;
+// const int   kStreamBufferSize = 512;
 const int   kSpectralGenSize  = 1024 * 8;
 
 float kMaxSpectralAmp   = 128.0f;
@@ -96,42 +96,12 @@ void pitchChanged( float value )
 
 //--------------------------------------------------------------
 App::App()
-: ofxiPhoneApp()
+: ofxiOSApp()
 , specGen(kSpectralGenSize)
 , bitCrush(24, Settings::BitCrush)
 , tickRate( Settings::Pitch )
 , highPass( 30, 0, Minim::MoogFilter::HP )
-, mSliderWidth(200 * (ofGetWidth() / 1024.0f))
-, mBandSpacingSlider( "",
-                     mSliderWidth*0.6f, ofGetHeight()-25, // position
-                     mSliderWidth, 30, // size
-                     120, // hue
-                     Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 
-                     bandSpacingChanged )
-, mBandOffsetSlider( "",
-                     mSliderWidth*0.6f + mSliderWidth*1.25f, ofGetHeight()-25, //position
-                     mSliderWidth, 30, // size
-                     120, //hue
-                    Settings::BandOffset, Settings::BandOffsetMin, Settings::BandOffsetMax,
-                    bandOffsetChanged )
-, mBandDecaySlider( "",
-                   mSliderWidth*0.6f + mSliderWidth*1.25f*2, ofGetHeight()-25, //position
-                   mSliderWidth, 30, //size
-                   120, //hue
-                   Settings::Decay, Settings::DecayMin, Settings::DecayMax,
-                   decayChanged )
-, mBitCrushSlider( "",
-                   mSliderWidth*0.6f + mSliderWidth*1.25f*3, ofGetHeight()-25, // position
-                   mSliderWidth, 30, // size
-                   120, // hue
-                   Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax,
-                   bitCrushChanged )
-, mPitchSlider   ( "",
-                    mSliderWidth*0.6f + mSliderWidth*1.25f, ofGetHeight()-25, //position
-                    mSliderWidth, 30, // size
-                    120, //hue
-                    Settings::Pitch, Settings::PitchMin, Settings::PitchMax,
-                    pitchChanged )
+, mSliderWidth(0)
 {
 	gApp = this;
 }
@@ -145,8 +115,6 @@ void App::setup()
 	ofSetBackgroundAuto(false);
 	
 	ofEnableAlphaBlending();
-    
-    ofEnableSmoothing();
 	
 	// register touch events
 	ofRegisterTouchEvents(this);
@@ -155,10 +123,10 @@ void App::setup()
 	ofxAccelerometer.setup();
 	
 	// iPhoneAlerts will be sent to this.
-	ofxiPhoneAlerts.addListener(this);
+	ofxiOSAlerts.addListener(this);
 	
 	// might want to do this at some point.
-	ofxiPhoneSetOrientation( OF_ORIENTATION_90_RIGHT );
+	ofSetOrientation( OF_ORIENTATION_90_RIGHT );
 	
 	//-- AUDIO --------------------------------------
 	{
@@ -169,7 +137,7 @@ void App::setup()
 		sessionParams.interruptListener = &AudioInterruptionListener;
 		sessionParams.interruptUserData = this;
 		
-		mAudioSystem = new Minim::AudioSystem( new TouchServiceProvider(sessionParams) );
+		mAudioSystem = new Minim::AudioSystem( kOutputBufferSize );
 		
 		extern void AudioRouteChangeListener( void *inClientData, AudioSessionPropertyID inID, UInt32 inPropertySize, const void *inPropertyValue );
 		AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, &AudioRouteChangeListener, this);
@@ -186,15 +154,63 @@ void App::setup()
         
         specGen.patch( tickRate ).patch( bitCrush ).patch( *mOutput );
 	}
+    
+    //-- VIZ --------------------------
+    {
+        const float segLength = ofGetHeight()/32;
+        const float height   = ofGetHeight();
+        for( float y = 0; y < height; y += segLength )
+        {
+                mString.addVertex( ofPoint(0,y) );
+        }
+    }
 	
 	//-- UI ---------------------------
 	{
+        mSliderWidth = 200 * (ofGetWidth() / 1024.0f);
+        
+        mBandSpacingSlider = Slider( "",
+                             mSliderWidth*0.6f, ofGetHeight()-25, // position
+                             mSliderWidth, 30, // size
+                             120, // hue
+                             Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax,
+                                    bandSpacingChanged );
+        
+        mBandOffsetSlider = Slider( "",
+                            mSliderWidth*0.6f + mSliderWidth*1.25f, ofGetHeight()-25, //position
+                            mSliderWidth, 30, // size
+                            120, //hue
+                            Settings::BandOffset, Settings::BandOffsetMin, Settings::BandOffsetMax,
+                                   bandOffsetChanged );
+        
+        mBandDecaySlider = Slider( "",
+                           mSliderWidth*0.6f + mSliderWidth*1.25f*2, ofGetHeight()-25, //position
+                           mSliderWidth, 30, //size
+                           120, //hue
+                           Settings::Decay, Settings::DecayMin, Settings::DecayMax,
+                         decayChanged );
+        
+        
+        mBitCrushSlider = Slider( "",
+                          mSliderWidth*0.6f + mSliderWidth*1.25f*3, ofGetHeight()-25, // position
+                          mSliderWidth, 30, // size
+                          120, // hue
+                          Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax,
+                                 bitCrushChanged );
+        
+        mPitchSlider = Slider( "",
+                          mSliderWidth*0.6f + mSliderWidth*1.25f, ofGetHeight()-25, //position
+                          mSliderWidth, 30, // size
+                          120, //hue
+                          Settings::Pitch, Settings::PitchMin, Settings::PitchMax,
+                              pitchChanged );
+        
         kFirstBandInset = 30 * (ofGetWidth()/1024.f);
         
 		mActionHandler = [[UIActionHandler alloc] init:this];
         
         // remove the glview from the UIWindow, which is where openFrameworks puts it
-        [ofxiPhoneGetGLView() removeFromSuperview];
+        [ofxiOSGetGLView() removeFromSuperview];
 
         // create a plain old UIView that is the same size as the app
         // just use OF sizes as our reference, everything should work out
@@ -202,7 +218,7 @@ void App::setup()
         UIView* mainView = [[UIView alloc] initWithFrame:mainFrame];
 
         // grab the glView and rotate/position it so it looks correct
-        UIView* glView      = ofxiPhoneGetGLView();
+        UIView* glView      = ofxiOSGetGLView();
         glView.transform    = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI_2);
         glView.center       = mainView.center;
 
@@ -217,7 +233,7 @@ void App::setup()
         // which will make mMainView the window's primary view
         // all other views are then added as subviews of mMainView
         // NOT as subviews of the UIWindow or the EAGLView
-        ofxiPhoneGetUIWindow().rootViewController = rootViewController;
+        ofxiOSGetUIWindow().rootViewController = rootViewController;
 		
 		// action sheet shown sometimes
         if ( 0 )
@@ -234,7 +250,7 @@ void App::setup()
         if ( 0 )
 		{
 			mPinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:mActionHandler action:@selector(handlePinchGesture:)];
-			[ofxiPhoneGetUIWindow() addGestureRecognizer:mPinchGestureRecognizer];
+			[ofxiOSGetUIWindow() addGestureRecognizer:mPinchGestureRecognizer];
 		}
         
         // slider labels
@@ -350,6 +366,8 @@ void App::draw()
 {	
     ofBackground(20, 20, 20);
     
+    const float segLength = ofGetHeight()/32;
+    
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
         float x = ofMap( b, Settings::BandOffset, lastBand, kFirstBandInset, ofGetWidth() - kFirstBandInset );
@@ -360,17 +378,16 @@ void App::draw()
         ofSetColor( 255.f * br );
         
         float w = ofMap( m, 0, kMaxSpectralAmp, 0, 6 );
-        float segLength = ofGetHeight()/32;
-        ofPolyline string;
-        for( float y = 0; y < ofGetHeight(); y += segLength )
+        float y = 0;
+        auto &verts = mString.getVertices();
+        for( auto &vert : verts )
         {
-            float s1 = y/ofGetHeight() * M_PI * 8 + p;
-            //float s2 = (y+segLength)/ofGetHeight() * M_PI * 8 + p;
-            string.addVertex( ofPoint(x + w*sinf(s1),y) );
-            //ofLine( x + w*sinf(s1), y, x + w*sinf(s2), y + segLength );
+            const float s1 = y/ofGetHeight() * M_PI * 8 + p;
+            vert.x         = x + w*sinf(s1);
+            y += segLength;
         }
         
-        string.draw();
+        mString.draw();
     }
     
     ofEnableAlphaBlending();
@@ -393,7 +410,6 @@ void App::draw()
     mBandDecaySlider.draw( );
     mBitCrushSlider.draw();
     mPitchSlider.draw();
-        
     
 //    ofSetColor(255, 255, 255);
 //    string fps("FPS: ");
