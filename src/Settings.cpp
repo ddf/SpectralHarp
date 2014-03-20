@@ -11,14 +11,14 @@
 
 // global
 int     Settings::BandSpacing(1);
-int     Settings::BandSpacingMin(1);
+int     Settings::BandSpacingMin(Settings::BandSpacing);
 int     Settings::BandSpacingMax(96);
-int     Settings::BandOffset(3);
-int     Settings::BandOffsetMin(3);
+int     Settings::BandOffset(10);
+int     Settings::BandOffsetMin(Settings::BandOffset);
 int     Settings::BandOffsetMax(64);
-float   Settings::Decay(1.1f);
-float   Settings::DecayMin(0.3f);
-float   Settings::DecayMax(1.2f);
+float   Settings::Decay(0.2f);
+float   Settings::DecayMin(0.8f);
+float   Settings::DecayMax(0.0f);
 float   Settings::BitCrush(44100);
 float   Settings::BitCrushMin(Settings::BitCrush);
 float   Settings::BitCrushMax(1000);

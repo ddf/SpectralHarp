@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include <string> // for memset
 
+float SpectralGen::decay(0);
+
 SpectralGen::SpectralGen( const int inTimeSize )
 : UGen()
 , timeSize(inTimeSize)
@@ -25,13 +27,6 @@ SpectralGen::SpectralGen( const int inTimeSize )
     specImag = new float[timeSize];
     inverse  = new float[timeSize];
     output   = new float[timeSize];
-    
-    amplitudes = new float[specSize];
-    memset( amplitudes, 0, sizeof(float)*specSize );
-    phases     = new float[specSize];
-    memset( phases, 0, sizeof(float)*specSize );
-    phaseSteps = new float[specSize];
-    memset( phaseSteps, 0, sizeof(float)*specSize );
 }
 
 SpectralGen::~SpectralGen()
@@ -40,31 +35,28 @@ SpectralGen::~SpectralGen()
     delete [] specImag;
     delete [] inverse;
     delete [] output;
-    delete [] amplitudes;
-    delete [] phases;
-    delete [] phaseSteps;
 }
 
 void SpectralGen::uGenerate(float* out, const int numChannels)
 {
     if ( outIndex % windowSize == 0 )
     {
-        //float decay = (Settings::DecayMax - Settings::Decay) * 16;
-        for( int b = 0; b < specSize; ++b )
+        // this one outside the loop so we don't need an if check around the "top half" assign
+        bands[0].update();
+        specReal[0] = bands[0].amplitude*cosf(bands[0].phase);
+        specImag[0] = bands[0].amplitude*sinf(bands[0].phase);
+        
+        for( unsigned i = 1; i < specSize; ++i )
         {
-            float amp   = amplitudes[b];
-            float phase = phases[b];
-            specReal[b] = amp*cosf(phase);
-            specImag[b] = amp*sinf(phase);
+            band& b = bands[i];
+            b.update();
             
-            if ( b > 0 && b < specSize )
-            {
-                specReal[timeSize - b] = specReal[b];
-                specImag[timeSize - b] = -specImag[b];
-            }
+            specReal[i] = b.amplitude*cosf(b.phase);
+            specImag[i] = b.amplitude*sinf(b.phase);
             
-            //amplitudes[b]    = fmaxf( amplitudes[b] - decay, 0);
-            phases[b]       += phaseSteps[b]*ofRandom(0.8f,1.2f);
+            // and the top half
+            specReal[timeSize - i] = specReal[i];
+            specImag[timeSize - i] = -specImag[i];
         }
         
         fft.Minim::FourierTransform::inverse(specReal, specImag, inverse);

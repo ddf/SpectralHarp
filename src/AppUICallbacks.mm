@@ -69,10 +69,8 @@ void App::touchMoved(ofTouchEventArgs &touch)
         {
             float speed = fabs(touch.x - prevTouch[touch.id].x) / (ofGetElapsedTimeMillis() - prevTouch[touch.id].time);
             float mag   = ofMap(speed, 0, 10, kMaxSpectralAmp*0.2f, kMaxSpectralAmp, true);
-            specGen.setBandMagnitude( b, mag );
             float ps    = ofMap( touch.y, 0, ofGetHeight(), M_PI/64, M_PI/32, true );
-            specGen.setBandPhaseStep( b, ps );
-            specGen.setBandPhase( b, ofRandom(M_PI) );
+            specGen.pluck( b, mag, ps );
         }
     }
                                                              

@@ -12,25 +12,20 @@
 #include "UGen.h"
 #include "FFT.h"
 
+const int kSpectralGenSize  = 1024 * 8;
+
 class SpectralGen : public Minim::UGen
 {
 public:
-    SpectralGen( const int timeSize );
+    SpectralGen( const int timeSize = kSpectralGenSize );
     virtual ~SpectralGen();
     
-    void    setBand( const int b, const float mag, const float phase )
-    {
-        amplitudes[b] = mag;
-        phases[b]     = phase;
-    }
+    inline void  pluck( const int b, const float amp, const float ps ) { bands[b].pluck(amp,ps); }
     
-    void    setBandMagnitude( const int b, const float mag ) { amplitudes[b] = mag; }
-    float   getBandMagnitude( const int b ) const { return amplitudes[b]; }
+    inline float getBandMagnitude( const int b ) const { return bands[b].amplitude; }
+    inline float getBandPhase( const int b ) const { return bands[b].phase; }
     
-    void    setBandPhase( const int b, const float phase ) { phases[b] = phase; }
-    float   getBandPhase( const int b ) const { return phases[b]; }
-    
-    void    setBandPhaseStep( const int b, const float phaseStep ) { phaseSteps[b] = phaseStep; }
+    static float decay;
     
 protected:
     
@@ -38,17 +33,49 @@ protected:
     
 private:
     
+    struct band
+    {
+        // amplitude applied on strum
+        float struckAmplitude;
+        // current amplitude
+        float amplitude;
+        // current phase
+        float phase;
+        // how much to step the phase on update
+        float phaseStep;
+        
+        band()
+        : struckAmplitude(0)
+        , amplitude(0)
+        , phase(0)
+        , phaseStep(0)
+        {
+
+        }
+        
+        inline void pluck( float amp, float ps )
+        {
+            amplitude = struckAmplitude = amp;
+            phaseStep = ps;
+        }
+        
+        inline void update()
+        {
+            const float d     = struckAmplitude*decay;
+            amplitude         = amplitude-d > 0 ? amplitude-d : 0;
+            phase             = phase + phaseStep > M_2_PI ? phase - M_2_PI + phaseStep : phase + phaseStep;
+        }
+        
+    };
+    
+    band bands[kSpectralGenSize/2];
+    
     // used for synthesis
     Minim::FFT  fft;
     
     // spectrum information
     float*  specReal;
     float*  specImag;
-    
-    // amplitudes and phases of bands in the spectrum
-    float*  amplitudes;
-    float*  phases;
-    float*  phaseSteps;
     
     int     timeSize;
     int     specSize;

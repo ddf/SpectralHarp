@@ -51,7 +51,6 @@ App* gApp = NULL;
 // global tweaks
 const int   kOutputBufferSize = 1024;
 // const int   kStreamBufferSize = 512;
-const int   kSpectralGenSize  = 1024 * 8;
 
 float kMaxSpectralAmp   = 128.0f;
 int   kToolbarHeight    = 60;
@@ -61,6 +60,11 @@ float kFirstBandInset       = 30;
 
 int       lastBand        = 1;
 float     stringAnimation = 0;
+
+float expoEaseOut( float t, float b, float c, float d )
+{
+	return c * ( -powf( 2, -10 * t/d ) + 1 ) + b;
+}
 
 void computeLastBand()
 {
@@ -82,6 +86,7 @@ void bandOffsetChanged( float value )
 void decayChanged( float value )
 {
     Settings::Decay = value;
+    SpectralGen::decay = value*value;
 }
 
 void bitCrushChanged( float value )
@@ -97,7 +102,7 @@ void pitchChanged( float value )
 //--------------------------------------------------------------
 App::App()
 : ofxiOSApp()
-, specGen(kSpectralGenSize)
+, specGen()
 , bitCrush(24, Settings::BitCrush)
 , tickRate( Settings::Pitch )
 , highPass( 30, 0, Minim::MoogFilter::HP )
@@ -148,11 +153,13 @@ void App::setup()
 		mOutput = mAudioSystem->getAudioOutput( TouchAudioFormat(2), kOutputBufferSize );
         
         computeLastBand();
+        decayChanged( Settings::Decay );
         
         tickRate.value.setLastValue( Settings::Pitch );
         tickRate.setInterpolation( true );
         
         specGen.patch( tickRate ).patch( bitCrush ).patch( *mOutput );
+        //specGen.patch( *mOutput );
 	}
     
     //-- VIZ --------------------------
@@ -330,11 +337,6 @@ void App::setup()
 	m_bWasPlaying			= false;
 }
 
-float expoEaseOut( float t, float b, float c, float d )
-{
-	return c * ( -powf( 2, -10 * t/d ) + 1 ) + b;
-}
-
 //--------------------------------------------------------------
 void App::update() 
 {
@@ -344,13 +346,6 @@ void App::update()
     if ( stringAnimation > TWO_PI )
     {
         stringAnimation -= TWO_PI;
-    }
-    
-    for( int b = 0; b < kSpectralGenSize/2; ++b )
-    {
-        float m = ofClamp( specGen.getBandMagnitude(b) * ofRandom( Settings::Decay - 0.3f, Settings::Decay), 0, kMaxSpectralAmp );
-        specGen.setBandMagnitude(b, m);
-        //specGen.setBandPhase( b, specGen.getBandPhase(b) + ofRandom(M_PI/24, M_PI_4) );
     }
     
     float t = ofMap(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
@@ -366,8 +361,6 @@ void App::draw()
 {	
     ofBackground(20, 20, 20);
     
-    const float segLength = ofGetHeight()/32;
-    
     for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
     {
         float x = ofMap( b, Settings::BandOffset, lastBand, kFirstBandInset, ofGetWidth() - kFirstBandInset );
@@ -378,13 +371,11 @@ void App::draw()
         ofSetColor( 255.f * br );
         
         float w = ofMap( m, 0, kMaxSpectralAmp, 0, 6 );
-        float y = 0;
         auto &verts = mString.getVertices();
         for( auto &vert : verts )
         {
-            const float s1 = y/ofGetHeight() * M_PI * 8 + p;
+            const float s1 = vert.y/ofGetHeight() * M_PI * 8 + p;
             vert.x         = x + w*sinf(s1);
-            y += segLength;
         }
         
         mString.draw();
