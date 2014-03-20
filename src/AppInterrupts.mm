@@ -120,12 +120,12 @@ void App::deviceOrientationChanged(int newOrientation)
     // so that we can use OF coordinates to layout UIKit widgets.
     if ( newOrientation == UIDeviceOrientationLandscapeLeft )
     {
-        [app setStatusBarOrientation: UIInterfaceOrientationLandscapeRight 
+        [app setStatusBarOrientation: UIInterfaceOrientationLandscapeRight
                             animated:NO];
     }
     else if ( newOrientation == UIDeviceOrientationLandscapeRight )
     {
-        [app setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft 
+        [app setStatusBarOrientation: UIInterfaceOrientationLandscapeLeft
                             animated:NO];
     }
 }

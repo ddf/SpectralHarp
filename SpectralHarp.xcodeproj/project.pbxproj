@@ -46,7 +46,6 @@
 		77FC831C164421C400487194 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77FC831B164421C400487194 /* Default-568h@2x.png */; };
 		77FC831E16442ACA00487194 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECB1561F684000A6187 /* Default.png */; };
 		77FC831F16442ACB00487194 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 77B2CECC1561F684000A6187 /* Default@2x.png */; };
-		BB0ECA6310F55E7900A35406 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0ECA6210F55E7900A35406 /* MapKit.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BB16F3AD0F2B73B000518274 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB16F3A80F2B73B000518274 /* main.mm */; };
@@ -131,7 +130,6 @@
 		77F12D7F14698F0900F8C32F /* MinimTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MinimTouch.xcodeproj; path = "../../../../Developer/Frameworks/minim-cpp/MinimTouch.xcodeproj"; sourceTree = DEVELOPER_DIR; };
 		77F12D9C14698F3C00F8C32F /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		77FC831B164421C400487194 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		BB0ECA6210F55E7900A35406 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB16EBD80F2B2AB500518274 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BB16F3A80F2B73B000518274 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				BBE5EAB80F49AD8400F28951 /* AudioToolbox.framework in Frameworks */,
 				53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */,
 				5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */,
-				BB0ECA6310F55E7900A35406 /* MapKit.framework in Frameworks */,
 				6D36251E1403606F005493CF /* AVFoundation.framework in Frameworks */,
 				6D36252214036088005493CF /* CoreVideo.framework in Frameworks */,
 				6D362536140360DD005493CF /* CoreMedia.framework in Frameworks */,
@@ -252,7 +249,6 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */,
 				5326AEA710A23A0500278DE6 /* CoreLocation.framework */,
-				BB0ECA6210F55E7900A35406 /* MapKit.framework */,
 				6D36251D1403606F005493CF /* AVFoundation.framework */,
 				6D36252114036088005493CF /* CoreVideo.framework */,
 				6D362535140360DD005493CF /* CoreMedia.framework */,
@@ -321,6 +317,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						SystemCapabilities = {
+							com.apple.iOS = {
+								enabled = 0;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SpectralHarp" */;
 			compatibilityVersion = "Xcode 3.2";
