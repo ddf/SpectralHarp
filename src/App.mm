@@ -135,14 +135,9 @@ void App::setup()
 	
 	//-- AUDIO --------------------------------------
 	{
-		TouchServiceProvider::AudioSessionParameters sessionParams;
-		sessionParams.outputBufferDuration = (float)kOutputBufferSize / 44100.f;
+		extern void HandleAudioInterruption ( void *inClientData, Minim::InterruptionState inInterruptionState );
 		
-		extern void AudioInterruptionListener ( void *inClientData, UInt32 inInterruptionState );
-		sessionParams.interruptListener = &AudioInterruptionListener;
-		sessionParams.interruptUserData = this;
-		
-		mAudioSystem = new Minim::AudioSystem( kOutputBufferSize );
+		mAudioSystem = new Minim::AudioSystem( kOutputBufferSize, &HandleAudioInterruption, this );
 		
 		extern void AudioRouteChangeListener( void *inClientData, AudioSessionPropertyID inID, UInt32 inPropertySize, const void *inPropertyValue );
 		AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, &AudioRouteChangeListener, this);

@@ -12,22 +12,23 @@
 #include "AudioOutput.h"
 #include "MultiChannelBuffer.h"
 #include "ofxiPhoneExtras.h"
+#include "AudioSystem.h"
 
 //--------------------------------------------------------------
-void AudioInterruptionListener ( void *inClientData, UInt32 inInterruptionState )
+void HandleAudioInterruption ( void *inClientData, Minim::InterruptionState inInterruptionState )
 {
 	App	* pApp = static_cast<App*>( inClientData );
 	
 	switch ( inInterruptionState )
 	{
-		case  kAudioSessionBeginInterruption:
+		case  Minim::InterruptionStateBegin:
 		{
 			printf("Audio was interrupted!\n");
 			pApp->pauseAudio();
 		}
 			break;
 			
-		case kAudioSessionEndInterruption:
+		case Minim::InterruptionStateEnd:
 		{
 			AudioSessionSetActive(true);
 			
