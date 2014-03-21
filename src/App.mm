@@ -340,12 +340,18 @@ void App::setup()
 //--------------------------------------------------------------
 void App::update() 
 {
-    const float dt  = 1.0f / ofGetFrameRate();
-    
-    stringAnimation += dt * TWO_PI * 2;
-    if ( stringAnimation > TWO_PI )
+    const float fps = ofGetFrameRate();
+    // ofGetFrameRate() can potentially return 0 on the second call
+    // if the first frame winds up being a long one
+    if ( fps > 0 )
     {
-        stringAnimation -= TWO_PI;
+        const float dt  = 1.0f / fps;
+    
+        stringAnimation += dt * TWO_PI * 2;
+        if ( stringAnimation > TWO_PI )
+        {
+            stringAnimation -= TWO_PI;
+        }
     }
     
     float t = ofMap(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
