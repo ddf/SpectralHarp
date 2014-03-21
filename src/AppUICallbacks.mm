@@ -38,6 +38,17 @@ void App::touchDown(ofTouchEventArgs &touch)
     if ( touch.y > ofGetHeight()-kToolbarHeight )
         return;
     
+    for( int b = Settings::BandOffset; b < lastBand; b += Settings::BandSpacing )
+    {
+        float x = ofMap( b, Settings::BandOffset, lastBand, kFirstBandInset, ofGetWidth()-kFirstBandInset );
+        if ( fabsf(x-touch.x) < 10 )
+        {
+            float mag   = kMaxSpectralAmp;
+            float ps    = ofMap( touch.y, 0, ofGetHeight(), M_PI/64, M_PI/32, true );
+            specGen.pluck( b, mag, ps );
+        }
+    }
+    
     prevTouch[touch.id] = touch;
 }
 
