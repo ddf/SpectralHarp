@@ -1,0 +1,120 @@
+body
+{
+	text-align: 		center;
+	background: 		url('webBackground.png') top center no-repeat;
+	background-color:	rgb(20,20,20);
+}
+
+#home
+{
+	margin-left: 		auto;
+	margin-right: 		auto;
+	width:				600px;
+	height:				100px;
+}
+
+#video
+{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+#nav-top
+{
+	color:				#AAAAAA;
+	margin-top:			-105px;
+}
+
+#nav-top a
+{
+	text-decoration:	overline;
+	color:				#BBBBBB;
+}
+
+#nav-bottom
+{
+	color:				#AAAAAA;
+	margin-top:			10px;
+}
+
+#nav-bottom a
+{
+	color:				#BBBBBB;
+}
+
+img
+{
+	width: 220px;
+}
+
+table
+{
+	margin-left: 		auto;
+	margin-right: 		auto;
+	margin-top:			10px;
+}
+
+td
+{
+	padding: 5px;
+}
+
+#section-heading
+{
+	color:			rgb(192,192,192);
+	font-family:	Helvetica, sans-serif;
+	font-size:		2em;
+}
+
+#appstore
+{
+	text-align: left;
+}
+
+#description
+{
+	margin-left: 		auto;
+	margin-right: 		auto;
+	margin-top:			0px;
+	margin-bottom:		20px;
+	width:				500px;
+	background-color:	rgba(20,20,20,0.8);
+	color:				#AAAAAA;
+	padding-left:		10px;
+	padding-right:		10px;
+	padding-top:		10px;
+	padding-bottom:	     5px;
+	text-align:			justify;
+}
+
+#description img
+{
+
+	width: 490px;
+	background-color:	rgba(240,240,240,0.8);
+	padding: 5px;
+}
+
+#soundcloud
+{
+	margin-left:		auto;
+	margin-right:		auto;
+	margin-bottom:		20px;
+	margin-top:			20px;
+	width:				500px;
+}
+
+#support
+{
+	margin-left: 		auto;
+	margin-right: 		auto;
+	margin-top:			15px;
+	margin-bottom:		20px;
+	width:				600px;
+	background-color:	rgba(20,20,20,0.5);
+	color:				#AAAAAA;
+	padding-left:		10px;
+	padding-right:		10px;
+	padding-bottom: 	10px;
+	text-align:			left;
+}
