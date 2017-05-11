@@ -16,6 +16,7 @@ int     Settings::BandSpacingMax(96);
 int     Settings::BandOffset(10);
 int     Settings::BandOffsetMin(Settings::BandOffset);
 int     Settings::BandOffsetMax(64);
+int		Settings::BandLast(BandOffsetMax);
 float   Settings::Decay(0.2f);
 float   Settings::DecayMin(0.8f);
 float   Settings::DecayMax(0.0f);

@@ -8,8 +8,6 @@
 
 #include "SpectralGen.h"
 #include "FourierTransform.h"
-#include "Settings.h"
-#include "ofMath.h"
 #include <stdio.h>
 #include <string> // for memset
 

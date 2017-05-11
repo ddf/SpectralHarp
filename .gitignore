@@ -17,4 +17,27 @@ xcuserdata
 *.perspectivev3
 
 # other
-.DS_Store
+Icon?
+.DS_Stor*
+
+*.exe
+*.sdf
+*.opensdf
+*.opendb
+*.zip
+*.suo
+*.ncb
+*.vcproj.*
+*.pkg
+*.dmg
+*.depend
+*.layout
+*.mode1v3
+*.db
+*.LSOverride
+*.xcworkspace
+*.xcuserdata
+*.xcschememanagement.plist
+build-*
+ipch/*
+gui/*

@@ -20,6 +20,7 @@ public:
     static int          BandOffset;
     static int          BandOffsetMin;
     static int          BandOffsetMax;
+	static int			BandLast;
     static float        Decay;
     static float        DecayMin;
     static float        DecayMax;
