@@ -32,8 +32,12 @@ enum ELayout
 	kPitchX = kSpacingX + kKnobSpacing,
 	kDecayX = kPitchX + kKnobSpacing,
 	kCrushX = kDecayX + kKnobSpacing,
-	kKnobY = GUI_HEIGHT - 60,
+	kKnobY = GUI_HEIGHT - 70,
 	kKnobFrames = 60,
+  
+  kCaptionT = GUI_HEIGHT - 20,
+  kCaptionB = GUI_HEIGHT,
+  kCaptionW = 50,
 
 	kPluckPadHeight = kKnobY,
 	kPluckPadMargin = 0
@@ -121,12 +125,19 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
   pGraphics->AttachPanelBackground(&COLOR_BLACK);
 
   IBitmap knob = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, kKnobFrames);
+  IText captionText = IText(&COLOR_WHITE);
 
   pGraphics->AttachControl(new IKnobMultiControl(this, kGainX, kKnobY, kGain, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kGainX, kCaptionT, kGainX+kCaptionW, kCaptionB), &captionText, "Volume"));
   pGraphics->AttachControl(new IKnobMultiControl(this, kSpacingX, kKnobY, kSpacing, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kSpacingX, kCaptionT, kSpacingX+kCaptionW, kCaptionB), &captionText, "Spacing"));
   pGraphics->AttachControl(new IKnobMultiControl(this, kPitchX, kKnobY, kPitch, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kPitchX, kCaptionT, kPitchX+kCaptionW, kCaptionB), &captionText, "Pitch"));
   pGraphics->AttachControl(new IKnobMultiControl(this, kDecayX, kKnobY, kDecay, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kDecayX, kCaptionT, kDecayX+kCaptionW, kCaptionB), &captionText, "Decay"));
   pGraphics->AttachControl(new IKnobMultiControl(this, kCrushX, kKnobY, kCrush, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX+kCaptionW, kCaptionB), &captionText, "Crush"));
+  
   pGraphics->AttachControl(new StringControl(specGen, this, IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight), 10, kPluckX, kPluckY));
 
   AttachGraphics(pGraphics);
@@ -228,7 +239,7 @@ void IPlugEffect::pluck()
 		for (int b = Settings::BandOffset; b < Settings::BandLast; b += Settings::BandSpacing)
 		{
 			float normBand = map(b, Settings::BandOffset, Settings::BandLast, 0, 1);
-			if (fabsf(normBand - GetParam(kPluckX)->Value() / 100.) < 0.01)
+			if (fabs(normBand - GetParam(kPluckX)->Value() / 100.) < 0.01)
 			{
 				float mag = kMaxSpectralAmp;
 				float normY = GetParam(kPluckY)->Value() / 100.;
