@@ -42,7 +42,7 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		// ddf (5/12/17)
 		// now using the same phase for every band because this prevents some of the clicking.
 		// evolving the phase over time never added much to the sound anyhow.
-		const float phase = M_PI*1.5f;
+		const float phase = (float)M_PI*1.5f;
         // this one outside the loop so we don't need an if check around the "top half" assign
         bands[0].update();
         specReal[0] = bands[0].amplitude*cosf(phase);

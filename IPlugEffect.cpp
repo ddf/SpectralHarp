@@ -59,18 +59,18 @@ float expoEaseOut(float t, float b, float c, float d)
 void computeLastBand()
 {
 	int last = Settings::BandOffset + 128 * Settings::BandSpacing;
-	Settings::BandLast = last < 3 ? 3 : fmin(last, kSpectralGenSize / 4);
+	Settings::BandLast = last < 3 ? 3 : (int)fmin(last, kSpectralGenSize / 4);
 }
 
 void bandSpacingChanged(float value)
 {
-	Settings::BandSpacing = value;
+	Settings::BandSpacing = (int)value;
 	computeLastBand();
 }
 
 void bandOffsetChanged(float value)
 {
-	Settings::BandOffset = value;
+	Settings::BandOffset = (int)value;
 	computeLastBand();
 }
 
@@ -199,7 +199,7 @@ void IPlugEffect::Reset()
 {
   TRACE;
   IMutexLock lock(this);
-  bitCrush.setSampleRate( GetSampleRate() );
+  bitCrush.setSampleRate( (float)GetSampleRate() );
 }
 
 void IPlugEffect::OnParamChange(int paramIdx)
@@ -209,33 +209,33 @@ void IPlugEffect::OnParamChange(int paramIdx)
   switch (paramIdx)
   {
     case kGain:
-      mGain = GetParam(kGain)->Value() / 100.;
+      mGain = (float)GetParam(kGain)->Value() / 100.f;
       break;
 
 	case kSpacing:
-		bandSpacingChanged(GetParam(kSpacing)->Value());
+		bandSpacingChanged((float)GetParam(kSpacing)->Value());
 		break;
 
 	case kPitch:
-		pitchChanged(GetParam(kPitch)->Value());
+		pitchChanged((float)GetParam(kPitch)->Value());
 		break;
 
 	case kCrush:
-		bitCrushChanged( map(GetParam(kCrush)->Value(), 0, 1, Settings::BitCrushMin, Settings::BitCrushMax) );
+		bitCrushChanged( map((float)GetParam(kCrush)->Value(), 0, 1, Settings::BitCrushMin, Settings::BitCrushMax) );
 		break;
 
 	case kDecay:
-		decayChanged( map(GetParam(kDecay)->Value(), 0, 1, Settings::DecayMin, Settings::DecayMax) );
+		decayChanged( map((float)GetParam(kDecay)->Value(), 0, 1, Settings::DecayMin, Settings::DecayMax) );
 		break;
 
 	case kPluckX:
 		pluck();
-		mPluckX = GetParam(kPluckX)->Value();
+		mPluckX = (float)GetParam(kPluckX)->Value();
 		break;
 
 	case kPluckY:
 		pluck();
-		mPluckY = GetParam(kPluckY)->Value();
+		mPluckY = (float)GetParam(kPluckY)->Value();
 		break;
 
     default:
@@ -249,7 +249,7 @@ void IPlugEffect::pluck()
 	{
 		for (int b = Settings::BandOffset; b < Settings::BandLast; b += Settings::BandSpacing)
 		{
-			float normBand = map(b, Settings::BandOffset, Settings::BandLast, 0, 1);
+			float normBand = map((float)b, (float)Settings::BandOffset, (float)Settings::BandLast, 0, 1);
 			if (fabs(normBand - (float)GetParam(kPluckX)->Value() / 100.0f) < 0.01f)
 			{
 				float normY = (float)GetParam(kPluckY)->Value() / 100.0f;
