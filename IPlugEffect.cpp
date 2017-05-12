@@ -39,9 +39,17 @@ enum ELayout
   kCaptionB = GUI_HEIGHT,
   kCaptionW = 50,
 
-	kPluckPadHeight = kKnobY,
+	kPluckPadHeight = kKnobY - 10,
 	kPluckPadMargin = 0
 };
+
+// background of entire window
+static const IColor backColor = IColor(255, 20, 20, 20);
+// rectangluar panel behind the knobs
+static const IColor panelColor = IColor(255, 30, 30, 30);
+// text color for labels under the knobs
+static const IColor labelColor = COLOR_GRAY;
+
 
 float expoEaseOut(float t, float b, float c, float d)
 {
@@ -122,10 +130,14 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
   GetParam(kPluckY)->SetShape(1.);
 
   IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
-  pGraphics->AttachPanelBackground(&COLOR_BLACK);
+  pGraphics->AttachPanelBackground(&backColor);
 
   IBitmap knob = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, kKnobFrames);
-  IText captionText = IText(&COLOR_WHITE);
+  IText captionText = IText(&labelColor);
+
+  pGraphics->AttachControl(new StringControl(specGen, this, IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight), 10, kPluckX, kPluckY));
+
+  pGraphics->AttachControl(new IPanelControl(this, IRECT(0, kPluckPadHeight, kWidth, kHeight), &panelColor));
 
   pGraphics->AttachControl(new IKnobMultiControl(this, kGainX, kKnobY, kGain, &knob));
   pGraphics->AttachControl(new ITextControl(this, IRECT(kGainX, kCaptionT, kGainX+kCaptionW, kCaptionB), &captionText, "Volume"));
@@ -138,8 +150,6 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
   pGraphics->AttachControl(new IKnobMultiControl(this, kCrushX, kKnobY, kCrush, &knob));
   pGraphics->AttachControl(new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX+kCaptionW, kCaptionB), &captionText, "Crush"));
   
-  pGraphics->AttachControl(new StringControl(specGen, this, IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight), 10, kPluckX, kPluckY));
-
   AttachGraphics(pGraphics);
 
   //MakePreset("preset 1", ... );

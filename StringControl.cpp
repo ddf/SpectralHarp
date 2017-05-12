@@ -21,8 +21,8 @@ bool StringControl::Draw(IGraphics* pGraphics)
 		const float segments = 32;
 		const float segLength = mRECT.H() / segments;
 		float py0 = 0;
-		float px0 = x;
-		for (int i = 1; i < segments; ++i)
+		float px0 = x + w*sinf(p);
+		for (int i = 1; i < segments+1; ++i)
 		{
 			float py1 = i*segLength;
 			float s1 = py1 / mRECT.H() * M_PI * 8 + p;

@@ -10,8 +10,8 @@
 
 
 // global
-int     Settings::BandSpacing(1);
-int     Settings::BandSpacingMin(Settings::BandSpacing);
+int     Settings::BandSpacing(50);
+int     Settings::BandSpacingMin(1);
 int     Settings::BandSpacingMax(96);
 int     Settings::BandOffset(10);
 int     Settings::BandOffsetMin(Settings::BandOffset);
