@@ -51,7 +51,7 @@ float expoEaseOut(float t, float b, float c, float d)
 void computeLastBand()
 {
 	int last = Settings::BandOffset + 128 * Settings::BandSpacing;
-	Settings::BandLast = last < 3 ? 3 : std::min(last, kSpectralGenSize / 4);
+	Settings::BandLast = last < 3 ? 3 : fmin(last, kSpectralGenSize / 4);
 }
 
 void bandSpacingChanged(float value)
