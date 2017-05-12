@@ -5,6 +5,18 @@
     <ClCompile Include="..\..\WDL\IPlug\IPlugVST.cpp">
       <Filter>vst2</Filter>
     </ClCompile>
+    <ClCompile Include="StringControl.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\SpectralGen.cpp" />
+    <ClCompile Include="..\minim-cpp\src\AudioSource.cpp" />
+    <ClCompile Include="..\minim-cpp\src\FFT.cpp" />
+    <ClCompile Include="..\minim-cpp\src\FourierTransform.cpp" />
+    <ClCompile Include="..\minim-cpp\src\Logging.cpp" />
+    <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IPlugEffect.h" />
@@ -12,6 +24,9 @@
     <ClInclude Include="..\..\WDL\IPlug\IPlugVST.h">
       <Filter>vst2</Filter>
     </ClInclude>
+    <ClInclude Include="StringControl.h" />
+    <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\SpectralGen.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IPlugEffect.rc" />

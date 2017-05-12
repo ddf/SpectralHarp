@@ -182,6 +182,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) S:\VST</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -239,10 +242,25 @@
     <ClInclude Include="..\..\WDL\IPlug\IPlugVST.h" />
     <ClInclude Include="IPlugEffect.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\SpectralGen.h" />
+    <ClInclude Include="StringControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\IPlug\IPlugVST.cpp" />
+    <ClCompile Include="..\minim-cpp\src\AudioSource.cpp" />
+    <ClCompile Include="..\minim-cpp\src\FFT.cpp" />
+    <ClCompile Include="..\minim-cpp\src\FourierTransform.cpp" />
+    <ClCompile Include="..\minim-cpp\src\Logging.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
+    <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
     <ClCompile Include="IPlugEffect.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\SpectralGen.cpp" />
+    <ClCompile Include="StringControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="IPlugEffect.rc" />

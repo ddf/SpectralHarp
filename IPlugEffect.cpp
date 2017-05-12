@@ -189,6 +189,7 @@ void IPlugEffect::Reset()
 {
   TRACE;
   IMutexLock lock(this);
+  bitCrush.setSampleRate( GetSampleRate() );
 }
 
 void IPlugEffect::OnParamChange(int paramIdx)

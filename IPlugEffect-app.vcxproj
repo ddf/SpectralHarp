@@ -275,12 +275,7 @@
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtAudio.h" />
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtError.h" />
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtMidi.h" />
-    <ClInclude Include="..\minim-cpp\src\FFT.h" />
     <ClInclude Include="..\minim-cpp\src\FourierTransform.h" />
-    <ClInclude Include="..\minim-cpp\src\Logging.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\BitCrush.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\MoogFilter.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\Summer.h" />
     <ClInclude Include="..\minim-cpp\src\ugens\TickRate.h" />
     <ClInclude Include="..\minim-cpp\src\ugens\UGen.h" />
     <ClInclude Include="..\minim-cpp\src\WindowFunction.h" />
@@ -305,7 +300,6 @@
     <ClCompile Include="..\minim-cpp\src\Logging.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp" />
-    <ClCompile Include="..\minim-cpp\src\ugens\Summer.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
