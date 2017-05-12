@@ -275,6 +275,60 @@
 		4FF016F8134E14E2001447BA /* ptrlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF016F5134E14E2001447BA /* ptrlist.h */; };
 		4FF016F9134E14E2001447BA /* wdlstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF016F6134E14E2001447BA /* wdlstring.h */; };
 		4FF0171A134E153A001447BA /* heapbuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF01719134E153A001447BA /* heapbuf.h */; };
+		77DC78F51EC6198500104A7C /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78ED1EC6197D00104A7C /* AudioSource.cpp */; };
+		77DC78F61EC6198500104A7C /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EE1EC6197D00104A7C /* FFT.cpp */; };
+		77DC78F71EC6198500104A7C /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */; };
+		77DC78F81EC6198500104A7C /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F01EC6197D00104A7C /* Logging.cpp */; };
+		77DC78F91EC6198500104A7C /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F11EC6197D00104A7C /* BitCrush.cpp */; };
+		77DC78FA1EC6198500104A7C /* MoogFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F21EC6197D00104A7C /* MoogFilter.cpp */; };
+		77DC78FB1EC6198500104A7C /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F31EC6197D00104A7C /* TickRate.cpp */; };
+		77DC78FC1EC6198500104A7C /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F41EC6197D00104A7C /* UGen.cpp */; };
+		77DC78FD1EC6198500104A7C /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78ED1EC6197D00104A7C /* AudioSource.cpp */; };
+		77DC78FE1EC6198500104A7C /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EE1EC6197D00104A7C /* FFT.cpp */; };
+		77DC78FF1EC6198500104A7C /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */; };
+		77DC79001EC6198500104A7C /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F01EC6197D00104A7C /* Logging.cpp */; };
+		77DC79011EC6198500104A7C /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F11EC6197D00104A7C /* BitCrush.cpp */; };
+		77DC79021EC6198500104A7C /* MoogFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F21EC6197D00104A7C /* MoogFilter.cpp */; };
+		77DC79031EC6198500104A7C /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F31EC6197D00104A7C /* TickRate.cpp */; };
+		77DC79041EC6198500104A7C /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F41EC6197D00104A7C /* UGen.cpp */; };
+		77DC79051EC6198600104A7C /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78ED1EC6197D00104A7C /* AudioSource.cpp */; };
+		77DC79061EC6198600104A7C /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EE1EC6197D00104A7C /* FFT.cpp */; };
+		77DC79071EC6198600104A7C /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */; };
+		77DC79081EC6198600104A7C /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F01EC6197D00104A7C /* Logging.cpp */; };
+		77DC79091EC6198600104A7C /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F11EC6197D00104A7C /* BitCrush.cpp */; };
+		77DC790A1EC6198600104A7C /* MoogFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F21EC6197D00104A7C /* MoogFilter.cpp */; };
+		77DC790B1EC6198600104A7C /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F31EC6197D00104A7C /* TickRate.cpp */; };
+		77DC790C1EC6198600104A7C /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F41EC6197D00104A7C /* UGen.cpp */; };
+		77DC790D1EC6198600104A7C /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78ED1EC6197D00104A7C /* AudioSource.cpp */; };
+		77DC790E1EC6198600104A7C /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EE1EC6197D00104A7C /* FFT.cpp */; };
+		77DC790F1EC6198600104A7C /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */; };
+		77DC79101EC6198600104A7C /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F01EC6197D00104A7C /* Logging.cpp */; };
+		77DC79111EC6198600104A7C /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F11EC6197D00104A7C /* BitCrush.cpp */; };
+		77DC79121EC6198600104A7C /* MoogFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F21EC6197D00104A7C /* MoogFilter.cpp */; };
+		77DC79131EC6198600104A7C /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F31EC6197D00104A7C /* TickRate.cpp */; };
+		77DC79141EC6198600104A7C /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC78F41EC6197D00104A7C /* UGen.cpp */; };
+		77DC791B1EC619B500104A7C /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79151EC619B500104A7C /* Settings.cpp */; };
+		77DC791C1EC619B500104A7C /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79151EC619B500104A7C /* Settings.cpp */; };
+		77DC791D1EC619B500104A7C /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79151EC619B500104A7C /* Settings.cpp */; };
+		77DC791E1EC619B500104A7C /* Settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79151EC619B500104A7C /* Settings.cpp */; };
+		77DC791F1EC619B500104A7C /* Settings.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DC79161EC619B500104A7C /* Settings.h */; };
+		77DC79201EC619B500104A7C /* Settings.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DC79161EC619B500104A7C /* Settings.h */; };
+		77DC79211EC619B500104A7C /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79171EC619B500104A7C /* SpectralGen.cpp */; };
+		77DC79221EC619B500104A7C /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79171EC619B500104A7C /* SpectralGen.cpp */; };
+		77DC79231EC619B500104A7C /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79171EC619B500104A7C /* SpectralGen.cpp */; };
+		77DC79241EC619B500104A7C /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79171EC619B500104A7C /* SpectralGen.cpp */; };
+		77DC79251EC619B500104A7C /* SpectralGen.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DC79181EC619B500104A7C /* SpectralGen.h */; };
+		77DC79261EC619B500104A7C /* SpectralGen.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DC79181EC619B500104A7C /* SpectralGen.h */; };
+		77DC79271EC619B500104A7C /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79191EC619B500104A7C /* StringControl.cpp */; };
+		77DC79281EC619B500104A7C /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79191EC619B500104A7C /* StringControl.cpp */; };
+		77DC79291EC619B500104A7C /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79191EC619B500104A7C /* StringControl.cpp */; };
+		77DC792A1EC619B500104A7C /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC79191EC619B500104A7C /* StringControl.cpp */; };
+		77DC792B1EC619B500104A7C /* StringControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DC791A1EC619B500104A7C /* StringControl.h */; };
+		77DC792C1EC619B500104A7C /* StringControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DC791A1EC619B500104A7C /* StringControl.h */; };
+		77DC792E1EC619DA00104A7C /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC792D1EC619DA00104A7C /* WindowFunction.cpp */; };
+		77DC792F1EC619DA00104A7C /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC792D1EC619DA00104A7C /* WindowFunction.cpp */; };
+		77DC79301EC619DA00104A7C /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC792D1EC619DA00104A7C /* WindowFunction.cpp */; };
+		77DC79311EC619DA00104A7C /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77DC792D1EC619DA00104A7C /* WindowFunction.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -649,6 +703,21 @@
 		52FBBED00D0CF139001C8B8A /* IPlugEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.cpp.cpp; path = IPlugEffect.cpp; sourceTree = "<group>"; tabWidth = 2; usesTabs = 0; };
 		52FBBED20D0CF13D001C8B8A /* IPlugEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = IPlugEffect.h; sourceTree = "<group>"; tabWidth = 2; usesTabs = 0; };
 		52FBBED30D0CF143001C8B8A /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; tabWidth = 2; usesTabs = 0; };
+		77DC78ED1EC6197D00104A7C /* AudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioSource.cpp; path = "../minim-cpp/src/AudioSource.cpp"; sourceTree = "<group>"; };
+		77DC78EE1EC6197D00104A7C /* FFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFT.cpp; path = "../minim-cpp/src/FFT.cpp"; sourceTree = "<group>"; };
+		77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FourierTransform.cpp; path = "../minim-cpp/src/FourierTransform.cpp"; sourceTree = "<group>"; };
+		77DC78F01EC6197D00104A7C /* Logging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logging.cpp; path = "../minim-cpp/src/Logging.cpp"; sourceTree = "<group>"; };
+		77DC78F11EC6197D00104A7C /* BitCrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitCrush.cpp; path = "../minim-cpp/src/ugens/BitCrush.cpp"; sourceTree = "<group>"; };
+		77DC78F21EC6197D00104A7C /* MoogFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MoogFilter.cpp; path = "../minim-cpp/src/ugens/MoogFilter.cpp"; sourceTree = "<group>"; };
+		77DC78F31EC6197D00104A7C /* TickRate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TickRate.cpp; path = "../minim-cpp/src/ugens/TickRate.cpp"; sourceTree = "<group>"; };
+		77DC78F41EC6197D00104A7C /* UGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UGen.cpp; path = "../minim-cpp/src/ugens/UGen.cpp"; sourceTree = "<group>"; };
+		77DC79151EC619B500104A7C /* Settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Settings.cpp; path = src/Settings.cpp; sourceTree = "<group>"; };
+		77DC79161EC619B500104A7C /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Settings.h; path = src/Settings.h; sourceTree = "<group>"; };
+		77DC79171EC619B500104A7C /* SpectralGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpectralGen.cpp; path = src/SpectralGen.cpp; sourceTree = "<group>"; };
+		77DC79181EC619B500104A7C /* SpectralGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectralGen.h; path = src/SpectralGen.h; sourceTree = "<group>"; };
+		77DC79191EC619B500104A7C /* StringControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringControl.cpp; sourceTree = "<group>"; };
+		77DC791A1EC619B500104A7C /* StringControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringControl.h; sourceTree = "<group>"; };
+		77DC792D1EC619DA00104A7C /* WindowFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunction.cpp; path = "../minim-cpp/src/WindowFunction.cpp"; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -731,6 +800,12 @@
 		089C166AFE841209C02AAC07 /* IPlugExample */ = {
 			isa = PBXGroup;
 			children = (
+				77DC79151EC619B500104A7C /* Settings.cpp */,
+				77DC79161EC619B500104A7C /* Settings.h */,
+				77DC79171EC619B500104A7C /* SpectralGen.cpp */,
+				77DC79181EC619B500104A7C /* SpectralGen.h */,
+				77DC79191EC619B500104A7C /* StringControl.cpp */,
+				77DC791A1EC619B500104A7C /* StringControl.h */,
 				52FBBED30D0CF143001C8B8A /* resource.h */,
 				52FBBED20D0CF13D001C8B8A /* IPlugEffect.h */,
 				52FBBED00D0CF139001C8B8A /* IPlugEffect.cpp */,
@@ -795,6 +870,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				77DC78EA1EC6194600104A7C /* Minim */,
 				4FD16C9D13B6327C001D0217 /* OSX App Wrapper */,
 				526F9C010D7DC7D700562CF8 /* IPlugEffect.exp */,
 				4FCF15AF133124D1009A6277 /* IPlugEffect.xcconfig */,
@@ -1327,6 +1403,22 @@
 			name = WDL;
 			sourceTree = "<group>";
 		};
+		77DC78EA1EC6194600104A7C /* Minim */ = {
+			isa = PBXGroup;
+			children = (
+				77DC792D1EC619DA00104A7C /* WindowFunction.cpp */,
+				77DC78ED1EC6197D00104A7C /* AudioSource.cpp */,
+				77DC78EE1EC6197D00104A7C /* FFT.cpp */,
+				77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */,
+				77DC78F01EC6197D00104A7C /* Logging.cpp */,
+				77DC78F11EC6197D00104A7C /* BitCrush.cpp */,
+				77DC78F21EC6197D00104A7C /* MoogFilter.cpp */,
+				77DC78F31EC6197D00104A7C /* TickRate.cpp */,
+				77DC78F41EC6197D00104A7C /* UGen.cpp */,
+			);
+			name = Minim;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1346,8 +1438,10 @@
 				4F78D8D913B63B5D0032E0F3 /* aeffect.h in Headers */,
 				4F78D8DA13B63B5D0032E0F3 /* aeffectx.h in Headers */,
 				4FF0171A134E153A001447BA /* heapbuf.h in Headers */,
+				77DC79201EC619B500104A7C /* Settings.h in Headers */,
 				4F1F1BEA135B1F60003A5BB2 /* wdlendian.h in Headers */,
 				4F78D93E13B63BA50032E0F3 /* IPlug_include_in_plug_hdr.h in Headers */,
+				77DC792C1EC619B500104A7C /* StringControl.h in Headers */,
 				4F78D94013B63BA50032E0F3 /* IPlug_include_in_plug_src.h in Headers */,
 				4F78D94113B63BA50032E0F3 /* IControl.h in Headers */,
 				4F78D94213B63BA50032E0F3 /* IKeyboardControl.h in Headers */,
@@ -1356,6 +1450,7 @@
 				4F78D94913B63BA50032E0F3 /* Containers.h in Headers */,
 				4F78D94A13B63BA50032E0F3 /* Hosts.h in Headers */,
 				4F78D95113B63BA50032E0F3 /* IGraphicsCocoa.h in Headers */,
+				77DC79261EC619B500104A7C /* SpectralGen.h in Headers */,
 				4F78D95213B63BA50032E0F3 /* Log.h in Headers */,
 				4F78D95413B63BA50032E0F3 /* IPopupMenu.h in Headers */,
 				4F78D95613B63BA50032E0F3 /* IPlugStructs.h in Headers */,
@@ -1390,8 +1485,11 @@
 				4F78DA8D13B640050032E0F3 /* heapbuf.h in Headers */,
 				4F78DA8E13B640050032E0F3 /* wdlendian.h in Headers */,
 				4F78DA8F13B640050032E0F3 /* swell.h in Headers */,
+				77DC79251EC619B500104A7C /* SpectralGen.h in Headers */,
 				4F78DA9013B640050032E0F3 /* swell-functions.h in Headers */,
 				4F78DA9113B640050032E0F3 /* swell-internal.h in Headers */,
+				77DC791F1EC619B500104A7C /* Settings.h in Headers */,
+				77DC792B1EC619B500104A7C /* StringControl.h in Headers */,
 				4F78DA9213B640050032E0F3 /* swell-types.h in Headers */,
 				4F78DA9313B640050032E0F3 /* aeffect.h in Headers */,
 				4F78DA9413B640050032E0F3 /* aeffectx.h in Headers */,
@@ -1743,17 +1841,29 @@
 				4F20EECB132C69FE0030E34C /* IPlugEffect.cpp in Sources */,
 				4FD16D1213B634BF001D0217 /* swell-gdi.mm in Sources */,
 				4F78D9BB13B63BA50032E0F3 /* IPlugBase.cpp in Sources */,
+				77DC78FD1EC6198500104A7C /* AudioSource.cpp in Sources */,
+				77DC79031EC6198500104A7C /* TickRate.cpp in Sources */,
+				77DC79001EC6198500104A7C /* Logging.cpp in Sources */,
+				77DC79221EC619B500104A7C /* SpectralGen.cpp in Sources */,
+				77DC79021EC6198500104A7C /* MoogFilter.cpp in Sources */,
+				77DC79281EC619B500104A7C /* StringControl.cpp in Sources */,
 				4F78D9BC13B63BA50032E0F3 /* IPlugStructs.cpp in Sources */,
 				4F78D9BD13B63BA50032E0F3 /* Hosts.cpp in Sources */,
 				4F78D9BF13B63BA50032E0F3 /* IGraphicsMac.mm in Sources */,
 				4F78D9C013B63BA50032E0F3 /* IGraphics.cpp in Sources */,
+				77DC79011EC6198500104A7C /* BitCrush.cpp in Sources */,
 				4F78D9C113B63BA50032E0F3 /* IGraphicsCarbon.cpp in Sources */,
 				4F78D9C213B63BA50032E0F3 /* IGraphicsCocoa.mm in Sources */,
+				77DC791C1EC619B500104A7C /* Settings.cpp in Sources */,
 				4F78D9C313B63BA50032E0F3 /* Log.cpp in Sources */,
+				77DC78FF1EC6198500104A7C /* FourierTransform.cpp in Sources */,
+				77DC792F1EC619DA00104A7C /* WindowFunction.cpp in Sources */,
 				4F78D9C413B63BA50032E0F3 /* IPopupMenu.cpp in Sources */,
+				77DC78FE1EC6198500104A7C /* FFT.cpp in Sources */,
 				4F78D9C813B63BA50032E0F3 /* IParam.cpp in Sources */,
 				4F78D9C913B63BA50032E0F3 /* IControl.cpp in Sources */,
 				4F78D9F313B63C6A0032E0F3 /* IPlugVST.cpp in Sources */,
+				77DC79041EC6198500104A7C /* UGen.cpp in Sources */,
 				4FDA440C13F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1763,22 +1873,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F3AE1A312C0E5E2001FD7A4 /* IPlugEffect.cpp in Sources */,
+				77DC790D1EC6198600104A7C /* AudioSource.cpp in Sources */,
 				4FD16D0E13B634BF001D0217 /* swell-gdi.mm in Sources */,
 				4F78D94513B63BA50032E0F3 /* IPlugBase.cpp in Sources */,
+				77DC79131EC6198600104A7C /* TickRate.cpp in Sources */,
 				4F78D94713B63BA50032E0F3 /* IPlugStructs.cpp in Sources */,
+				77DC790F1EC6198600104A7C /* FourierTransform.cpp in Sources */,
 				4F78D94B13B63BA50032E0F3 /* Hosts.cpp in Sources */,
 				4F78D94D13B63BA50032E0F3 /* IGraphicsMac.mm in Sources */,
+				77DC79241EC619B500104A7C /* SpectralGen.cpp in Sources */,
 				4F78D94E13B63BA50032E0F3 /* IGraphics.cpp in Sources */,
 				4F78D94F13B63BA50032E0F3 /* IGraphicsCarbon.cpp in Sources */,
+				77DC79311EC619DA00104A7C /* WindowFunction.cpp in Sources */,
 				4F78D95013B63BA50032E0F3 /* IGraphicsCocoa.mm in Sources */,
 				4F78D95313B63BA50032E0F3 /* Log.cpp in Sources */,
+				77DC792A1EC619B500104A7C /* StringControl.cpp in Sources */,
 				4F78D95513B63BA50032E0F3 /* IPopupMenu.cpp in Sources */,
 				4F78D95C13B63BA50032E0F3 /* IParam.cpp in Sources */,
 				4F78D96113B63BA50032E0F3 /* IControl.cpp in Sources */,
+				77DC791E1EC619B500104A7C /* Settings.cpp in Sources */,
 				4F78DA0813B63CD90032E0F3 /* IPlugAU.cpp in Sources */,
+				77DC790E1EC6198600104A7C /* FFT.cpp in Sources */,
 				4F78DA0A13B63CD90032E0F3 /* IPlugAU_ViewFactory.mm in Sources */,
+				77DC79141EC6198600104A7C /* UGen.cpp in Sources */,
 				4FDA440813F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */,
+				77DC79101EC6198600104A7C /* Logging.cpp in Sources */,
 				4F296BDA1678E6C800C0F5C2 /* dfx-au-utilities.c in Sources */,
+				77DC79111EC6198600104A7C /* BitCrush.cpp in Sources */,
+				77DC79121EC6198600104A7C /* MoogFilter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1823,24 +1945,36 @@
 				4F9828BA140A9EB700F3FCC1 /* Hosts.cpp in Sources */,
 				4F9828BB140A9EB700F3FCC1 /* IGraphicsMac.mm in Sources */,
 				4F9828BC140A9EB700F3FCC1 /* IGraphics.cpp in Sources */,
+				77DC79081EC6198600104A7C /* Logging.cpp in Sources */,
+				77DC79051EC6198600104A7C /* AudioSource.cpp in Sources */,
 				4F9828BD140A9EB700F3FCC1 /* IGraphicsCarbon.cpp in Sources */,
 				4F9828BE140A9EB700F3FCC1 /* IGraphicsCocoa.mm in Sources */,
+				77DC79071EC6198600104A7C /* FourierTransform.cpp in Sources */,
 				4F9828BF140A9EB700F3FCC1 /* Log.cpp in Sources */,
 				4F9828C0140A9EB700F3FCC1 /* IPopupMenu.cpp in Sources */,
+				77DC79061EC6198600104A7C /* FFT.cpp in Sources */,
 				4F9828C1140A9EB700F3FCC1 /* IParam.cpp in Sources */,
 				4F9828C2140A9EB700F3FCC1 /* IControl.cpp in Sources */,
+				77DC79301EC619DA00104A7C /* WindowFunction.cpp in Sources */,
 				4F9828C3140A9EB700F3FCC1 /* IBitmapMonoText.cpp in Sources */,
+				77DC79231EC619B500104A7C /* SpectralGen.cpp in Sources */,
+				77DC791D1EC619B500104A7C /* Settings.cpp in Sources */,
 				4F9828C4140A9EB700F3FCC1 /* IPlugVST3.cpp in Sources */,
 				4F9828C5140A9EB700F3FCC1 /* memorystream.cpp in Sources */,
+				77DC79291EC619B500104A7C /* StringControl.cpp in Sources */,
 				4F9828C6140A9EB700F3FCC1 /* pluginview.cpp in Sources */,
 				4F9828C7140A9EB700F3FCC1 /* macmain.cpp in Sources */,
 				4F9828C8140A9EB700F3FCC1 /* pluginfactoryvst3.cpp in Sources */,
 				4F9828C9140A9EB700F3FCC1 /* vstaudioeffect.cpp in Sources */,
+				77DC790C1EC6198600104A7C /* UGen.cpp in Sources */,
 				4F9828CA140A9EB700F3FCC1 /* vstbus.cpp in Sources */,
 				4F9828CB140A9EB700F3FCC1 /* vstcomponent.cpp in Sources */,
 				4F9828CC140A9EB700F3FCC1 /* vstcomponentbase.cpp in Sources */,
+				77DC79091EC6198600104A7C /* BitCrush.cpp in Sources */,
 				4F9828CE140A9EB700F3FCC1 /* vstinitiids.cpp in Sources */,
+				77DC790A1EC6198600104A7C /* MoogFilter.cpp in Sources */,
 				4F9828CF140A9EB700F3FCC1 /* vstnoteexpressiontypes.cpp in Sources */,
+				77DC790B1EC6198600104A7C /* TickRate.cpp in Sources */,
 				4F9828D0140A9EB700F3FCC1 /* vstparameters.cpp in Sources */,
 				4F9828D1140A9EB700F3FCC1 /* vstpresetfile.cpp in Sources */,
 				4F9828D2140A9EB700F3FCC1 /* vstrepresentation.cpp in Sources */,
@@ -1890,26 +2024,38 @@
 				4FD16D4013B635A0001D0217 /* swell-misc.mm in Sources */,
 				4FD16D4213B635AB001D0217 /* swell-wnd.mm in Sources */,
 				4FD16D4413B635B2001D0217 /* swell.cpp in Sources */,
+				77DC79271EC619B500104A7C /* StringControl.cpp in Sources */,
 				4FD16D4713B635C8001D0217 /* swellappmain.mm in Sources */,
 				4F78D8C413B63A700032E0F3 /* RtAudio.cpp in Sources */,
 				4F78D8C513B63A700032E0F3 /* RtMidi.cpp in Sources */,
 				4F78D90A13B63BA50032E0F3 /* IPlugStandalone.cpp in Sources */,
 				4F78D90B13B63BA50032E0F3 /* IPlugBase.cpp in Sources */,
 				4F78D90C13B63BA50032E0F3 /* IPlugStructs.cpp in Sources */,
+				77DC79211EC619B500104A7C /* SpectralGen.cpp in Sources */,
 				4F78D90D13B63BA50032E0F3 /* Hosts.cpp in Sources */,
 				4F78D90F13B63BA50032E0F3 /* IGraphicsMac.mm in Sources */,
 				4F78D91013B63BA50032E0F3 /* IGraphics.cpp in Sources */,
 				4F78D91113B63BA50032E0F3 /* IGraphicsCarbon.cpp in Sources */,
+				77DC78FB1EC6198500104A7C /* TickRate.cpp in Sources */,
 				4F78D91213B63BA50032E0F3 /* IGraphicsCocoa.mm in Sources */,
 				4F78D91313B63BA50032E0F3 /* Log.cpp in Sources */,
+				77DC792E1EC619DA00104A7C /* WindowFunction.cpp in Sources */,
 				4F78D91413B63BA50032E0F3 /* IPopupMenu.cpp in Sources */,
 				4F78D91813B63BA50032E0F3 /* IParam.cpp in Sources */,
+				77DC78F91EC6198500104A7C /* BitCrush.cpp in Sources */,
+				77DC78F61EC6198500104A7C /* FFT.cpp in Sources */,
 				4F78D91913B63BA50032E0F3 /* IControl.cpp in Sources */,
 				4F78DA5A13B63F150032E0F3 /* IPlugEffect.cpp in Sources */,
+				77DC791B1EC619B500104A7C /* Settings.cpp in Sources */,
+				77DC78F51EC6198500104A7C /* AudioSource.cpp in Sources */,
+				77DC78FC1EC6198500104A7C /* UGen.cpp in Sources */,
 				4FD16CA213B6327D001D0217 /* app_main.cpp in Sources */,
 				4FD16CA313B6327D001D0217 /* app_dialog.cpp in Sources */,
 				4FB3624F13B648FE00DB6B76 /* main.mm in Sources */,
+				77DC78F81EC6198500104A7C /* Logging.cpp in Sources */,
 				4FDA440E13F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */,
+				77DC78F71EC6198500104A7C /* FourierTransform.cpp in Sources */,
+				77DC78FA1EC6198500104A7C /* MoogFilter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
