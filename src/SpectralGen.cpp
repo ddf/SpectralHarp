@@ -18,7 +18,7 @@ SpectralGen::SpectralGen( const int inTimeSize )
 , timeSize(inTimeSize)
 , specSize(inTimeSize/2)
 , outIndex(0)
-, windowSize(inTimeSize/4)
+, windowSize(inTimeSize/2)
 , fft(inTimeSize,44100)
 {
     specReal = new float[timeSize];
@@ -39,26 +39,30 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 {
     if ( outIndex % windowSize == 0 )
     {
+		// ddf (5/12/17)
+		// now using the same phase for every band because this prevents some of the clicking.
+		// evolving the phase over time never added much to the sound anyhow.
+		const float phase = M_PI*1.5f;
         // this one outside the loop so we don't need an if check around the "top half" assign
         bands[0].update();
-        specReal[0] = bands[0].amplitude*cosf(bands[0].phase);
-        specImag[0] = bands[0].amplitude*sinf(bands[0].phase);
+        specReal[0] = bands[0].amplitude*cosf(phase);
+        specImag[0] = bands[0].amplitude*sinf(phase);
         
         for( unsigned i = 1; i < specSize; ++i )
         {
             band& b = bands[i];
             b.update();
             
-            specReal[i] = b.amplitude*cosf(b.phase);
-            specImag[i] = b.amplitude*sinf(b.phase);
+            specReal[i] = b.amplitude*cosf(phase);
+            specImag[i] = b.amplitude*sinf(phase);
             
             // and the top half
-            specReal[timeSize - i] = specReal[i];
-            specImag[timeSize - i] = -specImag[i];
+			specReal[timeSize - i] = specReal[i];
+			specImag[timeSize - i] = -specImag[i];
         }
         
         fft.Minim::FourierTransform::inverse(specReal, specImag, inverse);
-        Minim::FourierTransform::HAMMING.apply( inverse, timeSize );
+        Minim::FourierTransform::HANN.apply( inverse, timeSize );
         
         for( int s = 0; s < timeSize; ++s )
         {

@@ -111,7 +111,7 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
   GetParam(kGain)->InitDouble("Volume", 100., 0., 100.0, 0.01, "%");
   GetParam(kGain)->SetShape(2.);
 
-  GetParam(kSpacing)->InitDouble("Spacing", Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 0.01, "%");
+  GetParam(kSpacing)->InitDouble("Spacing", Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 1, "Bands");
   GetParam(kSpacing)->SetShape(1.);
 
   GetParam(kPitch)->InitDouble("Pitch", Settings::Pitch, Settings::PitchMin, Settings::PitchMax, 0.01, "%");
@@ -250,12 +250,11 @@ void IPlugEffect::pluck()
 		for (int b = Settings::BandOffset; b < Settings::BandLast; b += Settings::BandSpacing)
 		{
 			float normBand = map(b, Settings::BandOffset, Settings::BandLast, 0, 1);
-			if (fabs(normBand - GetParam(kPluckX)->Value() / 100.) < 0.01)
+			if (fabs(normBand - (float)GetParam(kPluckX)->Value() / 100.0f) < 0.01f)
 			{
-				float mag = kMaxSpectralAmp;
-				float normY = GetParam(kPluckY)->Value() / 100.;
-				float ps = map(normY, 0, 1, M_PI / 64, M_PI / 128);
-				specGen.pluck(b, mag, ps);
+				float normY = (float)GetParam(kPluckY)->Value() / 100.0f;
+				float mag = map(normY, 0, 1, kMaxSpectralAmp*0.1f, kMaxSpectralAmp);
+				specGen.pluck(b, mag);
 			}
 		}
 	}

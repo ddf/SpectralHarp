@@ -20,10 +20,10 @@ public:
     SpectralGen( const int timeSize = kSpectralGenSize );
     virtual ~SpectralGen();
     
-    inline void  pluck( const int b, const float amp, const float ps ) { bands[b].pluck(amp,ps); }
+    inline void  pluck( const int b, const float amp ) { bands[b].pluck(amp); }
     
     inline float getBandMagnitude( const int b ) const { return bands[b].amplitude; }
-    inline float getBandPhase( const int b ) const { return bands[b].phase; }
+    inline float getBandPhase( const int b ) const { return (float)M_PI*1.5f; }
     
     static float decay;
     
@@ -39,31 +39,23 @@ private:
         float struckAmplitude;
         // current amplitude
         float amplitude;
-        // current phase
-        float phase;
-        // how much to step the phase on update
-        float phaseStep;
         
         band()
         : struckAmplitude(0)
         , amplitude(0)
-        , phase(0)
-        , phaseStep(0)
         {
 
         }
         
-        inline void pluck( float amp, float ps )
+        inline void pluck( float amp )
         {
             amplitude = struckAmplitude = amp;
-            phaseStep = ps;
         }
         
         inline void update()
         {
             const float d     = struckAmplitude*decay;
             amplitude         = amplitude-d > 0 ? amplitude-d : 0;
-            phase             = phase + phaseStep > M_2_PI ? phase - M_2_PI + phaseStep : phase + phaseStep;
         }
         
     };
