@@ -8,11 +8,13 @@ const float kPadding = 5;
 
 bool StringControl::Draw(IGraphics* pGraphics)
 {
-	for (int b = Settings::BandOffset; b < Settings::BandLast; b += Settings::BandSpacing)
+	const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
+	for (float b = 0; b <= 1; b+=bandStep)
 	{
-		const float x = map((float)b, (float)Settings::BandOffset, (float)Settings::BandLast-1, mRECT.L + kPadding, mRECT.R - kPadding);
-		const float p = spectrum.getBandPhase(b) + stringAnimation;
-		const float m = spectrum.getBandMagnitude(b);
+		const int bindx = (int)roundf(map(b, 0, 1, Settings::BandFirst, Settings::BandLast));
+		const float x = map(b, 0, 1, mRECT.L + kPadding, mRECT.R - kPadding);
+		const float p = spectrum.getBandPhase(bindx) + stringAnimation;
+		const float m = spectrum.getBandMagnitude(bindx);
 
 		const int g = (int)(255.f * map(m, 0, kMaxSpectralAmp, 0.4f, 1.f));
 		const IColor color(255, g, g, g);

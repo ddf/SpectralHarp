@@ -17,6 +17,9 @@ enum EParams
 	// params for the xy pad that can be used to "strum"
 	kPluckX,
 	kPluckY,
+	kBandFirst,
+	kBandLast,
+	kBandDensity,
 	kNumParams
 };
 
@@ -28,7 +31,10 @@ enum ELayout
 	kKnobSpacing = 75,
 
 	kGainX = 25,
-	kSpacingX = kGainX + kKnobSpacing,
+	kBandFirstX = kGainX + kKnobSpacing,
+	kBandLastX = kBandFirstX + kKnobSpacing,
+	kSpacingX = kBandLastX + kKnobSpacing,
+	kBandDensityX = kSpacingX,
 	kPitchX = kSpacingX + kKnobSpacing,
 	kDecayX = kPitchX + kKnobSpacing,
 	kCrushX = kDecayX + kKnobSpacing,
@@ -58,14 +64,14 @@ float expoEaseOut(float t, float b, float c, float d)
 
 void computeLastBand()
 {
-	int last = Settings::BandOffset + 128 * Settings::BandSpacing;
-	Settings::BandLast = last < 3 ? 3 : (int)fmin(last, kSpectralGenSize / 4);
+	//int last = Settings::BandOffset + 128 * Settings::BandSpacing;
+	//Settings::BandLast = last < 3 ? 3 : (int)fmin(last, kSpectralGenSize / 4);
 }
 
 void bandSpacingChanged(float value)
 {
-	Settings::BandSpacing = (int)value;
-	computeLastBand();
+	//Settings::BandSpacing = (int)value;
+	//computeLastBand();
 }
 
 void bandOffsetChanged(float value)
@@ -129,6 +135,11 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
   GetParam(kPluckY)->InitDouble("PluckY", 0, 0., 100.0, 0.01, "%");
   GetParam(kPluckY)->SetShape(1.);
 
+  GetParam(kBandFirst)->InitDouble("BandFirst", Settings::BandFirst, Settings::BandMin, Settings::BandMax, 1);
+  GetParam(kBandLast)->InitDouble("BandLast", Settings::BandLast, Settings::BandMin, Settings::BandMax, 1);
+  GetParam(kBandDensity)->InitDouble("BandDensity", Settings::BandDensity, 0.01, 0.9999, 0.0001);
+  GetParam(kBandDensity)->SetShape(4.);
+
   IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
   pGraphics->AttachPanelBackground(&backColor);
 
@@ -141,12 +152,25 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
 
   pGraphics->AttachControl(new IKnobMultiControl(this, kGainX, kKnobY, kGain, &knob));
   pGraphics->AttachControl(new ITextControl(this, IRECT(kGainX, kCaptionT, kGainX+kCaptionW, kCaptionB), &captionText, "Volume"));
-  pGraphics->AttachControl(new IKnobMultiControl(this, kSpacingX, kKnobY, kSpacing, &knob));
-  pGraphics->AttachControl(new ITextControl(this, IRECT(kSpacingX, kCaptionT, kSpacingX+kCaptionW, kCaptionB), &captionText, "Spacing"));
+
+  pGraphics->AttachControl(new IKnobMultiControl(this, kBandFirstX, kKnobY, kBandFirst, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kBandFirstX, kCaptionT, kBandFirstX + kCaptionW, kCaptionB), &captionText, "First"));
+
+  pGraphics->AttachControl(new IKnobMultiControl(this, kBandLastX, kKnobY, kBandLast, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kBandLastX, kCaptionT, kBandLastX + kCaptionW, kCaptionB), &captionText, "Last"));
+
+  pGraphics->AttachControl(new IKnobMultiControl(this, kBandDensityX, kKnobY, kBandDensity, &knob));
+  pGraphics->AttachControl(new ITextControl(this, IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), &captionText, "Density"));
+
+  //pGraphics->AttachControl(new IKnobMultiControl(this, kSpacingX, kKnobY, kSpacing, &knob));
+  //pGraphics->AttachControl(new ITextControl(this, IRECT(kSpacingX, kCaptionT, kSpacingX+kCaptionW, kCaptionB), &captionText, "Spacing"));
+
   pGraphics->AttachControl(new IKnobMultiControl(this, kPitchX, kKnobY, kPitch, &knob));
   pGraphics->AttachControl(new ITextControl(this, IRECT(kPitchX, kCaptionT, kPitchX+kCaptionW, kCaptionB), &captionText, "Pitch"));
+
   pGraphics->AttachControl(new IKnobMultiControl(this, kDecayX, kKnobY, kDecay, &knob));
   pGraphics->AttachControl(new ITextControl(this, IRECT(kDecayX, kCaptionT, kDecayX+kCaptionW, kCaptionB), &captionText, "Decay"));
+
   pGraphics->AttachControl(new IKnobMultiControl(this, kCrushX, kKnobY, kCrush, &knob));
   pGraphics->AttachControl(new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX+kCaptionW, kCaptionB), &captionText, "Crush"));
   
@@ -238,6 +262,18 @@ void IPlugEffect::OnParamChange(int paramIdx)
 		mPluckY = (float)GetParam(kPluckY)->Value();
 		break;
 
+	case kBandFirst:
+		Settings::BandFirst = (int)GetParam(kBandFirst)->Value();
+		break;
+
+	case kBandLast:
+		Settings::BandLast = (int)GetParam(kBandLast)->Value();
+		break;
+
+	case kBandDensity:
+		Settings::BandDensity = (float)GetParam(kBandDensity)->Value();
+		break;
+
     default:
       break;
   }
@@ -247,10 +283,10 @@ void IPlugEffect::pluck()
 {
 	if (mPluckX != -1 && mPluckY != -1)
 	{
-		for (int b = Settings::BandOffset; b < Settings::BandLast; b += Settings::BandSpacing)
+		for (int b = Settings::BandFirst; b <= Settings::BandLast; ++b)
 		{
-			float normBand = map((float)b, (float)Settings::BandOffset, (float)Settings::BandLast, 0, 1);
-			if (fabs(normBand - (float)GetParam(kPluckX)->Value() / 100.0f) < 0.01f)
+			float normBand = map((float)b, (float)Settings::BandFirst, (float)Settings::BandLast, 0, 100);
+			if (fabs(normBand - (float)GetParam(kPluckX)->Value()) < 0.1f)
 			{
 				float normY = (float)GetParam(kPluckY)->Value() / 100.0f;
 				float mag = map(normY, 0, 1, kMaxSpectralAmp*0.1f, kMaxSpectralAmp);
