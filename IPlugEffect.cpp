@@ -10,7 +10,7 @@ const int kNumPrograms = 1;
 enum EParams
 {
 	kGain = 0,
-	kSpacing,
+	kSpacing, // unused now
 	kPitch,
 	kDecay,
 	kCrush,
@@ -117,8 +117,8 @@ IPlugEffect::IPlugEffect(IPlugInstanceInfo instanceInfo)
   GetParam(kGain)->InitDouble("Volume", 100., 0., 100.0, 0.01, "%");
   GetParam(kGain)->SetShape(2.);
 
-  GetParam(kSpacing)->InitDouble("Spacing", Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 1, "Bands");
-  GetParam(kSpacing)->SetShape(1.);
+//  GetParam(kSpacing)->InitDouble("Spacing", Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 1, "Bands");
+//  GetParam(kSpacing)->SetShape(1.);
 
   GetParam(kPitch)->InitDouble("Pitch", Settings::Pitch, Settings::PitchMin, Settings::PitchMax, 0.01, "%");
   GetParam(kPitch)->SetShape(1.);
@@ -283,15 +283,22 @@ void IPlugEffect::pluck()
 {
 	if (mPluckX != -1 && mPluckY != -1)
 	{
-		for (int b = Settings::BandFirst; b <= Settings::BandLast; ++b)
-		{
-			float normBand = map((float)b, (float)Settings::BandFirst, (float)Settings::BandLast, 0, 100);
-			if (fabs(normBand - (float)GetParam(kPluckX)->Value()) < 0.1f)
-			{
-				float normY = (float)GetParam(kPluckY)->Value() / 100.0f;
-				float mag = map(normY, 0, 1, kMaxSpectralAmp*0.1f, kMaxSpectralAmp);
-				specGen.pluck(b, mag);
-			}
-		}
+    const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
+    if ( numBands > 0 )
+    {
+      const float pluckX = (float)GetParam(kPluckX)->Value();
+      const float pluckY = (float)GetParam(kPluckY)->Value();
+      for (int b = 0; b <= numBands; ++b)
+      {
+        const int bindx = (int)roundf(map((float)b, 0, (float)numBands, Settings::BandFirst, Settings::BandLast));
+        float normBand = map((float)bindx, (float)Settings::BandFirst, (float)Settings::BandLast, 0, 100);
+        if (fabs(normBand - pluckX) < 0.5f)
+        {
+          float normY = pluckY / 100.0f;
+          float mag = map(normY, 0, 1, kMaxSpectralAmp*0.1f, kMaxSpectralAmp);
+          specGen.pluck(bindx, mag);
+        }
+      }
+    }
 	}
 }
