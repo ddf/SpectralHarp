@@ -1,3 +1,10 @@
+* fix string skipping when moving mouse quickly
+* map midi notes to strings somehow?
+* remove pitch knob? since changing pitch also impacts duration of sound, which is maybe weird due to the presence of the decay knob.
+* add midi support for control of the params (wdl-ol should make this easy to do now, just need to decide how to map them for the application. In the VST pretty sure most DAWs can use learn on the parameters to do the same.)
+
+
+
 DEFO:
 
 * make a splash screen (iPhone, iPhone Retina, iPad, iPad Retina)
