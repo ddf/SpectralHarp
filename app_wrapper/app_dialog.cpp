@@ -462,7 +462,10 @@ WDL_DLGRET PreferencesDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
           {
             int idx = (int) SendDlgItemMessage(hwndDlg, IDC_COMBO_MIDI_IN_DEV, CB_GETCURSEL, 0, 0);
             SendDlgItemMessage(hwndDlg, IDC_COMBO_MIDI_IN_DEV, CB_GETLBTEXT, idx, (LPARAM) gState->mMidiInDev);
-            ChooseMidiInput( gState->mMidiInDev );
+			if (!ChooseMidiInput(gState->mMidiInDev))
+			{
+				SendDlgItemMessage(hwndDlg, IDC_COMBO_MIDI_IN_DEV, CB_SETCURSEL, 0, 0);
+			}
           }
           break;
 
@@ -471,7 +474,10 @@ WDL_DLGRET PreferencesDlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
           {
             int idx = (int) SendDlgItemMessage(hwndDlg, IDC_COMBO_MIDI_OUT_DEV, CB_GETCURSEL, 0, 0);
             SendDlgItemMessage(hwndDlg, IDC_COMBO_MIDI_OUT_DEV, CB_GETLBTEXT, idx, (LPARAM) gState->mMidiOutDev);
-            ChooseMidiOutput( gState->mMidiOutDev );
+			if (!ChooseMidiOutput(gState->mMidiOutDev))
+			{
+				SendDlgItemMessage(hwndDlg, IDC_COMBO_MIDI_OUT_DEV, CB_SETCURSEL, 0, 0);
+			}
           }
           break;
 

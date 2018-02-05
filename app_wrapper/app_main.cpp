@@ -6,6 +6,10 @@
   #include <sys/stat.h>
 #endif
 
+// #DQF - RtError variables have been replaced with RtAudioError and RtMidiError throughout this file,
+// due to an API change in RtAudio and RtMidi introduced between the original versions this was written against
+// and the most recent versions (5.0.0 and 3.0.0 respectively).
+
 HWND gHWND;
 
 HINSTANCE gHINST;
@@ -409,7 +413,7 @@ bool InitialiseAudio(unsigned int inId,
       {
         gDAC->abortStream();
       }
-      catch (RtError& e)
+      catch (RtAudioError& e)
       {
         e.printMessage();
       }
@@ -452,7 +456,7 @@ bool InitialiseAudio(unsigned int inId,
 
     memcpy(gActiveState, gState, sizeof(AppState)); // copy state to active state
   }
-  catch ( RtError& e )
+  catch ( RtAudioError& e )
   {
     e.printMessage();
     return false;
@@ -467,7 +471,7 @@ bool InitialiseMidi()
   {
     gMidiIn = new RtMidiIn();
   }
-  catch ( RtError &error )
+  catch ( RtMidiError &error )
   {
     FREE_NULL(gMidiIn);
     error.printMessage();
@@ -478,7 +482,7 @@ bool InitialiseMidi()
   {
     gMidiOut = new RtMidiOut();
   }
-  catch ( RtError &error )
+  catch ( RtMidiError &error )
   {
     FREE_NULL(gMidiOut);
     error.printMessage();
@@ -514,6 +518,7 @@ bool ChooseMidiInput(const char* pPortName)
   */
   if (gMidiIn)
   {
+	
     gMidiIn->closePort();
 
     if (port == 0)
@@ -523,8 +528,20 @@ bool ChooseMidiInput(const char* pPortName)
     #ifdef OS_WIN
     else
     {
-      gMidiIn->openPort(port-1);
-      return true;
+      try
+	  {
+        gMidiIn->openPort(port-1);
+		return true;
+	  }
+	  catch (RtMidiError& error)
+	  {
+        error.printMessage();
+		char msg[512];
+		sprintf(msg, "Unable to open Midi In %s.\nIt may already be in use by another app.", pPortName);
+		MessageBox(gHWND, msg, "Midi Error", MB_OK);
+	  }
+	  // it failed so turn off input
+	  ChooseMidiInput("");
     }
     #else
     else if(port == 1)
@@ -578,8 +595,20 @@ bool ChooseMidiOutput(const char* pPortName)
     #ifdef OS_WIN
     else
     {
-      gMidiOut->openPort(port-1);
-      return true;
+	  try
+	  {
+        gMidiOut->openPort(port - 1);
+        return true;
+	  }
+	  catch (RtMidiError& error)
+	  {
+        error.printMessage();
+		char msg[512];
+		sprintf(msg, "Unable to open Midi Out %s.\nIt may already be in use by another app.", pPortName);
+		MessageBox(gHWND, msg, "Midi Error", MB_OK);
+	  }
+      // it failed so turn off output
+	  ChooseMidiOutput("");
     }
     #else
     else if(port == 1)
@@ -647,7 +676,7 @@ void Cleanup()
     // Stop the stream
     gDAC->stopStream();
   }
-  catch (RtError& e)
+  catch (RtAudioError& e)
   {
     e.printMessage();
   }
