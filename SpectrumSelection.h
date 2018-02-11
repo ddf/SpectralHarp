@@ -1,0 +1,31 @@
+#pragma once
+#include "IControl.h"
+
+class SpectrumSelection : public IControl
+{
+public:
+	SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowParam, int bandHighParam, IColor back, IColor select, IColor handle);
+	~SpectrumSelection();
+
+	virtual void OnMouseDown(int x, int y, IMouseMod* pMod) override;
+	virtual void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override;
+	virtual void OnMouseUp(int x, int y, IMouseMod* pMod) override;
+
+	virtual bool Draw(IGraphics* pGraphics) override;
+
+private:
+	IColor backgroundColor;
+	IColor selectedColor;
+	IColor handleColor;
+
+	IRECT handles[2];
+	int   handleWidth;
+
+	// the param whose value we should change
+	int	   dragParam;
+	// the min x-coord we can drag to
+	int    dragMinX;
+	// the max x-coord we can drag to
+	int    dragMaxX;
+};
+

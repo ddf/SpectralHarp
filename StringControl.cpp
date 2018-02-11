@@ -1,5 +1,5 @@
 #include "StringControl.h"
-#include "IPlugEffect.h"
+#include "SpectralHarp.h"
 #include "src/Settings.h"
 
 extern float map(float value, float istart, float istop, float ostart, float ostop);

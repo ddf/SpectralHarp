@@ -1,10 +1,11 @@
 #define PLUG_MFR "Compartmental"
-#define PLUG_NAME "IPlugEffect"
+#define PLUG_NAME "SpectralHarp"
 
-#define PLUG_CLASS_NAME IPlugEffect
+#define PLUG_CLASS_NAME SpectralHarp
 
-#define BUNDLE_MFR "Compartmental"
-#define BUNDLE_NAME "IPlugEffect"
+#define BUNDLE_DOMAIN "net"
+#define BUNDLE_MFR "compartmental"
+#define BUNDLE_NAME "spectralharp"
 
 #define PLUG_ENTRY IPlugEffect_Entry
 #define PLUG_VIEW_ENTRY IPlugEffect_ViewEntry

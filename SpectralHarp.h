@@ -1,5 +1,5 @@
-#ifndef __IPLUGEFFECT__
-#define __IPLUGEFFECT__
+#ifndef __SPECTRALHARP__
+#define __SPECTRALHARP__
 
 #include "IPlug_include_in_plug_hdr.h"
 #include "src/SpectralGen.h"
@@ -9,15 +9,15 @@
 
 const float kMaxSpectralAmp = 128.0f;
 
-class IPlugEffect : public IPlug
+class SpectralHarp : public IPlug
 {
 public:
-  IPlugEffect(IPlugInstanceInfo instanceInfo);
-  ~IPlugEffect();
+	SpectralHarp(IPlugInstanceInfo instanceInfo);
+	~SpectralHarp();
 
-  void Reset();
-  void OnParamChange(int paramIdx);
-  void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames);
+	void Reset();
+	void OnParamChange(int paramIdx);
+	void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames);
 
 private:
 

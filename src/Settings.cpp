@@ -27,7 +27,7 @@ float   Settings::DecayMax(0.0f);
 float   Settings::BitCrush(44100);
 float   Settings::BitCrushMin(Settings::BitCrush);
 float   Settings::BitCrushMax(1000);
-float   Settings::Pitch( 0.5f );
+float   Settings::Pitch( 1.0f );
 float   Settings::PitchMin( 0.25f );
 float   Settings::PitchMax( 1.0f );
 

@@ -44,7 +44,7 @@
 #include <string>
 #include <vector>
 
-#include "../IPlugEffect.h" // change this to match your iplug plugin .h file
+#include "../SpectralHarp.h" // change this to match your iplug plugin .h file
 
 typedef unsigned short UInt16;
 
