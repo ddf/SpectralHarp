@@ -14,15 +14,25 @@ public:
 	virtual bool Draw(IGraphics* pGraphics) override;
 
 private:
+
+	void SetParamFromHandle(const int paramIdx);
+
 	IColor backgroundColor;
 	IColor selectedColor;
 	IColor handleColor;
 
-	IRECT handles[2];
+	IRECT handles[3];
 	const int handleWidth;
 
 	// the param whose value we should change
-	int	   dragParam;
+	enum DragParam
+	{
+		kDragNone = -1,
+		kDragLeft,
+		kDragRight,
+		kDragBoth
+	} dragParam;
+
 	// the min x-coord we can drag to
 	int    dragMinX;
 	// the max x-coord we can drag to
