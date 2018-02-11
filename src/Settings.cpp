@@ -7,7 +7,6 @@
 //
 
 #include "Settings.h"
-#include "SpectralGen.h"
 
 // global
 int     Settings::BandSpacing(50);
@@ -16,8 +15,6 @@ int     Settings::BandSpacingMax(96);
 int     Settings::BandOffset(10);
 int     Settings::BandOffsetMin(Settings::BandOffset);
 int     Settings::BandOffsetMax(64);
-int		Settings::BandMin(1);
-int     Settings::BandMax(kSpectralGenSize / 4);
 int		Settings::BandFirst(Settings::BandMin);
 int		Settings::BandLast(Settings::BandMax);
 float   Settings::BandDensity(0.95f);

@@ -9,21 +9,21 @@
 #ifndef SpectralHarp_SpectralGen_h
 #define SpectralHarp_SpectralGen_h
 
+#include "Settings.h"
 #include "UGen.h"
 #include "FFT.h"
-
-const int kSpectralGenSize  = 1024 * 8;
 
 class SpectralGen : public Minim::UGen
 {
 public:
-    SpectralGen( const int timeSize = kSpectralGenSize );
+    SpectralGen( const int timeSize = Settings::SpectralGenSize );
     virtual ~SpectralGen();
     
     inline void  pluck( const int b, const float amp ) { bands[b].pluck(amp); }
     
     inline float getBandMagnitude( const int b ) const { return bands[b].amplitude; }
     inline float getBandPhase( const int b ) const { return (float)M_PI*1.5f; }
+	inline float getBandFrequency(const int b) const { return fft.indexToFreq(b); }
     
     static float decay;
     
@@ -60,7 +60,7 @@ private:
         
     };
     
-    band bands[kSpectralGenSize/2];
+    band bands[Settings::SpectralGenSize/2];
     
     // used for synthesis
     Minim::FFT  fft;

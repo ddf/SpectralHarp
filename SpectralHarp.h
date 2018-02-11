@@ -21,6 +21,8 @@ public:
 
 private:
 
+	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
+
 	void pluck();
 
 	float					  mGain;

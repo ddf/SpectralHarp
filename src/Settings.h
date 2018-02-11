@@ -1,9 +1,9 @@
 //
 //  Settings.h
-//  melodizer
+//  SpectralHarp
 //
 //  Created by Damien Di Fede on 12/12/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) Compartmental.
 //
 
 #ifndef Settings_h
@@ -21,8 +21,10 @@ public:
     static int          BandOffsetMin;
     static int          BandOffsetMax;
 
-	static int			BandMin;
-	static int			BandMax;
+	static const int    SpectralGenSize = 1024 * 8;
+	static const int	BandMin = 12;
+	static const int    BandMax = SpectralGenSize / 4;
+
 	static int			BandFirst;
 	static int			BandLast;
 	// 0 - 1 that we use to dynamically figure out how many strings to show based on BandFirst and BandLast

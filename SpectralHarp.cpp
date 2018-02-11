@@ -39,10 +39,10 @@ enum ELayout
 
 	kSpectrumSelect_X = kGainX + kKnobSpacing,
 	kSpectrumSelect_Y = kKnobY,
-	kSpectrumSelect_W = kKnobSpacing * 2 + 50,
+	kSpectrumSelect_W = 200,
 	kSpectrumSelect_H = 30,
 
-	kBandDensityX = kSpectrumSelect_X + kKnobSpacing * 3,
+	kBandDensityX = kSpectrumSelect_X + kSpectrumSelect_W + 25,
 	kPitchX = kBandDensityX + kKnobSpacing,
 	kDecayX = kPitchX + kKnobSpacing,
 	kCrushX = kDecayX + kKnobSpacing,
@@ -147,8 +147,9 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kPluckY)->InitDouble("PluckY", 0, 0., 100.0, 0.01, "%");
 	GetParam(kPluckY)->SetShape(1.);
 
-	GetParam(kBandFirst)->InitInt("BandFirst", Settings::BandFirst, Settings::BandMin, Settings::BandMax);
-	GetParam(kBandLast)->InitInt("BandLast", Settings::BandLast, Settings::BandMin, Settings::BandMax);
+	InitBandParam("BandFirst", kBandFirst, Settings::BandFirst);
+	InitBandParam("BandLast", kBandLast, Settings::BandLast);
+
 	GetParam(kBandDensity)->InitDouble("BandDensity", Settings::BandDensity, 0.01, 0.9999, 0.0001);
 	GetParam(kBandDensity)->SetShape(4.);
 
@@ -158,9 +159,24 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	IBitmap knob = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, kKnobFrames);
 	IText captionText = IText(&labelColor);
 
-	pGraphics->AttachControl(new StringControl(specGen, this, IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight), 10, kPluckX, kPluckY));
-
 	pGraphics->AttachControl(new IPanelControl(this, IRECT(0, kPluckPadHeight, kWidth, kHeight), &panelColor));
+
+	// strumming area
+	{
+		IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
+		pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10, kPluckX, kPluckY));
+
+		IText bandLabel = captionText;
+		const int capMargin = 2;
+
+		bandLabel.mAlign = IText::kAlignNear;
+		IRECT lowBandRect = IRECT(strumRect.L + capMargin, strumRect.B, strumRect.L + kCaptionW + capMargin, strumRect.B + 25);
+		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel));
+
+		bandLabel.mAlign = IText::kAlignFar;
+		IRECT highBandRect = IRECT(strumRect.R - kCaptionW - capMargin, strumRect.B, strumRect.R - capMargin, strumRect.B + 25);
+		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel));
+	}
 
 	pGraphics->AttachControl(new IKnobMultiControl(this, kGainX, kKnobY, kGain, &knob));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kGainX, kCaptionT, kGainX + kCaptionW, kCaptionB), &captionText, "Volume"));
@@ -216,6 +232,18 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 }
 
 SpectralHarp::~SpectralHarp() {}
+
+void SpectralHarp::InitBandParam(const char * name, const int paramIdx, const int defaultValue)
+{
+	IParam* param = GetParam(paramIdx);
+	param->InitInt(name, defaultValue, Settings::BandMin, Settings::BandMax);
+	char display[32];
+	for (int i = Settings::BandMin; i <= Settings::BandMax; ++i)
+	{
+		sprintf(display, "%d Hz", (int)specGen.getBandFrequency(i));
+		param->SetDisplayText(i, display);
+	}
+}
 
 void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
 {

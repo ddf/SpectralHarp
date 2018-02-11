@@ -7,14 +7,16 @@ SpectrumSelection::SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowPa
 	, backgroundColor(back)
 	, selectedColor(select)
 	, handleColor(handle)
+	, handleWidth(6)
 	, dragParam(-1)
 {
-	AddAuxParam(bandHighParam);
 	AddAuxParam(bandLowParam);
+	AddAuxParam(bandHighParam);
 
-	handles[0] = rect.SubRectHorizontal(35, 0);
-	handles[1] = rect.SubRectHorizontal(35, 34);
-	handleWidth = handles[0].W();
+	const int handT = rect.T;
+	const int handB = rect.B;
+	handles[0] = IRECT(rect.L, handT, rect.L + handleWidth, handB);
+	handles[1] = IRECT(rect.R - handleWidth, handT, rect.R, handB);
 }
 
 SpectrumSelection::~SpectrumSelection()
@@ -69,8 +71,9 @@ void SpectrumSelection::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMo
 			handle.R = handle.L + handleWidth;
 		}
 		float mw = handle.MW();
+		int hw = handleWidth / 2;
 		AuxParam* param = GetAuxParam(dragParam);
-		param->mValue = map(mw, mRECT.L + mw, mRECT.R - mw, 0, 1);
+		param->mValue = map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
 		mPlug->SetParameterFromGUI(param->mParamIdx, param->mValue);
 		SetDirty(false);
 	}

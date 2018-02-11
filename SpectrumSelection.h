@@ -19,7 +19,7 @@ private:
 	IColor handleColor;
 
 	IRECT handles[2];
-	int   handleWidth;
+	const int handleWidth;
 
 	// the param whose value we should change
 	int	   dragParam;
