@@ -29,31 +29,31 @@ enum ELayout
 	kWidth = GUI_WIDTH,
 	kHeight = GUI_HEIGHT,
 
+	kControlPanelHeight = 120,
+
+	kPluckPadHeight = kHeight - kControlPanelHeight,
+	kPluckPadMargin = 0,
+	kPluckPadSpaceBottom = 5,
+
+	kSpectrumSelect_X = 5,
+	kSpectrumSelect_Y = kPluckPadHeight + kPluckPadSpaceBottom + 15,
+	kSpectrumSelect_W = kWidth - kSpectrumSelect_X*2,
+	kSpectrumSelect_H = 15,
+
 	kKnobSpacing = 75,
-	kKnobY = GUI_HEIGHT - 70,
+	kKnobY = kSpectrumSelect_Y + kSpectrumSelect_H + 10,
 
-	kGainX = 25,
-	kBandFirstX = kGainX + kKnobSpacing,
-	kBandLastX = kBandFirstX + kKnobSpacing,
-	kSpacingX = kBandLastX + kKnobSpacing,
-
-	kSpectrumSelect_X = kGainX + kKnobSpacing,
-	kSpectrumSelect_Y = kKnobY,
-	kSpectrumSelect_W = 200,
-	kSpectrumSelect_H = 30,
-
-	kBandDensityX = kSpectrumSelect_X + kSpectrumSelect_W + 25,
+	kVolumeX = 25,
+	kBandDensityX = kVolumeX + kKnobSpacing,
 	kPitchX = kBandDensityX + kKnobSpacing,
 	kDecayX = kPitchX + kKnobSpacing,
 	kCrushX = kDecayX + kKnobSpacing,
+
 	kKnobFrames = 60,
 
-	kCaptionT = GUI_HEIGHT - 20,
-	kCaptionB = GUI_HEIGHT,
+	kCaptionT = kKnobY + 50,
+	kCaptionB = kCaptionT + 15,
 	kCaptionW = 50,
-
-	kPluckPadHeight = kKnobY - 10,
-	kPluckPadMargin = 0
 };
 
 // background of entire window
@@ -64,8 +64,8 @@ static const IColor panelColor = IColor(255, 30, 30, 30);
 static const IColor labelColor = COLOR_GRAY;
 
 // spectrum selection colors
-static const IColor selectionBackColor = IColor(255, 40, 40, 40);
-static const IColor selectionSelectColor = IColor(255, 100, 100, 100);
+static const IColor selectionBackColor = backColor;
+static const IColor selectionSelectColor = IColor(255, 80, 80, 80);
 static const IColor selectionHandleColor = IColor(255, 200, 200, 200);
 
 
@@ -168,7 +168,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 		IText bandLabel = captionText;
 		const int capMargin = 2;
-
+		strumRect.B += kPluckPadSpaceBottom;
 		bandLabel.mAlign = IText::kAlignNear;
 		IRECT lowBandRect = IRECT(strumRect.L + capMargin, strumRect.B, strumRect.L + kCaptionW + capMargin, strumRect.B + 25);
 		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel));
@@ -178,8 +178,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel));
 	}
 
-	pGraphics->AttachControl(new IKnobMultiControl(this, kGainX, kKnobY, kGain, &knob));
-	pGraphics->AttachControl(new ITextControl(this, IRECT(kGainX, kCaptionT, kGainX + kCaptionW, kCaptionB), &captionText, "Volume"));
+	pGraphics->AttachControl(new IKnobMultiControl(this, kVolumeX, kKnobY, kGain, &knob));
+	pGraphics->AttachControl(new ITextControl(this, IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), &captionText, "Volume"));
 
 	//pGraphics->AttachControl(new IKnobMultiControl(this, kBandFirstX, kKnobY, kBandFirst, &knob));
 	//pGraphics->AttachControl(new ITextControl(this, IRECT(kBandFirstX, kCaptionT, kBandFirstX + kCaptionW, kCaptionB), &captionText, "First"));
@@ -192,8 +192,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		IRECT rect = MakeIRect(kSpectrumSelect);
 		pGraphics->AttachControl(new SpectrumSelection(this, rect, kBandFirst, kBandLast, selectionBackColor, selectionSelectColor, selectionHandleColor));
 
-		rect.T = kCaptionT;
-		rect.B = kCaptionB;
+		rect.T = kPluckPadHeight + kPluckPadSpaceBottom;
+		rect.B = rect.T + 10;
 		pGraphics->AttachControl(new ITextControl(this, rect, &captionText, "Spectrum Selection"));
 	}
 
