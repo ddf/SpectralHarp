@@ -61,7 +61,7 @@ instrument determined by PLUG _IS _INST
 #define KNOB_FN "resources/img/knob.png"
 
 // GUI default dimensions
-#define GUI_WIDTH 800
+#define GUI_WIDTH 1024
 #define GUI_HEIGHT 400
 
 // on MSVC, you must define SA_API in the resource editor preprocessor macros as well as the c++ ones

@@ -39,13 +39,7 @@ public:
 		return SnapToMouse(x, y);
 	}
 
-	void SnapToMouse(int x, int y)
-	{
-		GetAuxParam(0)->mValue = BOUNDED((double)x / (double)mRECT.W(), 0, 1);
-		GetAuxParam(1)->mValue = BOUNDED((double)y / (double)mRECT.H(), 0, 1);
-
-		SetDirty();
-	}
+	void SnapToMouse(int x, int y);
 
 	void SetDirty(bool pushParamToPlug = true)
 	{

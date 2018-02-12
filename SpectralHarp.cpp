@@ -35,9 +35,9 @@ enum ELayout
 	kPluckPadMargin = 0,
 	kPluckPadSpaceBottom = 5,
 
-	kSpectrumSelect_X = 5,
+	kSpectrumSelect_W = 512,
+	kSpectrumSelect_X = kWidth / 2 - kSpectrumSelect_W / 2,
 	kSpectrumSelect_Y = kPluckPadHeight + kPluckPadSpaceBottom + 15,
-	kSpectrumSelect_W = kWidth - kSpectrumSelect_X*2,
 	kSpectrumSelect_H = 15,
 
 	kKnobSpacing = 75,
@@ -108,11 +108,6 @@ void pitchChanged(float value)
 	Settings::Pitch = value;
 }
 
-float map(float value, float istart, float istop, float ostart, float ostop)
-{
-	return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
-}
-
 SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
 	, mGain(1.)
@@ -129,13 +124,10 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kGain)->InitDouble("Volume", 100., 0., 100.0, 0.01, "%");
 	GetParam(kGain)->SetShape(2.);
 
-	//  GetParam(kSpacing)->InitDouble("Spacing", Settings::BandSpacing, Settings::BandSpacingMin, Settings::BandSpacingMax, 1, "Bands");
-	//  GetParam(kSpacing)->SetShape(1.);
-
 	GetParam(kPitch)->InitDouble("Pitch", Settings::Pitch, Settings::PitchMin, Settings::PitchMax, 0.01, "%");
 	GetParam(kPitch)->SetShape(1.);
 
-	GetParam(kDecay)->InitDouble("Decay", map(Settings::Decay, Settings::DecayMax, Settings::DecayMin, 0, 1), 0, 1, 0.01, "%");
+	GetParam(kDecay)->InitDouble("Decay", Settings::Map(Settings::Decay, Settings::DecayMax, Settings::DecayMin, 0, 1), 0, 1, 0.01, "%");
 	GetParam(kDecay)->SetShape(1.);
 
 	GetParam(kCrush)->InitDouble("Crush", 0, 0, 1, 0.01, "%");
@@ -150,8 +142,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	InitBandParam("BandFirst", kBandFirst, Settings::BandFirst);
 	InitBandParam("BandLast", kBandLast, Settings::BandLast);
 
-	GetParam(kBandDensity)->InitDouble("BandDensity", Settings::BandDensity, 0.01, 0.9999, 0.0001);
-	GetParam(kBandDensity)->SetShape(4.);
+	GetParam(kBandDensity)->InitInt("BandDensity", Settings::BandDensity, Settings::BandDensityMin, Settings::BandDesityMax, "strings");
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->AttachPanelBackground(&backColor);
@@ -249,7 +240,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 {
 	// Mutex is already locked for us.
 
-	float t = map(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
+	float t = Settings::Map(Settings::BitCrush, Settings::BitCrushMin, Settings::BitCrushMax, 0, 1);
 	float crush = expoEaseOut(t, Settings::BitCrushMin, Settings::BitCrushMax - Settings::BitCrushMin, 1);
 	//printf( "crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue() );
 	bitCrush.bitRate.setLastValue(crush);
@@ -295,11 +286,11 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		break;
 
 	case kCrush:
-		bitCrushChanged(map((float)GetParam(kCrush)->Value(), 0, 1, Settings::BitCrushMin, Settings::BitCrushMax));
+		bitCrushChanged(Settings::Map((float)GetParam(kCrush)->Value(), 0, 1, Settings::BitCrushMin, Settings::BitCrushMax));
 		break;
 
 	case kDecay:
-		decayChanged(map((float)GetParam(kDecay)->Value(), 0, 1, Settings::DecayMin, Settings::DecayMax));
+		decayChanged(Settings::Map((float)GetParam(kDecay)->Value(), 0, 1, Settings::DecayMin, Settings::DecayMax));
 		break;
 
 	case kPluckX:
@@ -321,7 +312,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		break;
 
 	case kBandDensity:
-		Settings::BandDensity = (float)GetParam(kBandDensity)->Value();
+		Settings::BandDensity = (int)GetParam(kBandDensity)->Value();
 		break;
 
 	default:
@@ -333,19 +324,20 @@ void SpectralHarp::pluck()
 {
 	if (mPluckX != -1 && mPluckY != -1)
 	{
-		const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
+		//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
+		const int numBands = Settings::BandDensity;
 		if (numBands > 0)
 		{
 			const float pluckX = (float)GetParam(kPluckX)->Value();
 			const float pluckY = (float)GetParam(kPluckY)->Value();
 			for (int b = 0; b <= numBands; ++b)
 			{
-				const int bindx = (int)roundf(map((float)b, 0, (float)numBands, Settings::BandFirst, Settings::BandLast));
-				float normBand = map((float)bindx, (float)Settings::BandFirst, (float)Settings::BandLast, 0, 100);
+				const int bindx = (int)roundf(Settings::Map((float)b, 0, (float)numBands, Settings::BandFirst, Settings::BandLast));
+				float normBand = Settings::Map((float)bindx, (float)Settings::BandFirst, (float)Settings::BandLast, 0, 100);
 				if (fabs(normBand - pluckX) < 0.5f)
 				{
 					float normY = pluckY / 100.0f;
-					float mag = map(normY, 0, 1, kMaxSpectralAmp*0.1f, kMaxSpectralAmp);
+					float mag = Settings::Map(normY, 0, 1, Settings::SpectralAmpMax*0.1f, Settings::SpectralAmpMax);
 					specGen.pluck(bindx, mag);
 				}
 			}

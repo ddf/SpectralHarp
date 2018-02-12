@@ -1,6 +1,5 @@
 #include "SpectrumSelection.h"
-
-extern float map(float value, float istart, float istop, float ostart, float ostop);
+#include "src/Settings.h"
 
 SpectrumSelection::SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowParam, int bandHighParam, IColor back, IColor select, IColor handle) 
 	: IControl(pPlug, rect)
@@ -30,12 +29,12 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 	{
 		dragParam = kDragLeft;
 		dragMinX = mRECT.L;
-		dragMaxX = handles[kDragRight].L;
+		dragMaxX = handles[kDragRight].L - handleWidth;
 	}
 	else if (handles[kDragRight].Contains(x, y))
 	{
 		dragParam = kDragRight;
-		dragMinX = handles[kDragLeft].R;
+		dragMinX = handles[kDragLeft].R + handleWidth;
 		dragMaxX = mRECT.R;
 	}
 	else if (handles[kDragBoth].Contains(x, y))
@@ -130,6 +129,6 @@ void SpectrumSelection::SetParamFromHandle(const int paramIdx)
 	float mw = handles[paramIdx].MW();
 	int hw = handleWidth / 2;
 	AuxParam* param = GetAuxParam(paramIdx);
-	param->mValue = map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
+	param->mValue = Settings::Map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
 	mPlug->SetParameterFromGUI(param->mParamIdx, param->mValue);
 }

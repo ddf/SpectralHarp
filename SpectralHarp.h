@@ -7,8 +7,6 @@
 #include "TickRate.h"
 #include "MoogFilter.h"
 
-const float kMaxSpectralAmp = 128.0f;
-
 class SpectralHarp : public IPlug
 {
 public:
