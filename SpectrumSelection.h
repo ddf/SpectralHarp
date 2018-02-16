@@ -12,10 +12,13 @@ public:
 	virtual void OnMouseUp(int x, int y, IMouseMod* pMod) override;
 
 	virtual bool Draw(IGraphics* pGraphics) override;
+	
+	void SetAuxParamValueFromPlug(int auxParamIdx, double value) override;
 
 private:
 
 	void SetParamFromHandle(const int paramIdx);
+	void SetHandleFromParam(const int paramIdx);
 
 	IColor backgroundColor;
 	IColor selectedColor;

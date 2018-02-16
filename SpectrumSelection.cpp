@@ -98,6 +98,8 @@ void SpectrumSelection::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMo
 			SetParamFromHandle(kDragLeft);
 			SetParamFromHandle(kDragRight);
 			break;
+				
+		default: break;
 		}
 
 		SetDirty(false);
@@ -132,3 +134,28 @@ void SpectrumSelection::SetParamFromHandle(const int paramIdx)
 	param->mValue = Settings::Map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
 	mPlug->SetParameterFromGUI(param->mParamIdx, param->mValue);
 }
+
+void SpectrumSelection::SetHandleFromParam(const int paramIdx)
+{
+	int hw = handleWidth / 2;
+	int mw = (int)roundf(Settings::Map(GetAuxParam(paramIdx)->mValue, 0, 1, mRECT.L+hw, mRECT.R-hw));
+	handles[paramIdx].L = mw - hw;
+	handles[paramIdx].R = mw + hw;
+	switch(paramIdx)
+	{
+	case kDragLeft:
+		handles[kDragBoth].L = mw;
+		break;
+		
+	case kDragRight:
+		handles[kDragBoth].R = mw;
+		break;
+	}
+}
+
+void SpectrumSelection::SetAuxParamValueFromPlug(int auxParamIdx, double value)
+{
+	IControl::SetAuxParamValueFromPlug(auxParamIdx, value);
+	SetHandleFromParam(auxParamIdx);
+}
+
