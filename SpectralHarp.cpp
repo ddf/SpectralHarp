@@ -5,6 +5,7 @@
 #include "src/Settings.h"
 #include "StringControl.h"
 #include "SpectrumSelection.h"
+#include "Controls.h"
 
 const int kNumPrograms = 1;
 
@@ -40,8 +41,13 @@ enum ELayout
 	kSpectrumSelect_Y = kPluckPadHeight + kPluckPadSpaceBottom + 15,
 	kSpectrumSelect_H = 15,
 
+	kKnob_X = 0,
+	kKnob_Y = kSpectrumSelect_Y + kSpectrumSelect_H + 10,
+	kKnob_W = 48,
+	kKnob_H = 48,
+	
+	kKnobCorona = 0,
 	kKnobSpacing = 75,
-	kKnobY = kSpectrumSelect_Y + kSpectrumSelect_H + 10,
 
 	kVolumeX = 25,
 	kBandDensityX = kVolumeX + kKnobSpacing,
@@ -51,7 +57,7 @@ enum ELayout
 
 	kKnobFrames = 60,
 
-	kCaptionT = kKnobY + 50,
+	kCaptionT = kKnob_Y + 50,
 	kCaptionB = kCaptionT + 15,
 	kCaptionW = 50,
 };
@@ -61,13 +67,20 @@ static const IColor backColor = IColor(255, 20, 20, 20);
 // rectangluar panel behind the knobs
 static const IColor panelColor = IColor(255, 30, 30, 30);
 // text color for labels under the knobs
-static const IColor labelColor = COLOR_GRAY;
+static const IColor labelColor = IColor(255, 200, 200, 200);
+#if OS_WIN
+static const int    labelSize  = 12;
+#else
+static const int    labelSize  = 14;
+#endif
 
 // spectrum selection colors
 static const IColor selectionBackColor = backColor;
 static const IColor selectionSelectColor = IColor(255, 80, 80, 80);
 static const IColor selectionHandleColor = IColor(255, 200, 200, 200);
 
+// knob colors
+static const IColor knobColor = IColor(255, 200, 200, 200);
 
 float expoEaseOut(float t, float b, float c, float d)
 {
@@ -147,8 +160,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->AttachPanelBackground(&backColor);
 
-	IBitmap knob = pGraphics->LoadIBitmap(KNOB_ID, KNOB_FN, kKnobFrames);
-	IText captionText = IText(&labelColor);
+	IText captionText = IText(labelSize, &labelColor);
 
 	pGraphics->AttachControl(new IPanelControl(this, IRECT(0, kPluckPadHeight, kWidth, kHeight), &panelColor));
 
@@ -158,18 +170,18 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10, kPluckX, kPluckY));
 
 		IText bandLabel = captionText;
-		const int capMargin = 2;
+		const int capMargin = 14;
 		strumRect.B += kPluckPadSpaceBottom;
 		bandLabel.mAlign = IText::kAlignNear;
 		IRECT lowBandRect = IRECT(strumRect.L + capMargin, strumRect.B, strumRect.L + kCaptionW + capMargin, strumRect.B + 25);
-		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel));
+		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel, false));
 
 		bandLabel.mAlign = IText::kAlignFar;
 		IRECT highBandRect = IRECT(strumRect.R - kCaptionW - capMargin, strumRect.B, strumRect.R - capMargin, strumRect.B + 25);
-		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel));
+		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel, false));
 	}
 
-	pGraphics->AttachControl(new IKnobMultiControl(this, kVolumeX, kKnobY, kGain, &knob));
+	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kVolumeX), kGain, &knobColor, &knobColor, kKnobCorona));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), &captionText, "Volume"));
 
 	//pGraphics->AttachControl(new IKnobMultiControl(this, kBandFirstX, kKnobY, kBandFirst, &knob));
@@ -188,19 +200,19 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		pGraphics->AttachControl(new ITextControl(this, rect, &captionText, "Spectrum Selection"));
 	}
 
-	pGraphics->AttachControl(new IKnobMultiControl(this, kBandDensityX, kKnobY, kBandDensity, &knob));
+	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, &knobColor, &knobColor, kKnobCorona));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), &captionText, "Density"));
 
 	//pGraphics->AttachControl(new IKnobMultiControl(this, kSpacingX, kKnobY, kSpacing, &knob));
 	//pGraphics->AttachControl(new ITextControl(this, IRECT(kSpacingX, kCaptionT, kSpacingX+kCaptionW, kCaptionB), &captionText, "Spacing"));
 
-	pGraphics->AttachControl(new IKnobMultiControl(this, kPitchX, kKnobY, kPitch, &knob));
+	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kPitchX), kPitch, &knobColor, &knobColor, kKnobCorona));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kPitchX, kCaptionT, kPitchX + kCaptionW, kCaptionB), &captionText, "Pitch"));
 
-	pGraphics->AttachControl(new IKnobMultiControl(this, kDecayX, kKnobY, kDecay, &knob));
+	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kDecayX),kDecay, &knobColor, &knobColor, kKnobCorona));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kDecayX, kCaptionT, kDecayX + kCaptionW, kCaptionB), &captionText, "Decay"));
 
-	pGraphics->AttachControl(new IKnobMultiControl(this, kCrushX, kKnobY, kCrush, &knob));
+	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kCrushX), kCrush, &knobColor, &knobColor, kKnobCorona));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), &captionText, "Crush"));
 
 	AttachGraphics(pGraphics);
