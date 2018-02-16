@@ -47,6 +47,8 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
         bands[0].update();
         specReal[0] = bands[0].amplitude*cosf(phase);
         specImag[0] = bands[0].amplitude*sinf(phase);
+		specReal[specSize] = specReal[0];
+		specImag[specSize] = -specImag[0];
         
         for( unsigned i = 1; i < specSize; ++i )
         {
