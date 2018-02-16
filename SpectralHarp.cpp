@@ -255,8 +255,13 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	{
 		float result[1];
 		bitCrush.tick(result, 1);
+#ifdef SA_API
+		*out1 = result[0] * mGain;
+		*out2 = result[0] * mGain;
+#else
 		*out1 = *in1 + result[0] * mGain;
 		*out2 = *in2 + result[0] * mGain;
+#endif
 	}
 }
 
