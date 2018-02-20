@@ -11,10 +11,9 @@
 #include <stdio.h>
 #include <string> // for memset
 
-float SpectralGen::decay(0);
-
 SpectralGen::SpectralGen( const int inTimeSize )
 : UGen()
+, decayRate( *this, CONTROL, 0 )
 , timeSize(inTimeSize)
 , specSize(inTimeSize/2)
 , outIndex(0)
@@ -43,20 +42,27 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		// now using the same phase for every band because this prevents some of the clicking.
 		// evolving the phase over time never added much to the sound anyhow.
 		const float phase = (float)M_PI*1.5f;
+		const float cosP = cosf(phase);
+		const float sinP = sinf(phase);
+
+		// DQ (2/20/18)
+		// now pull the decay from a UGenInput and pass it in to the band struct instead of using a static var.
+		const float decay = decayRate.getLastValue();
+
         // this one outside the loop so we don't need an if check around the "top half" assign
-        bands[0].update();
-        specReal[0] = bands[0].amplitude*cosf(phase);
-        specImag[0] = bands[0].amplitude*sinf(phase);
+        bands[0].update(decay);
+        specReal[0] = bands[0].amplitude*cosP;
+        specImag[0] = bands[0].amplitude*sinP;
 		specReal[specSize] = specReal[0];
-		specImag[specSize] = -specImag[0];
+		specImag[specSize] = -specImag[0];		
         
         for( unsigned i = 1; i < specSize; ++i )
         {
             band& b = bands[i];
-            b.update();
+            b.update(decay);
             
-            specReal[i] = b.amplitude*cosf(phase);
-            specImag[i] = b.amplitude*sinf(phase);
+            specReal[i] = b.amplitude*cosP;
+            specImag[i] = b.amplitude*sinP;
             
             // and the top half
 			specReal[timeSize - i] = specReal[i];

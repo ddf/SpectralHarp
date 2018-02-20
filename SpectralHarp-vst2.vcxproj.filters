@@ -5,7 +5,6 @@
       <Filter>vst2</Filter>
     </ClCompile>
     <ClCompile Include="StringControl.cpp" />
-    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SpectralGen.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />

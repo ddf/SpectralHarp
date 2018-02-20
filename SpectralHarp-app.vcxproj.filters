@@ -50,7 +50,6 @@
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="src\SpectralGen.h" />
-    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="StringControl.h" />
     <ClInclude Include="SpectralHarp.h" />
     <ClInclude Include="SpectrumSelection.h" />
@@ -58,6 +57,7 @@
     <ClInclude Include="app_wrapper\app_resource.h">
       <Filter>app</Filter>
     </ClInclude>
+    <ClInclude Include="Params.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -85,7 +85,6 @@
       <Filter>app</Filter>
     </ClCompile>
     <ClCompile Include="src\SpectralGen.cpp" />
-    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="StringControl.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />

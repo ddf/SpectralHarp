@@ -1,26 +1,29 @@
 #include "StringControl.h"
+#include "src/SpectralGen.h"
 #include "SpectralHarp.h"
-#include "src/Settings.h"
+#include "Params.h"
 
 const float kPadding = 16;
 
 bool StringControl::Draw(IGraphics* pGraphics)
 {
 	//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
-	const int numBands = Settings::BandDensity;
+	const float numBands = (float)mPlug->GetParam(kBandDensity)->Int();
+	const float bandFirst = (float)mPlug->GetParam(kBandFirst)->Int();
+	const float bandLast = (float)mPlug->GetParam(kBandLast)->Int();
     if ( numBands > 0 )
     {
         for (int b = 0; b <= numBands; ++b)
         {
-            const int bindx = (int)roundf(Settings::Map((float)b, 0, (float)numBands, Settings::BandFirst, Settings::BandLast));
-            const float x = Settings::Map((float)b, 0, (float)numBands, mRECT.L + kPadding, mRECT.R - kPadding);
+            const int bindx = (int)roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
+            const float x = Map((float)b, 0, numBands, mRECT.L + kPadding, mRECT.R - kPadding);
             const float p = spectrum.getBandPhase(bindx) + stringAnimation;
             const float m = spectrum.getBandMagnitude(bindx);
 
-            const int g = (int)(255.f * Settings::Map(m, 0, Settings::SpectralAmpMax, 0.4f, 1.f));
+            const int g = (int)(255.f * Map(m, 0, kSpectralAmpMax, 0.4f, 1.f));
             const IColor color(255, g, g, g);
 
-            const float w = Settings::Map(m, 0, Settings::SpectralAmpMax, 0, 6);
+            const float w = Map(m, 0, kSpectralAmpMax, 0, 6);
             const float segments = 32;
             const float segLength = mRECT.H() / segments;
             float py0 = 0;
@@ -76,7 +79,7 @@ void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 
 void StringControl::SnapToMouse(int x, int y)
 {
-	const float strumX = Settings::Map(x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1);
+	const float strumX = Map((float)x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1);
 	GetAuxParam(0)->mValue = BOUNDED(strumX, 0, 1);
 	GetAuxParam(1)->mValue = BOUNDED((double)y / (double)mRECT.H(), 0, 1);
 

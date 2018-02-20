@@ -1,6 +1,7 @@
 #pragma once
 #include "IControl.h"
-#include "src/SpectralGen.h"
+
+class SpectralGen;
 
 class StringControl : public IControl
 {

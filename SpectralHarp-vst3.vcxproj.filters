@@ -72,7 +72,6 @@
       <Filter>minim</Filter>
     </ClCompile>
     <ClCompile Include="src\Settings.cpp" />
-    <ClCompile Include="src\SpectralGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

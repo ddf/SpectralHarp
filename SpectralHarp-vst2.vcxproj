@@ -259,7 +259,6 @@
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
-    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SpectralGen.cpp" />
     <ClCompile Include="StringControl.cpp" />
   </ItemGroup>

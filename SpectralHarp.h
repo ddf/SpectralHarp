@@ -5,25 +5,10 @@
 #include "IMidiQueue.h"
 
 #include "src/SpectralGen.h"
+#include "Params.h"
 #include "BitCrush.h"
 #include "TickRate.h"
 #include "MoogFilter.h"
-
-enum EParams
-{
-	kGain = 0,
-	kSpacing, // unused now
-	kPitch,
-	kDecay,
-	kCrush,
-	// params for the xy pad that can be used to "strum"
-	kPluckX,
-	kPluckY,
-	kBandFirst,
-	kBandLast,
-	kBandDensity,
-	kNumParams
-};
 
 class SpectralHarp : public IPlug
 {
