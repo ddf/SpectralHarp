@@ -59,7 +59,6 @@ bool StringControl::Draw(IGraphics* pGraphics)
 
 void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 {
-#if SA_API
 	if ( pMod->R )
 	{
 		SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
@@ -69,7 +68,6 @@ void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 		}
 	}
 	else
-#endif
 	{
 		mHandleColor = COLOR_BLACK;
 		SnapToMouse(x, y);

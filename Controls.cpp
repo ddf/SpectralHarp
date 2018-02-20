@@ -37,7 +37,6 @@ bool KnobLineCoronaControl::Draw(IGraphics* pGraphics)
 	return IKnobLineControl::Draw(pGraphics);
 }
 
-#if SA_API
 void KnobLineCoronaControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 {
 	if (pMod->R)
@@ -49,7 +48,6 @@ void KnobLineCoronaControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 		}
 	}
 }
-#endif
 
 void KnobLineCoronaControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
 {

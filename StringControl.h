@@ -18,11 +18,6 @@ public:
 
 	bool Draw(IGraphics*);
 
-	//  void OnMouseOver(int x, int y, IMouseMod* pMod)
-	//  {
-	//    return SnapToMouse(x, y);
-	//  }
-	//  
 	void OnMouseDown(int x, int y, IMouseMod* pMod) override;
 
 	void OnMouseUp(int x, int y, IMouseMod* pMod) override
@@ -32,12 +27,10 @@ public:
 
 	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override
 	{
-		return SnapToMouse(x, y);
+		SnapToMouse(x, y);
 	}
 
-	void SnapToMouse(int x, int y);
-
-	void SetDirty(bool pushParamToPlug = true)
+	void SetDirty(bool pushParamToPlug = true) override
 	{
 		mDirty = true;
 
@@ -46,7 +39,11 @@ public:
 			SetAllAuxParamsFromGUI();
 		}
 	}
+
 private:
+
+	void SnapToMouse(int x, int y);
+
 	const SpectralGen& spectrum;
 	int mHandleRadius;
 	IColor mHandleColor;

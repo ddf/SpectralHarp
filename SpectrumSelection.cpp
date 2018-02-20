@@ -28,7 +28,6 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 {
 	if (handles[kDragLeft].Contains(x, y))
 	{
-#if SA_API
 		if (pMod->R)
 		{
 			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
@@ -38,7 +37,6 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 			}
 		}
 		else
-#endif
 		{
 			dragParam = kDragLeft;
 			dragMinX = mRECT.L;
@@ -47,7 +45,6 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 	}
 	else if (handles[kDragRight].Contains(x, y))
 	{
-#if SA_API
 		if (pMod->R)
 		{
 			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
@@ -57,7 +54,6 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 			}
 		}
 		else
-#endif
 		{
 			dragParam = kDragRight;
 			dragMinX = handles[kDragLeft].R + handleWidth;

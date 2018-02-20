@@ -21,9 +21,7 @@ public:
 	
 	bool Draw(IGraphics* pGraphics) override;
 
-#if SA_API
 	void OnMouseDown(int x, int y, IMouseMod* pMod) override;
-#endif
 
 	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override;
 

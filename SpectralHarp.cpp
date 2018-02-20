@@ -48,7 +48,7 @@ enum ELayout
 
 // background of entire window
 static const IColor backColor = IColor(255, 20, 20, 20);
-// rectangluar panel behind the knobs
+// rectangular panel behind the knobs
 static const IColor panelColor = IColor(255, 30, 30, 30);
 // text color for labels under the knobs
 static const IColor labelColor = IColor(255, 200, 200, 200);
@@ -257,9 +257,19 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	double* out1 = outputs[0];
 	double* out2 = outputs[1];
 
+	float result[1];
 	for (int s = 0; s < nFrames; ++s, ++in1, ++in2, ++out1, ++out2)
 	{
-		float result[1];
+		while (!mMidiQueue.Empty())
+		{
+			IMidiMsg* pMsg = mMidiQueue.Peek();
+			if (pMsg->mOffset > s) break;
+
+			HandleMidiControlChange(pMsg);
+
+			mMidiQueue.Remove();
+		}
+
 		bitCrush.tick(result, 1);
 #ifdef SA_API
 		*out1 = result[0] * mGain;
@@ -269,36 +279,62 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 		*out2 = *in2 + result[0] * mGain;
 #endif
 	}
+
+	mMidiQueue.Flush(nFrames);
 }
 
-#if SA_API
 void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 {
-	IPopupMenu menu;
-	WDL_String str;
-	if (paramIdx1 != -1)
+	if (GetAPI() == kAPIVST3)
 	{
-		str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx1)->GetNameForHost());
-		menu.AddItem(str.Get());
+		PopupHostContextMenuForParam(paramIdx1, x, y);
 	}
-	if (paramIdx2 != -1)
+	else if ( GetAPI() == kAPISA )
 	{
-		str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx2)->GetNameForHost());
-		menu.AddItem(str.Get());
-	}
-	if (GetGUI()->CreateIPopupMenu(&menu, x, y))
-	{
-		if (menu.GetChosenItemIdx() == 0)
+		IPopupMenu menu;
+		menu.SetMultiCheck(true);
+		WDL_String str;
+		if (paramIdx1 != -1)
 		{
-			midiLearnParamIdx = paramIdx1;
+			str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx1)->GetNameForHost());
+			int flags = controlChangeForParam[paramIdx1] ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			menu.AddItem(str.Get(), -1, flags);
 		}
-		else if ( menu.GetChosenItemIdx() == 1 )
+		if (paramIdx2 != -1)
 		{
-			midiLearnParamIdx = paramIdx2;
+			str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx2)->GetNameForHost());
+			int flags = controlChangeForParam[paramIdx2] ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			menu.AddItem(str.Get(), -1, flags);
 		}
-		else
+		if (GetGUI()->CreateIPopupMenu(&menu, x, y))
 		{
-			midiLearnParamIdx = -1;
+			const int chosen = menu.GetChosenItemIdx();
+			if (chosen == 0)
+			{			
+				if (menu.GetItem(chosen)->GetChecked())
+				{
+					controlChangeForParam[paramIdx1] = (IMidiMsg::EControlChangeMsg)0;
+				}
+				else
+				{
+					midiLearnParamIdx = paramIdx1;
+				}
+			}
+			else if (chosen == 1)
+			{
+				if (menu.GetItem(chosen)->GetChecked())
+				{
+					controlChangeForParam[paramIdx2] = (IMidiMsg::EControlChangeMsg)0;
+				}
+				else
+				{
+					midiLearnParamIdx = paramIdx2;
+				}
+			}
+			else
+			{
+ 				midiLearnParamIdx = -1;
+			}
 		}
 	}
 }
@@ -314,25 +350,16 @@ void SpectralHarp::ProcessMidiMsg(IMidiMsg* pMsg)
 			midiLearnParamIdx = -1;
 		}
 
-		for (int i = 0; i < kNumParams; ++i)
-		{
-			if (controlChangeForParam[i] == cc)
-			{
-				const double value = pMsg->ControlChange(cc);
-				GetParam(i)->SetNormalized(value);
-				OnParamChange(i);
-				GetGUI()->SetParameterFromPlug(i, GetParam(i)->GetNormalized(), true);
-			}
-		}
+		mMidiQueue.Add(pMsg);
 	}
 }
-#endif
 
 void SpectralHarp::Reset()
 {
 	TRACE;
 	IMutexLock lock(this);
 	bitCrush.setSampleRate((float)GetSampleRate());
+	mMidiQueue.Resize(GetBlockSize());
 }
 
 void SpectralHarp::OnParamChange(int paramIdx)
@@ -362,12 +389,12 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		break;
 
 	case kPluckX:
-		pluck();
+		Pluck();
 		mPluckX = (float)GetParam(kPluckX)->Value();
 		break;
 
 	case kPluckY:
-		pluck();
+		Pluck();
 		mPluckY = (float)GetParam(kPluckY)->Value();
 		break;
 
@@ -402,7 +429,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 	}
 }
 
-void SpectralHarp::pluck()
+void SpectralHarp::Pluck()
 {
 	if (mPluckX != -1 && mPluckY != -1)
 	{
@@ -423,6 +450,21 @@ void SpectralHarp::pluck()
 					specGen.pluck(bindx, mag);
 				}
 			}
+		}
+	}
+}
+
+void SpectralHarp::HandleMidiControlChange(IMidiMsg* pMsg)
+{
+	const IMidiMsg::EControlChangeMsg cc = pMsg->ControlChangeIdx();
+	for (int i = 0; i < kNumParams; ++i)
+	{
+		if (controlChangeForParam[i] == cc)
+		{
+			const double value = pMsg->ControlChange(cc);
+			GetParam(i)->SetNormalized(value);
+			OnParamChange(i);
+			GetGUI()->SetParameterFromPlug(i, GetParam(i)->GetNormalized(), true);
 		}
 	}
 }

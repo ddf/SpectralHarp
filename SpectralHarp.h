@@ -2,6 +2,8 @@
 #define __SPECTRALHARP__
 
 #include "IPlug_include_in_plug_hdr.h"
+#include "IMidiQueue.h"
+
 #include "src/SpectralGen.h"
 #include "BitCrush.h"
 #include "TickRate.h"
@@ -33,16 +35,14 @@ public:
 	void OnParamChange(int paramIdx) override;
 	void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames) override;
 
-#if SA_API
 	void BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y);
 	virtual void ProcessMidiMsg(IMidiMsg* pMsg) override;
-#endif
 
 private:
 
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
-
-	void pluck();
+	void HandleMidiControlChange(IMidiMsg* pMsg);
+	void Pluck();
 
 	float					  mGain;
 	float					  mPluckX;
@@ -52,13 +52,13 @@ private:
 	Minim::TickRate           tickRate;
 	Minim::MoogFilter         highPass;
 
-#if SA_API
 	// if not -1 when we receive a control change midi message
 	// we use this to determine which param should be linked to the control change
 	int						  midiLearnParamIdx;
 	// for each param, which midi control change should set its value
 	IMidiMsg::EControlChangeMsg controlChangeForParam[kNumParams];
-#endif
+
+	IMidiQueue				  mMidiQueue;
 };
 
 #endif
