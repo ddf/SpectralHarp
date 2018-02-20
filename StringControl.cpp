@@ -57,6 +57,25 @@ bool StringControl::Draw(IGraphics* pGraphics)
 	return true;
 }
 
+void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
+{
+#if SA_API
+	if ( pMod->R )
+	{
+		SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
+		if (harp != nullptr)
+		{
+			harp->BeginMIDILearn(GetAuxParam(0)->mParamIdx, GetAuxParam(1)->mParamIdx, x, y);
+		}
+	}
+	else
+#endif
+	{
+		mHandleColor = COLOR_BLACK;
+		SnapToMouse(x, y);
+	}
+}
+
 void StringControl::SnapToMouse(int x, int y)
 {
 	const float strumX = Settings::Map(x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1);

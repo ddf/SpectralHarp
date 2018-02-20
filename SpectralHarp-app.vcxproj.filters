@@ -56,6 +56,7 @@
     <ClInclude Include="StringControl.h" />
     <ClInclude Include="SpectralHarp.h" />
     <ClInclude Include="SpectrumSelection.h" />
+    <ClInclude Include="Controls.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -96,6 +97,7 @@
     <ClCompile Include="StringControl.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
+    <ClCompile Include="Controls.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />

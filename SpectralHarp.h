@@ -7,6 +7,22 @@
 #include "TickRate.h"
 #include "MoogFilter.h"
 
+enum EParams
+{
+	kGain = 0,
+	kSpacing, // unused now
+	kPitch,
+	kDecay,
+	kCrush,
+	// params for the xy pad that can be used to "strum"
+	kPluckX,
+	kPluckY,
+	kBandFirst,
+	kBandLast,
+	kBandDensity,
+	kNumParams
+};
+
 class SpectralHarp : public IPlug
 {
 public:
@@ -16,6 +32,11 @@ public:
 	void Reset();
 	void OnParamChange(int paramIdx);
 	void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames);
+
+#if SA_API
+	void BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y);
+	virtual void ProcessMidiMsg(IMidiMsg* pMsg) override;
+#endif
 
 private:
 
@@ -30,6 +51,14 @@ private:
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;
 	Minim::MoogFilter         highPass;
+
+#if SA_API
+	// if not -1 when we receive a control change midi message
+	// we use this to determine which param should be linked to the control change
+	int						  midiLearnParamIdx;
+	// for each param, which midi control change should set its value
+	IMidiMsg::EControlChangeMsg controlChangeForParam[kNumParams];
+#endif
 };
 
 #endif

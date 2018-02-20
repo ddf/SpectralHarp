@@ -1,4 +1,5 @@
 #include "SpectrumSelection.h"
+#include "SpectralHarp.h"
 #include "src/Settings.h"
 
 SpectrumSelection::SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowParam, int bandHighParam, IColor back, IColor select, IColor handle) 
@@ -27,15 +28,41 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 {
 	if (handles[kDragLeft].Contains(x, y))
 	{
-		dragParam = kDragLeft;
-		dragMinX = mRECT.L;
-		dragMaxX = handles[kDragRight].L - handleWidth;
+#if SA_API
+		if (pMod->R)
+		{
+			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
+			if (harp != nullptr)
+			{
+				harp->BeginMIDILearn(GetAuxParam(kDragLeft)->mParamIdx, -1, x, y);
+			}
+		}
+		else
+#endif
+		{
+			dragParam = kDragLeft;
+			dragMinX = mRECT.L;
+			dragMaxX = handles[kDragRight].L - handleWidth;
+		}
 	}
 	else if (handles[kDragRight].Contains(x, y))
 	{
-		dragParam = kDragRight;
-		dragMinX = handles[kDragLeft].R + handleWidth;
-		dragMaxX = mRECT.R;
+#if SA_API
+		if (pMod->R)
+		{
+			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
+			if (harp != nullptr)
+			{
+				harp->BeginMIDILearn(GetAuxParam(kDragRight)->mParamIdx, -1, x, y);
+			}
+		}
+		else
+#endif
+		{
+			dragParam = kDragRight;
+			dragMinX = handles[kDragLeft].R + handleWidth;
+			dragMaxX = mRECT.R;
+		}
 	}
 	else if (handles[kDragBoth].Contains(x, y))
 	{

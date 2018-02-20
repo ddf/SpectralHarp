@@ -6,6 +6,7 @@
 //
 
 #include "Controls.h"
+#include "SpectralHarp.h"
 
 #pragma  region KnobLineCoronaControl
 KnobLineCoronaControl::KnobLineCoronaControl(IPlugBase* pPlug, IRECT pR, int paramIdx,
@@ -36,6 +37,20 @@ bool KnobLineCoronaControl::Draw(IGraphics* pGraphics)
 	return IKnobLineControl::Draw(pGraphics);
 }
 
+#if SA_API
+void KnobLineCoronaControl::OnMouseDown(int x, int y, IMouseMod* pMod)
+{
+	if (pMod->R)
+	{
+		SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
+		if (harp != nullptr)
+		{
+			harp->BeginMIDILearn(mParamIdx, -1, x, y);
+		}
+	}
+}
+#endif
+
 void KnobLineCoronaControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
 {
 	double gearing = mGearing;
@@ -55,4 +70,5 @@ void KnobLineCoronaControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod*
 	
 	SetDirty();
 }
+
 #pragma  endregion KnobLineCoronaControl

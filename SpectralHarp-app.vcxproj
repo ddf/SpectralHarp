@@ -281,6 +281,7 @@
     <ClInclude Include="..\minim-cpp\src\WindowFunction.h" />
     <ClInclude Include="app_wrapper\app_main.h" />
     <ClInclude Include="app_wrapper\app_resource.h" />
+    <ClInclude Include="Controls.h" />
     <ClInclude Include="SpectralHarp.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SpectrumSelection.h" />
@@ -306,6 +307,7 @@
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
     <ClCompile Include="app_wrapper\app_dialog.cpp" />
     <ClCompile Include="app_wrapper\app_main.cpp" />
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
     <ClCompile Include="src\Settings.cpp" />

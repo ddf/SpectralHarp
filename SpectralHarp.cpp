@@ -9,22 +9,6 @@
 
 const int kNumPrograms = 1;
 
-enum EParams
-{
-	kGain = 0,
-	kSpacing, // unused now
-	kPitch,
-	kDecay,
-	kCrush,
-	// params for the xy pad that can be used to "strum"
-	kPluckX,
-	kPluckY,
-	kBandFirst,
-	kBandLast,
-	kBandDensity,
-	kNumParams
-};
-
 enum ELayout
 {
 	kWidth = GUI_WIDTH,
@@ -68,7 +52,7 @@ static const IColor backColor = IColor(255, 20, 20, 20);
 static const IColor panelColor = IColor(255, 30, 30, 30);
 // text color for labels under the knobs
 static const IColor labelColor = IColor(255, 200, 200, 200);
-#if OS_WIN
+#ifdef OS_WIN
 static const int    labelSize  = 12;
 #else
 static const int    labelSize  = 14;
@@ -130,8 +114,18 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, bitCrush(24, Settings::BitCrush)
 	, tickRate(Settings::Pitch)
 	, highPass(30, 0, Minim::MoogFilter::HP)
+#if SA_API
+	, midiLearnParamIdx(-1)
+#endif
 {
 	TRACE;
+
+#if SA_API
+	for (int i = 0; i < kNumParams; ++i)
+	{
+		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)0;
+	}
+#endif
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label
 	GetParam(kGain)->InitDouble("Volume", 100., 0., 100.0, 0.01, "%");
@@ -146,16 +140,16 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kCrush)->InitDouble("Crush", 0, 0, 1, 0.01, "%");
 	GetParam(kCrush)->SetShape(1.);
 
-	GetParam(kPluckX)->InitDouble("PluckX", 0, 0., 100.0, 0.01, "%");
+	GetParam(kPluckX)->InitDouble("Pluck X", 0, 0., 100.0, 0.01, "%");
 	GetParam(kPluckX)->SetShape(1.);
 
-	GetParam(kPluckY)->InitDouble("PluckY", 0, 0., 100.0, 0.01, "%");
+	GetParam(kPluckY)->InitDouble("Pluck Y", 0, 0., 100.0, 0.01, "%");
 	GetParam(kPluckY)->SetShape(1.);
 
-	InitBandParam("BandFirst", kBandFirst, Settings::BandFirst);
-	InitBandParam("BandLast", kBandLast, Settings::BandLast);
+	InitBandParam("First Band", kBandFirst, Settings::BandFirst);
+	InitBandParam("Last Band", kBandLast, Settings::BandLast);
 
-	GetParam(kBandDensity)->InitInt("BandDensity", Settings::BandDensity, Settings::BandDensityMin, Settings::BandDesityMax, "strings");
+	GetParam(kBandDensity)->InitInt("Density", Settings::BandDensity, Settings::BandDensityMin, Settings::BandDesityMax, "strings");
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->AttachPanelBackground(&backColor);
@@ -276,6 +270,63 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 #endif
 	}
 }
+
+#if SA_API
+void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
+{
+	IPopupMenu menu;
+	WDL_String str;
+	if (paramIdx1 != -1)
+	{
+		str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx1)->GetNameForHost());
+		menu.AddItem(str.Get());
+	}
+	if (paramIdx2 != -1)
+	{
+		str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx2)->GetNameForHost());
+		menu.AddItem(str.Get());
+	}
+	if (GetGUI()->CreateIPopupMenu(&menu, x, y))
+	{
+		if (menu.GetChosenItemIdx() == 0)
+		{
+			midiLearnParamIdx = paramIdx1;
+		}
+		else if ( menu.GetChosenItemIdx() == 1 )
+		{
+			midiLearnParamIdx = paramIdx2;
+		}
+		else
+		{
+			midiLearnParamIdx = -1;
+		}
+	}
+}
+
+void SpectralHarp::ProcessMidiMsg(IMidiMsg* pMsg)
+{
+	if (pMsg->StatusMsg() == IMidiMsg::kControlChange)
+	{
+		const IMidiMsg::EControlChangeMsg cc = pMsg->ControlChangeIdx();
+		if (midiLearnParamIdx != -1)
+		{
+			controlChangeForParam[midiLearnParamIdx] = cc;
+			midiLearnParamIdx = -1;
+		}
+
+		for (int i = 0; i < kNumParams; ++i)
+		{
+			if (controlChangeForParam[i] == cc)
+			{
+				const double value = pMsg->ControlChange(cc);
+				GetParam(i)->SetNormalized(value);
+				GetGUI()->SetParameterFromPlug(i, value, true);
+				OnParamChange(i);
+			}
+		}
+	}
+}
+#endif
 
 void SpectralHarp::Reset()
 {

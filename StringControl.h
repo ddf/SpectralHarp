@@ -23,18 +23,14 @@ public:
 	//    return SnapToMouse(x, y);
 	//  }
 	//  
-	void OnMouseDown(int x, int y, IMouseMod* pMod)
-	{
-		mHandleColor = COLOR_BLACK;
-		return SnapToMouse(x, y);
-	}
+	void OnMouseDown(int x, int y, IMouseMod* pMod) override;
 
-	void OnMouseUp(int x, int y, IMouseMod* pMod)
+	void OnMouseUp(int x, int y, IMouseMod* pMod) override
 	{
 		mHandleColor = COLOR_WHITE;
 	}
 
-	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
+	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override
 	{
 		return SnapToMouse(x, y);
 	}
