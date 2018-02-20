@@ -10,6 +10,9 @@
     <Filter Include="app\ASIO_SDK">
       <UniqueIdentifier>{b91b9db4-5584-4959-a395-7394ba3cf5a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="minim">
+      <UniqueIdentifier>{8b46aaf2-4d76-4aee-abe9-76ba5337e455}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtAudio.h">
@@ -46,17 +49,15 @@
     <ClInclude Include="..\..\WDL\IPlug\IPlugStandalone.h">
       <Filter>app</Filter>
     </ClInclude>
-    <ClInclude Include="app_wrapper\app_resource.h" />
     <ClInclude Include="src\SpectralGen.h" />
     <ClInclude Include="src\Settings.h" />
-    <ClInclude Include="..\minim-cpp\src\FourierTransform.h" />
-    <ClInclude Include="..\minim-cpp\src\WindowFunction.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\TickRate.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\UGen.h" />
     <ClInclude Include="StringControl.h" />
     <ClInclude Include="SpectralHarp.h" />
     <ClInclude Include="SpectrumSelection.h" />
     <ClInclude Include="Controls.h" />
+    <ClInclude Include="app_wrapper\app_resource.h">
+      <Filter>app</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -85,19 +86,37 @@
     </ClCompile>
     <ClCompile Include="src\SpectralGen.cpp" />
     <ClCompile Include="src\Settings.cpp" />
-    <ClCompile Include="..\minim-cpp\src\FFT.cpp" />
-    <ClCompile Include="..\minim-cpp\src\FourierTransform.cpp" />
-    <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
-    <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp" />
-    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp" />
-    <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp" />
-    <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
-    <ClCompile Include="..\minim-cpp\src\Logging.cpp" />
-    <ClCompile Include="..\minim-cpp\src\AudioSource.cpp" />
     <ClCompile Include="StringControl.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
     <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="..\minim-cpp\src\AudioSource.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\FFT.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\FourierTransform.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\Logging.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />

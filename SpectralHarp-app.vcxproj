@@ -275,10 +275,6 @@
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtAudio.h" />
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtError.h" />
     <ClInclude Include="..\..\WDL\rtaudiomidi\RtMidi.h" />
-    <ClInclude Include="..\minim-cpp\src\FourierTransform.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\TickRate.h" />
-    <ClInclude Include="..\minim-cpp\src\ugens\UGen.h" />
-    <ClInclude Include="..\minim-cpp\src\WindowFunction.h" />
     <ClInclude Include="app_wrapper\app_main.h" />
     <ClInclude Include="app_wrapper\app_resource.h" />
     <ClInclude Include="Controls.h" />

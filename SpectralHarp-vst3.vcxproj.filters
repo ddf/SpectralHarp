@@ -41,6 +41,38 @@
       <Filter>vst3</Filter>
     </ClCompile>
     <ClCompile Include="SpectralHarp.cpp" />
+    <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="SpectrumSelection.cpp" />
+    <ClCompile Include="StringControl.cpp" />
+    <ClCompile Include="..\minim-cpp\src\AudioSource.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\FFT.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\FourierTransform.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\Logging.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\SpectralGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
@@ -140,7 +172,6 @@
     <ClInclude Include="..\..\WDL\IPlug\IPlugVST3.h">
       <Filter>vst3</Filter>
     </ClInclude>
-    <ClInclude Include="SpectralHarp.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="vst3">
@@ -172,6 +203,9 @@
     </Filter>
     <Filter Include="vst3\VST3SDK\public.sdk\main">
       <UniqueIdentifier>{ec7b025c-4ef1-4403-956b-b3673b4715b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="minim">
+      <UniqueIdentifier>{e4b6f998-34ed-442c-b8a9-61fe8b08b11f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

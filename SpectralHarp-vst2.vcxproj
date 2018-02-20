@@ -203,6 +203,9 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(x64_LIB_PATHS);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) S:\VST\x64</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Tracer|Win32'">
     <ClCompile>
@@ -241,11 +244,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\WDL\IPlug\IPlugVST.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SpectralHarp.h" />
-    <ClInclude Include="SpectrumSelection.h" />
-    <ClInclude Include="src\Settings.h" />
-    <ClInclude Include="src\SpectralGen.h" />
-    <ClInclude Include="StringControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\IPlug\IPlugVST.cpp" />
@@ -258,6 +256,7 @@
     <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
     <ClCompile Include="src\Settings.cpp" />
