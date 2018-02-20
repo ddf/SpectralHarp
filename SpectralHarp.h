@@ -24,6 +24,9 @@ public:
 	void BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y);
 	virtual void ProcessMidiMsg(IMidiMsg* pMsg) override;
 
+	// catch the About menu item to display what we wants in a box
+	bool HostRequestingAboutBox() override;
+
 private:
 
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
