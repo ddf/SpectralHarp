@@ -29,6 +29,7 @@ private:
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
 	void HandleMidiControlChange(IMidiMsg* pMsg);
 	void Pluck();
+	void SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx);
 
 	float					  mGain;
 	float					  mPluckX;

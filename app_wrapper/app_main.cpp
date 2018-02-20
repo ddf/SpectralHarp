@@ -70,6 +70,14 @@ void UpdateINI()
   WritePrivateProfileString("midi", "inchan", buf, gINIPath);
   sprintf(buf, "%u", gState->mMidiOutChan);
   WritePrivateProfileString("midi", "outchan", buf, gINIPath);
+
+  char controlName[32];
+  for (int i = 0; i < kNumParams; ++i)
+  {
+	  sprintf(buf, "%u", gState->mMidiControlForParam[i]);
+	  sprintf(controlName, "control%u", i);
+	  WritePrivateProfileString("midi", controlName, buf, gINIPath);
+  }
 }
 
 // returns the device name. Core Audio device names are truncated
@@ -770,6 +778,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdPa
         gState->mMidiInChan = GetPrivateProfileInt("midi", "inchan", 0, gINIPath); // 0 is any
         gState->mMidiOutChan = GetPrivateProfileInt("midi", "outchan", 0, gINIPath); // 1 is first chan
 
+		char controlName[32];
+		for (int i = 0; i < kNumParams; ++i)
+		{
+			sprintf(controlName, "control%u", i);
+			gState->mMidiControlForParam[i] = GetPrivateProfileInt("midi", controlName, 0, gINIPath);
+		}
+
         UpdateINI(); // this will write over any invalid values in the file
       }
       else // settings file doesn't exist, so populate with default values
@@ -889,6 +904,13 @@ INT_PTR SWELLAppMain(int msg, INT_PTR parm1, INT_PTR parm2)
 
           gState->mMidiInChan = GetPrivateProfileInt("midi", "inchan", 0, gINIPath); // 0 is any
           gState->mMidiOutChan = GetPrivateProfileInt("midi", "outchan", 0, gINIPath); // 1 is first chan
+
+		  char controlName[32];
+		  for (int i = 0; i < kNumParams; ++i)
+		  {
+			  sprintf(controlName, "control%u", i);
+			  gState->mMidiControlForParam[i] = GetPrivateProfileInt("midi", controlName, 0, gINIPath);
+		  }
 
           UpdateINI(); // this will write over any invalid values in the file
         }

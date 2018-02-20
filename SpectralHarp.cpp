@@ -6,6 +6,10 @@
 #include "SpectrumSelection.h"
 #include "Controls.h"
 
+#if SA_API
+#include "app_wrapper/app_main.h"
+#endif
+
 const int kNumPrograms = 1;
 
 enum ELayout
@@ -273,7 +277,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 			{			
 				if (menu.GetItem(chosen)->GetChecked())
 				{
-					controlChangeForParam[paramIdx1] = (IMidiMsg::EControlChangeMsg)0;
+					SetControlChangeForParam((IMidiMsg::EControlChangeMsg)0, paramIdx1);
 				}
 				else
 				{
@@ -284,7 +288,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 			{
 				if (menu.GetItem(chosen)->GetChecked())
 				{
-					controlChangeForParam[paramIdx2] = (IMidiMsg::EControlChangeMsg)0;
+					SetControlChangeForParam((IMidiMsg::EControlChangeMsg)0, paramIdx2);
 				}
 				else
 				{
@@ -306,7 +310,7 @@ void SpectralHarp::ProcessMidiMsg(IMidiMsg* pMsg)
 		const IMidiMsg::EControlChangeMsg cc = pMsg->ControlChangeIdx();
 		if (midiLearnParamIdx != -1)
 		{
-			controlChangeForParam[midiLearnParamIdx] = cc;
+			SetControlChangeForParam(cc, midiLearnParamIdx);
 			midiLearnParamIdx = -1;
 		}
 
@@ -320,6 +324,13 @@ void SpectralHarp::Reset()
 	IMutexLock lock(this);
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
+
+#if SA_API
+	for (int i = 0; i < kNumParams; ++i)
+	{
+		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)gState->mMidiControlForParam[i];
+	}
+#endif
 }
 
 void SpectralHarp::OnParamChange(int paramIdx)
@@ -398,6 +409,15 @@ void SpectralHarp::Pluck()
 			}
 		}
 	}
+}
+
+void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
+{
+	controlChangeForParam[paramIdx] = cc;
+#if SA_API
+	gState->mMidiControlForParam[paramIdx] = (UInt16)cc;
+	UpdateINI();
+#endif
 }
 
 void SpectralHarp::HandleMidiControlChange(IMidiMsg* pMsg)
