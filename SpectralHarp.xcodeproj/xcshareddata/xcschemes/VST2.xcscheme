@@ -58,6 +58,15 @@
          BundleIdentifier = "com.cockos.reaper"
          FilePath = "/Applications/REAPER.app">
       </PathRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4F20EEC8132C69FE0030E34C"
+            BuildableName = "SpectralHarp.vst"
+            BlueprintName = "VST2"
+            ReferencedContainer = "container:SpectralHarp.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

@@ -7,14 +7,14 @@
 #define BUNDLE_MFR "compartmental"
 #define BUNDLE_NAME "SpectralHarp"
 
-#define PLUG_ENTRY IPlugEffect_Entry
-#define PLUG_VIEW_ENTRY IPlugEffect_ViewEntry
+#define PLUG_ENTRY SpectralHarp_Entry
+#define PLUG_VIEW_ENTRY SpectralHarp_ViewEntry
 
-#define PLUG_ENTRY_STR "IPlugEffect_Entry"
-#define PLUG_VIEW_ENTRY_STR "IPlugEffect_ViewEntry"
+#define PLUG_ENTRY_STR "SpectralHarp_Entry"
+#define PLUG_VIEW_ENTRY_STR "SpectralHarp_ViewEntry"
 
-#define VIEW_CLASS IPlugEffect_View
-#define VIEW_CLASS_STR "IPlugEffect_View"
+#define VIEW_CLASS SpectralHarp_View
+#define VIEW_CLASS_STR "SpectralHarp_View"
 
 // Format        0xMAJR.MN.BG - in HEX! so version 10.1.5 would be 0x000A0105
 #define PLUG_VER 0x00010000

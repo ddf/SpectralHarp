@@ -2358,7 +2358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = "$(AU_FOLDER)";
-				EXPORTED_SYMBOLS_FILE = IPlugEffect.exp;
+				EXPORTED_SYMBOLS_FILE = SpectralHarp.exp;
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
 					"$(AU_DEFS)",
 					"$(inherited)",
@@ -2380,7 +2380,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = "$(AU_FOLDER)";
-				EXPORTED_SYMBOLS_FILE = IPlugEffect.exp;
+				EXPORTED_SYMBOLS_FILE = SpectralHarp.exp;
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
 					"$(AU_DEFS)",
 					"$(inherited)",
@@ -2402,7 +2402,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = "$(AU_FOLDER)";
-				EXPORTED_SYMBOLS_FILE = IPlugEffect.exp;
+				EXPORTED_SYMBOLS_FILE = SpectralHarp.exp;
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
 					"$(AU_DEFS)",
 					"$(inherited)",

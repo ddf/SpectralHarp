@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "5.70/OSX" 1519095025
+<REAPER_PROJECT 0.1 "5.70/OSX" 1519095102
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -107,14 +107,14 @@
     MIDIOUT -1
     MAINSEND 1 0
     <FXCHAIN
-      WNDRECT 7 6 1258 476
+      WNDRECT 0 -51 1258 476
       SHOW 1
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
       <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.vst 0 "" 1399353968
         cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAMAAAAAAAAAAAABAA
-        776t3g3wrd4AAIA/AAAAAAAAgD+rquo+AAAAAAghBDyamXk/TVv4PrOQAj/v7j4/
+        776t3g3wrd4AAIA/AAAAAAAAgD+rquo+AAAAAAAAAAAzMxM/TVv4PulLFz/v7j4/
         LQAtABAAAAA=
       >
       PRESETNAME -
@@ -127,14 +127,6 @@
         ARM 1
         DEFSHAPE 0 -1 -1
         PT 0 0.485 0
-      >
-      <PARMENV 8 0 1 0.5
-        ACT 1 -1
-        VIS 1 1 1
-        LANEHEIGHT 0 0
-        ARM 1
-        DEFSHAPE 0 -1 -1
-        PT 0 0.51 0
       >
       WAK 0
     >
