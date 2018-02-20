@@ -5,7 +5,6 @@
       <Filter>vst2</Filter>
     </ClCompile>
     <ClCompile Include="StringControl.cpp" />
-    <ClCompile Include="src\SpectralGen.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
     <ClCompile Include="Controls.cpp" />
@@ -36,6 +35,7 @@
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp">
       <Filter>minim</Filter>
     </ClCompile>
+    <ClCompile Include="SpectralGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

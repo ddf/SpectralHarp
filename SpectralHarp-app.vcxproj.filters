@@ -49,7 +49,6 @@
     <ClInclude Include="..\..\WDL\IPlug\IPlugStandalone.h">
       <Filter>app</Filter>
     </ClInclude>
-    <ClInclude Include="src\SpectralGen.h" />
     <ClInclude Include="StringControl.h" />
     <ClInclude Include="SpectralHarp.h" />
     <ClInclude Include="SpectrumSelection.h" />
@@ -58,6 +57,7 @@
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="Params.h" />
+    <ClInclude Include="SpectralGen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -84,7 +84,6 @@
     <ClCompile Include="..\..\WDL\IPlug\IPlugStandalone.cpp">
       <Filter>app</Filter>
     </ClCompile>
-    <ClCompile Include="src\SpectralGen.cpp" />
     <ClCompile Include="StringControl.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
@@ -116,6 +115,7 @@
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp">
       <Filter>minim</Filter>
     </ClCompile>
+    <ClCompile Include="SpectralGen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />

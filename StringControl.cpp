@@ -1,5 +1,5 @@
 #include "StringControl.h"
-#include "src/SpectralGen.h"
+#include "SpectralGen.h"
 #include "SpectralHarp.h"
 #include "Params.h"
 

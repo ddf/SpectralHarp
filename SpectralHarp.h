@@ -4,8 +4,9 @@
 #include "IPlug_include_in_plug_hdr.h"
 #include "IMidiQueue.h"
 
-#include "src/SpectralGen.h"
 #include "Params.h"
+
+#include "SpectralGen.h"
 #include "BitCrush.h"
 #include "TickRate.h"
 #include "MoogFilter.h"

@@ -257,9 +257,9 @@
     <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />
     <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="SpectralGen.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
-    <ClCompile Include="src\SpectralGen.cpp" />
     <ClCompile Include="StringControl.cpp" />
   </ItemGroup>
   <ItemGroup>
