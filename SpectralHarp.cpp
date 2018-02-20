@@ -320,8 +320,8 @@ void SpectralHarp::ProcessMidiMsg(IMidiMsg* pMsg)
 			{
 				const double value = pMsg->ControlChange(cc);
 				GetParam(i)->SetNormalized(value);
-				GetGUI()->SetParameterFromPlug(i, value, true);
 				OnParamChange(i);
+				GetGUI()->SetParameterFromPlug(i, GetParam(i)->GetNormalized(), true);
 			}
 		}
 	}
@@ -373,10 +373,24 @@ void SpectralHarp::OnParamChange(int paramIdx)
 
 	case kBandFirst:
 		Settings::BandFirst = (int)GetParam(kBandFirst)->Value();
+		if ( Settings::BandFirst > Settings::BandLast - Settings::BandFirstLastMinDistance )
+		{
+			Settings::BandFirst = Settings::BandLast - Settings::BandFirstLastMinDistance;
+			GetParam(kBandFirst)->Set(Settings::BandFirst);
+			InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
+			GetGUI()->SetParameterFromPlug(kBandFirst, GetParam(kBandFirst)->GetNormalized(), true);
+		}
 		break;
 
 	case kBandLast:
 		Settings::BandLast = (int)GetParam(kBandLast)->Value();
+		if ( Settings::BandLast < Settings::BandFirst + Settings::BandFirstLastMinDistance )
+		{
+			Settings::BandLast = Settings::BandFirst + Settings::BandFirstLastMinDistance;
+			GetParam(kBandLast)->Set(Settings::BandLast);
+			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());
+			GetGUI()->SetParameterFromPlug(kBandLast, GetParam(kBandLast)->GetNormalized(), true);
+		}
 		break;
 
 	case kBandDensity:

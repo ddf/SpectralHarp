@@ -36,6 +36,7 @@ public:
 
 	static int			BandFirst;
 	static int			BandLast;
+	static const int    BandFirstLastMinDistance = 60;
 	// how many strings to show
 	static int   		BandDensity;
     static float        Decay;
