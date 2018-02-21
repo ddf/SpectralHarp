@@ -30,15 +30,22 @@ def main():
       
   
   FullVersionStr = MajorStr + "." + MinorStr + "." + BugfixStr
-  
+ 
   today = datetime.date.today()
-  CFBundleGetInfoString = FullVersionStr + ", Copyright Compartmental, " + str(today.year)
+  CFBundleGetInfoString = FullVersionStr + ", Copyright Damien Quartz, " + str(today.year)
   CFBundleVersion = FullVersionStr
   
   print "update_version.py - setting version to " + FullVersionStr
+
+  print "updating version.txt"
+
+  version = open("version.txt", "w")
+  version.write(FullVersionStr)
+  version.close()
+
   print "Updating plist version info..."
   
-  plistpath = scriptpath + "/resources/IPlugEffect-VST2-Info.plist"
+  plistpath = scriptpath + "/resources/SpectralHarp-VST2-Info.plist"
   vst2 = plistlib.readPlist(plistpath)
   vst2['CFBundleGetInfoString'] = CFBundleGetInfoString
   vst2['CFBundleVersion'] = CFBundleVersion
@@ -46,7 +53,7 @@ def main():
   plistlib.writePlist(vst2, plistpath)
   replacestrs(plistpath, "//Apple//", "//Apple Computer//");
   
-  plistpath = scriptpath + "/resources/IPlugEffect-AU-Info.plist"
+  plistpath = scriptpath + "/resources/SpectralHarp-AU-Info.plist"
   au = plistlib.readPlist(plistpath)
   au['CFBundleGetInfoString'] = CFBundleGetInfoString
   au['CFBundleVersion'] = CFBundleVersion
@@ -54,7 +61,7 @@ def main():
   plistlib.writePlist(au, plistpath)
   replacestrs(plistpath, "//Apple//", "//Apple Computer//");
   
-  plistpath = scriptpath + "/resources/IPlugEffect-VST3-Info.plist"
+  plistpath = scriptpath + "/resources/SpectralHarp-VST3-Info.plist"
   vst3 = plistlib.readPlist(plistpath)
   vst3['CFBundleGetInfoString'] = CFBundleGetInfoString
   vst3['CFBundleVersion'] = CFBundleVersion
@@ -62,7 +69,7 @@ def main():
   plistlib.writePlist(vst3, plistpath)
   replacestrs(plistpath, "//Apple//", "//Apple Computer//");
   
-  plistpath = scriptpath + "/resources/IPlugEffect-OSXAPP-Info.plist"
+  plistpath = scriptpath + "/resources/SpectralHarp-OSXAPP-Info.plist"
   app = plistlib.readPlist(plistpath)
   app['CFBundleGetInfoString'] = CFBundleGetInfoString
   app['CFBundleVersion'] = CFBundleVersion
@@ -70,23 +77,23 @@ def main():
   plistlib.writePlist(app, plistpath)
   replacestrs(plistpath, "//Apple//", "//Apple Computer//");
   
-  plistpath = scriptpath + "/resources/IPlugEffect-RTAS-Info.plist"
-  rtas = plistlib.readPlist(plistpath)
-  rtas['CFBundleGetInfoString'] = CFBundleGetInfoString
-  rtas['CFBundleVersion'] = CFBundleVersion
-  rtas['CFBundleShortVersionString'] = CFBundleVersion
-  plistlib.writePlist(rtas, plistpath)
-  replacestrs(plistpath, "//Apple//", "//Apple Computer//");
+#  plistpath = scriptpath + "/resources/SpectralHarp-RTAS-Info.plist"
+#  rtas = plistlib.readPlist(plistpath)
+#  rtas['CFBundleGetInfoString'] = CFBundleGetInfoString
+#  rtas['CFBundleVersion'] = CFBundleVersion
+#  rtas['CFBundleShortVersionString'] = CFBundleVersion
+#  plistlib.writePlist(rtas, plistpath)
+#  replacestrs(plistpath, "//Apple//", "//Apple Computer//");
   
-  plistpath = scriptpath + "/resources/IPlugEffect-AAX-Info.plist"
-  aax = plistlib.readPlist(plistpath)
-  aax['CFBundleGetInfoString'] = CFBundleGetInfoString
-  aax['CFBundleVersion'] = CFBundleVersion
-  aax['CFBundleShortVersionString'] = CFBundleVersion
-  plistlib.writePlist(aax, plistpath)
-  replacestrs(plistpath, "//Apple//", "//Apple Computer//");
+#  plistpath = scriptpath + "/resources/SpectralHarp-AAX-Info.plist"
+#  aax = plistlib.readPlist(plistpath)
+#  aax['CFBundleGetInfoString'] = CFBundleGetInfoString
+#  aax['CFBundleVersion'] = CFBundleVersion
+#  aax['CFBundleShortVersionString'] = CFBundleVersion
+#  plistlib.writePlist(aax, plistpath)
+#  replacestrs(plistpath, "//Apple//", "//Apple Computer//");
   
-#   plistpath = scriptpath + "/resources/IPlugEffect-IOSAPP-Info.plist"
+#   plistpath = scriptpath + "/resources/SpectralHarp-IOSAPP-Info.plist"
 #   iosapp = plistlib.readPlist(plistpath)
 #   iosapp['CFBundleGetInfoString'] = CFBundleGetInfoString
 #   iosapp['CFBundleVersion'] = CFBundleVersion
@@ -96,10 +103,10 @@ def main():
 
   print "Updating Mac Installer version info..."
   
-  plistpath = scriptpath + "/installer/IPlugEffect.pkgproj"
+  plistpath = scriptpath + "/installer/SpectralHarp.pkgproj"
   installer = plistlib.readPlist(plistpath)
   
-  for x in range(0,6):
+  for x in range(0,5):
     installer['PACKAGES'][x]['PACKAGE_SETTINGS']['VERSION'] = FullVersionStr
   
   plistlib.writePlist(installer, plistpath)
@@ -107,7 +114,7 @@ def main():
   
   print "Updating Windows Installer version info..."
   
-  for line in fileinput.input(scriptpath + "/installer/IPlugEffect.iss",inplace=1):
+  for line in fileinput.input(scriptpath + "/installer/SpectralHarp.iss",inplace=1):
     if "AppVersion" in line:
       line="AppVersion=" + FullVersionStr + "\n"
     sys.stdout.write(line)

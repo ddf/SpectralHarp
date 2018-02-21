@@ -1,4 +1,4 @@
-IPlugEffect changelog
-www.olilarkin.co.uk
+SpectralHarp changelog
+https://damikyu.itch.io/spectralharp
 
-00/00/00 - v1.00 initial release
+02/21/18 - v1.0.0 initial release
