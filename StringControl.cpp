@@ -5,6 +5,17 @@
 
 const float kPadding = 16;
 
+StringControl::StringControl(const SpectralGen& rSpectrum, IPlugBase *pPlug, IRECT pR, int handleRadius, int paramA, int paramB) 
+	: IControl(pPlug, pR)
+	, spectrum(rSpectrum)
+	, mHandleRadius(handleRadius)
+	, mHandleColor(COLOR_WHITE)
+	, stringAnimation(0)
+{
+	AddAuxParam(paramA);
+	AddAuxParam(paramB);
+}
+
 bool StringControl::Draw(IGraphics* pGraphics)
 {
 	//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
@@ -70,10 +81,36 @@ void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 			harp->BeginMIDILearn(GetAuxParam(0)->mParamIdx, GetAuxParam(1)->mParamIdx, x, y);
 		}
 	}
-	else
+	else if ( pMod->L )
 	{
 		mHandleColor = COLOR_BLACK;
 		SnapToMouse(x, y);
+	}
+}
+
+void StringControl::OnMouseUp(int x, int y, IMouseMod* pMod)
+{
+	if (pMod->L)
+	{
+		mHandleColor = COLOR_WHITE;
+	}
+}
+
+void StringControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
+{
+	if (pMod->L)
+	{
+		SnapToMouse(x, y);
+	}
+}
+
+void StringControl::SetDirty(bool pushParamToPlug /*= true*/)
+{
+	mDirty = true;
+
+	if (pushParamToPlug && mPlug)
+	{
+		SetAllAuxParamsFromGUI();
 	}
 }
 
