@@ -80,8 +80,9 @@ void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 void StringControl::SnapToMouse(int x, int y)
 {
 	const float strumX = Map((float)x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1);
+	const float strumY = Map((float)y, mRECT.T, mRECT.B, 1, 0);
 	GetAuxParam(0)->mValue = BOUNDED(strumX, 0, 1);
-	GetAuxParam(1)->mValue = BOUNDED((double)y / (double)mRECT.H(), 0, 1);
+	GetAuxParam(1)->mValue = BOUNDED(strumY, 0, 1);
 
 	SetDirty();
 }
