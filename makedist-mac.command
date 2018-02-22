@@ -24,6 +24,19 @@ PLUGIN_NAME=`echo | grep BUNDLE_NAME resource.h`
 PLUGIN_NAME=${PLUGIN_NAME//\#define BUNDLE_NAME }
 PLUGIN_NAME=${PLUGIN_NAME//\"}
 
+# prompt for whether we should publish to itch after building
+PUBLISH=
+echo "Publish to Itch? (y/n): \c"
+read PUBLISH
+
+BUILD_FOLDER=""
+
+if [ "$PUBLISH" == "y" ] 
+then
+BUILD_FOLDER=$HOME/dev/Builds/$PLUGIN_NAME
+echo "Will publish to $BUILD_FOLDER"
+fi
+
 # work out the paths to the binaries
 
 VST2=`echo | grep VST_FOLDER ../../common.xcconfig`
@@ -39,14 +52,14 @@ APP=`echo | grep APP_FOLDER ../../common.xcconfig`
 APP=${APP//\APP_FOLDER = }/$PLUGIN_NAME.app
 
 # Dev build folder
-RTAS=`echo | grep RTAS_FOLDER ../../common.xcconfig`
-RTAS=${RTAS//\RTAS_FOLDER = }/$PLUGIN_NAME.dpm
-RTAS_FINAL="/Library/Application Support/Digidesign/Plug-Ins/$PLUGIN_NAME.dpm"
+#RTAS=`echo | grep RTAS_FOLDER ../../common.xcconfig`
+#RTAS=${RTAS//\RTAS_FOLDER = }/$PLUGIN_NAME.dpm
+#RTAS_FINAL="/Library/Application Support/Digidesign/Plug-Ins/$PLUGIN_NAME.dpm"
 
 # Dev build folder
-AAX=`echo | grep AAX_FOLDER ../../common.xcconfig`
-AAX=${AAX//\AAX_FOLDER = }/$PLUGIN_NAME.aaxplugin
-AAX_FINAL="/Library/Application Support/Avid/Audio/Plug-Ins/$PLUGIN_NAME.aaxplugin"
+#AAX=`echo | grep AAX_FOLDER ../../common.xcconfig`
+#AAX=${AAX//\AAX_FOLDER = }/$PLUGIN_NAME.aaxplugin
+#AAX_FINAL="/Library/Application Support/Avid/Audio/Plug-Ins/$PLUGIN_NAME.aaxplugin"
 
 PKG="installer/build-mac/$PLUGIN_NAME Installer.pkg"
 PKG_US="installer/build-mac/$PLUGIN_NAME Installer.unsigned.pkg"
@@ -134,13 +147,13 @@ fi
 #---------------------------------------------------------------------------------------------------------
 
 #icon stuff - http://maxao.free.fr/telechargements/setfileicon.gz
-echo "setting icons"
-echo ""
-setfileicon resources/$PLUGIN_NAME.icns $AU
-setfileicon resources/$PLUGIN_NAME.icns $VST2
-setfileicon resources/$PLUGIN_NAME.icns $VST3
-setfileicon resources/$PLUGIN_NAME.icns "${RTAS}"
-setfileicon resources/$PLUGIN_NAME.icns "${AAX}"
+#echo "setting icons"
+#echo ""
+./setfileicon.sh resources/$PLUGIN_NAME.icns $AU
+./setfileicon.sh resources/$PLUGIN_NAME.icns $VST2
+./setfileicon.sh resources/$PLUGIN_NAME.icns $VST3
+#setfileicon resources/$PLUGIN_NAME.icns "${RTAS}"
+#setfileicon resources/$PLUGIN_NAME.icns "${AAX}"
 
 #---------------------------------------------------------------------------------------------------------
 
@@ -151,20 +164,20 @@ strip -x $AU/Contents/MacOS/$PLUGIN_NAME
 strip -x $VST2/Contents/MacOS/$PLUGIN_NAME
 strip -x $VST3/Contents/MacOS/$PLUGIN_NAME
 strip -x $APP/Contents/MacOS/$PLUGIN_NAME
-strip -x "${AAX}/Contents/MacOS/$PLUGIN_NAME"
-strip -x "${RTAS}/Contents/MacOS/$PLUGIN_NAME"
+#strip -x "${AAX}/Contents/MacOS/$PLUGIN_NAME"
+#strip -x "${RTAS}/Contents/MacOS/$PLUGIN_NAME"
 
 #---------------------------------------------------------------------------------------------------------
 
 #ProTools stuff
 
-echo "copying RTAS PLUGIN_NAME from 3PDev to main RTAS folder"
-sudo cp -p -R "${RTAS}" "${RTAS_FINAL}"
+#echo "copying RTAS PLUGIN_NAME from 3PDev to main RTAS folder"
+#sudo cp -p -R "${RTAS}" "${RTAS_FINAL}"
 
-echo "copying AAX PLUGIN_NAME from 3PDev to main AAX folder"
-sudo cp -p -R "${AAX}" "${AAX_FINAL}"
+#echo "copying AAX PLUGIN_NAME from 3PDev to main AAX folder"
+#sudo cp -p -R "${AAX}" "${AAX_FINAL}"
 
-echo "code sign AAX binary"
+#echo "code sign AAX binary"
 #... consult PACE documentation
 
 #---------------------------------------------------------------------------------------------------------
@@ -211,7 +224,7 @@ productsign --sign "Developer ID Installer: ""${CERT_ID}" "${PKG_US}" "${PKG}"
 rm -R -f "${PKG_US}"
 
 #set installer icon
-setfileicon resources/$PLUGIN_NAME.icns "${PKG}"
+./setfileicon.sh resources/$PLUGIN_NAME.icns "${PKG}"
 
 #---------------------------------------------------------------------------------------------------------
 
@@ -255,5 +268,17 @@ sudo rm -R -f installer/build-mac/
 # rm -R installer/dist
 
 #---------------------------------------------------------------------------------------------------------
+# itch
+
+if [ "$BUILD_FOLDER" != "" ] 
+then
+echo "Publishing to Itch..."
+cp -R -v $APP $BUILD_FOLDER/App/
+cp -R -v manual/"$PLUGIN_NAME"_manual.pdf $BUILD_FOLDER/App/
+cp -R -v installer/$PLUGIN_NAME-mac.dmg $BUILD_FOLDER/Installer/
+echo $FULL_VERSION > $BUILD_FOLDER/version.txt
+cd $BUILD_FOLDER
+./publish-itch.command
+fi
 
 echo "done"

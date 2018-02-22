@@ -16,9 +16,7 @@
 				4F78DAF613B6436B0032E0F3 /* PBXTargetDependency */,
 				4F78DAF813B6436B0032E0F3 /* PBXTargetDependency */,
 				4F78DAFA13B6436B0032E0F3 /* PBXTargetDependency */,
-				4F8D4C6313E97B3D004F7633 /* PBXTargetDependency */,
 				4F9828F8140A9F0200F3FCC1 /* PBXTargetDependency */,
-				4F789ED016763E47009EF688 /* PBXTargetDependency */,
 			);
 			name = All;
 			productName = "AllOSX_32&64_intel";
@@ -37,7 +35,6 @@
 		4F3AE1D712C0E5E2001FD7A4 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E41D7E0D14C2D100A0943B /* AudioUnit.framework */; };
 		4F3AE1D812C0E5E2001FD7A4 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E41CC40D14C2B000A0943B /* CoreServices.framework */; };
 		4F3AE1D912C0E5E2001FD7A4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E41CB90D14C2A900A0943B /* CoreAudio.framework */; };
-		4F3B0B44158B50A5001B0CEF /* libAAXLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8B6723158B4EB2002FC25B /* libAAXLibrary.a */; };
 		4F3EE94613B65A350097B791 /* IPlugOSDetect.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3EE94513B65A350097B791 /* IPlugOSDetect.h */; };
 		4F3EE94913B65A350097B791 /* IPlugOSDetect.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F3EE94513B65A350097B791 /* IPlugOSDetect.h */; };
 		4F78D70B13B637340032E0F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F78D62313B637200032E0F3 /* CoreFoundation.framework */; };
@@ -145,35 +142,8 @@
 		4F78DAB913B640530032E0F3 /* RtError.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F78D8C113B63A700032E0F3 /* RtError.h */; };
 		4F78DABA13B640530032E0F3 /* RtMidi.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F78D8C313B63A700032E0F3 /* RtMidi.h */; };
 		4F78DABB13B640620032E0F3 /* IPlugStandalone.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F78D9EA13B63BE90032E0F3 /* IPlugStandalone.h */; };
-		4F79A34E146304CD00744AED /* IPlugProcessAS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A34C146304CD00744AED /* IPlugProcessAS.cpp */; };
-		4F7F5C5013E95EC8002918FD /* swell-gdi.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D0B13B634BF001D0217 /* swell-gdi.mm */; };
-		4F7F5C5113E95EC8002918FD /* IPlugBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8ED13B63BA40032E0F3 /* IPlugBase.cpp */; };
-		4F7F5C5213E95EC8002918FD /* IPlugStructs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8EF13B63BA50032E0F3 /* IPlugStructs.cpp */; };
-		4F7F5C5313E95EC8002918FD /* Hosts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F313B63BA50032E0F3 /* Hosts.cpp */; };
-		4F7F5C5413E95EC8002918FD /* IGraphicsMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F513B63BA50032E0F3 /* IGraphicsMac.mm */; };
-		4F7F5C5513E95EC8002918FD /* IGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F613B63BA50032E0F3 /* IGraphics.cpp */; };
-		4F7F5C5613E95EC8002918FD /* IGraphicsCarbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F713B63BA50032E0F3 /* IGraphicsCarbon.cpp */; };
-		4F7F5C5713E95EC8002918FD /* IGraphicsCocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F813B63BA50032E0F3 /* IGraphicsCocoa.mm */; };
-		4F7F5C5813E95EC8002918FD /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8FB13B63BA50032E0F3 /* Log.cpp */; };
-		4F7F5C5913E95EC8002918FD /* IPopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8FD13B63BA50032E0F3 /* IPopupMenu.cpp */; };
-		4F7F5C5A13E95EC8002918FD /* IParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D90413B63BA50032E0F3 /* IParam.cpp */; };
-		4F7F5C5B13E95EC8002918FD /* IControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D90913B63BA50032E0F3 /* IControl.cpp */; };
-		4F7F5C6213E95EC8002918FD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		4F7F5C6313E95EC8002918FD /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52C4DB180D0E51270007A920 /* Carbon.framework */; };
-		4F7F5C7113E95FB2002918FD /* IPlugRTAS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5C6F13E95FB2002918FD /* IPlugRTAS.cpp */; };
-		4F7F5CAD13E9607A002918FD /* digicode1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5C9C13E9607A002918FD /* digicode1.cpp */; };
-		4F7F5CAE13E9607A002918FD /* digicode2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5C9D13E9607A002918FD /* digicode2.cpp */; };
-		4F7F5CAF13E9607A002918FD /* digicode3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5C9E13E9607A002918FD /* digicode3.cpp */; };
-		4F7F5CB013E9607A002918FD /* IPlugCustomUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5CA013E9607A002918FD /* IPlugCustomUI.cpp */; };
-		4F7F5CB113E9607A002918FD /* IPlugGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5CA313E9607A002918FD /* IPlugGroup.cpp */; };
-		4F7F5CB213E9607A002918FD /* IPlugProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5CA513E9607A002918FD /* IPlugProcess.cpp */; };
-		4F7F5CB313E9607A002918FD /* IPlugProcessRTAS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5CA713E9607A002918FD /* IPlugProcessRTAS.cpp */; };
-		4F7F5CF713E96564002918FD /* System.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F7F5CF613E96564002918FD /* System.framework */; };
-		4F7F5D2C13E9686E002918FD /* IPlugRTAS.r in Rez */ = {isa = PBXBuildFile; fileRef = 4F7F5D2413E9681E002918FD /* IPlugRTAS.r */; };
-		4F8B6766158B4F74002FC25B /* libPluginLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8B674F158B4F53002FC25B /* libPluginLibrary.a */; };
 		4F8D4BCD13E97671004F7633 /* lice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D4BCC13E97664004F7633 /* lice.a */; };
 		4F8D4C2813E9778D004F7633 /* lice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D4BCC13E97664004F7633 /* lice.a */; };
-		4F8D4C2913E97794004F7633 /* lice32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D4C1713E976A7004F7633 /* lice32.a */; };
 		4F8D4C2F13E97806004F7633 /* lice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D4BCC13E97664004F7633 /* lice.a */; };
 		4F9828B7140A9EB700F3FCC1 /* swell-gdi.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D0B13B634BF001D0217 /* swell-gdi.mm */; };
 		4F9828B8140A9EB700F3FCC1 /* IPlugBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8ED13B63BA40032E0F3 /* IPlugBase.cpp */; };
@@ -212,26 +182,6 @@
 		4F9828F6140A9EEE00F3FCC1 /* lice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D4BCC13E97664004F7633 /* lice.a */; };
 		4FA88B931444E4C4006CB8DA /* dfx-au-utilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA88B911444E4C4006CB8DA /* dfx-au-utilities.h */; };
 		4FB3624F13B648FE00DB6B76 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FB3624E13B648FE00DB6B76 /* main.mm */; };
-		4FB600191567CB0A0020189A /* swell-gdi.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D0B13B634BF001D0217 /* swell-gdi.mm */; };
-		4FB6001A1567CB0A0020189A /* IPlugBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8ED13B63BA40032E0F3 /* IPlugBase.cpp */; };
-		4FB6001B1567CB0A0020189A /* IPlugStructs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8EF13B63BA50032E0F3 /* IPlugStructs.cpp */; };
-		4FB6001C1567CB0A0020189A /* Hosts.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F313B63BA50032E0F3 /* Hosts.cpp */; };
-		4FB6001D1567CB0A0020189A /* IGraphicsMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F513B63BA50032E0F3 /* IGraphicsMac.mm */; };
-		4FB6001E1567CB0A0020189A /* IGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F613B63BA50032E0F3 /* IGraphics.cpp */; };
-		4FB6001F1567CB0A0020189A /* IGraphicsCarbon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F713B63BA50032E0F3 /* IGraphicsCarbon.cpp */; };
-		4FB600201567CB0A0020189A /* IGraphicsCocoa.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8F813B63BA50032E0F3 /* IGraphicsCocoa.mm */; };
-		4FB600211567CB0A0020189A /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8FB13B63BA50032E0F3 /* Log.cpp */; };
-		4FB600221567CB0A0020189A /* IPopupMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D8FD13B63BA50032E0F3 /* IPopupMenu.cpp */; };
-		4FB600231567CB0A0020189A /* IParam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D90413B63BA50032E0F3 /* IParam.cpp */; };
-		4FB600241567CB0A0020189A /* IControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F78D90913B63BA50032E0F3 /* IControl.cpp */; };
-		4FB600251567CB0A0020189A /* IBitmapMonoText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA440513F3E4F2000B4551 /* IBitmapMonoText.cpp */; };
-		4FB600261567CB0A0020189A /* AAX_Exports.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F4CC38A1549B91100A9EA21 /* AAX_Exports.cpp */; };
-		4FB600271567CB0A0020189A /* IPlugAAX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F4CC4251549BED600A9EA21 /* IPlugAAX.cpp */; };
-		4FB600281567CB0A0020189A /* IPlugAAX_Describe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F4CC4401549C15500A9EA21 /* IPlugAAX_Describe.cpp */; };
-		4FB600291567CB0A0020189A /* AAX_CIPlugParameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F017360154D4BFC0034BE1A /* AAX_CIPlugParameters.cpp */; };
-		4FB6002C1567CB0A0020189A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		4FB6002D1567CB0A0020189A /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52C4DB180D0E51270007A920 /* Carbon.framework */; };
-		4FB600551567CBF90020189A /* lice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D4BCC13E97664004F7633 /* lice.a */; };
 		4FD16CA213B6327D001D0217 /* app_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16CA013B6327C001D0217 /* app_main.cpp */; };
 		4FD16CA313B6327D001D0217 /* app_dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16CA113B6327C001D0217 /* app_dialog.cpp */; };
 		4FD16CFC13B63468001D0217 /* swell-appstub.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16CFB13B63468001D0217 /* swell-appstub.mm */; };
@@ -251,7 +201,6 @@
 		4FD16D4213B635AB001D0217 /* swell-wnd.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D4113B635AB001D0217 /* swell-wnd.mm */; };
 		4FD16D4413B635B2001D0217 /* swell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D4313B635B2001D0217 /* swell.cpp */; };
 		4FD16D4713B635C8001D0217 /* swellappmain.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4FD16D4613B635C8001D0217 /* swellappmain.mm */; };
-		4FDA440713F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA440513F3E4F2000B4551 /* IBitmapMonoText.cpp */; };
 		4FDA440813F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA440513F3E4F2000B4551 /* IBitmapMonoText.cpp */; };
 		4FDA440913F3E4F2000B4551 /* IBitmapMonoText.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FDA440613F3E4F2000B4551 /* IBitmapMonoText.h */; };
 		4FDA440C13F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA440513F3E4F2000B4551 /* IBitmapMonoText.cpp */; };
@@ -273,10 +222,6 @@
 		77B5A1912034FF810095DF75 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18B2034FF7D0095DF75 /* SpectrumSelection.cpp */; };
 		77B5A1922034FF820095DF75 /* SpectralHarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18A2034FF7D0095DF75 /* SpectralHarp.cpp */; };
 		77B5A1932034FF820095DF75 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18B2034FF7D0095DF75 /* SpectrumSelection.cpp */; };
-		77B5A1942034FF850095DF75 /* SpectralHarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18A2034FF7D0095DF75 /* SpectralHarp.cpp */; };
-		77B5A1952034FF850095DF75 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18B2034FF7D0095DF75 /* SpectrumSelection.cpp */; };
-		77B5A1962034FF850095DF75 /* SpectralHarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18A2034FF7D0095DF75 /* SpectralHarp.cpp */; };
-		77B5A1972034FF850095DF75 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A18B2034FF7D0095DF75 /* SpectrumSelection.cpp */; };
 		77B5A1AD2037815D0095DF75 /* Controls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A1AC2037815D0095DF75 /* Controls.cpp */; };
 		77B5A1AE2037815D0095DF75 /* Controls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A1AC2037815D0095DF75 /* Controls.cpp */; };
 		77B5A1AF2037815D0095DF75 /* Controls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77B5A1AC2037815D0095DF75 /* Controls.cpp */; };
@@ -332,13 +277,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4F3B0B42158B509A001B0CEF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FF7B0F3156A831000E6CB12 /* AAXLibrary.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = AAXLibrary;
-		};
 		4F4AD1F51409A56A0068A6D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F4AD1F11409A56A0068A6D4 /* base.xcodeproj */;
@@ -352,13 +290,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = "lice_32&64_intel";
-		};
-		4F789ECF16763E47009EF688 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4FB600121567CB0A0020189A;
-			remoteInfo = "AAX_32&64_intel";
 		};
 		4F78DAF513B6436B0032E0F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -402,13 +333,6 @@
 			remoteGlobalIDString = B65B09B30860FB0800FE2E6A;
 			remoteInfo = "Plugin Library";
 		};
-		4F8B6764158B4F67002FC25B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4F8B6747158B4F53002FC25B /* PluginLibrary.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B65B09B20860FB0800FE2E6A;
-			remoteInfo = "Plugin Library";
-		};
 		4F8D4BCB13E97664004F7633 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F8D4BC413E97664004F7633 /* lice.xcodeproj */;
@@ -430,26 +354,12 @@
 			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = "lice_32&64_intel";
 		};
-		4F8D4C3713E9783A004F7633 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4F8D4BC413E97664004F7633 /* lice.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 4F8D4BD513E976A7004F7633;
-			remoteInfo = lice_32_intel;
-		};
 		4F8D4C3913E97859004F7633 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F8D4BC413E97664004F7633 /* lice.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = "lice_32&64_intel";
-		};
-		4F8D4C6213E97B3D004F7633 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4F7F5C4213E95EC8002918FD;
-			remoteInfo = RTAS_32_intel;
 		};
 		4F9828AE140A9EB700F3FCC1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -471,13 +381,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4F9828AA140A9EB700F3FCC1;
 			remoteInfo = "VST3_32&64_intel";
-		};
-		4FB6004F1567CB990020189A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4F8D4BC413E97664004F7633 /* lice.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D;
-			remoteInfo = "lice_32&64_intel";
 		};
 		77B5A17E2034FF090095DF75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -652,7 +555,6 @@
 		4F79A34C146304CD00744AED /* IPlugProcessAS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IPlugProcessAS.cpp; path = ../../WDL/IPlug/RTAS/IPlugProcessAS.cpp; sourceTree = "<group>"; };
 		4F79A34D146304CD00744AED /* IPlugProcessAS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPlugProcessAS.h; path = ../../WDL/IPlug/RTAS/IPlugProcessAS.h; sourceTree = "<group>"; };
 		4F7F5C0C13E95DDC002918FD /* SpectralHarp-RTAS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SpectralHarp-RTAS-Info.plist"; path = "resources/SpectralHarp-RTAS-Info.plist"; sourceTree = "<group>"; };
-		4F7F5C6813E95EC8002918FD /* SpectralHarp.dpm */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpectralHarp.dpm; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F7F5C6F13E95FB2002918FD /* IPlugRTAS.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IPlugRTAS.cpp; path = ../../WDL/IPlug/IPlugRTAS.cpp; sourceTree = SOURCE_ROOT; };
 		4F7F5C7013E95FB2002918FD /* IPlugRTAS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IPlugRTAS.h; path = ../../WDL/IPlug/IPlugRTAS.h; sourceTree = SOURCE_ROOT; };
 		4F7F5C9B13E9607A002918FD /* digicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = digicode.h; path = ../../WDL/IPlug/RTAS/digicode.h; sourceTree = "<group>"; };
@@ -680,7 +582,6 @@
 		4FA88B901444E4C4006CB8DA /* dfx-au-utilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "dfx-au-utilities.c"; path = "../../WDL/IPlug/dfx/dfx-au-utilities.c"; sourceTree = SOURCE_ROOT; };
 		4FA88B911444E4C4006CB8DA /* dfx-au-utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dfx-au-utilities.h"; path = "../../WDL/IPlug/dfx/dfx-au-utilities.h"; sourceTree = SOURCE_ROOT; };
 		4FB3624E13B648FE00DB6B76 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = app_wrapper/main.mm; sourceTree = "<group>"; };
-		4FB600331567CB0A0020189A /* SpectralHarp.aaxplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpectralHarp.aaxplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCF15AF133124D1009A6277 /* SpectralHarp.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SpectralHarp.xcconfig; sourceTree = "<group>"; };
 		4FD16A0913B63081001D0217 /* SpectralHarp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpectralHarp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD16C9E13B6327C001D0217 /* app_resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = app_resource.h; path = app_wrapper/app_resource.h; sourceTree = "<group>"; };
@@ -770,18 +671,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F7F5C5F13E95EC8002918FD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F8B6766158B4F74002FC25B /* libPluginLibrary.a in Frameworks */,
-				4F8D4C2913E97794004F7633 /* lice32.a in Frameworks */,
-				4F7F5C6213E95EC8002918FD /* Cocoa.framework in Frameworks */,
-				4F7F5C6313E95EC8002918FD /* Carbon.framework in Frameworks */,
-				4F7F5CF713E96564002918FD /* System.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F9828D7140A9EB700F3FCC1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -790,17 +679,6 @@
 				4F9828D8140A9EB700F3FCC1 /* libbase_stdc++.a in Frameworks */,
 				4F9828DA140A9EB700F3FCC1 /* Cocoa.framework in Frameworks */,
 				4F9828DB140A9EB700F3FCC1 /* Carbon.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FB6002A1567CB0A0020189A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F3B0B44158B50A5001B0CEF /* libAAXLibrary.a in Frameworks */,
-				4FB600551567CBF90020189A /* lice.a in Frameworks */,
-				4FB6002C1567CB0A0020189A /* Cocoa.framework in Frameworks */,
-				4FB6002D1567CB0A0020189A /* Carbon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,8 +767,6 @@
 				4F20EF33132C69FE0030E34C /* SpectralHarp.vst */,
 				4F9828E0140A9EB700F3FCC1 /* SpectralHarp.vst3 */,
 				4F78DB5F13B6462B0032E0F3 /* SpectralHarp.component */,
-				4F7F5C6813E95EC8002918FD /* SpectralHarp.dpm */,
-				4FB600331567CB0A0020189A /* SpectralHarp.aaxplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1584,27 +1460,6 @@
 			productReference = 4F78DB5F13B6462B0032E0F3 /* SpectralHarp.component */;
 			productType = "com.apple.product-type.bundle";
 		};
-		4F7F5C4213E95EC8002918FD /* RTAS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4F7F5C6413E95EC8002918FD /* Build configuration list for PBXNativeTarget "RTAS" */;
-			buildPhases = (
-				4F7F5C4813E95EC8002918FD /* Sources */,
-				4F7F5C5F13E95EC8002918FD /* Frameworks */,
-				4F7F5D3113E9688A002918FD /* Rez */,
-				4F7F5C4313E95EC8002918FD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4F8D4C3813E9783A004F7633 /* PBXTargetDependency */,
-				4F8B6765158B4F67002FC25B /* PBXTargetDependency */,
-			);
-			name = RTAS;
-			productInstallPath = "$(HOME)/Library/Bundles";
-			productName = IPlugExample;
-			productReference = 4F7F5C6813E95EC8002918FD /* SpectralHarp.dpm */;
-			productType = "com.apple.product-type.bundle";
-		};
 		4F9828AA140A9EB700F3FCC1 /* VST3 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F9828DC140A9EB700F3FCC1 /* Build configuration list for PBXNativeTarget "VST3" */;
@@ -1623,26 +1478,6 @@
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = IPlugExample;
 			productReference = 4F9828E0140A9EB700F3FCC1 /* SpectralHarp.vst3 */;
-			productType = "com.apple.product-type.bundle";
-		};
-		4FB600121567CB0A0020189A /* AAX */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4FB6002F1567CB0A0020189A /* Build configuration list for PBXNativeTarget "AAX" */;
-			buildPhases = (
-				4FB600151567CB0A0020189A /* Resources */,
-				4FB600171567CB0A0020189A /* Sources */,
-				4FB6002A1567CB0A0020189A /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4FB600501567CB990020189A /* PBXTargetDependency */,
-				4F3B0B43158B509A001B0CEF /* PBXTargetDependency */,
-			);
-			name = AAX;
-			productInstallPath = "$(HOME)/Library/Bundles";
-			productName = IPlugExample;
-			productReference = 4FB600331567CB0A0020189A /* SpectralHarp.aaxplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		4FD16A0813B63081001D0217 /* APP */ = {
@@ -1710,8 +1545,6 @@
 				4F20EEC8132C69FE0030E34C /* VST2 */,
 				4F9828AA140A9EB700F3FCC1 /* VST3 */,
 				4F3AE17812C0E5E2001FD7A4 /* AU */,
-				4F7F5C4213E95EC8002918FD /* RTAS */,
-				4FB600121567CB0A0020189A /* AAX */,
 			);
 		};
 /* End PBXProject section */
@@ -1804,21 +1637,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F7F5C4313E95EC8002918FD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F9828AF140A9EB700F3FCC1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FB600151567CB0A0020189A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1843,14 +1662,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F78DA0913B63CD90032E0F3 /* IPlugAU.r in Rez */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4F7F5D3113E9688A002918FD /* Rez */ = {
-			isa = PBXRezBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F7F5D2C13E9686E002918FD /* IPlugRTAS.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1949,37 +1760,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4F7F5C4813E95EC8002918FD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4F7F5C5013E95EC8002918FD /* swell-gdi.mm in Sources */,
-				4F7F5C5113E95EC8002918FD /* IPlugBase.cpp in Sources */,
-				4F7F5C5213E95EC8002918FD /* IPlugStructs.cpp in Sources */,
-				4F7F5C5313E95EC8002918FD /* Hosts.cpp in Sources */,
-				4F7F5C5413E95EC8002918FD /* IGraphicsMac.mm in Sources */,
-				4F7F5C5513E95EC8002918FD /* IGraphics.cpp in Sources */,
-				4F7F5C5613E95EC8002918FD /* IGraphicsCarbon.cpp in Sources */,
-				77B5A1952034FF850095DF75 /* SpectrumSelection.cpp in Sources */,
-				4F7F5C5713E95EC8002918FD /* IGraphicsCocoa.mm in Sources */,
-				4F7F5C5813E95EC8002918FD /* Log.cpp in Sources */,
-				4F7F5C5913E95EC8002918FD /* IPopupMenu.cpp in Sources */,
-				4F7F5C5A13E95EC8002918FD /* IParam.cpp in Sources */,
-				4F7F5C5B13E95EC8002918FD /* IControl.cpp in Sources */,
-				4F7F5C7113E95FB2002918FD /* IPlugRTAS.cpp in Sources */,
-				4F7F5CAD13E9607A002918FD /* digicode1.cpp in Sources */,
-				4F7F5CAE13E9607A002918FD /* digicode2.cpp in Sources */,
-				4F7F5CAF13E9607A002918FD /* digicode3.cpp in Sources */,
-				4F7F5CB013E9607A002918FD /* IPlugCustomUI.cpp in Sources */,
-				77B5A1942034FF850095DF75 /* SpectralHarp.cpp in Sources */,
-				4F7F5CB113E9607A002918FD /* IPlugGroup.cpp in Sources */,
-				4F7F5CB213E9607A002918FD /* IPlugProcess.cpp in Sources */,
-				4F7F5CB313E9607A002918FD /* IPlugProcessRTAS.cpp in Sources */,
-				4FDA440713F3E4F2000B4551 /* IBitmapMonoText.cpp in Sources */,
-				4F79A34E146304CD00744AED /* IPlugProcessAS.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		4F9828B5140A9EB700F3FCC1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2030,32 +1810,6 @@
 				4F9828D4140A9EB700F3FCC1 /* conststringtable.cpp in Sources */,
 				4F9828D5140A9EB700F3FCC1 /* funknown.cpp in Sources */,
 				4F9828D6140A9EB700F3FCC1 /* ustring.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4FB600171567CB0A0020189A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4FB600191567CB0A0020189A /* swell-gdi.mm in Sources */,
-				4FB6001A1567CB0A0020189A /* IPlugBase.cpp in Sources */,
-				4FB6001B1567CB0A0020189A /* IPlugStructs.cpp in Sources */,
-				4FB6001C1567CB0A0020189A /* Hosts.cpp in Sources */,
-				4FB6001D1567CB0A0020189A /* IGraphicsMac.mm in Sources */,
-				4FB6001E1567CB0A0020189A /* IGraphics.cpp in Sources */,
-				4FB6001F1567CB0A0020189A /* IGraphicsCarbon.cpp in Sources */,
-				4FB600201567CB0A0020189A /* IGraphicsCocoa.mm in Sources */,
-				4FB600211567CB0A0020189A /* Log.cpp in Sources */,
-				4FB600221567CB0A0020189A /* IPopupMenu.cpp in Sources */,
-				4FB600231567CB0A0020189A /* IParam.cpp in Sources */,
-				77B5A1972034FF850095DF75 /* SpectrumSelection.cpp in Sources */,
-				4FB600241567CB0A0020189A /* IControl.cpp in Sources */,
-				4FB600251567CB0A0020189A /* IBitmapMonoText.cpp in Sources */,
-				4FB600261567CB0A0020189A /* AAX_Exports.cpp in Sources */,
-				77B5A1962034FF850095DF75 /* SpectralHarp.cpp in Sources */,
-				4FB600271567CB0A0020189A /* IPlugAAX.cpp in Sources */,
-				4FB600281567CB0A0020189A /* IPlugAAX_Describe.cpp in Sources */,
-				4FB600291567CB0A0020189A /* AAX_CIPlugParameters.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2113,20 +1867,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4F3B0B43158B509A001B0CEF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AAXLibrary;
-			targetProxy = 4F3B0B42158B509A001B0CEF /* PBXContainerItemProxy */;
-		};
 		4F678B6D13E984B200A6A9BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "lice_32&64_intel";
 			targetProxy = 4F678B6C13E984B200A6A9BB /* PBXContainerItemProxy */;
-		};
-		4F789ED016763E47009EF688 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4FB600121567CB0A0020189A /* AAX */;
-			targetProxy = 4F789ECF16763E47009EF688 /* PBXContainerItemProxy */;
 		};
 		4F78DAF613B6436B0032E0F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2143,30 +1887,15 @@
 			target = 4F3AE17812C0E5E2001FD7A4 /* AU */;
 			targetProxy = 4F78DAF913B6436B0032E0F3 /* PBXContainerItemProxy */;
 		};
-		4F8B6765158B4F67002FC25B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Plugin Library";
-			targetProxy = 4F8B6764158B4F67002FC25B /* PBXContainerItemProxy */;
-		};
 		4F8D4C2D13E977CD004F7633 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "lice_32&64_intel";
 			targetProxy = 4F8D4C2C13E977CD004F7633 /* PBXContainerItemProxy */;
 		};
-		4F8D4C3813E9783A004F7633 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = lice_32_intel;
-			targetProxy = 4F8D4C3713E9783A004F7633 /* PBXContainerItemProxy */;
-		};
 		4F8D4C3A13E97859004F7633 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "lice_32&64_intel";
 			targetProxy = 4F8D4C3913E97859004F7633 /* PBXContainerItemProxy */;
-		};
-		4F8D4C6313E97B3D004F7633 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4F7F5C4213E95EC8002918FD /* RTAS */;
-			targetProxy = 4F8D4C6213E97B3D004F7633 /* PBXContainerItemProxy */;
 		};
 		4F9828AD140A9EB700F3FCC1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2182,11 +1911,6 @@
 			isa = PBXTargetDependency;
 			target = 4F9828AA140A9EB700F3FCC1 /* VST3 */;
 			targetProxy = 4F9828F7140A9F0200F3FCC1 /* PBXContainerItemProxy */;
-		};
-		4FB600501567CB990020189A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "lice_32&64_intel";
-			targetProxy = 4FB6004F1567CB990020189A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2444,156 +2168,6 @@
 			};
 			name = Tracer;
 		};
-		4F7F5C6513E95EC8002918FD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F7F5CAB13E9607A002918FD /* CommonDebugSettings.xcconfig */;
-			buildSettings = {
-				ARCHS = i386;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				DSTROOT = "$(RTAS_FOLDER)";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					$DEBUG_DEFS,
-					"_DEBUG=1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
-					"$(inherited)",
-					"$(RTAS_DEFS)",
-				);
-				GCC_VERSION = "$(COMPILER)";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(ADDITIONAL_INCLUDES)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "resources/IPlugEffect-RTAS-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MacBag = "$(PT9_SDK)/MacBag";
-				OBJROOT = "build-mac";
-				OTHER_CFLAGS = "-fno-inline";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"\"-LlibPluginLibrary\"",
-				);
-				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
-				SYMROOT = "build-mac";
-				VALID_ARCHS = i386;
-				WARNING_CFLAGS = (
-					"-Wno-reorder",
-					"-Wno-four-char-constants",
-				);
-				WRAPPER_EXTENSION = dpm;
-			};
-			name = Debug;
-		};
-		4F7F5C6613E95EC8002918FD /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F7F5CAC13E9607A002918FD /* CommonReleaseSettings.xcconfig */;
-			buildSettings = {
-				ARCHS = i386;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				DEPLOYMENT_POSTPROCESSING = NO;
-				DSTROOT = "$(RTAS_FOLDER)";
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
-					"$(RTAS_DEFS)",
-					"$(inherited)",
-				);
-				GCC_VERSION = "$(COMPILER)";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(ADDITIONAL_INCLUDES)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "resources/IPlugEffect-RTAS-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MacBag = "$(PT9_SDK)/MacBag";
-				OBJROOT = "build-mac";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "$(inherited)";
-				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
-				SYMROOT = "build-mac";
-				VALID_ARCHS = i386;
-				WARNING_CFLAGS = (
-					"-Wno-reorder",
-					"-Wno-four-char-constants",
-				);
-				WRAPPER_EXTENSION = dpm;
-			};
-			name = Release;
-		};
-		4F7F5C6713E95EC8002918FD /* Tracer */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F7F5CAC13E9607A002918FD /* CommonReleaseSettings.xcconfig */;
-			buildSettings = {
-				ARCHS = i386;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
-				DSTROOT = "$(RTAS_FOLDER)";
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
-					"$(inherited)",
-					"$(RTAS_DEFS)",
-				);
-				GCC_VERSION = "$(COMPILER)";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(ADDITIONAL_INCLUDES)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "resources/IPlugEffect-RTAS-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Release\"",
-					"\"$(SRCROOT)/../../PT9_SDK/MacBag/Libs/Debug\"",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				MacBag = "$(PT9_SDK)/MacBag";
-				OBJROOT = "build-mac";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"\"-LlibPluginLibrary\"",
-				);
-				SDKROOT = "$(BASE_SDK)";
-				SYMROOT = "build-mac";
-				VALID_ARCHS = i386;
-				WARNING_CFLAGS = (
-					"-Wno-reorder",
-					"-Wno-four-char-constants",
-				);
-				WRAPPER_EXTENSION = dpm;
-			};
-			name = Tracer;
-		};
 		4F9828DD140A9EB700F3FCC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2645,149 +2219,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/resources/SpectralHarp-VST3-Info.plist";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = vst3;
-			};
-			name = Tracer;
-		};
-		4FB600301567CB0A0020189A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F4CC38C1549B92900A9EA21 /* CommonDebugSettings.xcconfig */;
-			buildSettings = {
-				AAX_SDK_ROOT = "$(AAX_SDK)";
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				DEPLOYMENT_LOCATION = YES;
-				DSTROOT = "$(AAX_FOLDER)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = $IPLUG_PATH/IPlug_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					$DEBUG_DEFS,
-					"_DEBUG=1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
-					"$(AAX_DEFS)",
-					"$(inherited)",
-				);
-				GCC_VERSION = "$(COMPILER)";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(IPLUG_PATH)",
-					"$(ADDITIONAL_INCLUDES)",
-					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
-				);
-				INFOPLIST_FILE = "resources/IPlugEffect-AAX-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Debug",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = (
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
-				);
-				WRAPPER_EXTENSION = aaxplugin;
-			};
-			name = Debug;
-		};
-		4FB600311567CB0A0020189A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F4CC38D1549B92900A9EA21 /* CommonReleaseSettings.xcconfig */;
-			buildSettings = {
-				AAX_SDK_ROOT = "$(AAX_SDK)";
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
-				DEPLOYMENT_POSTPROCESSING = NO;
-				DSTROOT = "$(AAX_FOLDER)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = $IPLUG_PATH/IPlug_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					$RELEASE_DEFS,
-					"_NDEBUG=1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
-					"$(AAX_DEFS)",
-					"$(inherited)",
-				);
-				GCC_VERSION = "$(COMPILER)";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(IPLUG_PATH)",
-					"$(ADDITIONAL_INCLUDES)",
-					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
-				);
-				INFOPLIST_FILE = "resources/IPlugEffect-AAX-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Release",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				PREBINDING = YES;
-				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = (
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
-				);
-				WRAPPER_EXTENSION = aaxplugin;
-			};
-			name = Release;
-		};
-		4FB600321567CB0A0020189A /* Tracer */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F4CC38D1549B92900A9EA21 /* CommonReleaseSettings.xcconfig */;
-			buildSettings = {
-				AAX_SDK_ROOT = "$(AAX_SDK)";
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
-				DEPLOYMENT_POSTPROCESSING = NO;
-				DSTROOT = "$(AAX_FOLDER)";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = $IPLUG_PATH/IPlug_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					$TRACER_DEFS,
-					"_NDEBUG=1",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = (
-					"$(AAX_DEFS)",
-					"$(inherited)",
-				);
-				GCC_VERSION = "$(COMPILER)";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(IPLUG_PATH)",
-					"$(ADDITIONAL_INCLUDES)",
-					"$(inherited)",
-					"$(AAX_SDK)/Interfaces",
-					"$(AAX_SDK)/Interfaces/ACF",
-				);
-				INFOPLIST_FILE = "resources/IPlugEffect-AAX-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(ADDITIONAL_LIBRARY_PATHS)",
-					"$(AAX_SDK)/Libs/Release",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(DEPLOYMENT_TARGET)";
-				SDKROOT = "$(BASE_SDK)";
-				SKIP_INSTALL = NO;
-				WARNING_CFLAGS = (
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-					"-Wno-incompatible-ms-struct",
-				);
-				WRAPPER_EXTENSION = aaxplugin;
 			};
 			name = Tracer;
 		};
@@ -2953,32 +2384,12 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4F7F5C6413E95EC8002918FD /* Build configuration list for PBXNativeTarget "RTAS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4F7F5C6513E95EC8002918FD /* Debug */,
-				4F7F5C6613E95EC8002918FD /* Release */,
-				4F7F5C6713E95EC8002918FD /* Tracer */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		4F9828DC140A9EB700F3FCC1 /* Build configuration list for PBXNativeTarget "VST3" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4F9828DD140A9EB700F3FCC1 /* Debug */,
 				4F9828DE140A9EB700F3FCC1 /* Release */,
 				4F9828DF140A9EB700F3FCC1 /* Tracer */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4FB6002F1567CB0A0020189A /* Build configuration list for PBXNativeTarget "AAX" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4FB600301567CB0A0020189A /* Debug */,
-				4FB600311567CB0A0020189A /* Release */,
-				4FB600321567CB0A0020189A /* Tracer */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

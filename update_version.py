@@ -106,7 +106,7 @@ def main():
   plistpath = scriptpath + "/installer/SpectralHarp.pkgproj"
   installer = plistlib.readPlist(plistpath)
   
-  for x in range(0,5):
+  for x in range(0,4):
     installer['PACKAGES'][x]['PACKAGE_SETTINGS']['VERSION'] = FullVersionStr
   
   plistlib.writePlist(installer, plistpath)
