@@ -24,6 +24,8 @@ SpectralGen::SpectralGen( const int inTimeSize )
     specImag = new float[timeSize];
     inverse  = new float[timeSize];
     output   = new float[timeSize];
+	
+	reset();
 }
 
 SpectralGen::~SpectralGen()
@@ -32,6 +34,22 @@ SpectralGen::~SpectralGen()
     delete [] specImag;
     delete [] inverse;
     delete [] output;
+}
+
+void SpectralGen::reset()
+{
+	memset(specReal, 0, sizeof(float)*timeSize);
+	memset(specImag, 0, sizeof(float)*timeSize);
+	memset(inverse, 0, sizeof(float)*timeSize);
+	memset(output, 0, sizeof(float)*timeSize);
+	
+	for(int i = 0; i < specSize; ++i)
+	{
+		bands[i].struckAmplitude = 0;
+		bands[i].amplitude = 0;
+	}
+	
+	outIndex = 0;
 }
 
 void SpectralGen::uGenerate(float* out, const int numChannels)

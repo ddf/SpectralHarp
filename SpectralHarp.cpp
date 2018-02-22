@@ -78,6 +78,7 @@ float expoEaseOut(float t, float b, float c, float d)
 
 SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
+	, mIsLoading(false)
 	, mGain(1.)
 	, mPluckX(-1)
 	, mPluckY(-1)
@@ -332,8 +333,11 @@ void SpectralHarp::Reset()
 {
 	TRACE;
 	IMutexLock lock(this);
+	specGen.reset();
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
+	mPluckX = -1;
+	mPluckY = -1;
 
 #if SA_API
 	for (int i = 0; i < kNumParams; ++i)
@@ -341,6 +345,17 @@ void SpectralHarp::Reset()
 		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)gState->mMidiControlForParam[i];
 	}
 #endif
+}
+
+int SpectralHarp::UnserializeState(ByteChunk* pChunk, int startPos)
+{
+	TRACE;
+	IMutexLock lock(this);
+	
+	mIsLoading = true;
+	int endPos = UnserializeParams(pChunk, startPos);
+	mIsLoading = false;
+	return endPos;
 }
 
 void SpectralHarp::OnParamChange(int paramIdx)
@@ -396,7 +411,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 
 void SpectralHarp::Pluck()
 {
-	if (mPluckX != -1 && mPluckY != -1)
+	if (!mIsLoading && mPluckX > 0 && mPluckY > 0)
 	{
 		//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
 		const float numBands = (float)GetParam(kBandDensity)->Int();

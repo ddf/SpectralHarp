@@ -18,7 +18,9 @@ class SpectralGen : public Minim::UGen
 public:
     SpectralGen( const int timeSize = kSpectralGenSize );
     virtual ~SpectralGen();
-    
+	
+	void reset();
+	
     inline void  pluck( const int b, const float amp ) { bands[b].pluck(amp); }
     
     inline float getBandMagnitude( const int b ) const { return bands[b].amplitude; }
