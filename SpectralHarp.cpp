@@ -234,8 +234,8 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 		//printf("crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue());
 		bitCrush.bitRate.setLastValue(crush);
 		tickRate.value.setLastValue((float)GetParam(kPitch)->Value() / 100.0f);
-		float decay = Map((float)GetParam(kDecay)->Value(), kDecayMin, kDecayMax, 0.8f, 0.2f);
-		specGen.decayRate.setLastValue(decay*decay);
+		float decay = Map((float)GetParam(kDecay)->Value(), kDecayMin, kDecayMax, 0.35f, 0.025f);
+		specGen.decayRate.setLastValue(decay);
 
 		bitCrush.tick(result, 1);
 #ifdef SA_API

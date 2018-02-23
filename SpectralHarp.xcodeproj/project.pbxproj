@@ -630,6 +630,9 @@
 		77B5A18B2034FF7D0095DF75 /* SpectrumSelection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpectrumSelection.cpp; sourceTree = "<group>"; };
 		77B5A1A6203781460095DF75 /* Controls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Controls.h; sourceTree = "<group>"; };
 		77B5A1AC2037815D0095DF75 /* Controls.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Controls.cpp; sourceTree = "<group>"; };
+		77BE2FDE203F779B0024B3B4 /* Params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Params.h; sourceTree = "<group>"; };
+		77BE2FE52040A80D0024B3B4 /* WindowFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WindowFunction.h; path = "../minim-cpp/src/WindowFunction.h"; sourceTree = "<group>"; };
+		77BE2FE62040A87B0024B3B4 /* FourierTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FourierTransform.h; path = "../minim-cpp/src/FourierTransform.h"; sourceTree = "<group>"; };
 		77DC78ED1EC6197D00104A7C /* AudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioSource.cpp; path = "../minim-cpp/src/AudioSource.cpp"; sourceTree = "<group>"; };
 		77DC78EE1EC6197D00104A7C /* FFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFT.cpp; path = "../minim-cpp/src/FFT.cpp"; sourceTree = "<group>"; };
 		77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FourierTransform.cpp; path = "../minim-cpp/src/FourierTransform.cpp"; sourceTree = "<group>"; };
@@ -702,6 +705,7 @@
 		089C166AFE841209C02AAC07 /* IPlugExample */ = {
 			isa = PBXGroup;
 			children = (
+				77BE2FDE203F779B0024B3B4 /* Params.h */,
 				77AFCFD4203CE96E00BF0F04 /* SpectralGen.cpp */,
 				77AFCFD5203CE96F00BF0F04 /* SpectralGen.h */,
 				77B5A1AC2037815D0095DF75 /* Controls.cpp */,
@@ -1312,6 +1316,8 @@
 		77DC78EA1EC6194600104A7C /* Minim */ = {
 			isa = PBXGroup;
 			children = (
+				77BE2FE62040A87B0024B3B4 /* FourierTransform.h */,
+				77BE2FE52040A80D0024B3B4 /* WindowFunction.h */,
 				77DC792D1EC619DA00104A7C /* WindowFunction.cpp */,
 				77DC78ED1EC6197D00104A7C /* AudioSource.cpp */,
 				77DC78EE1EC6197D00104A7C /* FFT.cpp */,
