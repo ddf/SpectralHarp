@@ -11,19 +11,25 @@
 #include <stdio.h>
 #include <string> // for memset
 
+enum
+{
+	kSpectralMagnitude = 1024
+};
+
 SpectralGen::SpectralGen( const int inTimeSize )
 : UGen()
 , decayRate( *this, CONTROL, 0 )
-, timeSize(inTimeSize)
+, inverseSize(inTimeSize)
 , specSize(inTimeSize/2)
+, outputSize(inTimeSize*2)
 , outIndex(0)
-, windowSize(inTimeSize/2)
+, overlapSize(inTimeSize/2)
 , fft(inTimeSize,44100)
 {
-    specReal = new float[timeSize];
-    specImag = new float[timeSize];
-    inverse  = new float[timeSize];
-    output   = new float[timeSize];
+    specReal = new float[inverseSize];
+    specImag = new float[inverseSize];
+    inverse  = new float[inverseSize];
+    output   = new float[outputSize];
 	
 	reset();
 }
@@ -38,73 +44,64 @@ SpectralGen::~SpectralGen()
 
 void SpectralGen::reset()
 {
-	memset(specReal, 0, sizeof(float)*timeSize);
-	memset(specImag, 0, sizeof(float)*timeSize);
-	memset(inverse, 0, sizeof(float)*timeSize);
-	memset(output, 0, sizeof(float)*timeSize);
+	memset(specReal, 0, sizeof(float)*inverseSize);
+	memset(specImag, 0, sizeof(float)*inverseSize);
+	memset(inverse, 0, sizeof(float)*inverseSize);
+	memset(output, 0, sizeof(float)*outputSize);
 	
 	for(int i = 0; i < specSize; ++i)
 	{
 		bands[i].struckAmplitude = 0;
 		bands[i].amplitude = 0;
+		bands[i].phase = 0;
+		bands[i].phaseStep = M_PI*(i%2);
 	}
 	
 	outIndex = 0;
 }
 
+void SpectralGen::sampleRateChanged()
+{
+}
+
+void SpectralGen::pluck(const int b, const float amp)
+{
+	bands[b].pluck(amp);
+}
+
 void SpectralGen::uGenerate(float* out, const int numChannels)
 {
-    if ( outIndex % windowSize == 0 )
+    if ( outIndex % overlapSize == 0 )
     {
-		// ddf (5/12/17)
-		// now using the same phase for every band because this prevents some of the clicking.
-		// evolving the phase over time never added much to the sound anyhow.
-		const float phase = (float)M_PI*1.5f;
-		const float cosP = cosf(phase);
-		const float sinP = sinf(phase);
-
 		// DQ (2/20/18)
 		// now pull the decay from a UGenInput and pass it in to the band struct instead of using a static var.
 		const float decay = decayRate.getLastValue();
-
-        // this one outside the loop so we don't need an if check around the "top half" assign
-        bands[0].update(decay);
-        specReal[0] = bands[0].amplitude*cosP;
-        specImag[0] = bands[0].amplitude*sinP;
-		specReal[specSize] = specReal[0];
-		specImag[specSize] = -specImag[0];		
-        
-        for( unsigned i = 1; i < specSize; ++i )
+		
+        for( unsigned i = kBandMin; i <= kBandMax; ++i )
         {
             band& b = bands[i];
             b.update(decay);
-            
-            specReal[i] = b.amplitude*cosP;
-            specImag[i] = b.amplitude*sinP;
-            
-            // and the top half
-			specReal[timeSize - i] = specReal[i];
-			specImag[timeSize - i] = -specImag[i];
+			
+			const float x = b.amplitude*cosf(bands[i].phase);
+			const float y = b.amplitude*sinf(bands[i].phase);
+			
+			specReal[i] = kSpectralMagnitude*x;
+			specImag[i] = kSpectralMagnitude*y;
         }
         
         fft.Minim::FourierTransform::inverse(specReal, specImag, inverse);
-        Minim::FourierTransform::HANN.apply( inverse, timeSize );
-        
-        for( int s = 0; s < timeSize; ++s )
+        Minim::FourierTransform::TRIANGULAR.apply( inverse, inverseSize );
+		
+        for( int s = 0; s < inverseSize; ++s )
         {
-            int ind = (s + outIndex) % timeSize;
+            int ind = (s + outIndex) % outputSize;
             
             output[ind] += inverse[s];
-            
-            // soft-clip
-//            static float clipFactor = 2;
-//            static float invClipFactor = 1.f / clipFactor;
-//            output[ind] = invClipFactor * atanf( clipFactor * output[ind] );
         }
     }
     
     UGen::fill(out, output[outIndex], numChannels);
     output[outIndex] = 0;
     
-    outIndex = (outIndex+1)%timeSize;
+    outIndex = (outIndex+1)%outputSize;
 }

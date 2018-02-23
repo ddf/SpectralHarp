@@ -25,8 +25,8 @@ enum EParams
 enum ESettings
 {
 	// settings for the SpectralGen UGen
-	kSpectralAmpMax = 256,
-	kSpectralGenSize = 1024 * 8,
+	kSpectralAmpMax = 1,
+	kSpectralGenSize = 1024*8,
 
 	// settings for kPitch, expressed as percent
 	kPitchMin = 25,

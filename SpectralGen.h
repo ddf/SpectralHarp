@@ -21,17 +21,18 @@ public:
 	
 	void reset();
 	
-    inline void  pluck( const int b, const float amp ) { bands[b].pluck(amp); }
+	void  pluck( const int b, const float amp );
     
     inline float getBandMagnitude( const int b ) const { return bands[b].amplitude; }
-    inline float getBandPhase( const int b ) const { return (float)M_PI*1.5f; }
+	inline float getBandPhase( const int b ) const { return bands[b].phase; }
 	inline float getBandFrequency(const int b) const { return fft.indexToFreq(b); }
     
 	UGenInput decayRate;
     
 protected:
     
-    virtual void uGenerate( float* out, const int numChannels );
+    void uGenerate( float* out, const int numChannels ) override;
+	void sampleRateChanged() override;
     
 private:
     
@@ -41,10 +42,14 @@ private:
         float struckAmplitude;
         // current amplitude
         float amplitude;
+		float phase;
+		float phaseStep;
         
         band()
         : struckAmplitude(0)
         , amplitude(0)
+		, phase(0)
+		, phaseStep(0)
         {
 
         }
@@ -58,25 +63,36 @@ private:
         {
             const float d     = struckAmplitude*decay;
             amplitude         = amplitude-d > 0 ? amplitude-d : 0;
+			phase += phaseStep;
         }
         
     };
     
     band bands[kSpectralGenSize/2];
-    
+	
     // used for synthesis
     Minim::FFT  fft;
     
     // spectrum information
     float*  specReal;
     float*  specImag;
-    
-    int     timeSize;
+	
+	// buffer we write into when performing the ifft
+	float*  inverse;
+	// circular output buffer that we add into after synthesizing into inverse
+	float*  output;
+	// where we should next read from output
+	int     outIndex;
+	
+	// how big is the output buffer
+	int     outputSize;
+	// how big is the inverse buffer (specReal and specImag are also this size)
+	int     inverseSize;
+	// how many "positive" frequency bands in the fft (always timeSize/2)
     int     specSize;
-    int     windowSize;
-    int     outIndex;
-    float*  output;
-    float*  inverse;
+	// how many samples we overlap our generated samples
+	// (ie every overlapSize samples we update our plucked bands and synthesize into inverse)
+    int     overlapSize;
 };
 
 #endif

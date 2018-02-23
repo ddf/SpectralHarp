@@ -429,6 +429,7 @@ void SpectralHarp::Pluck()
 				{
 					float normY = pluckY / 100.0f;
 					float mag = Map(normY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);
+					//printf("plucked %f\n", specGen.getBandFrequency(bindx));
 					specGen.pluck(bindx, mag);
 				}
 			}
