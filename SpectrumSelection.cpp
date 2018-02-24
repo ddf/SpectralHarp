@@ -118,8 +118,16 @@ void SpectrumSelection::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMo
 			handles[kDragLeft].R = handle.L + handleWidth / 2;
 			handles[kDragRight].L = handle.R - handleWidth / 2;
 			handles[kDragRight].R = handle.R + handleWidth / 2;
-			SetParamFromHandle(kDragLeft);
-			SetParamFromHandle(kDragRight);
+			if ( dX > 0 )
+			{
+				SetParamFromHandle(kDragRight);
+				SetParamFromHandle(kDragLeft);
+			}
+			else
+			{
+				SetParamFromHandle(kDragLeft);
+				SetParamFromHandle(kDragRight);
+			}
 			break;
 				
 		default: break;

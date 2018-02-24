@@ -634,6 +634,7 @@
 		77BE2FE52040A80D0024B3B4 /* WindowFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WindowFunction.h; path = "../minim-cpp/src/WindowFunction.h"; sourceTree = "<group>"; };
 		77BE2FE62040A87B0024B3B4 /* FourierTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FourierTransform.h; path = "../minim-cpp/src/FourierTransform.h"; sourceTree = "<group>"; };
 		77BE2FE72040C0470024B3B4 /* MoogFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MoogFilter.cpp; path = "../minim-cpp/src/ugens/MoogFilter.cpp"; sourceTree = "<group>"; };
+		77BE2FEC2040E21F0024B3B4 /* FFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FFT.h; path = "../minim-cpp/src/FFT.h"; sourceTree = "<group>"; };
 		77DC78ED1EC6197D00104A7C /* AudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioSource.cpp; path = "../minim-cpp/src/AudioSource.cpp"; sourceTree = "<group>"; };
 		77DC78EE1EC6197D00104A7C /* FFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFT.cpp; path = "../minim-cpp/src/FFT.cpp"; sourceTree = "<group>"; };
 		77DC78EF1EC6197D00104A7C /* FourierTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FourierTransform.cpp; path = "../minim-cpp/src/FourierTransform.cpp"; sourceTree = "<group>"; };
@@ -1316,6 +1317,7 @@
 		77DC78EA1EC6194600104A7C /* Minim */ = {
 			isa = PBXGroup;
 			children = (
+				77BE2FEC2040E21F0024B3B4 /* FFT.h */,
 				77BE2FE72040C0470024B3B4 /* MoogFilter.cpp */,
 				77BE2FE62040A87B0024B3B4 /* FourierTransform.h */,
 				77BE2FE52040A80D0024B3B4 /* WindowFunction.h */,

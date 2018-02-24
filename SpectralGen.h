@@ -21,11 +21,10 @@ public:
 	
 	void reset();
 	
-	void  pluck( const int b, const float amp );
-    
-    inline float getBandMagnitude( const int b ) const { return bands[b].amplitude; }
-	inline float getBandPhase( const int b ) const { return bands[b].phase; }
-	inline float getBandFrequency(const int b) const { return fft.indexToFreq(b); }
+	void  pluck( const float freq, const float amp );
+	
+	float getBandMagnitude( const float freq ) const;
+	float getBandPhase( const float freq ) const;
     
 	UGenInput decayRate;
     
@@ -68,7 +67,7 @@ private:
         
     };
     
-    band bands[kSpectralGenSize/2];
+	band* bands;
 	
     // used for synthesis
     Minim::FFT  fft;

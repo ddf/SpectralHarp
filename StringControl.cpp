@@ -26,10 +26,10 @@ bool StringControl::Draw(IGraphics* pGraphics)
     {
         for (int b = 0; b <= numBands; ++b)
         {
-            const int bindx = (int)roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
+            const float freq = roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
             const float x = Map((float)b, 0, numBands, mRECT.L + kPadding, mRECT.R - kPadding);
-            const float p = spectrum.getBandPhase(bindx) + stringAnimation;
-            const float m = spectrum.getBandMagnitude(bindx);
+            const float p = spectrum.getBandPhase(freq) + stringAnimation;
+            const float m = spectrum.getBandMagnitude(freq);
 
             const int g = (int)(255.f * Map(m, 0, kSpectralAmpMax, 0.4f, 1.f));
             const IColor color(255, g, g, g);

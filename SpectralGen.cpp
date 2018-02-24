@@ -26,6 +26,7 @@ SpectralGen::SpectralGen( const int inTimeSize )
 , overlapSize(inTimeSize/2)
 , fft(inTimeSize,44100)
 {
+	bands    = new band[specSize];
     specReal = new float[inverseSize];
     specImag = new float[inverseSize];
     inverse  = new float[inverseSize];
@@ -36,6 +37,7 @@ SpectralGen::SpectralGen( const int inTimeSize )
 
 SpectralGen::~SpectralGen()
 {
+	delete [] bands;
     delete [] specReal;
     delete [] specImag;
     delete [] inverse;
@@ -62,11 +64,28 @@ void SpectralGen::reset()
 
 void SpectralGen::sampleRateChanged()
 {
+	fft.setSampleRate(sampleRate());
 }
 
-void SpectralGen::pluck(const int b, const float amp)
+void SpectralGen::pluck(const float freq, const float amp)
 {
-	bands[b].pluck(amp);
+	const int b = fft.freqToIndex(freq);
+	if ( b >= 0 && b < specSize )
+	{
+		bands[b].pluck(amp);
+	}
+}
+
+float SpectralGen::getBandPhase(const float freq) const
+{
+	const int b = fft.freqToIndex(freq);
+	return b>=0 && b<specSize ? bands[b].phase : 0;
+}
+
+float SpectralGen::getBandMagnitude(const float freq) const
+{
+	const int b = fft.freqToIndex(freq);
+	return b>=0 && b<specSize ? bands[b].amplitude : 0;
 }
 
 void SpectralGen::uGenerate(float* out, const int numChannels)
@@ -77,7 +96,7 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		// now pull the decay from a UGenInput and pass it in to the band struct instead of using a static var.
 		const float decay = decayRate.getLastValue();
 		
-        for( unsigned i = kBandMin; i <= kBandMax; ++i )
+        for( unsigned i = 0; i < specSize; ++i )
         {
             band& b = bands[i];
             b.update(decay);

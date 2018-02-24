@@ -198,13 +198,7 @@ SpectralHarp::~SpectralHarp() {}
 void SpectralHarp::InitBandParam(const char * name, const int paramIdx, const int defaultValue)
 {
 	IParam* param = GetParam(paramIdx);
-	param->InitInt(name, defaultValue, kBandMin, kBandMax);
-	char display[32];
-	for (int i = kBandMin; i <= kBandMax; ++i)
-	{
-		sprintf(display, "%d Hz", (int)specGen.getBandFrequency(i));
-		param->SetDisplayText(i, display);
-	}
+	param->InitInt(name, defaultValue, kBandMin, kBandMax, "Hz");
 }
 
 void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
@@ -423,14 +417,14 @@ void SpectralHarp::Pluck()
 			const float pluckY = (float)GetParam(kPluckY)->Value();
 			for (int b = 0; b <= numBands; ++b)
 			{
-				const int bindx = (int)roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
-				float normBand = Map((float)bindx, bandFirst, bandLast, 0, 100);
+				const float freq = roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
+				float normBand = Map((float)freq, bandFirst, bandLast, 0, 100);
 				if (fabs(normBand - pluckX) < 0.5f)
 				{
 					float normY = pluckY / 100.0f;
 					float mag = Map(normY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);
 					//printf("plucked %f\n", specGen.getBandFrequency(bindx));
-					specGen.pluck(bindx, mag);
+					specGen.pluck(freq, mag);
 				}
 			}
 		}

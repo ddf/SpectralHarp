@@ -16,8 +16,11 @@ enum EParams
 	// params for the xy pad that can be used to "strum"
 	kPluckX,
 	kPluckY,
+	// frequency of the first strummable string
 	kBandFirst,
+	// frequency of the last strummable string
 	kBandLast,
+	// how many strings available for strumming
 	kBandDensity,
 	kNumParams
 };
@@ -44,9 +47,9 @@ enum ESettings
 	kCrushDefault = kCrushMin,
 
 	// settings for kBandFirst and kBandLast params
-	kBandMin = 12,
-	kBandMax = (int)(kSpectralGenSize * 0.3),
-	kBandMinDistance = 60,
+	kBandMin = 64,
+	kBandMax = 13000,
+	kBandMinDistance = 256,
 
 	kBandFirstDefault = kBandMin,
 	kBandLastDefault = kBandMax,
