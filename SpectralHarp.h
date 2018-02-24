@@ -9,7 +9,6 @@
 #include "SpectralGen.h"
 #include "BitCrush.h"
 #include "TickRate.h"
-#include "MoogFilter.h"
 
 class SpectralHarp : public IPlug
 {
@@ -44,7 +43,6 @@ private:
 	SpectralGen               specGen;
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;
-	Minim::MoogFilter         highPass;
 
 	// if not -1 when we receive a control change midi message
 	// we use this to determine which param should be linked to the control change

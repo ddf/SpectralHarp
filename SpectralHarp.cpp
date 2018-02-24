@@ -85,7 +85,6 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
-	, highPass(30, 0, Minim::MoogFilter::HP)
 	, midiLearnParamIdx(-1)
 {
 	TRACE;
