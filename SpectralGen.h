@@ -16,7 +16,7 @@
 class SpectralGen : public Minim::UGen
 {
 public:
-    SpectralGen( const int timeSize = kSpectralGenSize );
+    SpectralGen();
     virtual ~SpectralGen();
 	
 	void reset();
@@ -30,6 +30,7 @@ public:
     
 protected:
     
+	void cleanup();
     void uGenerate( float* out, const int numChannels ) override;
 	void sampleRateChanged() override;
     
@@ -55,7 +56,7 @@ private:
 	band* bands;
 	
     // used for synthesis
-    Minim::FFT  fft;
+    Minim::FFT*  fft;
     
     // spectrum information
     float*  specReal;
@@ -79,6 +80,8 @@ private:
     int     overlapSize;
 	// whether we should adjust the phase of odd bands in the next buffer generation step
 	bool 	adjustOddPhase;
+	// the fixed magnitude we use to scale up bands before performing the inverse
+	int    spectralMagnitude;
 };
 
 #endif

@@ -203,6 +203,8 @@ void SpectralHarp::InitBandParam(const char * name, const int paramIdx, const in
 void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
 {
 	// Mutex is already locked for us.
+	const double crushBegin = GetSampleRate();
+	const double crushChange = 100 - crushBegin;
 
 	double* in1 = inputs[0];
 	double* in2 = inputs[1];
@@ -223,7 +225,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 		}
 
 		const float t = (float)GetParam(kCrush)->Value();
-		const float crush = expoEaseOut(t, 44100, -43100, kCrushMax - kCrushMin);
+		const float crush = expoEaseOut(t, crushBegin, crushChange, kCrushMax - kCrushMin);
 		const float rate = (float)GetParam(kPitch)->Value() / 100.0f;
 		// convert milliseconds to fractional seconds
 		const float decay = (float)GetParam(kDecay)->Int() / 1000.0f;
