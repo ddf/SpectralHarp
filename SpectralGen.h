@@ -42,13 +42,11 @@ private:
 		// current decay of the band (0-1), scales amplitude
 		float decay;
 		float phase;
-		float phaseStep;
         
         band()
         : amplitude(0)
 		, decay(0)
 		, phase(0)
-		, phaseStep(0)
         {
 
         }
@@ -79,6 +77,8 @@ private:
 	// how many samples we overlap our generated samples
 	// (ie every overlapSize samples we update our plucked bands and synthesize into inverse)
     int     overlapSize;
+	// whether we should adjust the phase of odd bands in the next buffer generation step
+	bool 	adjustOddPhase;
 };
 
 #endif

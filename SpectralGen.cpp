@@ -10,6 +10,7 @@
 #include "FourierTransform.h"
 #include <stdio.h>
 #include <string> // for memset
+#include <random>
 
 enum
 {
@@ -25,6 +26,7 @@ SpectralGen::SpectralGen( const int inTimeSize )
 , outIndex(0)
 , overlapSize(inTimeSize/2)
 , fft(inTimeSize,44100)
+, adjustOddPhase(false)
 {
 	bands    = new band[specSize];
     specReal = new float[inverseSize];
@@ -51,14 +53,21 @@ void SpectralGen::reset()
 	memset(inverse, 0, sizeof(float)*inverseSize);
 	memset(output, 0, sizeof(float)*outputSize);
 	
+	// we give each band a random phase to minimize interference
+	// when there are lots of active bands.
+	// ie this sounds nicer than if all bands start with a phase of 0.
+	std::random_device rd;  //Will be used to obtain a seed for the random number engine
+	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+	std::uniform_real_distribution<> dis(0, M_PI*2);
+	
 	for(int i = 0; i < specSize; ++i)
 	{
 		bands[i].amplitude = 0;
-		bands[i].phase = 0;
-		bands[i].phaseStep = M_PI*(i%2);
+		bands[i].phase = dis(gen);
 	}
 	
 	outIndex = 0;
+	adjustOddPhase = false;
 }
 
 void SpectralGen::sampleRateChanged()
@@ -107,10 +116,12 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
         {
             band& b = bands[i];
 			b.decay = b.decay > decayDec ? b.decay - decayDec : 0;
-			b.phase += b.phaseStep;
-			
-			const float x = b.decay*b.amplitude*cosf(bands[i].phase);
-			const float y = b.decay*b.amplitude*sinf(bands[i].phase);
+			// ODD bands need to step phase by 90 degrees every other generation
+			// because our overlap is half the size of the buffer generated.
+			// this ensure that phase lines up for those sinusoids in every buffer.
+			const float p = adjustOddPhase && i%2==1 ? b.phase + M_PI : b.phase;
+			const float x = b.decay*b.amplitude*cosf(p);
+			const float y = b.decay*b.amplitude*sinf(p);
 			
 			specReal[i] = kSpectralMagnitude*x;
 			specImag[i] = kSpectralMagnitude*y;
@@ -125,6 +136,8 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
             
             output[ind] += inverse[s];
         }
+		
+		adjustOddPhase = !adjustOddPhase;
     }
     
     UGen::fill(out, output[outIndex], numChannels);
