@@ -345,7 +345,6 @@ if exist "%programfiles(x86)%" (copy /y "$(TargetPath)" "$(VST3_64_PATH)\IPlugEf
     <ClCompile Include="..\minim-cpp\src\FourierTransform.cpp" />
     <ClCompile Include="..\minim-cpp\src\Logging.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\BitCrush.cpp" />
-    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp" />
     <ClCompile Include="..\minim-cpp\src\ugens\UGen.cpp" />
     <ClCompile Include="..\minim-cpp\src\WindowFunction.cpp" />

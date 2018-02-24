@@ -59,9 +59,6 @@
     <ClCompile Include="..\minim-cpp\src\Logging.cpp">
       <Filter>minim</Filter>
     </ClCompile>
-    <ClCompile Include="..\minim-cpp\src\ugens\MoogFilter.cpp">
-      <Filter>minim</Filter>
-    </ClCompile>
     <ClCompile Include="..\minim-cpp\src\ugens\TickRate.cpp">
       <Filter>minim</Filter>
     </ClCompile>
