@@ -102,7 +102,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kPitch)->InitDouble("Pitch", kPitchDefault, kPitchMin, kPitchMax, 0.1, "%");
 	GetParam(kPitch)->SetShape(1.);
 
-	GetParam(kDecay)->InitDouble("Decay", kDecayDefault, kDecayMin, kDecayMax, 0.1, "%");
+	GetParam(kDecay)->InitInt("Decay", kDecayDefault, kDecayMin, kDecayMax, "ms");
 	GetParam(kDecay)->SetShape(1.);
 
 	GetParam(kCrush)->InitDouble("Crush", kCrushDefault, kCrushMin, kCrushMax, 0.1, "%");
@@ -225,11 +225,14 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 
 		const float t = (float)GetParam(kCrush)->Value();
 		const float crush = expoEaseOut(t, 44100, -43100, kCrushMax - kCrushMin);
+		const float rate = (float)GetParam(kPitch)->Value() / 100.0f;
+		// convert milliseconds to fractional seconds
+		const float decay = (float)GetParam(kDecay)->Int() / 1000.0f;
 		//printf("crush with rate %f and depth %f\n", crush, bitCrush.bitRes.getLastValue());
 		bitCrush.bitRate.setLastValue(crush);
-		tickRate.value.setLastValue((float)GetParam(kPitch)->Value() / 100.0f);
-		float decay = Map((float)GetParam(kDecay)->Value(), kDecayMin, kDecayMax, 0.35f, 0.025f);
-		specGen.decayRate.setLastValue(decay);
+		tickRate.value.setLastValue(rate);
+		// slower tick rate means we have to decrease decay by same ratio so Pitch doesn't change Decay duration
+		specGen.decay.setLastValue(decay * rate);
 
 		bitCrush.tick(result, 1);
 #ifdef SA_API

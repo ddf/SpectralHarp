@@ -26,7 +26,7 @@ public:
 	float getBandMagnitude( const float freq ) const;
 	float getBandPhase( const float freq ) const;
     
-	UGenInput decayRate;
+	UGenInput decay;
     
 protected:
     
@@ -37,34 +37,21 @@ private:
     
     struct band
     {
-        // amplitude applied on strum
-        float struckAmplitude;
-        // current amplitude
+        // the amplitude of the band
         float amplitude;
+		// current decay of the band (0-1), scales amplitude
+		float decay;
 		float phase;
 		float phaseStep;
         
         band()
-        : struckAmplitude(0)
-        , amplitude(0)
+        : amplitude(0)
+		, decay(0)
 		, phase(0)
 		, phaseStep(0)
         {
 
         }
-        
-        inline void pluck( const float amp )
-        {
-            amplitude = struckAmplitude = amp;
-        }
-        
-        inline void update( const float decay )
-        {
-            const float d     = struckAmplitude*decay;
-            amplitude         = amplitude-d > 0 ? amplitude-d : 0;
-			phase += phaseStep;
-        }
-        
     };
     
 	band* bands;

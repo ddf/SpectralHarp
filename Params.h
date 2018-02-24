@@ -32,14 +32,14 @@ enum ESettings
 	kSpectralGenSize = 1024*8,
 
 	// settings for kPitch, expressed as percent
-	kPitchMin = 25,
+	kPitchMin = 50,
 	kPitchMax = 100,
 	kPitchDefault = kPitchMax,
 
-	// settings for kDecay, expressed as percent
-	kDecayMin = 0,
-	kDecayMax = 100,
-	kDecayDefault = 50,
+	// settings for kDecay, expressed in milliseconds
+	kDecayMin = 150,
+	kDecayMax = 5000,
+	kDecayDefault = 500,
 
 	// settings for kCrush, expressed as percent
 	kCrushMin = 0,

@@ -18,7 +18,7 @@ enum
 
 SpectralGen::SpectralGen( const int inTimeSize )
 : UGen()
-, decayRate( *this, CONTROL, 0 )
+, decay( *this, CONTROL, 0 )
 , inverseSize(inTimeSize)
 , specSize(inTimeSize/2)
 , outputSize(inTimeSize*2)
@@ -53,7 +53,6 @@ void SpectralGen::reset()
 	
 	for(int i = 0; i < specSize; ++i)
 	{
-		bands[i].struckAmplitude = 0;
 		bands[i].amplitude = 0;
 		bands[i].phase = 0;
 		bands[i].phaseStep = M_PI*(i%2);
@@ -72,7 +71,8 @@ void SpectralGen::pluck(const float freq, const float amp)
 	const int b = fft.freqToIndex(freq);
 	if ( b >= 0 && b < specSize )
 	{
-		bands[b].pluck(amp);
+		bands[b].amplitude = amp;
+		bands[b].decay = 1;
 	}
 }
 
@@ -85,7 +85,7 @@ float SpectralGen::getBandPhase(const float freq) const
 float SpectralGen::getBandMagnitude(const float freq) const
 {
 	const int b = fft.freqToIndex(freq);
-	return b>=0 && b<specSize ? bands[b].amplitude : 0;
+	return b>=0 && b<specSize ? bands[b].amplitude*bands[b].decay : 0;
 }
 
 void SpectralGen::uGenerate(float* out, const int numChannels)
@@ -94,15 +94,23 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
     {
 		// DQ (2/20/18)
 		// now pull the decay from a UGenInput and pass it in to the band struct instead of using a static var.
-		const float decay = decayRate.getLastValue();
+		// this is in seconds, we need to convert to a fixed amount we can subtract from each band's amplitude,
+		// which depends on sample rate and overlap size.
+		const float decaySeconds = decay.getLastValue();
+		// amplitude needs to decrease by 1 / (decaySeconds * sampleRate()) every sample.
+		// eg decaySeconds == 1 -> 1 / sampleRate()
+		//    decaySeconds == 0.5 -> 1 / (0.5 * sampleRate), which is twice as fast, equivalent to 2 / sampleRate()
+		// since we generate a new buffer every overlapSize samples, we multiply that rate by overlapSize, giving:
+		const float decayDec = overlapSize / (decaySeconds * sampleRate());
 		
         for( unsigned i = 0; i < specSize; ++i )
         {
             band& b = bands[i];
-            b.update(decay);
+			b.decay = b.decay > decayDec ? b.decay - decayDec : 0;
+			b.phase += b.phaseStep;
 			
-			const float x = b.amplitude*cosf(bands[i].phase);
-			const float y = b.amplitude*sinf(bands[i].phase);
+			const float x = b.decay*b.amplitude*cosf(bands[i].phase);
+			const float y = b.decay*b.amplitude*sinf(bands[i].phase);
 			
 			specReal[i] = kSpectralMagnitude*x;
 			specImag[i] = kSpectralMagnitude*y;
