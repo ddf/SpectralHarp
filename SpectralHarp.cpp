@@ -55,6 +55,8 @@ enum ELayout
 static const IColor backColor = IColor(255, 20, 20, 20);
 // rectangular panel behind the knobs
 static const IColor panelColor = IColor(255, 30, 30, 30);
+// color of shadow cast on strings by the knob panel
+static const IColor shadowColor = IColor(200, 10, 10, 10);
 // text color for labels under the knobs
 static const IColor labelColor = IColor(255, 200, 200, 200);
 #ifdef OS_WIN
@@ -123,23 +125,26 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	IText captionText = IText(labelSize, &labelColor);
 
+	IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
+	pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10, kPluckX, kPluckY));
+
+	IRECT stringShadowRect = IRECT(0, kPluckPadHeight - 5, kWidth, kPluckPadHeight);
+	pGraphics->AttachControl(new IPanelControl(this, stringShadowRect, &shadowColor));
+
 	pGraphics->AttachControl(new IPanelControl(this, IRECT(0, kPluckPadHeight, kWidth, kHeight), &panelColor));
 
-	// strumming area
+	// string Hz labels
 	{
-		IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
-		pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10, kPluckX, kPluckY));
-
 		IText bandLabel = captionText;
 		const int capMargin = 14;
 		strumRect.B += kPluckPadSpaceBottom;
 		bandLabel.mAlign = IText::kAlignNear;
 		IRECT lowBandRect = IRECT(strumRect.L + capMargin, strumRect.B, strumRect.L + kCaptionW + capMargin, strumRect.B + 25);
-		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel, false));
+		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel, true));
 
 		bandLabel.mAlign = IText::kAlignFar;
 		IRECT highBandRect = IRECT(strumRect.R - kCaptionW - capMargin, strumRect.B, strumRect.R - capMargin, strumRect.B + 25);
-		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel, false));
+		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel, true));
 	}
 
 	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kVolumeX), kVolume, &knobColor, &knobColor, kKnobCorona));
