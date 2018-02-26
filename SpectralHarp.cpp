@@ -49,6 +49,9 @@ enum ELayout
 	kCaptionT = kKnob_Y + 50,
 	kCaptionB = kCaptionT + 15,
 	kCaptionW = 50,
+	
+	kTitleRightMargin = 10,
+	kTitleBottomMargin = 15
 };
 
 // background of entire window
@@ -63,6 +66,15 @@ static const IColor labelColor = IColor(255, 200, 200, 200);
 static const int    labelSize  = 12;
 #else
 static const int    labelSize  = 14;
+#endif
+// text style
+static const IColor titleColor = IColor(255, 60, 60, 60);
+static const int titleSize = 16;
+static const char * titleString = PLUG_NAME " " VST3_VER_STR;
+#if defined(OS_WIN)
+static char* titleFontName = "Segoe UI";
+#else
+static char* titleFontName = "Helvetica Neue";
 #endif
 
 // spectrum selection colors
@@ -180,6 +192,17 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kCrushX), kCrush, &knobColor, &knobColor, kKnobCorona));
 	pGraphics->AttachControl(new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), &captionText, "Crush"));
+	
+	// logooo
+	
+	IText titleText( titleSize, &titleColor, titleFontName );
+	titleText.mAlign = IText::kAlignFar;
+	IRECT titleRect( GUI_WIDTH - kTitleRightMargin - 10,
+					GUI_HEIGHT - kTitleBottomMargin - 10,
+					GUI_WIDTH - kTitleRightMargin,
+					GUI_HEIGHT - kTitleBottomMargin );
+	pGraphics->MeasureIText(&titleText, const_cast<char*>(titleString), &titleRect);
+	pGraphics->AttachControl(new ITextControl(this, titleRect, &titleText, titleString));
 
 	AttachGraphics(pGraphics);
 
