@@ -94,8 +94,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
 	, mIsLoading(false)
 	, mGain(1.)
-	, mPluckX(-1)
-	, mPluckY(-1)
+	, mPluckX(0)
+	, mPluckY(0)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
@@ -138,7 +138,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	IText captionText = IText(labelSize, &labelColor);
 
 	IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
-	pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10, kPluckX, kPluckY));
+	pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10));
 
 	IRECT stringShadowRect = IRECT(0, kPluckPadHeight - 5, kWidth, kPluckPadHeight);
 	pGraphics->AttachControl(new IPanelControl(this, stringShadowRect, &shadowColor));
@@ -362,8 +362,6 @@ void SpectralHarp::Reset()
 	specGen.reset();
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
-	mPluckX = -1;
-	mPluckY = -1;
 
 #if SA_API
 	for (int i = 0; i < kNumParams; ++i)
@@ -395,14 +393,24 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		break;
 
 	case kPluckX:
-		Pluck();
-		mPluckX = (float)GetParam(kPluckX)->Value();
-		break;
-
 	case kPluckY:
-		Pluck();
-		mPluckY = (float)GetParam(kPluckY)->Value();
-		break;
+	{
+		const bool isX = paramIdx == kPluckX;
+		const bool isY = paramIdx == kPluckY;
+		const float param = (float)GetParam(paramIdx)->GetNormalized();
+
+		if (isX && param != mPluckX)
+		{
+			Pluck(param, (float)GetParam(kPluckY)->GetNormalized());
+			mPluckX = param;
+		}
+		else if (isY && param != mPluckY)
+		{
+			Pluck((float)GetParam(kPluckX)->GetNormalized(), param);
+			mPluckY = param;
+		}
+	}
+	break;
 
 	case kBandFirst:
 	{
@@ -435,9 +443,9 @@ void SpectralHarp::OnParamChange(int paramIdx)
 	}
 }
 
-void SpectralHarp::Pluck()
+void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 {
-	if (!mIsLoading && mPluckX > 0 && mPluckY > 0)
+	if (!mIsLoading)
 	{
 		//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
 		const float numBands = (float)GetParam(kBandDensity)->Int();
@@ -445,16 +453,13 @@ void SpectralHarp::Pluck()
 		const float bandLast = (float)GetParam(kBandLast)->Int();
 		if (numBands > 0)
 		{
-			const float pluckX = (float)GetParam(kPluckX)->Value();
-			const float pluckY = (float)GetParam(kPluckY)->Value();
 			for (int b = 0; b <= numBands; ++b)
 			{
 				const float freq = roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
-				float normBand = Map((float)freq, bandFirst, bandLast, 0, 100);
-				if (fabs(normBand - pluckX) < 0.5f)
+				float normBand = Map((float)freq, bandFirst, bandLast, 0, 1);
+				if (fabs(normBand - pluckX) < 0.005f)
 				{
-					float normY = pluckY / 100.0f;
-					float mag = Map(normY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);
+					float mag = Map(pluckY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);
 					//printf("plucked %f\n", specGen.getBandFrequency(bindx));
 					specGen.pluck(freq, mag);
 				}

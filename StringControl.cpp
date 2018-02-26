@@ -5,15 +5,13 @@
 
 const float kPadding = 16;
 
-StringControl::StringControl(const SpectralGen& rSpectrum, IPlugBase *pPlug, IRECT pR, int handleRadius, int paramA, int paramB) 
+StringControl::StringControl(const SpectralGen& rSpectrum, IPlugBase *pPlug, IRECT pR, int handleRadius) 
 	: IControl(pPlug, pR)
 	, spectrum(rSpectrum)
 	, mHandleRadius(handleRadius)
 	, mHandleColor(COLOR_WHITE)
 	, stringAnimation(0)
 {
-	AddAuxParam(paramA);
-	AddAuxParam(paramB);
 }
 
 bool StringControl::Draw(IGraphics* pGraphics)
@@ -104,22 +102,14 @@ void StringControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
 	}
 }
 
-void StringControl::SetDirty(bool pushParamToPlug /*= true*/)
-{
-	mDirty = true;
-
-	if (pushParamToPlug && mPlug)
-	{
-		SetAllAuxParamsFromGUI();
-	}
-}
-
 void StringControl::SnapToMouse(int x, int y)
 {
-	const float strumX = Map((float)x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1);
-	const float strumY = Map((float)y, mRECT.T, mRECT.B, 1, 0);
-	GetAuxParam(0)->mValue = BOUNDED(strumX, 0, 1);
-	GetAuxParam(1)->mValue = BOUNDED(strumY, 0, 1);
-
-	SetDirty();
+	const float pluckX = BOUNDED(Map((float)x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1), 0, 1);
+	const float pluckY = BOUNDED(Map((float)y, mRECT.T, mRECT.B, 1, 0), 0, 1);
+	
+	SpectralHarp* harp = static_cast<SpectralHarp*>(mPlug);
+	if (harp != nullptr)
+	{
+		harp->Pluck(pluckX, pluckY);
+	}
 }

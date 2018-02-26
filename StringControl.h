@@ -6,7 +6,7 @@ class SpectralGen;
 class StringControl : public IControl
 {
 public:
-	StringControl(const SpectralGen& rSpectrum, IPlugBase *pPlug, IRECT pR, int handleRadius, int paramA, int paramB);
+	StringControl(const SpectralGen& rSpectrum, IPlugBase *pPlug, IRECT pR, int handleRadius);
 
 	bool Draw(IGraphics*) override;
 
@@ -15,8 +15,6 @@ public:
 	void OnMouseUp(int x, int y, IMouseMod* pMod) override;
 
 	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override;
-
-	void SetDirty(bool pushParamToPlug = true) override;
 
 private:
 

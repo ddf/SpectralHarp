@@ -28,11 +28,13 @@ public:
 	// catch the About menu item to display what we wants in a box
 	bool HostRequestingAboutBox() override;
 
+	// can be called directly from StringControl, but also used internally in response to param changes and midi.
+	void Pluck(const float pluckX, const float pluckY);
+
 private:
 
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
-	void HandleMidiControlChange(IMidiMsg* pMsg);
-	void Pluck();
+	void HandleMidiControlChange(IMidiMsg* pMsg);	
 	void SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx);
 	
 	bool 					  mIsLoading;
