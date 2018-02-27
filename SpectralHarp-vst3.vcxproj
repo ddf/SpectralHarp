@@ -164,7 +164,7 @@
     </Link>
     <PostBuildEvent>
       <Command>echo Post-Build: copy 32bit binary to 32bit VST3 Plugins folder ... ...
-copy /y "$(TargetPath)" "$(VST3_32_PATH)\IPlugEffect.vst3"</Command>
+copy /y $(TargetPath) S:\VST</Command>
       <Message>Copy VST3 Binary to VST3 Plugins folder</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -42,7 +42,7 @@ void SpectralGen::reset()
 	const int bufferSizeNP2 = (int)(sampleRate()*0.09f);
 	// find the nearest power of two greater than or equal to bufferSizeNP2
 	// so that our spectrum and overlap behave nicely.
-	int bufferSize = 16;
+	int bufferSize = 32;
 	while (bufferSize < bufferSizeNP2) bufferSize <<= 1;
 
 	if (inverseSize != bufferSize)
@@ -88,7 +88,13 @@ void SpectralGen::reset()
 	adjustOddPhase = false;
 	// spectral magnitude is relative to the fft size because shorter ffts make louder output (and vice-versa),
 	// so this helps maintain similar volume across all sample rates.
+#if SA_API
+	// spectral magnitude needs to be louder for standalone to balance this APP_MULT constant in app_resource.h
+	// adjust volume here gives better results than setting APP_MULT to 1 and using the same spectral amplitude.
 	spectralMagnitude = inverseSize / 8;
+#else
+	spectralMagnitude = inverseSize / 32;
+#endif
 }
 
 void SpectralGen::sampleRateChanged()
