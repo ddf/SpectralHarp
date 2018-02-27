@@ -232,7 +232,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 {
 	// Mutex is already locked for us.
 	const double crushBegin = GetSampleRate();
-	const double crushChange = 100 - crushBegin;
+	const double crushChange = 1000 - crushBegin;
 
 	double* in1 = inputs[0];
 	double* in2 = inputs[1];
