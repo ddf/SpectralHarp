@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "5.76/x64" 1519757822
+<REAPER_PROJECT 0.1 "5.76/OSX64" 1519759095
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -27,7 +27,7 @@
   >
   <APPLYFX_CFG
   >
-  RENDER_FILE "S:\dev\wdl-ol\Projects\SpectralHarp\reaper\testing\testing.wav"
+  RENDER_FILE "S:\dev\wdl-ol\Projects\SpectralHarp\reaper\testing/testing.wav"
   RENDER_FMT 0 2 44100
   RENDER_1X 0
   RENDER_RANGE 2 0 0 18 1000
@@ -66,7 +66,7 @@
   MASTER_NCH 2 2
   MASTER_VOLUME 1 0 -1 -1 1
   MASTER_FX 1
-  MASTER_SEL 1
+  MASTER_SEL 0
   <MASTERFXLIST
     WNDRECT 0 129 1280 475
     SHOW 1
@@ -109,8 +109,8 @@
     BUSCOMP 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 0
-    REC 0 5088 1 0 0 0 0
+    SEL 1
+    REC 1 5088 1 0 0 0 0
     VU 2
     TRACKHEIGHT 97 0
     INQ 0 0 0 0.5 100 0 0 100
@@ -121,14 +121,14 @@
     MIDIOUT -1
     MAINSEND 1 0
     <FXCHAIN
-      WNDRECT 437 452 1259 513
+      WNDRECT 20 257 1259 513
       SHOW 0
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
-      <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.dll 0 "" 1399353968
+      <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.vst 0 "" 1399353968
         cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAALAAAAAAAAAAAABAA
-        776t3g3wrd4AAIA/AACAP6NKZT4AAAAAAACAPzqoYz+4g4A+wAQCP4mI6D4=
+        776t3g3wrd4AAIA/AAAAAKaYKj0AAAAAAACAPzqoYz8AAAAAAACAPwAAgD8=
         LQAtABAAAAA=
       >
       PRESETNAME -
@@ -138,12 +138,429 @@
         ACT 1 -1
         VIS 1 1 1
         LANEHEIGHT 0 0
-        ARM 1
+        ARM 0
         DEFSHAPE 0 -1 -1
         PT 0 1 0
         PT 3.5 0 0 0 1
       >
+      <PARMENV 1 0 1 0.5
+        ACT 1 -1
+        VIS 1 1 1
+        LANEHEIGHT 0 0
+        ARM 0
+        DEFSHAPE 0 -1 -1
+        PT 0 0 0
+      >
+      <PROGRAMENV 1 0
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0
+        MIDIPLINK 0 0 176 16
+        MODWND 0 586 492 973 776
+      >
       WAK 0
+    >
+    <ITEM
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 6
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0 0 1 0 0
+      FADEOUT 1 0 0 1 0 0
+      MUTE 0
+      SEL 1
+      IGUID {BB6AF389-C642-BF44-B25B-B726587CFAF2}
+      IID 4
+      NAME "01-vst2-Recorded MIDI"
+      VOLPAN 1 0 1 -1
+      SOFFS 0 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {BD15745A-00CB-E54F-9776-F57473DB8249}
+      RECPASS 3
+      <SOURCE MIDI
+        HASDATA 1 960 QN
+        POOLEDEVTS {9C8F5E73-BF43-1E44-9A14-65108AF82D16}
+        E 930 b0 10 01
+        E 22 b0 10 03
+        E 0 b0 10 05
+        E 22 b0 10 06
+        E 22 b0 10 07
+        E 23 b0 10 09
+        E 0 b0 10 0a
+        E 22 b0 10 0b
+        E 22 b0 10 0d
+        E 23 b0 10 0e
+        E 0 b0 10 0f
+        E 22 b0 10 11
+        E 22 b0 10 13
+        E 22 b0 10 14
+        E 23 b0 10 15
+        E 0 b0 10 17
+        E 22 b0 10 19
+        E 22 b0 10 1a
+        E 23 b0 10 1c
+        E 0 b0 10 1e
+        E 22 b0 10 1f
+        E 22 b0 10 21
+        E 23 b0 10 23
+        E 22 b0 10 25
+        E 0 b0 10 27
+        E 22 b0 10 29
+        E 22 b0 10 2b
+        E 23 b0 10 2d
+        E 0 b0 10 2f
+        E 22 b0 10 31
+        E 22 b0 10 32
+        E 23 b0 10 34
+        E 22 b0 10 36
+        E 0 b0 10 37
+        E 22 b0 10 39
+        E 22 b0 10 3a
+        E 23 b0 10 3c
+        E 0 b0 10 3d
+        E 22 b0 10 3e
+        E 22 b0 10 3f
+        E 23 b0 10 40
+        E 22 b0 10 41
+        E 0 b0 10 43
+        E 22 b0 10 44
+        E 22 b0 10 45
+        E 23 b0 10 46
+        E 0 b0 10 47
+        E 22 b0 10 48
+        E 22 b0 10 49
+        E 23 b0 10 4a
+        E 0 b0 10 4b
+        E 22 b0 10 4c
+        E 45 b0 10 4e
+        E 22 b0 10 4f
+        E 22 b0 10 50
+        E 22 b0 10 51
+        E 23 b0 10 52
+        E 0 b0 10 53
+        E 22 b0 10 54
+        E 22 b0 10 55
+        E 23 b0 10 56
+        E 22 b0 10 58
+        E 22 b0 10 59
+        E 22 b0 10 5a
+        E 23 b0 10 5c
+        E 22 b0 10 5d
+        E 45 b0 10 5e
+        E 22 b0 10 60
+        E 22 b0 10 61
+        E 45 b0 10 63
+        E 22 b0 10 65
+        E 22 b0 10 66
+        E 23 b0 10 67
+        E 22 b0 10 68
+        E 22 b0 10 69
+        E 45 b0 10 6a
+        E 0 b0 10 6b
+        E 44 b0 10 6d
+        E 23 b0 10 6f
+        E 22 b0 10 70
+        E 22 b0 10 71
+        E 23 b0 10 72
+        E 22 b0 10 73
+        E 44 b0 10 74
+        E 23 b0 10 75
+        E 67 b0 10 76
+        E 44 b0 10 77
+        E 201 b0 10 76
+        E 0 b0 10 75
+        E 22 b0 10 74
+        E 22 b0 10 72
+        E 23 b0 10 71
+        E 22 b0 10 70
+        E 0 b0 10 6e
+        E 22 b0 10 6d
+        E 23 b0 10 6c
+        E 22 b0 10 6a
+        E 0 b0 10 69
+        E 22 b0 10 68
+        E 22 b0 10 67
+        E 23 b0 10 65
+        E 22 b0 10 63
+        E 45 b0 10 62
+        E 22 b0 10 61
+        E 22 b0 10 60
+        E 22 b0 10 5f
+        E 23 b0 10 5e
+        E 0 b0 10 5d
+        E 22 b0 10 5c
+        E 22 b0 10 5b
+        E 23 b0 10 5a
+        E 22 b0 10 58
+        E 22 b0 10 57
+        E 45 b0 10 56
+        E 0 b0 10 55
+        E 22 b0 10 54
+        E 22 b0 10 53
+        E 45 b0 10 51
+        E 0 b0 10 50
+        E 22 b0 10 4f
+        E 45 b0 10 4e
+        E 22 b0 10 4c
+        E 22 b0 10 4b
+        E 45 b0 10 49
+        E 0 b0 10 48
+        E 22 b0 10 47
+        E 23 b0 10 46
+        E 22 b0 10 45
+        E 22 b0 10 44
+        E 22 b0 10 43
+        E 45 b0 10 41
+        E 0 b0 10 40
+        E 45 b0 10 3f
+        E 22 b0 10 3e
+        E 22 b0 10 3d
+        E 22 b0 10 3c
+        E 23 b0 10 3a
+        E 22 b0 10 39
+        E 22 b0 10 38
+        E 23 b0 10 36
+        E 22 b0 10 34
+        E 22 b0 10 33
+        E 22 b0 10 31
+        E 23 b0 10 30
+        E 0 b0 10 2e
+        E 22 b0 10 2c
+        E 22 b0 10 2b
+        E 23 b0 10 2a
+        E 22 b0 10 28
+        E 0 b0 10 27
+        E 22 b0 10 26
+        E 23 b0 10 24
+        E 22 b0 10 23
+        E 0 b0 10 21
+        E 22 b0 10 20
+        E 22 b0 10 1e
+        E 23 b0 10 1c
+        E 22 b0 10 1b
+        E 0 b0 10 1a
+        E 22 b0 10 19
+        E 23 b0 10 18
+        E 22 b0 10 17
+        E 178 b0 10 18
+        E 22 b0 10 19
+        E 23 b0 10 1a
+        E 0 b0 10 1b
+        E 22 b0 10 1c
+        E 22 b0 10 1e
+        E 23 b0 10 1f
+        E 22 b0 10 21
+        E 0 b0 10 23
+        E 22 b0 10 25
+        E 23 b0 10 27
+        E 22 b0 10 29
+        E 0 b0 10 2c
+        E 22 b0 10 2e
+        E 22 b0 10 31
+        E 23 b0 10 34
+        E 22 b0 10 36
+        E 0 b0 10 39
+        E 22 b0 10 3b
+        E 23 b0 10 3d
+        E 22 b0 10 3f
+        E 0 b0 10 41
+        E 22 b0 10 44
+        E 22 b0 10 46
+        E 23 b0 10 48
+        E 22 b0 10 49
+        E 0 b0 10 4b
+        E 22 b0 10 4c
+        E 23 b0 10 4d
+        E 111 b0 10 4c
+        E 0 b0 10 4b
+        E 22 b0 10 49
+        E 23 b0 10 48
+        E 22 b0 10 46
+        E 0 b0 10 45
+        E 22 b0 10 43
+        E 23 b0 10 41
+        E 22 b0 10 3f
+        E 22 b0 10 3d
+        E 0 b0 10 3a
+        E 22 b0 10 37
+        E 23 b0 10 35
+        E 22 b0 10 33
+        E 0 b0 10 31
+        E 22 b0 10 2f
+        E 23 b0 10 2e
+        E 22 b0 10 2d
+        E 22 b0 10 2c
+        E 45 b0 10 2b
+        E 22 b0 10 29
+        E 156 b0 10 2a
+        E 45 b0 10 2c
+        E 22 b0 10 2d
+        E 0 b0 10 2f
+        E 22 b0 10 30
+        E 22 b0 10 31
+        E 23 b0 10 33
+        E 22 b0 10 34
+        E 0 b0 10 35
+        E 45 b0 10 37
+        E 22 b0 10 38
+        E 0 b0 10 39
+        E 22 b0 10 3a
+        E 23 b0 10 3b
+        E 22 b0 10 3c
+        E 22 b0 10 3e
+        E 22 b0 10 3f
+        E 23 b0 10 40
+        E 44 b0 10 41
+        E 23 b0 10 42
+        E 22 b0 10 44
+        E 44 b0 10 45
+        E 23 b0 10 46
+        E 22 b0 10 47
+        E 0 b0 10 48
+        E 22 b0 10 4a
+        E 23 b0 10 4b
+        E 22 b0 10 4c
+        E 0 b0 10 4d
+        E 22 b0 10 4e
+        E 45 b0 10 4f
+        E 22 b0 10 50
+        E 22 b0 10 51
+        E 45 b0 10 52
+        E 22 b0 10 53
+        E 45 b0 10 54
+        E 22 b0 10 56
+        E 45 b0 10 57
+        E 22 b0 10 58
+        E 22 b0 10 59
+        E 45 b0 10 5b
+        E 22 b0 10 5c
+        E 22 b0 10 5d
+        E 45 b0 10 5f
+        E 0 b0 10 60
+        E 22 b0 10 61
+        E 45 b0 10 62
+        E 0 b0 10 63
+        E 44 b0 10 64
+        E 23 b0 10 65
+        E 22 b0 10 66
+        E 22 b0 10 67
+        E 45 b0 10 68
+        E 45 b0 10 69
+        E 44 b0 10 6a
+        E 45 b0 10 6b
+        E 22 b0 10 6c
+        E 45 b0 10 6d
+        E 22 b0 10 6e
+        E 22 b0 10 6f
+        E 45 b0 10 70
+        E 67 b0 10 71
+        E 111 b0 10 70
+        E 22 b0 10 6f
+        E 23 b0 10 6e
+        E 22 b0 10 6d
+        E 22 b0 10 6c
+        E 0 b0 10 6b
+        E 22 b0 10 6a
+        E 23 b0 10 69
+        E 22 b0 10 67
+        E 22 b0 10 66
+        E 23 b0 10 65
+        E 22 b0 10 63
+        E 45 b0 10 62
+        E 44 b0 10 61
+        E 22 b0 10 5f
+        E 45 b0 10 5e
+        E 22 b0 10 5c
+        E 45 b0 10 5b
+        E 22 b0 10 5a
+        E 22 b0 10 59
+        E 45 b0 10 58
+        E 0 b0 10 57
+        E 45 b0 10 56
+        E 44 b0 10 55
+        E 22 b0 10 54
+        E 23 b0 10 53
+        E 22 b0 10 52
+        E 45 b0 10 51
+        E 44 b0 10 50
+        E 23 b0 10 4f
+        E 44 b0 10 4e
+        E 22 b0 10 4d
+        E 45 b0 10 4c
+        E 0 b0 10 4b
+        E 45 b0 10 4a
+        E 44 b0 10 48
+        E 22 b0 10 47
+        E 45 b0 10 46
+        E 22 b0 10 45
+        E 45 b0 10 44
+        E 22 b0 10 42
+        E 45 b0 10 41
+        E 22 b0 10 40
+        E 67 b0 10 3f
+        E 22 b0 10 3e
+        E 45 b0 10 3d
+        E 22 b0 10 3c
+        E 67 b0 10 3a
+        E 45 b0 10 39
+        E 44 b0 10 38
+        E 22 b0 10 37
+        E 45 b0 10 36
+        E 45 b0 10 35
+        E 44 b0 10 34
+        E 22 b0 10 33
+        E 23 b0 10 32
+        E 22 b0 10 31
+        E 45 b0 10 30
+        E 44 b0 10 2e
+        E 45 b0 10 2d
+        E 22 b0 10 2c
+        E 45 b0 10 2b
+        E 44 b0 10 29
+        E 45 b0 10 28
+        E 22 b0 10 27
+        E 45 b0 10 26
+        E 22 b0 10 25
+        E 22 b0 10 23
+        E 45 b0 10 22
+        E 22 b0 10 21
+        E 22 b0 10 1f
+        E 23 b0 10 1e
+        E 22 b0 10 1d
+        E 22 b0 10 1c
+        E 0 b0 10 1b
+        E 45 b0 10 1a
+        E 22 b0 10 18
+        E 22 b0 10 17
+        E 23 b0 10 16
+        E 22 b0 10 15
+        E 22 b0 10 14
+        E 45 b0 10 12
+        E 22 b0 10 11
+        E 0 b0 10 0f
+        E 23 b0 10 0e
+        E 22 b0 10 0d
+        E 22 b0 10 0c
+        E 22 b0 10 0a
+        E 23 b0 10 09
+        E 22 b0 10 08
+        E 22 b0 10 07
+        E 0 b0 10 05
+        E 23 b0 10 04
+        E 22 b0 10 03
+        E 22 b0 10 02
+        E 0 b0 10 00
+        E 2787 b0 7b 00
+        GUID {D0E43EB3-558A-F541-8E28-62F8D3AFF2CE}
+        IGNTEMPO 0 120 4 4
+        SRCCOLOR 11
+        VELLANE 16 100 0
+      >
     >
   >
   <TRACK {700C6529-D5A2-5741-9699-1D3624CDDFCE}
@@ -152,14 +569,14 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 1 0 -1 -1 1
-    MUTESOLO 1 0 0
+    MUTESOLO 0 0 0
     IPHASE 0
     ISBUS 0 0
     BUSCOMP 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
     SEL 0
-    REC 1 5088 1 0 0 0 0
+    REC 0 5088 1 0 0 0 0
     VU 2
     TRACKHEIGHT 93 0
     INQ 0 0 0 0.5 100 0 0 100
@@ -170,15 +587,15 @@
     MIDIOUT -1
     MAINSEND 1 0
     <FXCHAIN
-      WNDRECT 584 223 1259 513
-      SHOW 1
+      WNDRECT 21 203 1259 513
+      SHOW 0
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
       <VST "VST3i: SpectralHarp (Damien Quartz)" SpectralHarp.vst3 0 "" 234935671{F2AEE70D00DE4F4E43706D7453687270}
         d9UADu5e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAApAAAAAEAAAD//xAA
-        SAAAAAEAAAAAAAAAAABZQAAAAAAAAFlAAAAAAACol0D///////9YQAAAAAAAAFlAAAAA7P8/SkAAAAAAAPiaQAAAAAAAULtAAAAAAAAAcEBMAAAAAAAAAAAAAAAAAFlA
-        AAAAAAAAWUAAAAAAAKiXQP///////1hAAAAAAAAAWUAAAADs/z9KQAAAAAAA+JpAAAAAAABQu0AAAAAAAABwQAAAAAA=
+        SAAAAAEAAAAAAAAAAABZQAAAAAAAAFlAAAAAAABQcUD+/////981QAAAAAAAAFlAAAAA7P8/SkAAAAAAAABQQAAAAAAAHrhAAAAAAAAAcEBMAAAAAAAAAAAAAAAAAFlA
+        AAAAAAAAWUAAAAAAAFBxQP7/////3zVAAAAAAAAAWUAAAADs/z9KQAAAAAAAAFBAAAAAAAAeuEAAAAAAAABwQAAAAAA=
         AAAQAAAA
       >
       FLOATPOS 0 0 0 0
@@ -213,7 +630,7 @@
       FADEIN 1 0 0 1 0 0
       FADEOUT 1 0 0 1 0 0
       MUTE 0
-      SEL 1
+      SEL 0
       IGUID {3DB35C12-9D12-4D20-ADFA-7629F241694C}
       IID 1
       NAME "vst3 untitled MIDI item"
@@ -265,8 +682,8 @@
       <AU "AUi: SpectralHarp (Damien Quartz)" "Damien Quartz: SpectralHarp" "" 1635085685 1399353968 1131441524
         6QMAAAAAAAACAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAMAIAADw/eG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+CjwhRE9D
         VFlQRSBwbGlzdCBQVUJMSUMgIi0vL0FwcGxlLy9EVEQgUExJU1QgMS4wLy9FTiIgImh0dHA6Ly93d3cuYXBwbGUuY29tL0RURHMvUHJvcGVydHlMaXN0LTEuMC5kdGQi
-        Pgo8cGxpc3QgdmVyc2lvbj0iMS4wIj4KPGRpY3Q+Cgk8a2V5PmRhdGE8L2tleT4KCTxkYXRhPgoJQUFBQUFBQUFXVUFBQUFBQUFBQlpRRlpWVlZWVmZWSkFzYXFxcXFv
-        cVBVQUFBQUFjWTR3Q1FBQUFBR2pidGs1QUFBQUEKCUFBQUFLRUFBQUFBQUFES2pRQUFBQUFBQUFIQkEKCTwvZGF0YT4KCTxrZXk+bWFudWZhY3R1cmVyPC9rZXk+Cgk8
+        Pgo8cGxpc3QgdmVyc2lvbj0iMS4wIj4KPGRpY3Q+Cgk8a2V5PmRhdGE8L2tleT4KCTxkYXRhPgoJQUFBQUFBQUFXVUFBQUFBQUFBQlpRQUFBQUFBQXdHSkFzYXFxcXFv
+        cVBVQUFBQUFjWTR3Q1FBQUFBR2pidGs1QUFBQUEKCUFBQUFVRUFBQUFBQUFES2pRQUFBQUFBQUFIQkEKCTwvZGF0YT4KCTxrZXk+bWFudWZhY3R1cmVyPC9rZXk+Cgk8
         aW50ZWdlcj4xMTMxNDQxNTI0PC9pbnRlZ2VyPgoJPGtleT5uYW1lPC9rZXk+Cgk8c3RyaW5nPi08L3N0cmluZz4KCTxrZXk+c3VidHlwZTwva2V5PgoJPGludGVnZXI+
         MTM5OTM1Mzk2ODwvaW50ZWdlcj4KCTxrZXk+dHlwZTwva2V5PgoJPGludGVnZXI+MTYzNTA4NTY4NTwvaW50ZWdlcj4KCTxrZXk+dmVyc2lvbjwva2V5PgoJPGludGVn
         ZXI+NjU1MzY8L2ludGVnZXI+CjwvZGljdD4KPC9wbGlzdD4KAQAAAAAAAAAAAA==
@@ -305,7 +722,7 @@
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
-      <VST "VSTi: ReaSynth (Cockos)" reasynth.dll 0 "" 1919251321
+      <VST "VSTi: ReaSynth (Cockos)" reasynth.vst.dylib 0 "" 1919251321
         eXNlcu9e7f4AAAAAAgAAAAEAAAAAAAAAAgAAAAAAAAA8AAAAAAAAAAAAEAA=
         776t3g3wrd6mm8Q7AACAPwAAAAAAAAAAAAAAAM5NAD/pZ4g9AAAAAAAAAD8AAIA/AACAPwAAAD8AAAAA
         AAAQAAAA
