@@ -22,7 +22,6 @@ body
 #nav-top
 {
 	color:				#AAAAAA;
-	margin-top:			-105px;
 }
 
 #nav-top a
@@ -68,16 +67,16 @@ td
 
 #appstore
 {
-	text-align: left;
+	float: left;
 }
 
 #description
 {
 	margin-left: 		auto;
 	margin-right: 		auto;
-	margin-top:			0px;
+	margin-top:			10px;
 	margin-bottom:		20px;
-	width:				500px;
+	width:				540px;
 	background-color:	rgba(20,20,20,0.8);
 	color:				#AAAAAA;
 	padding-left:		10px;
@@ -91,7 +90,7 @@ td
 {
 
 	width: 490px;
-	background-color:	rgba(240,240,240,0.8);
+	background-color:	rgba(240,240,240,0.0);
 	padding: 5px;
 }
 
@@ -102,6 +101,14 @@ td
 	margin-bottom:		20px;
 	margin-top:			20px;
 	width:				500px;
+}
+
+#youtube
+{
+	margin-left:		auto;
+	margin-right:		auto;
+	margin-bottom:		20px;
+	margin-top:			20px;
 }
 
 #support
