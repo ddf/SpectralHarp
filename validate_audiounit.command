@@ -8,17 +8,17 @@ cd $BASEDIR
 
 OS_VERSION=`sw_vers -productVersion | egrep -o '10\.[0-9]+'`
 
-x86_ARGS=""
+x86_ARGS="-32"
 x64_ARGS=""
 
-if [[ $OS_VERSION == "10.9" ]] || [[ $OS_VERSION == "10.10" ]]
-then
-  x86_ARGS="-32"
-  x64_ARGS=""
-else
-  x86_ARGS=""
-  x64_ARGS="-64"
-fi
+#if [[ $OS_VERSION == "10.9" ]] || [[ $OS_VERSION == "10.10" ]]
+#then
+#  x86_ARGS="-32"
+#  x64_ARGS=""
+#else
+#  x86_ARGS=""
+#  x64_ARGS="-64"
+#fi
 
 PUID=`echo | grep PLUG_UNIQUE_ID resource.h`
 PUID=${PUID//\#define PLUG_UNIQUE_ID }
