@@ -10,6 +10,7 @@ The standalone version also supports controlling parameters with MIDI: simply ri
 
 - clone https://github.com/ddf/wdl-ol
 - create a folder named Projects in the root of the repo
+- clone https://github.com/ddf/minim-cpp into the Projects folder
 - clone this repo into the Projects folder
 - to build the VST version, follow the instructions here to install the VST SDK: https://github.com/ddf/wdl-ol/tree/master/VST_SDK
 - to build the VST3 version, follow the instructions to install the VST 3.6.6 SDK: https://github.com/ddf/wdl-ol/tree/master/VST3_SDK, it should not be necessary to modify any project files
