@@ -76,7 +76,7 @@ void StringControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 		SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
 		if (harp != nullptr)
 		{
-			harp->BeginMIDILearn(GetAuxParam(0)->mParamIdx, GetAuxParam(1)->mParamIdx, x, y);
+			harp->BeginMIDILearn(kPluckX, kPluckY, x, y);
 		}
 	}
 	else if ( pMod->L )
