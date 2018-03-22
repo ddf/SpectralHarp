@@ -22,7 +22,8 @@ private:
 
 	const SpectralGen& spectrum;
 	int mHandleRadius;
-	IColor mHandleColor;
+	int mMouseX;
+	int mMouseY;
 	float stringAnimation;
 };
 
