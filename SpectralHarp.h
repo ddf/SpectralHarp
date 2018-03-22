@@ -9,6 +9,7 @@
 #include "SpectralGen.h"
 #include "BitCrush.h"
 #include "TickRate.h"
+#include <vector>
 
 class SpectralHarp : public IPlug
 {
@@ -54,6 +55,7 @@ private:
 	IMidiMsg::EControlChangeMsg controlChangeForParam[kNumParams];
 
 	IMidiQueue				  mMidiQueue;
+	std::vector<IMidiMsg>	  mNotes;
 };
 
 #endif

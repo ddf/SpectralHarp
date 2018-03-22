@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "5.76/OSX64" 1519759095
+<REAPER_PROJECT 0.1 "5.77" 1521754208
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -15,7 +15,7 @@
   VIDEO_CONFIG 0 0 256
   PANMODE 3
   CURSOR 0
-  ZOOM 71.04526911253215 0 0
+  ZOOM 100 0 0
   VZOOMEX 12
   USE_REC_CFG 0
   RECMODE 1
@@ -27,7 +27,7 @@
   >
   <APPLYFX_CFG
   >
-  RENDER_FILE "S:\dev\wdl-ol\Projects\SpectralHarp\reaper\testing/testing.wav"
+  RENDER_FILE "S:\dev\wdl-ol\Projects\SpectralHarp\reaper\testing\testing.wav"
   RENDER_FMT 0 2 44100
   RENDER_1X 0
   RENDER_RANGE 2 0 0 18 1000
@@ -76,7 +76,7 @@
     <JS Analysis/gfxscope ""
       31.348618 -9.400000 2.000000 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     >
-    JS_DIMS 1701 233
+    JS_DIMS 1701 279
     FLOATPOS 0 0 0 0
     FXID {1A4A127D-BFC6-4748-84DD-A9B1283856F3}
     WAK 0
@@ -109,7 +109,7 @@
     BUSCOMP 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 1
+    SEL 0
     REC 1 5088 1 0 0 0 0
     VU 2
     TRACKHEIGHT 97 0
@@ -126,7 +126,7 @@
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
-      <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.vst 0 "" 1399353968
+      <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.dll 0 "" 1399353968
         cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAALAAAAAAAAAAAABAA
         776t3g3wrd4AAIA/AAAAAKaYKj0AAAAAAACAPzqoYz8AAAAAAACAPwAAgD8=
         LQAtABAAAAA=
@@ -172,7 +172,7 @@
       FADEIN 1 0 0 1 0 0
       FADEOUT 1 0 0 1 0 0
       MUTE 0
-      SEL 1
+      SEL 0
       IGUID {BB6AF389-C642-BF44-B25B-B726587CFAF2}
       IID 4
       NAME "01-vst2-Recorded MIDI"
@@ -560,6 +560,11 @@
         IGNTEMPO 0 120 4 4
         SRCCOLOR 11
         VELLANE 16 100 0
+        CFGEDITVIEW 0 0.05221 61 12 0 -1 0 0 0 0.5
+        KEYSNAP 0
+        TRACKSEL 0
+        EVTFILTER 0 -1 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 0 -1 -1
+        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.5 360 257 1917 973 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
       >
     >
   >
@@ -569,7 +574,7 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 1 0 -1 -1 1
-    MUTESOLO 0 0 0
+    MUTESOLO 1 0 0
     IPHASE 0
     ISBUS 0 0
     BUSCOMP 0 0
@@ -656,7 +661,7 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 1 0 -1 -1 1
-    MUTESOLO 0 0 0
+    MUTESOLO 1 0 0
     IPHASE 0
     ISBUS 0 0
     BUSCOMP 0 0
@@ -682,8 +687,8 @@
       <AU "AUi: SpectralHarp (Damien Quartz)" "Damien Quartz: SpectralHarp" "" 1635085685 1399353968 1131441524
         6QMAAAAAAAACAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAMAIAADw/eG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+CjwhRE9D
         VFlQRSBwbGlzdCBQVUJMSUMgIi0vL0FwcGxlLy9EVEQgUExJU1QgMS4wLy9FTiIgImh0dHA6Ly93d3cuYXBwbGUuY29tL0RURHMvUHJvcGVydHlMaXN0LTEuMC5kdGQi
-        Pgo8cGxpc3QgdmVyc2lvbj0iMS4wIj4KPGRpY3Q+Cgk8a2V5PmRhdGE8L2tleT4KCTxkYXRhPgoJQUFBQUFBQUFXVUFBQUFBQUFBQlpRQUFBQUFBQXdHSkFzYXFxcXFv
-        cVBVQUFBQUFjWTR3Q1FBQUFBR2pidGs1QUFBQUEKCUFBQUFVRUFBQUFBQUFES2pRQUFBQUFBQUFIQkEKCTwvZGF0YT4KCTxrZXk+bWFudWZhY3R1cmVyPC9rZXk+Cgk8
+        Pgo8cGxpc3QgdmVyc2lvbj0iMS4wIj4KPGRpY3Q+Cgk8a2V5PmRhdGE8L2tleT4KCTxkYXRhPgoJQUFBQUFBQUFXVUFBQUFBQUFBQlpRQUFBQUFBQTRHVkFBQUFBQUFB
+        QUFBQUFBQUFjWTR3Q1FBQUFBR2pidGs1QUFBQUEKCUFJRHp3RUFBQUFBQWdLWEZRQUFBQUFBQUFIQkEKCTwvZGF0YT4KCTxrZXk+bWFudWZhY3R1cmVyPC9rZXk+Cgk8
         aW50ZWdlcj4xMTMxNDQxNTI0PC9pbnRlZ2VyPgoJPGtleT5uYW1lPC9rZXk+Cgk8c3RyaW5nPi08L3N0cmluZz4KCTxrZXk+c3VidHlwZTwva2V5PgoJPGludGVnZXI+
         MTM5OTM1Mzk2ODwvaW50ZWdlcj4KCTxrZXk+dHlwZTwva2V5PgoJPGludGVnZXI+MTYzNTA4NTY4NTwvaW50ZWdlcj4KCTxrZXk+dmVyc2lvbjwva2V5PgoJPGludGVn
         ZXI+NjU1MzY8L2ludGVnZXI+CjwvZGljdD4KPC9wbGlzdD4KAQAAAAAAAAAAAA==
@@ -705,31 +710,147 @@
     BUSCOMP 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 0
+    SEL 1
     REC 0 5056 2 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0
     INQ 0 0 0 0.5 100 0 0 100
     NCHAN 2
-    FX 0
+    FX 1
     TRACKID {53E83AD3-D5A2-43C8-8CED-9B3E21E5806C}
     PERF 0
     MIDIOUT -1
     MAINSEND 1 0
     <FXCHAIN
-      WNDRECT 321 153 935 584
-      SHOW 0
+      WNDRECT 513 288 1259 513
+      SHOW 1
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
-      <VST "VSTi: ReaSynth (Cockos)" reasynth.vst.dylib 0 "" 1919251321
-        eXNlcu9e7f4AAAAAAgAAAAEAAAAAAAAAAgAAAAAAAAA8AAAAAAAAAAAAEAA=
-        776t3g3wrd6mm8Q7AACAPwAAAAAAAAAAAAAAAM5NAD/pZ4g9AAAAAAAAAD8AAIA/AACAPwAAAD8AAAAA
-        AAAQAAAA
+      <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.dll 0 "" 1399353968
+        cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAALAAAAAAAAAAAABAA
+        776t3g3wrd4AAIA/AACAPzfLkz0AAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8=
+        LQAtABAAAAA=
       >
+      PRESETNAME -
       FLOATPOS 0 0 0 0
-      FXID {6AD1FC10-7EE2-FC40-9E54-889E5250E16B}
+      FXID {46E8564B-424F-4301-9F17-67095D40E4AC}
       WAK 0
+    >
+    <ITEM
+      POSITION 0
+      SNAPOFFS 0
+      LENGTH 6
+      LOOP 1
+      ALLTAKES 0
+      FADEIN 1 0 0 1 0 0
+      FADEOUT 1 0 0 1 0 0
+      MUTE 0
+      SEL 1
+      IGUID {A1C44DD6-04F0-4F2D-8574-B5631AD3F328}
+      IID 6
+      NAME "untitled MIDI item"
+      VOLPAN 1 0 1 -1
+      SOFFS 0 0
+      PLAYRATE 1 1 0 -1 0 0.0025
+      CHANMODE 0
+      GUID {C1708A80-423A-430E-8846-81799CCD0A17}
+      <SOURCE MIDI
+        HASDATA 1 960 QN
+        POOLEDEVTS {1932A4C0-794A-4D59-9B04-F69FA17456DA}
+        e 0 90 30 60
+        e 0 90 51 60
+        e 0 90 6b 60
+        e 0 90 29 60
+        e 0 90 34 60
+        e 0 90 31 62
+        e 0 90 52 62
+        e 0 90 6c 62
+        e 0 90 2a 62
+        e 0 90 35 62
+        e 0 90 56 62
+        e 0 90 2e 62
+        e 0 90 39 62
+        e 0 90 3a 62
+        e 0 90 5b 62
+        e 0 90 33 62
+        e 0 90 3e 62
+        e 0 90 36 62
+        e 0 90 57 62
+        e 0 90 2f 62
+        e 0 90 3a 62
+        e 0 90 2a 62
+        e 0 90 4b 62
+        e 0 90 65 62
+        e 0 90 23 62
+        e 0 90 2e 62
+        e 0 90 4f 62
+        e 0 90 69 62
+        e 0 90 27 62
+        e 0 90 32 62
+        e 0 90 3d 62
+        e 0 90 5e 62
+        e 0 90 36 62
+        e 0 90 41 62
+        e 0 90 62 62
+        e 0 90 3a 62
+        e 0 90 45 62
+        e 0 90 44 62
+        e 0 90 65 62
+        e 0 90 3d 62
+        e 0 90 48 62
+        e 11520 80 30 00
+        e 0 80 51 00
+        e 0 80 6b 00
+        e 0 80 29 00
+        e 0 80 34 00
+        e 0 80 31 00
+        e 0 80 52 00
+        e 0 80 6c 00
+        e 0 80 2a 00
+        e 0 80 35 00
+        e 0 80 56 00
+        e 0 80 2e 00
+        e 0 80 39 00
+        e 0 80 3a 00
+        e 0 80 5b 00
+        e 0 80 33 00
+        e 0 80 3e 00
+        e 0 80 36 00
+        e 0 80 57 00
+        e 0 80 2f 00
+        e 0 80 3a 00
+        e 0 80 2a 00
+        e 0 80 4b 00
+        e 0 80 65 00
+        e 0 80 23 00
+        e 0 80 2e 00
+        e 0 80 4f 00
+        e 0 80 69 00
+        e 0 80 27 00
+        e 0 80 32 00
+        e 0 80 3d 00
+        e 0 80 5e 00
+        e 0 80 36 00
+        e 0 80 41 00
+        e 0 80 62 00
+        e 0 80 3a 00
+        e 0 80 45 00
+        e 0 80 44 00
+        e 0 80 65 00
+        e 0 80 3d 00
+        e 0 80 48 00
+        E 0 b0 7b 00
+        GUID {3F2079C5-2EBB-4D85-9F3C-D90EFD36C481}
+        IGNTEMPO 0 120 4 4
+        SRCCOLOR 13
+        VELLANE 16 100 0
+        CFGEDITVIEW -378.99148 0.105307 10 4 0 -1 0 0 0 0.5
+        KEYSNAP 0
+        TRACKSEL 0
+        EVTFILTER 0 -1 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 0 -1 -1
+        CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.5 335 255 1892 971 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
+      >
     >
   >
 >

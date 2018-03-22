@@ -115,6 +115,9 @@
     <ClCompile Include="SpectralGen.cpp" />
     <ClCompile Include="KnobLineCoronaControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\Frequency.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />

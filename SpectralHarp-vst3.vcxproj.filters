@@ -70,6 +70,7 @@
     <ClCompile Include="SpectralGen.cpp" />
     <ClCompile Include="KnobLineCoronaControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="..\minim-cpp\src\ugens\Frequency.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

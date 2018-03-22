@@ -7,6 +7,8 @@
 #include "KnobLineCoronaControl.h"
 #include "TextBox.h"
 
+#include "Frequency.h"
+
 #if SA_API
 #include "app_wrapper/app_main.h"
 
@@ -112,6 +114,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	{
 		controlChangeForParam[i] = kUnmappedParam;
 	}
+
+	mNotes.reserve(32);
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label
 	GetParam(kVolume)->InitDouble("Volume", 100., 0., 100.0, 0.1, "%");
@@ -261,9 +265,45 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 			IMidiMsg* pMsg = mMidiQueue.Peek();
 			if (pMsg->mOffset > s) break;
 
-			HandleMidiControlChange(pMsg);
+			switch (pMsg->StatusMsg())
+			{
+			case IMidiMsg::kControlChange:
+				HandleMidiControlChange(pMsg);
+				break;
+
+			case IMidiMsg::kNoteOn:
+				if (pMsg->Velocity() > 0)
+				{
+					mNotes.push_back(*pMsg);
+					break;
+				}
+				// fallthru to handle note ons that are really note offs
+
+			case IMidiMsg::kNoteOff:
+				// remove all notes with the same note number
+				for (auto iter = mNotes.begin(); iter != mNotes.end(); ++iter)
+				{
+					if (iter->NoteNumber() == pMsg->NoteNumber())
+					{
+						iter = mNotes.erase(iter);
+						if (iter == mNotes.end())
+						{
+							break;
+						}
+					}
+				}
+				break;
+			}
 
 			mMidiQueue.Remove();
+		}
+
+		// excite all of the held frequencies
+		for (auto& note : mNotes)
+		{
+			Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
+			float amp = kSpectralAmpMax * (float)note.Velocity() / 127.0f; 
+			specGen.pluck(freq.asHz(), amp);
 		}
 
 		const float t = (float)GetParam(kCrush)->Value();
@@ -380,9 +420,8 @@ void SpectralHarp::ProcessMidiMsg(IMidiMsg* pMsg)
 			SetControlChangeForParam(cc, midiLearnParamIdx);
 			midiLearnParamIdx = -1;
 		}
-
-		mMidiQueue.Add(pMsg);
 	}
+	mMidiQueue.Add(pMsg);
 }
 
 void SpectralHarp::Reset()
@@ -392,6 +431,7 @@ void SpectralHarp::Reset()
 	specGen.reset();
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
+	mNotes.clear();
 
 	// read control mappings from the INI if we are running standalone
 #if SA_API
