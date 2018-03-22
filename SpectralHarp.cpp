@@ -5,6 +5,7 @@
 #include "StringControl.h"
 #include "SpectrumSelection.h"
 #include "KnobLineCoronaControl.h"
+#include "TextBox.h"
 
 #if SA_API
 #include "app_wrapper/app_main.h"
@@ -141,6 +142,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	pGraphics->AttachPanelBackground(&backColor);
 
 	IText captionText = IText(labelSize, &labelColor);
+	captionText.mTextEntryBGColor = panelColor;
+	captionText.mTextEntryFGColor = labelColor;
 
 	IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
 	pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10));
@@ -157,11 +160,11 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		strumRect.B += kPluckPadSpaceBottom;
 		bandLabel.mAlign = IText::kAlignNear;
 		IRECT lowBandRect = IRECT(strumRect.L + capMargin, strumRect.B, strumRect.L + kCaptionW + capMargin, strumRect.B + 25);
-		pGraphics->AttachControl(new ICaptionControl(this, lowBandRect, kBandFirst, &bandLabel, true));
+		pGraphics->AttachControl(new TextBox(this, lowBandRect, kBandFirst, &bandLabel, pGraphics, "00000 Hz", true, 0.005));
 
 		bandLabel.mAlign = IText::kAlignFar;
 		IRECT highBandRect = IRECT(strumRect.R - kCaptionW - capMargin, strumRect.B, strumRect.R - capMargin, strumRect.B + 25);
-		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel, true));
+		pGraphics->AttachControl(new TextBox(this, highBandRect, kBandLast, &bandLabel, pGraphics, "00000 Hz", true, 0.005));
 	}
 
 	KnobLineCoronaControl* knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kVolumeX), kVolume, &knobColor, &knobColor, kKnobCorona);
@@ -454,7 +457,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 			GetParam(kBandFirst)->Set(bandLast - kBandMinDistance);
 			InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
 			GetGUI()->SetParameterFromPlug(kBandFirst, GetParam(kBandFirst)->GetNormalized(), true);
-		}
+		}		
 	}
 	break;
 
@@ -467,7 +470,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 			GetParam(kBandLast)->Set(bandFirst + kBandMinDistance);
 			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());
 			GetGUI()->SetParameterFromPlug(kBandLast, GetParam(kBandLast)->GetNormalized(), true);
-		}
+		}	
 	}
 	break;
 

@@ -69,6 +69,7 @@
     </ClCompile>
     <ClCompile Include="SpectralGen.cpp" />
     <ClCompile Include="KnobLineCoronaControl.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

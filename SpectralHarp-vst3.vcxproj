@@ -353,6 +353,7 @@ if exist "%programfiles(x86)%" (copy /y "$(TargetPath)" "$(VST3_64_PATH)\IPlugEf
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
     <ClCompile Include="StringControl.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />

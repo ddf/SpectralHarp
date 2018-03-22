@@ -58,6 +58,7 @@
     <ClInclude Include="Params.h" />
     <ClInclude Include="SpectralGen.h" />
     <ClInclude Include="KnobLineCoronaControl.h" />
+    <ClInclude Include="TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -113,6 +114,7 @@
     </ClCompile>
     <ClCompile Include="SpectralGen.cpp" />
     <ClCompile Include="KnobLineCoronaControl.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />
