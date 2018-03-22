@@ -64,6 +64,7 @@ bool StringControl::Draw(IGraphics* pGraphics)
 	//pGraphics->DrawLine(&mHandleColor, mRECT.L, ypos + mRECT.T, mRECT.R, ypos + mRECT.T, 0, false);
 	//pGraphics->FillCircle(&mHandleColor, xpos + mRECT.L, ypos + mRECT.T, mHandleRadius, 0, true);
 
+	SetDirty(false);
 	Redraw();
 
 	return true;
