@@ -4,7 +4,7 @@
 #include "resource.h"
 #include "StringControl.h"
 #include "SpectrumSelection.h"
-#include "Controls.h"
+#include "KnobLineCoronaControl.h"
 
 #if SA_API
 #include "app_wrapper/app_main.h"
@@ -137,6 +137,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kBandDensity)->InitInt("Density", kBandDensityDefault, kBandDensityMin, kBandDensityMax, "strings");
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
+	pGraphics->HandleMouseOver(true);
 	pGraphics->AttachPanelBackground(&backColor);
 
 	IText captionText = IText(labelSize, &labelColor);
@@ -163,14 +164,11 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		pGraphics->AttachControl(new ICaptionControl(this, highBandRect, kBandLast, &bandLabel, true));
 	}
 
-	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kVolumeX), kVolume, &knobColor, &knobColor, kKnobCorona));
-	pGraphics->AttachControl(new ITextControl(this, IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), &captionText, "Volume"));
-
-	//pGraphics->AttachControl(new IKnobMultiControl(this, kBandFirstX, kKnobY, kBandFirst, &knob));
-	//pGraphics->AttachControl(new ITextControl(this, IRECT(kBandFirstX, kCaptionT, kBandFirstX + kCaptionW, kCaptionB), &captionText, "First"));
-
-	//pGraphics->AttachControl(new IKnobMultiControl(this, kBandLastX, kKnobY, kBandLast, &knob));
-	//pGraphics->AttachControl(new ITextControl(this, IRECT(kBandLastX, kCaptionT, kBandLastX + kCaptionW, kCaptionB), &captionText, "Last"));
+	KnobLineCoronaControl* knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kVolumeX), kVolume, &knobColor, &knobColor, kKnobCorona);
+	ITextControl* text = new ITextControl(this, IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), &captionText, "Volume");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
 
 	// spectrum selection UI
 	{
@@ -182,20 +180,29 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		pGraphics->AttachControl(new ITextControl(this, rect, &captionText, "Spectrum Selection"));
 	}
 
-	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, &knobColor, &knobColor, kKnobCorona));
-	pGraphics->AttachControl(new ITextControl(this, IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), &captionText, "Density"));
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), &captionText, "Density");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
 
-	//pGraphics->AttachControl(new IKnobMultiControl(this, kSpacingX, kKnobY, kSpacing, &knob));
-	//pGraphics->AttachControl(new ITextControl(this, IRECT(kSpacingX, kCaptionT, kSpacingX+kCaptionW, kCaptionB), &captionText, "Spacing"));
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kPitchX), kPitch, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kPitchX, kCaptionT, kPitchX + kCaptionW, kCaptionB), &captionText, "Pitch");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
 
-	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kPitchX), kPitch, &knobColor, &knobColor, kKnobCorona));
-	pGraphics->AttachControl(new ITextControl(this, IRECT(kPitchX, kCaptionT, kPitchX + kCaptionW, kCaptionB), &captionText, "Pitch"));
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kDecayX), kDecay, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kDecayX, kCaptionT, kDecayX + kCaptionW, kCaptionB), &captionText, "Decay");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
 
-	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kDecayX),kDecay, &knobColor, &knobColor, kKnobCorona));
-	pGraphics->AttachControl(new ITextControl(this, IRECT(kDecayX, kCaptionT, kDecayX + kCaptionW, kCaptionB), &captionText, "Decay"));
-
-	pGraphics->AttachControl(new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob,kCrushX), kCrush, &knobColor, &knobColor, kKnobCorona));
-	pGraphics->AttachControl(new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), &captionText, "Crush"));
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kCrushX), kCrush, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), &captionText, "Crush");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
 	
 	// logooo
 	

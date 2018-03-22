@@ -52,12 +52,12 @@
     <ClInclude Include="StringControl.h" />
     <ClInclude Include="SpectralHarp.h" />
     <ClInclude Include="SpectrumSelection.h" />
-    <ClInclude Include="Controls.h" />
     <ClInclude Include="app_wrapper\app_resource.h">
       <Filter>app</Filter>
     </ClInclude>
     <ClInclude Include="Params.h" />
     <ClInclude Include="SpectralGen.h" />
+    <ClInclude Include="KnobLineCoronaControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\WDL\rtaudiomidi\RtAudio.cpp">
@@ -87,7 +87,6 @@
     <ClCompile Include="StringControl.cpp" />
     <ClCompile Include="SpectralHarp.cpp" />
     <ClCompile Include="SpectrumSelection.cpp" />
-    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="..\minim-cpp\src\AudioSource.cpp">
       <Filter>minim</Filter>
     </ClCompile>
@@ -113,6 +112,7 @@
       <Filter>minim</Filter>
     </ClCompile>
     <ClCompile Include="SpectralGen.cpp" />
+    <ClCompile Include="KnobLineCoronaControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpectralHarp.rc" />
