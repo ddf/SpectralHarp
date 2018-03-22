@@ -74,8 +74,6 @@ struct AppState
   UInt16 mMidiInChan;
   UInt16 mMidiOutChan;
 
-  UInt16 mMidiControlForParam[kNumParams];
-
   AppState():
     mAudioDriverType(0), // DS / CoreAudio by default
     mAudioInChanL(1),
@@ -93,8 +91,6 @@ struct AppState
 
     strcpy(mMidiInDev, "off");
     strcpy(mMidiOutDev, "off");
-
-	memset(mMidiControlForParam, 0, sizeof(mMidiControlForParam));
   }
 };
 

@@ -28,6 +28,7 @@ public:
 	// catch the About menu item to display what we wants in a box
 	bool HostRequestingAboutBox() override;
 
+	void BroadcastParamChange(const int paramIdx);
 	// can be called directly from StringControl, but also used internally in response to param changes and midi.
 	void Pluck(const float pluckX, const float pluckY);
 

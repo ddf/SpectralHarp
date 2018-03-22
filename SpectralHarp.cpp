@@ -14,6 +14,10 @@ static const char * kAboutBoxText = "Version " VST3_VER_STR "\nCreated by Damien
 
 const int kNumPrograms = 1;
 
+// name of the section of the INI file we save midi cc mappings to
+const char * kMidiControlIni = "midi";
+const IMidiMsg::EControlChangeMsg kUnmappedParam = (IMidiMsg::EControlChangeMsg)128;
+
 enum ELayout
 {
 	kWidth = GUI_WIDTH,
@@ -105,7 +109,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	for (int i = 0; i < kNumParams; ++i)
 	{
-		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)0;
+		controlChangeForParam[i] = kUnmappedParam;
 	}
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label
@@ -297,14 +301,30 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 		WDL_String str;
 		if (paramIdx1 != -1)
 		{
-			str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx1)->GetNameForHost());
-			int flags = controlChangeForParam[paramIdx1] ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			bool isMapped = controlChangeForParam[paramIdx1] != kUnmappedParam;
+			int flags = isMapped ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			if (isMapped)
+			{
+				str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetParam(paramIdx1)->GetNameForHost(), (int)controlChangeForParam[paramIdx1]);
+			}
+			else
+			{
+				str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx1)->GetNameForHost());
+			}
 			menu.AddItem(str.Get(), -1, flags);
 		}
 		if (paramIdx2 != -1)
 		{
-			str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx2)->GetNameForHost());
-			int flags = controlChangeForParam[paramIdx2] ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			bool isMapped = controlChangeForParam[paramIdx2] != kUnmappedParam;
+			int flags = isMapped ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			if (isMapped)
+			{
+				str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetParam(paramIdx2)->GetNameForHost(), (int)controlChangeForParam[paramIdx2]);
+			}
+			else
+			{
+				str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx2)->GetNameForHost());
+			}
 			menu.AddItem(str.Get(), -1, flags);
 		}
 		if (GetGUI()->CreateIPopupMenu(&menu, x, y))
@@ -314,7 +334,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 			{			
 				if (menu.GetItem(chosen)->GetChecked())
 				{
-					SetControlChangeForParam((IMidiMsg::EControlChangeMsg)0, paramIdx1);
+					SetControlChangeForParam(kUnmappedParam, paramIdx1);
 				}
 				else
 				{
@@ -325,7 +345,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 			{
 				if (menu.GetItem(chosen)->GetChecked())
 				{
-					SetControlChangeForParam((IMidiMsg::EControlChangeMsg)0, paramIdx2);
+					SetControlChangeForParam(kUnmappedParam, paramIdx2);
 				}
 				else
 				{
@@ -363,10 +383,16 @@ void SpectralHarp::Reset()
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
 
+	// read control mappings from the INI if we are running standalone
 #if SA_API
 	for (int i = 0; i < kNumParams; ++i)
 	{
-		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)gState->mMidiControlForParam[i];
+		int defaultMapping = (int)controlChangeForParam[i];
+		char controlName[32];
+		sprintf(controlName, "control%u", i);
+		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, gINIPath);
+
+		BroadcastParamChange(i);
 	}
 #endif
 }
@@ -441,6 +467,8 @@ void SpectralHarp::OnParamChange(int paramIdx)
 	default:
 		break;
 	}
+
+	BroadcastParamChange(paramIdx);
 }
 
 void SpectralHarp::Pluck(const float pluckX, const float pluckY)
@@ -471,9 +499,21 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
 {
 	controlChangeForParam[paramIdx] = cc;
+
 #if SA_API
-	gState->mMidiControlForParam[paramIdx] = (UInt16)cc;
-	UpdateINI();
+	char controlName[32];
+	sprintf(controlName, "control%u", paramIdx);
+	// remove the setting if they unmapped it
+	if (cc == kUnmappedParam)
+	{
+		WritePrivateProfileString(kMidiControlIni, controlName, 0, gINIPath);
+	}
+	else
+	{
+		char ccString[100];
+		sprintf(ccString, "%u", (unsigned)cc);
+		WritePrivateProfileString(kMidiControlIni, controlName, ccString, gINIPath);
+	}
 #endif
 }
 
@@ -508,3 +548,14 @@ bool SpectralHarp::HostRequestingAboutBox()
 	return false;
 }
 
+void SpectralHarp::BroadcastParamChange(const int paramIdx)
+{
+	// send MIDI CC messages with current param values for any mapped params,
+	// which should enable some control surfaces to keep indicators in sync with the UI.
+	if (controlChangeForParam[paramIdx] != kUnmappedParam)
+	{
+		IMidiMsg msg;
+		msg.MakeControlChangeMsg(controlChangeForParam[paramIdx], GetParam(paramIdx)->GetNormalized(), 0);
+		SendMidiMsg(&msg);
+	}
+}
