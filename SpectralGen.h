@@ -21,7 +21,7 @@ public:
 	
 	void reset();
 	
-	void  pluck( const float freq, const float amp );
+	void  pluck( const float freq, const float amp, const float spread );
 	
 	float getBandMagnitude( const float freq ) const;
 	float getBandPhase( const float freq ) const;
@@ -29,6 +29,10 @@ public:
 	UGenInput decay;
     
 protected:
+
+	// our own version of this so we can return out-of-bounds indices.
+	// helpful when dealing with large spread near the edge of the spectrum.
+	int freqToIndex(const float freq);
     
 	void cleanup();
     void uGenerate( float* out, const int numChannels ) override;

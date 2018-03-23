@@ -102,13 +102,28 @@ void SpectralGen::sampleRateChanged()
 	reset();
 }
 
-void SpectralGen::pluck(const float freq, const float amp)
+void SpectralGen::pluck(const float freq, const float amp, const float spread)
 {
-	const int b = fft->freqToIndex(freq);
-	if ( b >= 0 && b < specSize )
+	const float hs = spread / 2;
+	const int cb = freqToIndex(freq);
+	const int lb = freqToIndex(freq - hs);
+	const int hb = freqToIndex(freq + hs);
+	for (int b = lb; b <= hb; ++b)
 	{
-		bands[b].amplitude = amp;
-		bands[b].decay = 1;
+		if (b >= 0 && b < specSize)
+		{
+			if (b == cb)
+			{
+				bands[b].amplitude = amp;
+			}
+			else
+			{
+				float f = fft->indexToFreq(b);
+				bands[b].amplitude = amp * (1.0f - powf(fabs(f - freq) / spread, 1.0/M_E));
+			}
+
+			bands[b].decay = 1;
+		}
 	}
 }
 
@@ -187,6 +202,17 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
     output[outIndex] = 0;
     
     outIndex = (outIndex+1)%outputSize;
+}
+
+int SpectralGen::freqToIndex(const float freq)
+{
+	// special case: freq is lower than the bandwidth of spectrum[0] but not negative
+	if (freq > 0 && freq < fft->getBandWidth() / 2) return 0;
+	// all other cases
+	float fraction = freq / sampleRate();
+	// roundf is not available in windows, so we do this
+	int i = (int)floorf((float)fft->timeSize() * fraction + 0.5f);
+	return i;
 }
 
 void SpectralGen::cleanup()

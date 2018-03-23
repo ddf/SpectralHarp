@@ -48,7 +48,8 @@ enum ELayout
 	kVolumeX = 25,
 	kBandDensityX = kVolumeX + kKnobSpacing,
 	kTuningX = kBandDensityX + kKnobSpacing,
-	kPitchX = kTuningX + kKnobSpacing,
+	kSpreadX = kTuningX + kKnobSpacing,
+	kPitchX = kSpreadX + kKnobSpacing,
 	kDecayX = kPitchX + kKnobSpacing,
 	kCrushX = kDecayX + kKnobSpacing,
 
@@ -143,6 +144,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kBandDensity)->InitInt("Density", kBandDensityDefault, kBandDensityMin, kBandDensityMax, "strings");
 	// default of 1, which is linear spacing like in the first version, which means the sound is preserved for existing projects.
 	GetParam(kBandLinLogLerp)->InitDouble("Tuning", 1, 0, 1, 0.01);
+	// default of 0, which matches behavior of the first version.
+	GetParam(kBandSpread)->InitDouble("Spread", kBandSpreadMin, kBandSpreadMin, kBandSpreadMax, 1, "Hz");
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->HandleMouseOver(true);
@@ -198,6 +201,12 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kTuningX), kBandLinLogLerp, &knobColor, &knobColor, kKnobCorona);
 	text = new ITextControl(this, IRECT(kTuningX, kCaptionT, kTuningX + kCaptionW, kCaptionB), &captionText, "Tuning");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
+
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kSpreadX), kBandSpread, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kSpreadX, kCaptionT, kSpreadX + kCaptionW, kCaptionB), &captionText, "Spread");
 	knob->SetLabelControl(text);
 	pGraphics->AttachControl(knob);
 	pGraphics->AttachControl(text);
@@ -307,12 +316,14 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 			mMidiQueue.Remove();
 		}
 
+		const float spread = GetParam(kBandSpread)->Value();
+
 		// excite all of the held frequencies
 		for (auto& note : mNotes)
 		{
-			Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
-			float amp = kSpectralAmpMax * (float)note.Velocity() / 127.0f; 
-			specGen.pluck(freq.asHz(), amp);
+			const Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
+			const float amp = kSpectralAmpMax * (float)note.Velocity() / 127.0f; 
+			specGen.pluck(freq.asHz(), amp, spread);
 		}
 
 		const float t = (float)GetParam(kCrush)->Value();
@@ -552,10 +563,8 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 {
 	if (!mIsLoading)
 	{
-		//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
 		const float numBands = (float)GetParam(kBandDensity)->Int();
-		const float bandFirst = (float)GetParam(kBandFirst)->Int();
-		const float bandLast = (float)GetParam(kBandLast)->Int();
+		const float spread = (float)GetParam(kBandSpread)->Value();
 		if (numBands > 0)
 		{
 			for (int b = 0; b <= numBands; ++b)
@@ -566,7 +575,7 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 				{
 					float mag = Map(pluckY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);
 					//printf("plucked %f\n", specGen.getBandFrequency(bindx));
-					specGen.pluck(freq, mag);
+					specGen.pluck(freq, mag, spread);
 				}
 			}
 		}

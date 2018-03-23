@@ -26,6 +26,11 @@ enum EParams
 	// at 1 we space strings logarithmically between BandFirst and BandLast,
 	// at values inbetween we lerp between the linear value and log value.
 	kBandLinLogLerp,
+	// spread is expressed in Hz and is how widely we excite the spectrum around a strings frequency.
+	// applied amplitudes fall of exponentially a we move away from the central frequency band.
+	// how much of an audible effect this will have depends on the sample rate, 
+	// since higher sample rates means we get more resolution in the frequency spectrum.
+	kBandSpread,
 	kNumParams
 };
 
@@ -52,7 +57,7 @@ enum ESettings
 	// settings for kBandFirst and kBandLast params
 	kBandMin = 64,
 	kBandMax = 13000,
-	kBandMinDistance = 256,
+	kBandMinDistance = 64,
 
 	kBandFirstDefault = kBandMin,
 	kBandLastDefault = kBandMax,
@@ -60,7 +65,12 @@ enum ESettings
 	// settings for kBandDensity
 	kBandDensityMin = 16,
 	kBandDensityMax = 256,
-	kBandDensityDefault = kBandDensityMax
+	//kBandDensityMin = 12, // one string per semi-tone if low and high frequency are an octave apart
+	//kBandDensityMax = 288, // 24 "octaves" of semi-tones
+	kBandDensityDefault = kBandDensityMax,
+
+	kBandSpreadMin = 0,
+	kBandSpreadMax = 13000,
 };
 
 static float Map(float value, float istart, float istop, float ostart, float ostop)
