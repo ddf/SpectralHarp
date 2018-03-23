@@ -47,7 +47,8 @@ enum ELayout
 
 	kVolumeX = 25,
 	kBandDensityX = kVolumeX + kKnobSpacing,
-	kPitchX = kBandDensityX + kKnobSpacing,
+	kTuningX = kBandDensityX + kKnobSpacing,
+	kPitchX = kTuningX + kKnobSpacing,
 	kDecayX = kPitchX + kKnobSpacing,
 	kCrushX = kDecayX + kKnobSpacing,
 
@@ -140,6 +141,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	InitBandParam("Last Band", kBandLast, kBandLastDefault);
 
 	GetParam(kBandDensity)->InitInt("Density", kBandDensityDefault, kBandDensityMin, kBandDensityMax, "strings");
+	// default of 1, which is linear spacing like in the first version, which means the sound is preserved for existing projects.
+	GetParam(kBandLinLogLerp)->InitDouble("Tuning", 1, 0, 1, 0.01);
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->HandleMouseOver(true);
@@ -189,6 +192,12 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, &knobColor, &knobColor, kKnobCorona);
 	text = new ITextControl(this, IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), &captionText, "Density");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
+
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kTuningX), kBandLinLogLerp, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kTuningX, kCaptionT, kTuningX + kCaptionW, kCaptionB), &captionText, "Tuning");
 	knob->SetLabelControl(text);
 	pGraphics->AttachControl(knob);
 	pGraphics->AttachControl(text);
@@ -530,8 +539,13 @@ float SpectralHarp::FrequencyOfString(int stringNum)
 	// convert first and last bands to midi notes and then do a linear interp, converting back to Hz at the end.
 	Minim::Frequency lowFreq = Minim::Frequency::ofHertz(GetParam(kBandFirst)->Value());
 	Minim::Frequency hiFreq = Minim::Frequency::ofHertz(GetParam(kBandLast)->Value());
+	const float linFreq = Map(t, 0, 1, lowFreq.asHz(), hiFreq.asHz());
 	const float midiNote = Map(t, 0, 1, lowFreq.asMidiNote(), hiFreq.asMidiNote());
-	return Minim::Frequency::ofMidiNote(midiNote).asHz();
+	const float logFreq = Minim::Frequency::ofMidiNote(midiNote).asHz();
+	// we lerp from logFreq up to linFreq because log spacing clusters frequencies
+	// towards the bottom of the range, which means that when holding down the mouse on a string
+	// and lowering this param, you'll hear the pitch drop, which makes more sense than vice-versa.
+	return Map(GetParam(kBandLinLogLerp)->Value(), 0, 1, logFreq, linFreq);
 }
 
 void SpectralHarp::Pluck(const float pluckX, const float pluckY)

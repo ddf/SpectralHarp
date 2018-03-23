@@ -22,6 +22,10 @@ enum EParams
 	kBandLast,
 	// how many strings available for strumming
 	kBandDensity,
+	// at 0 we space strings linearly between BandFirst and BandLast,
+	// at 1 we space strings logarithmically between BandFirst and BandLast,
+	// at values inbetween we lerp between the linear value and log value.
+	kBandLinLogLerp,
 	kNumParams
 };
 
