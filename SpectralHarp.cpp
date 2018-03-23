@@ -523,6 +523,17 @@ void SpectralHarp::OnParamChange(int paramIdx)
 	BroadcastParamChange(paramIdx);
 }
 
+
+float SpectralHarp::FrequencyOfString(int stringNum)
+{
+	const double t = (double)stringNum / GetParam(kBandDensity)->Value();
+	// convert first and last bands to midi notes and then do a linear interp, converting back to Hz at the end.
+	Minim::Frequency lowFreq = Minim::Frequency::ofHertz(GetParam(kBandFirst)->Value());
+	Minim::Frequency hiFreq = Minim::Frequency::ofHertz(GetParam(kBandLast)->Value());
+	const float midiNote = Map(t, 0, 1, lowFreq.asMidiNote(), hiFreq.asMidiNote());
+	return Minim::Frequency::ofMidiNote(midiNote).asHz();
+}
+
 void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 {
 	if (!mIsLoading)
@@ -535,8 +546,8 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 		{
 			for (int b = 0; b <= numBands; ++b)
 			{
-				const float freq = roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
-				float normBand = Map((float)freq, bandFirst, bandLast, 0, 1);
+				const float freq = FrequencyOfString(b);
+				const float normBand = (float)b / numBands;
 				if (fabs(normBand - pluckX) < 0.005f)
 				{
 					float mag = Map(pluckY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);

@@ -21,11 +21,13 @@ bool StringControl::Draw(IGraphics* pGraphics)
 	const float numBands = (float)mPlug->GetParam(kBandDensity)->Int();
 	const float bandFirst = (float)mPlug->GetParam(kBandFirst)->Int();
 	const float bandLast = (float)mPlug->GetParam(kBandLast)->Int();
-    if ( numBands > 0 )
+
+	SpectralHarp* harp = static_cast<SpectralHarp*>(mPlug);
+    if ( numBands > 0 && harp != nullptr)
     {
         for (int b = 0; b <= numBands; ++b)
         {
-            const float freq = roundf(Map((float)b, 0, numBands, bandFirst, bandLast));
+			const float freq = harp->FrequencyOfString(b);
             const float x = Map((float)b, 0, numBands, mRECT.L + kPadding, mRECT.R - kPadding);
             const float p = spectrum.getBandPhase(freq) + stringAnimation;
             const float m = spectrum.getBandMagnitude(freq);

@@ -30,6 +30,11 @@ public:
 	bool HostRequestingAboutBox() override;
 
 	void BroadcastParamChange(const int paramIdx);
+
+	// given a string number between 0 and the current value of Density,
+	// return the current frequency based on related parameters like BandFirst and BandLast.
+	float FrequencyOfString(int stringNum);
+
 	// can be called directly from StringControl, but also used internally in response to param changes and midi.
 	void Pluck(const float pluckX, const float pluckY);
 
