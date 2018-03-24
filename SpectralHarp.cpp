@@ -105,6 +105,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, mGain(1.)
 	, mPluckX(0)
 	, mPluckY(0)
+	, mSpread(0)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
@@ -146,6 +147,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kBandLinLogLerp)->InitDouble("Tuning", 1, 0, 1, 0.01);
 	// default of 0, which matches behavior of the first version.
 	GetParam(kBandSpread)->InitDouble("Spread", kBandSpreadMin, kBandSpreadMin, kBandSpreadMax, 1, "Hz");
+	GetParam(kBandSpread)->SetShape(2);
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->HandleMouseOver(true);
@@ -275,6 +277,14 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	double* out1 = outputs[0];
 	double* out2 = outputs[1];
 
+	// excite all of the held frequencies
+	for (auto& note : mNotes)
+	{
+		const Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
+		const float amp = kSpectralAmpMax * (float)note.Velocity() / 127.0f;
+		specGen.pluck(freq.asHz(), amp, mSpread);
+	}
+
 	float result[1];
 	for (int s = 0; s < nFrames; ++s, ++in1, ++in2, ++out1, ++out2)
 	{
@@ -292,6 +302,11 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 			case IMidiMsg::kNoteOn:
 				if (pMsg->Velocity() > 0)
 				{
+					// pluck the string now
+					const Minim::Frequency freq = Minim::Frequency::ofMidiNote(pMsg->NoteNumber());
+					const float amp = kSpectralAmpMax * (float)pMsg->Velocity() / 127.0f;
+					specGen.pluck(freq.asHz(), amp, mSpread);
+
 					mNotes.push_back(*pMsg);
 					break;
 				}
@@ -316,15 +331,6 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 			mMidiQueue.Remove();
 		}
 
-		const float spread = GetParam(kBandSpread)->Value();
-
-		// excite all of the held frequencies
-		for (auto& note : mNotes)
-		{
-			const Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
-			const float amp = kSpectralAmpMax * (float)note.Velocity() / 127.0f; 
-			specGen.pluck(freq.asHz(), amp, spread);
-		}
 
 		const float t = (float)GetParam(kCrush)->Value();
 		const float crush = expoEaseOut(t, crushBegin, crushChange, kCrushMax - kCrushMin);
@@ -535,6 +541,10 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		GetGUI()->SetParameterFromPlug(kBandLast, GetParam(kBandLast)->GetNormalized(), true);
 	}
 	break;
+
+	case kBandSpread:
+		mSpread = GetParam(kBandSpread)->Value();
+		break;
 
 	default:
 		break;

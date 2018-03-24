@@ -49,6 +49,7 @@ private:
 	float					  mGain;
 	float					  mPluckX;
 	float					  mPluckY;
+	float					  mSpread;
 	SpectralGen               specGen;
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;

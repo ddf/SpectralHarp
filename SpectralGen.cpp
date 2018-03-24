@@ -108,6 +108,7 @@ void SpectralGen::pluck(const float freq, const float amp, const float spread)
 	const int cb = freqToIndex(freq);
 	const int lb = freqToIndex(freq - hs);
 	const int hb = freqToIndex(freq + hs);
+	const int denom = cb - lb;
 	for (int b = lb; b <= hb; ++b)
 	{
 		if (b >= 0 && b < specSize)
@@ -118,8 +119,12 @@ void SpectralGen::pluck(const float freq, const float amp, const float spread)
 			}
 			else
 			{
-				float f = fft->indexToFreq(b);
-				bands[b].amplitude = amp * (1.0f - powf(fabs(f - freq) / spread, 1.0/M_E));
+				const float fn = fabs(b - cb) / denom;
+				// exponential fall off from the center, see: https://www.desmos.com/calculator/gzqrz4isyb
+				const float fa = amp * exp(-10 * fn);
+				// we set the amplitude to the maximum of the current effective amplitude and the amplitude from the spread,
+				// ie we don't want to make a band suddenly quieter than it currently is.
+				bands[b].amplitude = fmax(bands[b].amplitude * bands[b].decay, fa);
 			}
 
 			bands[b].decay = 1;
