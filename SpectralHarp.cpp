@@ -144,7 +144,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	GetParam(kBandDensity)->InitInt("Density", kBandDensityDefault, kBandDensityMin, kBandDensityMax, "strings");
 	// default of 1, which is linear spacing like in the first version, which means the sound is preserved for existing projects.
-	GetParam(kBandLinLogLerp)->InitDouble("Tuning", 1, 0, 1, 0.01);
+	GetParam(kBandLinLogLerp)->InitDouble("Tuning", 1, 0, 1, 0.01, "log -> lin");
+
 	// default of 0, which matches behavior of the first version.
 	GetParam(kBandSpread)->InitDouble("Spread", kBandSpreadMin, kBandSpreadMin, kBandSpreadMax, 1, "Hz");
 	GetParam(kBandSpread)->SetShape(2);
