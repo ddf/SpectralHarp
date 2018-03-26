@@ -45,13 +45,15 @@ enum ELayout
 	kKnobCorona = 0,
 	kKnobSpacing = 75,
 
-	kVolumeX = 25,
-	kBandDensityX = kVolumeX + kKnobSpacing,
+	kVolumeX = 30,
+	kDecayX = kVolumeX + kKnobSpacing,
+	kCrushX = kDecayX + kKnobSpacing,
+
+	kBandDensityX = kCrushX + kKnobSpacing,
 	kTuningX = kBandDensityX + kKnobSpacing,
 	kSpreadX = kTuningX + kKnobSpacing,
 	kPitchX = kSpreadX + kKnobSpacing,
-	kDecayX = kPitchX + kKnobSpacing,
-	kCrushX = kDecayX + kKnobSpacing,
+	
 
 	kKnobFrames = 60,
 
