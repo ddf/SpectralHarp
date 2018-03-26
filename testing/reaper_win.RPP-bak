@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "5.77" 1522102428
+<REAPER_PROJECT 0.1 "5.77" 1522106067
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -74,7 +74,7 @@
     DOCKED 1
     BYPASS 0 0 0
     <JS Analysis/gfxscope ""
-      31.348618 -9.400000 2.000000 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      31.348618 9.400000 2.000000 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     >
     JS_DIMS 1701 279
     FLOATPOS 0 0 0 0
@@ -831,7 +831,7 @@
     BUSCOMP 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 0
+    SEL 1
     REC 0 0 0 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0
@@ -850,7 +850,7 @@
       BYPASS 0 0 0
       <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.dll 0 "" 1399353968
         cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAOAAAAAAAAAAAABAA
-        776t3g3wrd4AAIA/AACAP8IGwD4AAAAAAAAAAAAAAAAF87E8LVXGPgRzbT0AAAAAAAAAAAAAAAA=
+        776t3g3wrd5VVYU+AACAP9A+VT4AAAAAAAAAAAAAAAAF87E8LVXGPuJnlD0AAAAAAAAAAAAAAAA=
         LQAtABAAAAA=
       >
       PRESETNAME -

@@ -16,6 +16,7 @@ SpectralGen::SpectralGen()
 : UGen()
 , decay( *this, CONTROL, 0 )
 , brightness( *this, CONTROL, 0 )
+, spread( *this, CONTROL, 0 )
 , inverseSize(0)
 , specSize(0)
 , outputSize(0)
@@ -177,11 +178,12 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		const float decayDec = overlapSize / (decaySeconds * sampleRate());
 
 		const float falloff = brightness.getLastValue();
+		const float halfSpread = spread.getLastValue() * 0.5f;
 
 		memset(specReal, 0, specSize * sizeof(float));
 		memset(specImag, 0, specSize * sizeof(float));
 		
-        for( unsigned i = 0; i < specSize; ++i )
+        for( int i = 0; i < specSize; ++i )
         {
             band& b = bands[i];
 			b.decay = b.decay > decayDec ? b.decay - decayDec : 0;
@@ -193,18 +195,29 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 				float p = adjustOddPhase && i % 2 == 1 ? b.phase + M_PI : b.phase;
 				float a = spectralMagnitude*b.decay*b.amplitude;
 
-				addSinusoid(i, a, p);
-
 				const float bandFreq = fft->indexToFreq(i);
+
+				// apply spread
+				int lidx = freqToIndex(bandFreq - halfSpread);
+				int hidx = freqToIndex(bandFreq + halfSpread);
+
+				addSinusoid(i, a, p, lidx, hidx);
+
+				// apply brightness
 				int partial = 2;
-				int bidx = freqToIndex(bandFreq*partial);
-				while (bidx < specSize)
+				float partialFreq = bandFreq*partial;
+				int pidx = freqToIndex(bandFreq*partial);
+				a *= falloff;
+				while (pidx < specSize && a > 0.01f)
 				{
-					p = adjustOddPhase && bidx % 2 == 1 ? b.phase + M_PI : b.phase;
-					a *= falloff;
-					addSinusoid(bidx, a / partial, p);
+					p = adjustOddPhase && pidx % 2 == 1 ? bands[pidx].phase + M_PI : bands[pidx].phase;
+					lidx = freqToIndex(partialFreq - halfSpread);
+					hidx = freqToIndex(partialFreq + halfSpread);
+					addSinusoid(pidx, a / partial, p, lidx, hidx);
 					++partial;
-					bidx = freqToIndex(bandFreq*partial);
+					partialFreq = bandFreq*partial;
+					pidx = freqToIndex(bandFreq*partial);
+					a *= falloff;
 				}
 			}
         }
@@ -233,10 +246,36 @@ int SpectralGen::freqToIndex(const float freq)
 	// special case: freq is lower than the bandwidth of spectrum[0] but not negative
 	if (freq > 0 && freq < fft->getBandWidth() / 2) return 0;
 	// all other cases
-	float fraction = freq / sampleRate();
+	const float fraction = freq / sampleRate();
 	// roundf is not available in windows, so we do this
-	int i = (int)floorf((float)fft->timeSize() * fraction + 0.5f);
+	const int i = (int)floorf((float)fft->timeSize() * fraction + 0.5f);
 	return i;
+}
+
+void SpectralGen::addSinusoid(const int cidx, const float amp, const float phase, const int lidx, const int hidx)
+{
+	const int range = cidx - lidx;
+	for (int bidx = lidx; bidx <= hidx; ++bidx)
+	{
+		if (bidx > 0 && bidx < specSize)
+		{
+			if (bidx == cidx)
+			{
+				specReal[cidx] += amp*cosf(phase);
+				specImag[cidx] += amp*sinf(phase);
+			}
+			else
+			{
+				const float fn = fabs(bidx - cidx) / range;
+				// exponential fall off from the center, see: https://www.desmos.com/calculator/gzqrz4isyb
+				const float fa = amp * exp(-10 * fn);
+				const float p = adjustOddPhase && bidx % 2 == 1 ? bands[bidx].phase + M_PI : bands[bidx].phase;
+				specReal[bidx] += fa*cosf(p);
+				specImag[bidx] += fa*sinf(p);
+			}
+		}
+	}
+
 }
 
 void SpectralGen::cleanup()

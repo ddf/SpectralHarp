@@ -29,17 +29,17 @@ public:
 	UGenInput decay;
 	// [0-1] how "bright" should the spectrum be
 	UGenInput brightness; 
+	// the spread, in Hz, for each plucked frequency,
+	// this smears the spectral content outward from the frequency with an exponential falloff
+	UGenInput spread;
     
 protected:
 
 	// our own version of this so we can return out-of-bounds indices.
 	// helpful when dealing with large spread near the edge of the spectrum.
 	int freqToIndex(const float freq);
-	inline void addSinusoid(const int idx, const float amp, const float phase)
-	{
-		specReal[idx] += amp*cosf(phase);
-		specImag[idx] += amp*sinf(phase);
-	}
+	
+	void addSinusoid(const int idx, const float amp, const float phase, const int lidx, const int hidx);
     
 	void cleanup();
     void uGenerate( float* out, const int numChannels ) override;
@@ -53,6 +53,8 @@ private:
         float amplitude;
 		// current decay of the band (0-1), scales amplitude
 		float decay;
+		// precomputed real / imag values that can simply be scaled.
+		// 0 is normal phase, 1 is 180 degrees out of phase for odd bands.
 		float phase;
         
         band()
@@ -60,7 +62,6 @@ private:
 		, decay(0)
 		, phase(0)
         {
-
         }
     };
     
@@ -90,7 +91,7 @@ private:
 	// (ie every overlapSize samples we update our plucked bands and synthesize into inverse)
     int     overlapSize;
 	// whether we should adjust the phase of odd bands in the next buffer generation step
-	bool 	adjustOddPhase;
+	bool    adjustOddPhase;
 	// the fixed magnitude we use to scale up bands before performing the inverse
 	int    spectralMagnitude;
 };

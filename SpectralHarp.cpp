@@ -356,6 +356,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 		// slower tick rate means we have to decrease decay by same ratio so Pitch doesn't change Decay duration
 		specGen.decay.setLastValue(decay * rate);
 		specGen.brightness.setLastValue(mBrightness);
+		specGen.spread.setLastValue(mSpread);
 
 		bitCrush.tick(result, 1);
 #ifdef SA_API
@@ -610,7 +611,7 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 
 void SpectralHarp::PluckSpectrum(const float freq, float mag)
 {
-	specGen.pluck(freq, mag, mSpread);
+	specGen.pluck(freq, mag, 0);
 }
 
 void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
