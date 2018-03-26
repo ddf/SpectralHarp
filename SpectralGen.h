@@ -27,12 +27,19 @@ public:
 	float getBandPhase( const float freq ) const;
     
 	UGenInput decay;
+	// [0-1] how "bright" should the spectrum be
+	UGenInput brightness; 
     
 protected:
 
 	// our own version of this so we can return out-of-bounds indices.
 	// helpful when dealing with large spread near the edge of the spectrum.
 	int freqToIndex(const float freq);
+	inline void addSinusoid(const int idx, const float amp, const float phase)
+	{
+		specReal[idx] += amp*cosf(phase);
+		specImag[idx] += amp*sinf(phase);
+	}
     
 	void cleanup();
     void uGenerate( float* out, const int numChannels ) override;

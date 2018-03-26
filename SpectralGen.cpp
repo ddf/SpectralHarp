@@ -15,6 +15,7 @@
 SpectralGen::SpectralGen()
 : UGen()
 , decay( *this, CONTROL, 0 )
+, brightness( *this, CONTROL, 0 )
 , inverseSize(0)
 , specSize(0)
 , outputSize(0)
@@ -174,20 +175,38 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		//    decaySeconds == 0.5 -> 1 / (0.5 * sampleRate), which is twice as fast, equivalent to 2 / sampleRate()
 		// since we generate a new buffer every overlapSize samples, we multiply that rate by overlapSize, giving:
 		const float decayDec = overlapSize / (decaySeconds * sampleRate());
+
+		const float falloff = brightness.getLastValue();
+
+		memset(specReal, 0, specSize * sizeof(float));
+		memset(specImag, 0, specSize * sizeof(float));
 		
         for( unsigned i = 0; i < specSize; ++i )
         {
             band& b = bands[i];
 			b.decay = b.decay > decayDec ? b.decay - decayDec : 0;
-			// ODD bands need to step phase by 90 degrees every other generation
-			// because our overlap is half the size of the buffer generated.
-			// this ensure that phase lines up for those sinusoids in every buffer.
-			const float p = adjustOddPhase && i%2==1 ? b.phase + M_PI : b.phase;
-			const float x = b.decay*b.amplitude*cosf(p);
-			const float y = b.decay*b.amplitude*sinf(p);
-			
-			specReal[i] = spectralMagnitude*x;
-			specImag[i] = spectralMagnitude*y;
+			if (b.decay > 0)
+			{
+				// ODD bands need to step phase by 90 degrees every other generation
+				// because our overlap is half the size of the buffer generated.
+				// this ensure that phase lines up for those sinusoids in every buffer.
+				float p = adjustOddPhase && i % 2 == 1 ? b.phase + M_PI : b.phase;
+				float a = spectralMagnitude*b.decay*b.amplitude;
+
+				addSinusoid(i, a, p);
+
+				const float bandFreq = fft->indexToFreq(i);
+				int partial = 2;
+				int bidx = freqToIndex(bandFreq*partial);
+				while (bidx < specSize)
+				{
+					p = adjustOddPhase && bidx % 2 == 1 ? b.phase + M_PI : b.phase;
+					a *= falloff;
+					addSinusoid(bidx, a / partial, p);
+					++partial;
+					bidx = freqToIndex(bandFreq*partial);
+				}
+			}
         }
 
         fft->Minim::FourierTransform::inverse(specReal, specImag, inverse);

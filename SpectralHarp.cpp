@@ -109,7 +109,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, mPluckX(0)
 	, mPluckY(0)
 	, mSpread(0)
-	, mFalloff(0)
+	, mBrightness(0)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
@@ -355,6 +355,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 		tickRate.value.setLastValue(rate);
 		// slower tick rate means we have to decrease decay by same ratio so Pitch doesn't change Decay duration
 		specGen.decay.setLastValue(decay * rate);
+		specGen.brightness.setLastValue(mBrightness);
 
 		bitCrush.tick(result, 1);
 #ifdef SA_API
@@ -560,7 +561,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		break;
 
 	case kBrightness:
-		mFalloff = (float)GetParam(kBrightness)->Value() / 100.0f;
+		mBrightness = (float)GetParam(kBrightness)->Value() / 100.0f;
 		break;
 
 	default:
@@ -610,18 +611,6 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 void SpectralHarp::PluckSpectrum(const float freq, float mag)
 {
 	specGen.pluck(freq, mag, mSpread);
-	// add in all partials up to the sample rate,
-	// scaling to generate a sawtooth when brightness to 100%.
-	// lower brightness effectively sounds like a low pass filter being applied.
-	int partial = 2;
-	float partialFreq = freq*partial;
-	while (partialFreq < GetSampleRate())
-	{
-		mag *= mFalloff;
-		specGen.pluck(partialFreq, mag / partial, mSpread);
-		++partial;
-		partialFreq = freq*partial;
-	}
 }
 
 void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)

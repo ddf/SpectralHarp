@@ -52,7 +52,7 @@ private:
 	float					  mPluckX;
 	float					  mPluckY;
 	float					  mSpread;
-	float					  mFalloff;
+	float					  mBrightness;
 	SpectralGen               specGen;
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;
