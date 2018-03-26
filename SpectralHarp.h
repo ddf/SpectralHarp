@@ -36,7 +36,7 @@ public:
 	float FrequencyOfString(int stringNum);
 
 	// can be called directly from StringControl, but also used internally in response to param changes and midi.
-	void Pluck(const float pluckX, const float pluckY);
+	void Pluck(const float pluckX, const float pluckY);	
 
 private:
 
@@ -44,6 +44,7 @@ private:
 	void HandleMidiControlChange(IMidiMsg* pMsg);	
 	void SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx);
 	float GetPluckAmp(const float pluckY) const;
+	void PluckSpectrum(const float freq, float mag);
 	
 	bool 					  mIsLoading;
 
@@ -51,6 +52,7 @@ private:
 	float					  mPluckX;
 	float					  mPluckY;
 	float					  mSpread;
+	float					  mFalloff;
 	SpectralGen               specGen;
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;

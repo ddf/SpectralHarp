@@ -31,6 +31,9 @@ enum EParams
 	// how much of an audible effect this will have depends on the sample rate, 
 	// since higher sample rates means we get more resolution in the frequency spectrum.
 	kBandSpread,
+	// how "bright" we make the sound by exciting additional partials of a string.
+	// at 100% a single string will sound like a band-limited saw wave instead of a sine wave.
+	kBrightness,
 	kNumParams
 };
 

@@ -52,7 +52,8 @@ enum ELayout
 	kBandDensityX = kCrushX + kKnobSpacing,
 	kTuningX = kBandDensityX + kKnobSpacing,
 	kSpreadX = kTuningX + kKnobSpacing,
-	kPitchX = kSpreadX + kKnobSpacing,
+	kBrightnessX = kSpreadX + kKnobSpacing,
+	kPitchX = kBrightnessX + kKnobSpacing,
 	
 
 	kKnobFrames = 60,
@@ -108,6 +109,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, mPluckX(0)
 	, mPluckY(0)
 	, mSpread(0)
+	, mFalloff(0)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
@@ -151,6 +153,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	// default of 0, which matches behavior of the first version.
 	GetParam(kBandSpread)->InitDouble("Spread", kBandSpreadMin, kBandSpreadMin, kBandSpreadMax, 1, "Hz");
 	GetParam(kBandSpread)->SetShape(2);
+
+	GetParam(kBrightness)->InitDouble("Brightness", 0, 0, 100, 0.1, "%");
 
 	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
 	pGraphics->HandleMouseOver(true);
@@ -212,6 +216,12 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kSpreadX), kBandSpread, &knobColor, &knobColor, kKnobCorona);
 	text = new ITextControl(this, IRECT(kSpreadX, kCaptionT, kSpreadX + kCaptionW, kCaptionB), &captionText, "Spread");
+	knob->SetLabelControl(text);
+	pGraphics->AttachControl(knob);
+	pGraphics->AttachControl(text);
+
+	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBrightnessX), kBrightness, &knobColor, &knobColor, kKnobCorona);
+	text = new ITextControl(this, IRECT(kBrightnessX, kCaptionT, kBrightnessX + kCaptionW, kCaptionB), &captionText, "Brightness");
 	knob->SetLabelControl(text);
 	pGraphics->AttachControl(knob);
 	pGraphics->AttachControl(text);
@@ -285,7 +295,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	{
 		const Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
 		const float amp = GetPluckAmp((float)note.Velocity() / 127.0f);
-		specGen.pluck(freq.asHz(), amp, mSpread);
+		PluckSpectrum(freq.asHz(), amp);
 	}
 
 	float result[1];
@@ -308,7 +318,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 					// pluck the string now
 					const Minim::Frequency freq = Minim::Frequency::ofMidiNote(pMsg->NoteNumber());
 					const float amp = GetPluckAmp((float)pMsg->Velocity() / 127.0f);
-					specGen.pluck(freq.asHz(), amp, mSpread);
+					PluckSpectrum(freq.asHz(), amp);
 
 					mNotes.push_back(*pMsg);
 					break;
@@ -549,6 +559,10 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		mSpread = GetParam(kBandSpread)->Value();
 		break;
 
+	case kBrightness:
+		mFalloff = (float)GetParam(kBrightness)->Value() / 100.0f;
+		break;
+
 	default:
 		break;
 	}
@@ -576,8 +590,7 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 {
 	if (!mIsLoading)
 	{
-		const float numBands = (float)GetParam(kBandDensity)->Int();
-		const float spread = (float)GetParam(kBandSpread)->Value();
+		const float numBands = (float)GetParam(kBandDensity)->Int();		
 		if (numBands > 0)
 		{
 			for (int b = 0; b <= numBands; ++b)
@@ -587,11 +600,27 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 				if (fabs(normBand - pluckX) < 0.005f)
 				{
 					float mag = GetPluckAmp(pluckY);
-					//printf("plucked %f\n", specGen.getBandFrequency(bindx));
-					specGen.pluck(freq, mag, spread);
+					PluckSpectrum(freq, mag);
 				}
 			}
 		}
+	}
+}
+
+void SpectralHarp::PluckSpectrum(const float freq, float mag)
+{
+	specGen.pluck(freq, mag, mSpread);
+	// add in all partials up to the sample rate,
+	// scaling to generate a sawtooth when brightness to 100%.
+	// lower brightness effectively sounds like a low pass filter being applied.
+	int partial = 2;
+	float partialFreq = freq*partial;
+	while (partialFreq < GetSampleRate())
+	{
+		mag *= mFalloff;
+		specGen.pluck(partialFreq, mag / partial, mSpread);
+		++partial;
+		partialFreq = freq*partial;
 	}
 }
 
