@@ -43,6 +43,7 @@ private:
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
 	void HandleMidiControlChange(IMidiMsg* pMsg);	
 	void SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx);
+	float GetPluckAmp(const float pluckY) const;
 	
 	bool 					  mIsLoading;
 
@@ -61,7 +62,7 @@ private:
 	IMidiMsg::EControlChangeMsg controlChangeForParam[kNumParams];
 
 	IMidiQueue				  mMidiQueue;
-	std::vector<IMidiMsg>	  mNotes;
+	std::vector<IMidiMsg>	  mNotes;	
 };
 
 #endif

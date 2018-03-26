@@ -284,7 +284,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	for (auto& note : mNotes)
 	{
 		const Minim::Frequency freq = Minim::Frequency::ofMidiNote(note.NoteNumber());
-		const float amp = kSpectralAmpMax * (float)note.Velocity() / 127.0f;
+		const float amp = GetPluckAmp((float)note.Velocity() / 127.0f);
 		specGen.pluck(freq.asHz(), amp, mSpread);
 	}
 
@@ -307,7 +307,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 				{
 					// pluck the string now
 					const Minim::Frequency freq = Minim::Frequency::ofMidiNote(pMsg->NoteNumber());
-					const float amp = kSpectralAmpMax * (float)pMsg->Velocity() / 127.0f;
+					const float amp = GetPluckAmp((float)pMsg->Velocity() / 127.0f);
 					specGen.pluck(freq.asHz(), amp, mSpread);
 
 					mNotes.push_back(*pMsg);
@@ -586,7 +586,7 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 				const float normBand = (float)b / numBands;
 				if (fabs(normBand - pluckX) < 0.005f)
 				{
-					float mag = Map(pluckY, 0, 1, kSpectralAmpMax*0.1f, kSpectralAmpMax);
+					float mag = GetPluckAmp(pluckY);
 					//printf("plucked %f\n", specGen.getBandFrequency(bindx));
 					specGen.pluck(freq, mag, spread);
 				}
@@ -614,6 +614,11 @@ void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc
 		WritePrivateProfileString(kMidiControlIni, controlName, ccString, gINIPath);
 	}
 #endif
+}
+
+float SpectralHarp::GetPluckAmp(const float pluckY) const
+{
+	return kSpectralAmpMax*pluckY;
 }
 
 void SpectralHarp::HandleMidiControlChange(IMidiMsg* pMsg)
