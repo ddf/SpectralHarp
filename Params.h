@@ -63,10 +63,10 @@ enum ESettings
 	kBandLastDefault = kBandMax,
 	
 	// settings for kBandDensity
-	kBandDensityMin = 16,
-	kBandDensityMax = 256,
-	//kBandDensityMin = 12, // one string per semi-tone if low and high frequency are an octave apart
-	//kBandDensityMax = 288, // 24 "octaves" of semi-tones
+	kBandDensityMinOrig = 16,
+	kBandDensityMaxOrig = 256,
+	kBandDensityMin = 12, // one string per semi-tone if low and high frequency are an octave apart
+	kBandDensityMax = 288, // 24 "octaves" of semi-tones
 	kBandDensityDefault = kBandDensityMax,
 
 	kBandSpreadMin = 0,
