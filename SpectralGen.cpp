@@ -24,6 +24,7 @@ SpectralGen::SpectralGen()
 , overlapSize(0)
 , fft(nullptr)
 , bands(nullptr)
+, specMag(nullptr)
 , specReal(nullptr)
 , specImag(nullptr)
 , inverse(nullptr)
@@ -58,6 +59,7 @@ void SpectralGen::reset()
 
 		fft = new Minim::FFT(inverseSize, sampleRate());
 		bands = new band[specSize];
+		specMag = new float[specSize];
 		inverse = new float[inverseSize];
 		specReal = new float[inverseSize];
 		specImag = new float[inverseSize];
@@ -67,7 +69,8 @@ void SpectralGen::reset()
 	// have to set the sample rate always 
 	// because we may not have resized the buffers even though the sample rate changed.
 	fft->setSampleRate(sampleRate());
-
+	
+	memset(specMag, 0, sizeof(float)*specSize);
 	memset(specReal, 0, sizeof(float)*inverseSize);
 	memset(specImag, 0, sizeof(float)*inverseSize);
 	memset(inverse, 0, sizeof(float)*inverseSize);
@@ -195,42 +198,56 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		const float falloff = brightness.getLastValue();
 		const float halfSpread = spread.getLastValue() * 0.5f;
 
-		memset(specReal, 0, specSize * sizeof(float));
-		memset(specImag, 0, specSize * sizeof(float));
+		memset(specMag, 0, specSize * sizeof(float));
+		memset(specReal, 0, inverseSize * sizeof(float));
+		memset(specImag, 0, inverseSize * sizeof(float));
 		
-        for( int i = 0; i < specSize; ++i )
+        for( int i = 1; i < specSize; ++i )
         {
             band& b = bands[i];
 			b.decay = b.decay > decayDec ? b.decay - decayDec : 0;
 			if (b.decay > 0)
 			{				
-				float a = spectralMagnitude*b.decay*b.amplitude;
-
+				const float a = spectralMagnitude*b.decay*b.amplitude;
 				const float bandFreq = fft->indexToFreq(i);
-
-				// apply spread
-				int lidx = freqToIndex(bandFreq - halfSpread);
-				int hidx = freqToIndex(bandFreq + halfSpread);
-
-				addSinusoid(i, a, lidx, hidx);
-
-				// apply brightness
+				// get low and high frequencies for spread
+				const int lidx = freqToIndex(bandFreq - halfSpread);
+				const int hidx = freqToIndex(bandFreq + halfSpread);
+				addSinusoidWithSpread(i, a, lidx, hidx);
+			}
+        }
+		
+		// apply brightness to the spectrum
+		for(int i = 1; i < specSize; ++i)
+		{
+			float a = specMag[i];
+			// copy magnitude here into the complex spectrum.
+			// it's += because we have already accumulated some brightness here from a previous band
+			specReal[i] += a;
+			// add brightness if we have a decent signal to work with
+			if ( a > 0.01f )
+			{
+				const float bandFreq = fft->indexToFreq(i);
 				int partial = 2;
 				float partialFreq = bandFreq*partial;
 				int pidx = freqToIndex(bandFreq*partial);
 				a *= falloff;
 				while (pidx < specSize && a > 0.01f)
 				{
-					lidx = freqToIndex(partialFreq - halfSpread);
-					hidx = freqToIndex(partialFreq + halfSpread);
-					addSinusoid(pidx, a / partial, lidx, hidx);
+					// accumulate into the complex spectrum
+					specReal[pidx] += a / partial;
 					++partial;
 					partialFreq = bandFreq*partial;
 					pidx = freqToIndex(bandFreq*partial);
 					a *= falloff;
 				}
 			}
-        }
+			
+			// done with this band, we can construct the complex representation.
+			// specReal holds the magnitude of the band at this point.
+			specImag[i] = specReal[i]*bands[i].imag[phaseIdx];
+			specReal[i] = specReal[i]*bands[i].real[phaseIdx];
+		}
 
         fft->Minim::FourierTransform::inverse(specReal, specImag, inverse);
         Minim::FourierTransform::TRIANGULAR.apply( inverse, inverseSize );
@@ -263,7 +280,7 @@ int SpectralGen::freqToIndex(const float freq)
 	return i;
 }
 
-void SpectralGen::addSinusoid(const int idx, const float amp, const int lidx, const int hidx)
+void SpectralGen::addSinusoidWithSpread(const int idx, const float amp, const int lidx, const int hidx)
 {
 	const int range = idx - lidx;
 	for (int bidx = lidx; bidx <= hidx; ++bidx)
@@ -272,16 +289,13 @@ void SpectralGen::addSinusoid(const int idx, const float amp, const int lidx, co
 		{
 			if (bidx == idx)
 			{
-				specReal[idx] += amp*bands[bidx].real[phaseIdx];
-				specImag[idx] += amp*bands[bidx].imag[phaseIdx];
+				specMag[bidx] += amp;
 			}
 			else
 			{
 				const float fn = fabs(bidx - idx) / range;
 				// exponential fall off from the center, see: https://www.desmos.com/calculator/gzqrz4isyb
-				const float fa = amp * exp(-10 * fn);
-				specReal[bidx] += fa*bands[bidx].real[phaseIdx];
-				specImag[bidx] += fa*bands[bidx].imag[phaseIdx];
+				specMag[bidx] += amp * exp(-10 * fn);
 			}
 		}
 	}
@@ -300,6 +314,12 @@ void SpectralGen::cleanup()
 	{
 		delete[] bands;
 		bands = nullptr;
+	}
+	
+	if (specMag != nullptr)
+	{
+		delete[] specMag;
+		specMag = nullptr;
 	}
 
 	if (specReal != nullptr)

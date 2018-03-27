@@ -39,7 +39,7 @@ protected:
 	// helpful when dealing with large spread near the edge of the spectrum.
 	int freqToIndex(const float freq);
 	
-	void addSinusoid(const int idx, const float amp, const int lidx, const int hidx);
+	void addSinusoidWithSpread(const int idx, const float amp, const int lidx, const int hidx);
     
 	void cleanup();
     void uGenerate( float* out, const int numChannels ) override;
@@ -74,6 +74,7 @@ private:
     Minim::FFT*  fft;
     
     // spectrum information
+	float*  specMag;
     float*  specReal;
     float*  specImag;
 	
