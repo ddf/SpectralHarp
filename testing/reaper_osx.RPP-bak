@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "5.77/OSX" 1522189806
+<REAPER_PROJECT 0.1 "5.77/OSX" 1522189493
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -82,9 +82,8 @@
     WAK 0
     BYPASS 0 0 0
     <JS Analysis/gfxanalyzer ""
-      10.830000 -120.000000 0.000000 2.000000 0.000000 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      6.000000 -120.000000 0.000000 2.000000 0.000000 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     >
-    JS_DIMS 1175 182
     FLOATPOS 0 0 0 0
     FXID {F43D9BAC-98F3-304C-A664-D0FA4747DA11}
     WAK 0
@@ -129,14 +128,14 @@
     MIDIOUT -1
     MAINSEND 1 0
     <FXCHAIN
-      WNDRECT 143 237 1130 513
+      WNDRECT 20 257 1259 513
       SHOW 0
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
       <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.vst 0 "" 1399353968
         cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAOAAAAAAAAAAAABAA
-        776t3g3wrd4AAIA/AAAAAAAAgD8AAAAAAACAPzqoYz8uHO48AACAP7KQBT4AAIA/VVXNPgAAAAA=
+        776t3g3wrd4AAIA/AAAAAKaYKj0AAAAAAACAPzqoYz8AAAAAAACAPwAAgD8AAIA/AAAAAAAAAAA=
         LQAtABAAAAA=
       >
       PRESETNAME -
@@ -713,13 +712,13 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 1 0 -1 -1 1
-    MUTESOLO 1 0 0
+    MUTESOLO 0 0 0
     IPHASE 0
     ISBUS 0 0
     BUSCOMP 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 0
+    SEL 1
     REC 0 -1 2 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0
@@ -860,46 +859,6 @@
         EVTFILTER 0 -1 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 0 -1 -1
         CFGEDIT 1 1 0 1 0 0 1 1 1 1 1 0.5 335 255 1892 971 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
       >
-    >
-  >
-  <TRACK {233C81C0-0C4F-AC49-9500-64200267A71D}
-    NAME ""
-    PEAKCOL 16576
-    BEAT -1
-    AUTOMODE 0
-    VOLPAN 1 0 -1 -1 1
-    MUTESOLO 0 0 0
-    IPHASE 0
-    ISBUS 0 0
-    BUSCOMP 0 0
-    SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
-    FREEMODE 0
-    SEL 1
-    REC 0 0 0 0 0 0 0
-    VU 2
-    TRACKHEIGHT 0 0
-    INQ 0 0 0 0.5 100 0 0 100
-    NCHAN 2
-    FX 1
-    TRACKID {233C81C0-0C4F-AC49-9500-64200267A71D}
-    PERF 0
-    MIDIOUT -1
-    MAINSEND 1 0
-    <FXCHAIN
-      WNDRECT 68 299 1129 476
-      SHOW 1
-      LASTSEL 0
-      DOCKED 0
-      BYPASS 0 0 0
-      <VST "VSTi: SpectralHarp (Damien Quartz)" SpectralHarp.vst 0 "" 1399353968
-        cHJoU+9e7f4CAAAAAQAAAAAAAAACAAAAAAAAAAIAAAABAAAAAAAAAAIAAAAAAAAAOAAAAAAAAAAAABAA
-        776t3g3wrd4AAAA/AACAP8A7mj4AAAAAAAAAAAAAAAAAAAAAAACAP6BR4j4AAIA/AACYPgAAJD8=
-        LQAtABAAAAA=
-      >
-      PRESETNAME -
-      FLOATPOS 0 0 0 0
-      FXID {F65BCF7C-E585-F340-BFE6-3CE5D8A4BB69}
-      WAK 0
     >
   >
 >
