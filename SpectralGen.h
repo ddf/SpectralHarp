@@ -21,7 +21,7 @@ public:
 	
 	void reset();
 	
-	void  pluck( const float freq, const float amp, const float spread );
+	void pluck( const float freq, const float amp );
 	
 	float getBandMagnitude( const float freq ) const;
 	float getBandPhase( const float freq ) const;

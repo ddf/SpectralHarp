@@ -611,7 +611,7 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 
 void SpectralHarp::PluckSpectrum(const float freq, float mag)
 {
-	specGen.pluck(freq, mag, 0);
+	specGen.pluck(freq, mag);
 }
 
 void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
