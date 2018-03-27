@@ -128,7 +128,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	mNotes.reserve(32);
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label
-	GetParam(kVolume)->InitDouble("Volume", 100., 0., 100.0, 0.1, "%");
+	GetParam(kVolume)->InitDouble("Volume", 25.0, 0.0, 100.0, 0.1, "%");
 	GetParam(kVolume)->SetShape(2.);
 
 	GetParam(kPitch)->InitDouble("Pitch", kPitchDefault, kPitchMin, kPitchMax, 0.1, "%");
