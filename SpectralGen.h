@@ -73,8 +73,11 @@ private:
     // used for synthesis
     Minim::FFT*  fft;
     
-    // spectrum information
+	// first pass magnitude spectrum that contains all magnitudes for plucked strings including spread
+	float*  specSpread; 
+	// final spectrum magnitudes used to generate the most recent output
 	float*  specMag;
+	// complex spectrum values, passed to fft.inverse to generate a block of audio output
     float*  specReal;
     float*  specImag;
 	

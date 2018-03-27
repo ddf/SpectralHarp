@@ -24,6 +24,7 @@ SpectralGen::SpectralGen()
 , overlapSize(0)
 , fft(nullptr)
 , bands(nullptr)
+, specSpread(nullptr)
 , specMag(nullptr)
 , specReal(nullptr)
 , specImag(nullptr)
@@ -59,6 +60,7 @@ void SpectralGen::reset()
 
 		fft = new Minim::FFT(inverseSize, sampleRate());
 		bands = new band[specSize];
+		specSpread = new float[specSize];
 		specMag = new float[specSize];
 		inverse = new float[inverseSize];
 		specReal = new float[inverseSize];
@@ -71,6 +73,7 @@ void SpectralGen::reset()
 	fft->setSampleRate(sampleRate());
 	
 	memset(specMag, 0, sizeof(float)*specSize);
+	memset(specSpread, 0, sizeof(float)*specSize);
 	memset(specReal, 0, sizeof(float)*inverseSize);
 	memset(specImag, 0, sizeof(float)*inverseSize);
 	memset(inverse, 0, sizeof(float)*inverseSize);
@@ -178,7 +181,9 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		const float falloff = brightness.getLastValue();
 		const float halfSpread = spread.getLastValue() * 0.5f;
 
-		memset(specMag, 0, specSize * sizeof(float));
+		// we *do not* memset specMag because it will be directly set once we accumulate all amplitudes.
+		// this keeps it more consistent for rendering the strings in the UI
+		memset(specSpread, 0, specSize * sizeof(float));
 		memset(specReal, 0, inverseSize * sizeof(float));
 		memset(specImag, 0, inverseSize * sizeof(float));
 		
@@ -201,9 +206,9 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		for(int i = 1; i < specSize; ++i)
 		{
 			// grab the magnitude as set by our pluck with spread pass
-			float a = specMag[i];
+			float a = specSpread[i];
 			// copy into the complex spectrum where we will accumulate brightness.
-			// it's += because we have already accumulated some brightness here from a previous band.
+			// it's += because we may have already accumulated some brightness here from a previous band.
 			specReal[i] += a;
 			// add brightness if we have a decent signal to work with
 			if ( a > 0.01f )
@@ -224,7 +229,7 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 				}
 			}
 
-			// copy accumulated result back into the magnitude array, scaling by our max amplitude
+			// copy accumulated result into the magnitude array, scaling by our max amplitude
 			specMag[i] = fmin(specReal[i] * spectralMagnitude, spectralMagnitude);
 			
 			// done with this band, we can construct the complex representation.
@@ -272,13 +277,13 @@ void SpectralGen::addSinusoidWithSpread(const int idx, const float amp, const in
 		{
 			if (bidx == idx)
 			{
-				specMag[bidx] += amp;
+				specSpread[bidx] += amp;
 			}
 			else
 			{
 				const float fn = fabs(bidx - idx) / range;
 				// exponential fall off from the center, see: https://www.desmos.com/calculator/gzqrz4isyb
-				specMag[bidx] += amp * exp(-10 * fn);
+				specSpread[bidx] += amp * exp(-10 * fn);
 			}
 		}
 	}
@@ -297,6 +302,12 @@ void SpectralGen::cleanup()
 	{
 		delete[] bands;
 		bands = nullptr;
+	}
+
+	if (specSpread != nullptr)
+	{
+		delete[] specSpread;
+		specSpread = nullptr;
 	}
 	
 	if (specMag != nullptr)
