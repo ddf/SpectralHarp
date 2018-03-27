@@ -168,7 +168,7 @@ float SpectralGen::getBandMagnitude(const float freq) const
 	if (fft != nullptr)
 	{
 		const int b = fft->freqToIndex(freq);
-		return b >= 0 && b < specSize ? bands[b].amplitude*bands[b].decay : 0;
+		return b >= 0 && b < specSize ? specMag[b]/spectralMagnitude : 0;
 	}
 
 	return 0;
@@ -208,7 +208,7 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 			b.decay = b.decay > decayDec ? b.decay - decayDec : 0;
 			if (b.decay > 0)
 			{				
-				const float a = spectralMagnitude*b.decay*b.amplitude;
+				const float a = b.decay*b.amplitude;
 				const float bandFreq = fft->indexToFreq(i);
 				// get low and high frequencies for spread
 				const int lidx = freqToIndex(bandFreq - halfSpread);
@@ -220,9 +220,10 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		// apply brightness to the spectrum
 		for(int i = 1; i < specSize; ++i)
 		{
+			// grab the magnitude as set by our pluck with spread pass
 			float a = specMag[i];
-			// copy magnitude here into the complex spectrum.
-			// it's += because we have already accumulated some brightness here from a previous band
+			// copy into the complex spectrum where we will accumulate brightness.
+			// it's += because we have already accumulated some brightness here from a previous band.
 			specReal[i] += a;
 			// add brightness if we have a decent signal to work with
 			if ( a > 0.01f )
@@ -242,11 +243,13 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 					a *= falloff;
 				}
 			}
+
+			// copy accumulated result back into the magnitude array, scaling by our max amplitude
+			specMag[i] = fmin(specReal[i] * spectralMagnitude, spectralMagnitude);
 			
 			// done with this band, we can construct the complex representation.
-			// specReal holds the magnitude of the band at this point.
-			specImag[i] = specReal[i]*bands[i].imag[phaseIdx];
-			specReal[i] = specReal[i]*bands[i].real[phaseIdx];
+			specReal[i] = specMag[i] * bands[i].real[phaseIdx];
+			specImag[i] = specMag[i] * bands[i].imag[phaseIdx];
 		}
 
         fft->Minim::FourierTransform::inverse(specReal, specImag, inverse);
