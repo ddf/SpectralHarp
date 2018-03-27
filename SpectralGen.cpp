@@ -211,14 +211,15 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 			// it's += because we may have already accumulated some brightness here from a previous band.
 			specReal[i] += a;
 			// add brightness if we have a decent signal to work with
-			if ( a > 0.01f )
+			static const float epsilon = 0.0001f;
+			if ( a > epsilon )
 			{
 				const float bandFreq = fft->indexToFreq(i);
 				int partial = 2;
 				float partialFreq = bandFreq*partial;
 				int pidx = freqToIndex(bandFreq*partial);
 				a *= falloff;
-				while (pidx < specSize && a > 0.01f)
+				while (pidx < specSize && a > epsilon)
 				{
 					// accumulate into the complex spectrum
 					specReal[pidx] += a / partial;
