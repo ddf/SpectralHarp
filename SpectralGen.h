@@ -39,7 +39,7 @@ protected:
 	// helpful when dealing with large spread near the edge of the spectrum.
 	int freqToIndex(const float freq);
 	
-	void addSinusoid(const int idx, const float amp, const float phase, const int lidx, const int hidx);
+	void addSinusoid(const int idx, const float amp, const int lidx, const int hidx);
     
 	void cleanup();
     void uGenerate( float* out, const int numChannels ) override;
@@ -53,15 +53,18 @@ private:
         float amplitude;
 		// current decay of the band (0-1), scales amplitude
 		float decay;
+		float phase;
 		// precomputed real / imag values that can simply be scaled.
 		// 0 is normal phase, 1 is 180 degrees out of phase for odd bands.
-		float phase;
+		float real[2];
+		float imag[2];
         
         band()
         : amplitude(0)
 		, decay(0)
 		, phase(0)
         {
+			real[0] = real[1] = imag[0] = imag[1] = 0;
         }
     };
     
@@ -91,7 +94,7 @@ private:
 	// (ie every overlapSize samples we update our plucked bands and synthesize into inverse)
     int     overlapSize;
 	// whether we should adjust the phase of odd bands in the next buffer generation step
-	bool    adjustOddPhase;
+	int		phaseIdx;
 	// the fixed magnitude we use to scale up bands before performing the inverse
 	int    spectralMagnitude;
 };
