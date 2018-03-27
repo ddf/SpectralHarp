@@ -6,7 +6,7 @@ TextBox::TextBox(IPlugBase* pPlug, IRECT pR, int paramIdx, IText* pText, IGraphi
 	, mTextRect(pR)
 	, mScrollSpeed(scrollSpeed)
 {
-	mTextRect.GetPadded(-1);
+	mTextRect = pR.GetHPadded(-3);
 	pGraphics->MeasureIText(pText, const_cast<char*>(maxText), &mTextRect);
 #ifdef OS_OSX
 	mTextRect.B -= 4;
@@ -21,7 +21,18 @@ TextBox::TextBox(IPlugBase* pPlug, IRECT pR, int paramIdx, IText* pText, IGraphi
 bool TextBox::Draw(IGraphics* pGraphics)
 {
 	pGraphics->FillIRect(&mText.mTextEntryBGColor, &mRECT);
-	//pGraphics->DrawRect(&mText.mTextEntryFGColor, &mRECT);
+	IColor* borderColor = &mText.mTextEntryFGColor;
+	const int bi = 2;
+	const int bt = mRECT.T;
+	const int bb = mRECT.B - 1;
+	// bracket on left side
+	pGraphics->DrawLine(borderColor, mRECT.L, bt, mRECT.L, bb);
+	pGraphics->DrawLine(borderColor, mRECT.L, bt, mRECT.L + bi, bt);
+	pGraphics->DrawLine(borderColor, mRECT.L, bb, mRECT.L + bi, bb);
+	// bracket on right side
+	pGraphics->DrawLine(borderColor, mRECT.R, bt, mRECT.R, bb);
+	pGraphics->DrawLine(borderColor, mRECT.R, bt, mRECT.R - bi, bt);
+	pGraphics->DrawLine(borderColor, mRECT.R, bb, mRECT.R - bi, bb);
 
 	IRECT ourRect = mRECT;
 	mRECT = mTextRect;

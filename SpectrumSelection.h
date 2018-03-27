@@ -42,3 +42,13 @@ private:
 	int    dragMaxX;
 };
 
+class SpectrumArrows : public IControl
+{
+public:
+	SpectrumArrows(IPlugBase* pPlug, IRECT rect, IColor color) : IControl(pPlug, rect), mColor(color) {}
+
+	bool Draw(IGraphics* pGraphics) override;
+
+private:
+	IColor mColor;
+};

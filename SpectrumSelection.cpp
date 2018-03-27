@@ -149,6 +149,18 @@ bool SpectrumSelection::Draw(IGraphics* pGraphics)
 	backRect.R -= handleWidth / 2;
 	pGraphics->FillIRect(&backgroundColor, &backRect);
 
+	const int bi = 2;
+	const int bt = backRect.T;
+	const int bb = backRect.B - 1;
+	// bracket on left side
+	pGraphics->DrawLine(&handleColor, backRect.L, bt, backRect.L, bb);
+	pGraphics->DrawLine(&handleColor, backRect.L, bt, backRect.L + bi, bt);
+	pGraphics->DrawLine(&handleColor, backRect.L, bb, backRect.L + bi, bb);
+	// bracket on right side
+	pGraphics->DrawLine(&handleColor, backRect.R, bt, backRect.R, bb);
+	pGraphics->DrawLine(&handleColor, backRect.R, bt, backRect.R - bi, bt);
+	pGraphics->DrawLine(&handleColor, backRect.R, bb, backRect.R - bi, bb);
+
 	pGraphics->FillIRect(&selectedColor, &handles[kDragBoth]);
 
 	pGraphics->FillIRect(&handleColor, &handles[kDragLeft]);
@@ -190,3 +202,19 @@ void SpectrumSelection::SetAuxParamValueFromPlug(int auxParamIdx, double value)
 	SetHandleFromParam(auxParamIdx);
 }
 
+bool SpectrumArrows::Draw(IGraphics* pGraphics)
+{
+	const float a = 2;
+	float mid = mRECT.MH();
+	pGraphics->DrawLine(&mColor, mRECT.L + a, mid, mRECT.R - a, mid);
+	pGraphics->DrawLine(&mColor, mRECT.L + a, mid, mRECT.L + a, mRECT.T);
+	pGraphics->DrawLine(&mColor, mRECT.R - a, mid, mRECT.R - a, mRECT.T);
+	// left arrow
+	pGraphics->DrawLine(&mColor, mRECT.L + a, mRECT.T, mRECT.L, mRECT.T + a);
+	pGraphics->DrawLine(&mColor, mRECT.L + a, mRECT.T, mRECT.L + a + a, mRECT.T + a);
+	// right arrow
+	pGraphics->DrawLine(&mColor, mRECT.R - a, mRECT.T, mRECT.R, mRECT.T + a);
+	pGraphics->DrawLine(&mColor, mRECT.R - a, mRECT.T, mRECT.R - a - a, mRECT.T + a);
+
+	return true;
+}

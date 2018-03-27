@@ -34,14 +34,14 @@ enum ELayout
 
 	kSpectrumSelect_W = 512,
 	kSpectrumSelect_X = kWidth / 2 - kSpectrumSelect_W / 2,
-	kSpectrumSelect_Y = kPluckPadHeight + kPluckPadSpaceBottom + 15,
+	kSpectrumSelect_Y = kPluckPadHeight + kPluckPadSpaceBottom,
 	kSpectrumSelect_H = 15,
 
 	kKnob_X = 0,
-	kKnob_Y = kSpectrumSelect_Y + kSpectrumSelect_H + 10,
+	kKnob_Y = kSpectrumSelect_Y + kSpectrumSelect_H + 30,
 	kKnob_W = 48,
 	kKnob_H = 48,
-	
+
 	kKnobCorona = 0,
 	kKnobSpacing = 75,
 
@@ -54,13 +54,16 @@ enum ELayout
 	kSpreadX = kTuningX + kKnobSpacing,
 	kBrightnessX = kSpreadX + kKnobSpacing,
 	kPitchX = kBrightnessX + kKnobSpacing,
-	
+
 
 	kKnobFrames = 60,
 
 	kCaptionT = kKnob_Y + 50,
 	kCaptionB = kCaptionT + 15,
 	kCaptionW = 50,
+
+	kTextBoxW = 64,
+	kTextBoxH = kSpectrumSelect_H + 2,
 	
 	kTitleRightMargin = 10,
 	kTitleBottomMargin = 15
@@ -161,7 +164,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	pGraphics->AttachPanelBackground(&backColor);
 
 	IText captionText = IText(labelSize, &labelColor);
-	captionText.mTextEntryBGColor = panelColor;
+	captionText.mTextEntryBGColor = backColor;
 	captionText.mTextEntryFGColor = labelColor;
 
 	IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
@@ -172,17 +175,21 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	pGraphics->AttachControl(new IPanelControl(this, IRECT(0, kPluckPadHeight, kWidth, kHeight), &panelColor));
 
+	const int arrowMargin = 14;
+	IRECT arrowRect = IRECT(strumRect.L + arrowMargin, strumRect.B, strumRect.R - arrowMargin, strumRect.B + kSpectrumSelect_H + kPluckPadSpaceBottom + 5);
+	pGraphics->AttachControl(new SpectrumArrows(this, arrowRect, labelColor));
+
 	// string Hz labels
 	{
 		IText bandLabel = captionText;
-		const int capMargin = 14;
-		strumRect.B += kPluckPadSpaceBottom;
-		bandLabel.mAlign = IText::kAlignNear;
-		IRECT lowBandRect = IRECT(strumRect.L + capMargin, strumRect.B, strumRect.L + kCaptionW + capMargin, strumRect.B + 25);
+		const int capMargin = 24;
+		const int textBoxTop = kSpectrumSelect_Y;
+		//bandLabel.mAlign = IText::kAlignNear;
+		IRECT lowBandRect = IRECT(strumRect.L + capMargin, textBoxTop, strumRect.L + kTextBoxW + capMargin, textBoxTop + kTextBoxH);
 		pGraphics->AttachControl(new TextBox(this, lowBandRect, kBandFirst, &bandLabel, pGraphics, "00000 Hz", true, 0.005));
 
-		bandLabel.mAlign = IText::kAlignFar;
-		IRECT highBandRect = IRECT(strumRect.R - kCaptionW - capMargin, strumRect.B, strumRect.R - capMargin, strumRect.B + 25);
+		//bandLabel.mAlign = IText::kAlignFar;
+		IRECT highBandRect = IRECT(strumRect.R - kTextBoxW - capMargin, textBoxTop, strumRect.R - capMargin, textBoxTop + kTextBoxH);
 		pGraphics->AttachControl(new TextBox(this, highBandRect, kBandLast, &bandLabel, pGraphics, "00000 Hz", true, 0.005));
 	}
 
@@ -196,9 +203,9 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	{
 		IRECT rect = MakeIRect(kSpectrumSelect);
 		pGraphics->AttachControl(new SpectrumSelection(this, rect, kBandFirst, kBandLast, selectionBackColor, selectionSelectColor, selectionHandleColor));
-
-		rect.T = kPluckPadHeight + kPluckPadSpaceBottom;
-		rect.B = rect.T + 10;
+		
+		rect.T += kSpectrumSelect_H + 5;
+		rect.B += kSpectrumSelect_H + 5;
 		pGraphics->AttachControl(new ITextControl(this, rect, &captionText, "Spectrum Selection"));
 	}
 
