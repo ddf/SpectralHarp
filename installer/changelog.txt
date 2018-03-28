@@ -1,4 +1,18 @@
 SpectralHarp changelog
 https://damikyu.itch.io/spectralharp
 
-02/21/18 - v1.0.0 initial release
+03/28/18 - v1.1.0 [more params and MIDI support]
+
+- fixed a crash when right-clicking the strings in the plugin
+- improved UI layout and appearance
+- improved MIDI Learn functionality
+- added support for directly playing frequencies with MIDI notes
+- added support for sustaining a string by clicking and holding on it with the mouse
+- added a Tuning param for controlling how strings are mapped to frequencies (logarithmic -> linear)
+- added a Spread param for increasing the area of the spectrum a vibrating string affects
+- added a Brightness param for adding additional harmonic content to the spectrum
+- changed min and max values for Density to 12 and 288 (note: this causes an incorrect value to be restored when loading saved state from the VST version of 1.0.0)
+- changed amplitude range for Pluck Y so that strings can be silently plucked
+- wrote a manual
+
+02/28/18 - v1.0.0 [initial release]
