@@ -143,7 +143,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	GetParam(kPluckX)->InitDouble("Pluck X", 0, 0., 100.0, 0.1, "%");
 	GetParam(kPluckX)->SetShape(1.);
 
-	GetParam(kPluckY)->InitDouble("Pluck Y", 0, 0., 100.0, 0.1, "%");
+	GetParam(kPluckY)->InitDouble("Pluck Y", 100.0, 0., 100.0, 0.1, "%");
 	GetParam(kPluckY)->SetShape(1.);
 
 	InitBandParam("First Band", kBandFirst, kBandFirstDefault);
