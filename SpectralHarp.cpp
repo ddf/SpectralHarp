@@ -32,10 +32,10 @@ enum ELayout
 	kPluckPadMargin = 0,
 	kPluckPadSpaceBottom = 5,
 
-	kSpectrumSelect_W = 512,
+	kSpectrumSelect_W = 830,
 	kSpectrumSelect_X = kWidth / 2 - kSpectrumSelect_W / 2,
 	kSpectrumSelect_Y = kPluckPadHeight + kPluckPadSpaceBottom,
-	kSpectrumSelect_H = 15,
+	kSpectrumSelect_H = 16,
 
 	kKnob_X = 0,
 	kKnob_Y = kSpectrumSelect_Y + kSpectrumSelect_H + 30,
@@ -47,14 +47,15 @@ enum ELayout
 
 	kVolumeX = GUI_WIDTH - kKnob_W - 14,
 
-	kBandDensityX = kSpectrumSelect_X,
-	kTuningX = kBandDensityX + kKnobSpacing,
-	kDecayX = kTuningX + kKnobSpacing,
-	kSpreadX = kDecayX + kKnobSpacing,
-	kBrightnessX = kSpreadX + kKnobSpacing,
-	kPitchX = kBrightnessX + kKnobSpacing,
-	kCrushX = kPitchX + kKnobSpacing,
+	kSpreadX = kWidth/2 - kKnob_W/2,
 
+	kBandDensityX = kSpreadX - kKnobSpacing*3,
+	kTuningX      = kSpreadX - kKnobSpacing*2,
+	kDecayX       = kSpreadX - kKnobSpacing,
+	
+	kBrightnessX  = kSpreadX + kKnobSpacing,
+	kPitchX       = kSpreadX + kKnobSpacing*2,
+	kCrushX       = kSpreadX + kKnobSpacing*3,
 
 	kKnobFrames = 60,
 
@@ -70,7 +71,7 @@ enum ELayout
 };
 
 // background of entire window
-static const IColor backColor = IColor(255, 20, 20, 20);
+static const IColor backColor = IColor(255, 15, 15, 15);
 // rectangular panel behind the knobs
 static const IColor panelColor = IColor(255, 30, 30, 30);
 // color of shadow cast on strings by the knob panel
@@ -204,8 +205,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		IRECT rect = MakeIRect(kSpectrumSelect);
 		pGraphics->AttachControl(new SpectrumSelection(this, rect, kBandFirst, kBandLast, selectionBackColor, selectionSelectColor, selectionHandleColor));
 		
-		rect.T += kSpectrumSelect_H + 5;
-		rect.B += kSpectrumSelect_H + 5;
+		rect.T += kSpectrumSelect_H + 3;
+		rect.B += kSpectrumSelect_H + 3;
 		pGraphics->AttachControl(new ITextControl(this, rect, &captionText, "Spectrum Selection"));
 	}
 

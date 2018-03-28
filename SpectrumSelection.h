@@ -16,7 +16,7 @@ public:
 	void SetAuxParamValueFromPlug(int auxParamIdx, double value) override;
 
 private:
-
+	void DrawHandle(IGraphics* pGraphics, const IRECT& handle);
 	void SetParamFromHandle(const int paramIdx);
 	void SetHandleFromParam(const int paramIdx);
 

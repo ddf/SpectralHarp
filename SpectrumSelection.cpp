@@ -7,7 +7,7 @@ SpectrumSelection::SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowPa
 	, backgroundColor(back)
 	, selectedColor(select)
 	, handleColor(handle)
-	, handleWidth(6)
+	, handleWidth(16)
 	, dragParam(kDragNone)
 {
 	AddAuxParam(bandLowParam);
@@ -17,7 +17,7 @@ SpectrumSelection::SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowPa
 	const int handB = rect.B;
 	handles[kDragLeft] = IRECT(rect.L, handT, rect.L + handleWidth, handB);
 	handles[kDragRight] = IRECT(rect.R - handleWidth, handT, rect.R, handB);
-	handles[kDragBoth] = IRECT((int)handles[0].MW(), handT, (int)handles[1].MW(), handB);
+	handles[kDragBoth] = IRECT((int)handles[0].L, handT, (int)handles[1].R, handB);
 }
 
 SpectrumSelection::~SpectrumSelection()
@@ -40,7 +40,7 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 		{
 			dragParam = kDragLeft;
 			dragMinX = mRECT.L;
-			dragMaxX = handles[kDragRight].L - handleWidth;
+			dragMaxX = handles[kDragRight].L - handleWidth/2;
 		}
 	}
 	else if (handles[kDragRight].Contains(x, y))
@@ -56,7 +56,7 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 		else
 		{
 			dragParam = kDragRight;
-			dragMinX = handles[kDragLeft].R + handleWidth;
+			dragMinX = handles[kDragLeft].R + handleWidth/2;
 			dragMaxX = mRECT.R;
 		}
 	}
@@ -145,28 +145,30 @@ void SpectrumSelection::OnMouseUp(int x, int y, IMouseMod* pMod)
 bool SpectrumSelection::Draw(IGraphics* pGraphics)
 {
 	IRECT backRect = mRECT;
-	backRect.L += handleWidth / 2;
-	backRect.R -= handleWidth / 2;
 	pGraphics->FillIRect(&backgroundColor, &backRect);
 
-	const int bi = 2;
-	const int bt = backRect.T;
-	const int bb = backRect.B - 1;
-	// bracket on left side
-	pGraphics->DrawLine(&handleColor, backRect.L, bt, backRect.L, bb);
-	pGraphics->DrawLine(&handleColor, backRect.L, bt, backRect.L + bi, bt);
-	pGraphics->DrawLine(&handleColor, backRect.L, bb, backRect.L + bi, bb);
-	// bracket on right side
-	pGraphics->DrawLine(&handleColor, backRect.R, bt, backRect.R, bb);
-	pGraphics->DrawLine(&handleColor, backRect.R, bt, backRect.R - bi, bt);
-	pGraphics->DrawLine(&handleColor, backRect.R, bb, backRect.R - bi, bb);
+	pGraphics->DrawLine(&handleColor, backRect.L, backRect.MH(), handles[kDragLeft].L, backRect.MH());
+	pGraphics->DrawLine(&handleColor, handles[kDragRight].R, backRect.MH(), backRect.R, backRect.MH());
 
 	pGraphics->FillIRect(&selectedColor, &handles[kDragBoth]);
 
-	pGraphics->FillIRect(&handleColor, &handles[kDragLeft]);
-	pGraphics->FillIRect(&handleColor, &handles[kDragRight]);
+	DrawHandle(pGraphics, handles[kDragLeft]);
+	DrawHandle(pGraphics, handles[kDragRight]);
 
 	return true;
+}
+
+void SpectrumSelection::DrawHandle(IGraphics* pGraphics, const IRECT& handle)
+{
+	int x[4] = { handle.MW(), handle.R, handle.MW(), handle.L };
+	int y[4] = { handle.T, handle.MH(), handle.B, handle.MH() };
+
+	//pGraphics->DrawLine(&handleColor, x[0], y[0], x[1], y[1], 0, true);
+	//pGraphics->DrawLine(&handleColor, x[1], y[1], x[2], y[2], 0, true);
+	//pGraphics->DrawLine(&handleColor, x[2], y[2], x[3], y[3], 0, true);
+	//pGraphics->DrawLine(&handleColor, x[3], y[3], x[0], y[0], 0, true);
+
+	pGraphics->FillIConvexPolygon(&handleColor, x, y, 4);
 }
 
 void SpectrumSelection::SetParamFromHandle(const int paramIdx)
