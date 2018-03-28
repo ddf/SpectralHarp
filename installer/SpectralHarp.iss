@@ -1,6 +1,6 @@
 [Setup]
 AppName=SpectralHarp
-AppVersion=1.0.0
+AppVersion=1.1.0
 DefaultDirName={pf}\SpectralHarp
 DefaultGroupName=SpectralHarp
 Compression=lzma2
@@ -24,7 +24,7 @@ Name: "vst3_64"; Description: "64-bit VST3 Plugin (.vst3)"; Types: full custom; 
 ;Name: "rtas_32"; Description: "32-bit RTAS Plugin (.dpm)"; Types: full custom;
 ;Name: "aax_32"; Description: "32-bit AAX Plugin (.aaxplugin)"; Types: full custom;
 ;Name: "aax_64"; Description: "64-bit AAX Plugin (.aaxplugin)"; Types: full custom; Check: Is64BitInstallMode;
-;Name: "manual"; Description: "User guide"; Types: full custom; Flags: fixed
+Name: "manual"; Description: "User guide"; Types: full custom; Flags: fixed
 
 [Files]
 Source: "..\build-win\app\Win32\bin\SpectralHarp.exe"; DestDir: "{app}"; Check: not Is64BitInstallMode; Components:app; Flags: ignoreversion;
@@ -44,13 +44,13 @@ Source: "..\build-win\vst3\x64\bin\SpectralHarp.vst3"; DestDir: "{cf64}\VST3\"; 
 ;Source: "..\build-win\aax\bin\IPlugEffect.aaxplugin\*.*"; DestDir: "{cf32}\Avid\Audio\Plug-Ins\IPlugEffect.aaxplugin\"; Components:aax_32; Flags: ignoreversion recursesubdirs;
 ;Source: "..\build-win\aax\bin\IPlugEffect.aaxplugin\*.*"; DestDir: "{cf}\Avid\Audio\Plug-Ins\IPlugEffect.aaxplugin\"; Components:aax_64; Flags: ignoreversion recursesubdirs;
 
-;Source: "..\manual\IPlugEffect_manual.pdf"; DestDir: "{app}"
+Source: "..\manual\SpectralHarp_manual.pdf"; DestDir: "{app}"
 Source: "changelog.txt"; DestDir: "{app}"
 Source: "readmewin.rtf"; DestDir: "{app}"; DestName: "readme.rtf"; Flags: isreadme
 
 [Icons]
 Name: "{group}\SpectralHarp"; Filename: "{app}\SpectralHarp.exe"
-;Name: "{group}\User guide"; Filename: "{app}\IPlugEffect_manual.pdf"
+Name: "{group}\User guide"; Filename: "{app}\SpectralHarp_manual.pdf"
 Name: "{group}\Changelog"; Filename: "{app}\changelog.txt"
 ;Name: "{group}\readme"; Filename: "{app}\readme.rtf"
 Name: "{group}\Uninstall SpectralHarp"; Filename: "{app}\unins000.exe"
