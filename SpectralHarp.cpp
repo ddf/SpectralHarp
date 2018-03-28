@@ -43,17 +43,17 @@ enum ELayout
 	kKnob_H = 48,
 
 	kKnobCorona = 0,
-	kKnobSpacing = 75,
+	kKnobSpacing = 77,
 
-	kVolumeX = 30,
-	kDecayX = kVolumeX + kKnobSpacing,
-	kCrushX = kDecayX + kKnobSpacing,
+	kVolumeX = GUI_WIDTH - kKnob_W - 14,
 
-	kBandDensityX = kCrushX + kKnobSpacing,
+	kBandDensityX = kSpectrumSelect_X,
 	kTuningX = kBandDensityX + kKnobSpacing,
-	kSpreadX = kTuningX + kKnobSpacing,
+	kDecayX = kTuningX + kKnobSpacing,
+	kSpreadX = kDecayX + kKnobSpacing,
 	kBrightnessX = kSpreadX + kKnobSpacing,
 	kPitchX = kBrightnessX + kKnobSpacing,
+	kCrushX = kPitchX + kKnobSpacing,
 
 
 	kKnobFrames = 60,
@@ -65,7 +65,7 @@ enum ELayout
 	kTextBoxW = 64,
 	kTextBoxH = kSpectrumSelect_H + 2,
 	
-	kTitleRightMargin = 10,
+	kTitleX = 10,
 	kTitleBottomMargin = 15
 };
 
@@ -254,10 +254,10 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	// logooo
 	
 	IText titleText( titleSize, &titleColor, titleFontName );
-	titleText.mAlign = IText::kAlignFar;
-	IRECT titleRect( GUI_WIDTH - kTitleRightMargin - 10,
+	titleText.mAlign = IText::kAlignNear;
+	IRECT titleRect( kTitleX,
 					GUI_HEIGHT - kTitleBottomMargin - 10,
-					GUI_WIDTH - kTitleRightMargin,
+					150,
 					GUI_HEIGHT - kTitleBottomMargin );
 	pGraphics->MeasureIText(&titleText, const_cast<char*>(titleString), &titleRect);
 	pGraphics->AttachControl(new ITextControl(this, titleRect, &titleText, titleString));
