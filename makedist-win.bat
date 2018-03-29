@@ -76,9 +76,9 @@ set BUILD_FOLDER=..\..\..\Builds\SpectralHarp
 
 xcopy /Y /F version.txt %BUILD_FOLDER%\version.txt
 xcopy /Y /F .\build-win\app\win32\bin\SpectralHarp.exe %BUILD_FOLDER%\App32\SpectralHarp.exe
-REM xcopy /Y /F .\manual\SpectralHarp_manual.pdf %BUILD_FOLDER%\App32\SpectralHarp_manual.pdf
+xcopy /Y /F .\manual\SpectralHarp_manual.pdf %BUILD_FOLDER%\App32\SpectralHarp_manual.pdf
 xcopy /Y /F .\build-win\app\x64\bin\SpectralHarp.exe %BUILD_FOLDER%\App64\SpectralHarp.exe
-REM xcopy /Y /F .\manual\SpectralHarp_manual.pdf %BUILD_FOLDER%\App64\SpectralHarp_manual.pdf
+xcopy /Y /F .\manual\SpectralHarp_manual.pdf %BUILD_FOLDER%\App64\SpectralHarp_manual.pdf
 xcopy /Y /F ".\installer\SpectralHarp Installer.exe" "%BUILD_FOLDER%\Installer\SpectralHarp Installer.exe"
 
 pushd %BUILD_FOLDER%
