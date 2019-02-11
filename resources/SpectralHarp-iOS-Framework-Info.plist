@@ -3,28 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>SpectralHarp</string>
-	<key>CFBundleGetInfoString</key>
-	<string>SpectralHarp v1.0.0 Copyright 2019 Acme Inc</string>
+	<string>SpectralHarpFramework</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.DamienQuartz.vst3.SpectralHarp</string>
+	<string>com.DamienQuartz.SpectralHarpApp.Framework</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SpectralHarp</string>
+	<string>SpectralHarpFramework</string>
 	<key>CFBundlePackageType</key>
-	<string>BNDL</string>
+	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
-	<string>Ipef</string>
+	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
-	<key>CSResourcesFileMapped</key>
-	<true/>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.11.0</string>
 </dict>
 </plist>

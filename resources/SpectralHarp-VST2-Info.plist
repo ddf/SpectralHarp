@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>${BINARY_NAME}</string>
+	<string>SpectralHarp</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.1.0, Copyright Damien Quartz, 2018</string>
+	<string>SpectralHarp v1.0.0 Copyright 2019 Acme Inc</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.compartmental.vst.${BINARY_NAME}</string>
+	<string>com.DamienQuartz.vst.SpectralHarp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${BINARY_NAME}</string>
+	<string>SpectralHarp</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleSignature</key>
-	<string>Acme</string>
+	<string>Ipef</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.0</string>
+	<string>1.0.0</string>
+	<key>CSResourcesFileMapped</key>
+	<true/>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.5.0</string>
+	<string>10.11.0</string>
 </dict>
 </plist>

@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>${BINARY_NAME}</string>
+	<string>SpectralHarp</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.0.0, Copyright Compartmental, 2012</string>
+	<string>SpectralHarp v1.0.0 Copyright 2019 Acme Inc</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.compartmental.aax.${BINARY_NAME}</string>
+	<string>com.DamienQuartz.aax.SpectralHarp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>${BINARY_NAME}</string>
+	<string>SpectralHarp</string>
 	<key>CFBundlePackageType</key>
 	<string>TDMw</string>
 	<key>CFBundleShortVersionString</key>
@@ -22,6 +22,10 @@
 	<string>PTul</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
+	<key>CSResourcesFileMapped</key>
+	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.11.0</string>
 	<key>LSMultipleInstancesProhibited</key>
 	<string>true</string>
 	<key>LSPrefersCarbon</key>
