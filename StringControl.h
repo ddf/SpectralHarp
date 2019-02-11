@@ -6,24 +6,24 @@ class SpectralGen;
 class StringControl : public IControl
 {
 public:
-	StringControl(const SpectralGen& rSpectrum, IPlugBase *pPlug, IRECT pR, int handleRadius);
+	StringControl(const SpectralGen& rSpectrum, IRECT pR, int handleRadius);
 
-	bool Draw(IGraphics*) override;
+	void Draw(IGraphics&) override;
 
-	void OnMouseDown(int x, int y, IMouseMod* pMod) override;
+	void OnMouseDown(float x, float y, const IMouseMod& pMod) override;
 
-	void OnMouseUp(int x, int y, IMouseMod* pMod) override;
+	void OnMouseUp(float x, float y, const IMouseMod& pMod) override;
 
-	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override;
+	void OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod) override;
 
 private:
 
-	void SnapToMouse(int x, int y);
+	void SnapToMouse(float x, float y);
 
 	const SpectralGen& spectrum;
 	int mHandleRadius;
-	int mMouseX;
-	int mMouseY;
+	float mMouseX;
+	float mMouseY;
 	float stringAnimation;
 };
 
