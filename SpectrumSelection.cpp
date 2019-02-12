@@ -2,8 +2,6 @@
 #include "SpectralHarp.h"
 #include "Params.h"
 
-// #TODO spectrum handles aren't working correctly
-
 SpectrumSelection::SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle) 
 	: IControl(rect)
 	, backgroundColor(back)
