@@ -9,10 +9,8 @@
 
 #include "Frequency.h"
 
-#if SA_API
-#include "app_wrapper/app_main.h"
-
-static const char * kAboutBoxText = "Version " VST3_VER_STR "\nCreated by Damien Quartz\nBuilt on " __DATE__;
+#if APP_API
+static const char * kAboutBoxText = "Version " PLUG_VERSION_STR "\nCreated by Damien Quartz\nBuilt on " __DATE__;
 #endif
 
 const int kNumPrograms = 1;
@@ -377,7 +375,7 @@ void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 		specGen.spread.setLastValue(mSpread);
 
 		bitCrush.tick(result, 1);
-#ifdef SA_API
+#ifdef APP_API
 		*out1 = result[0] * mGain;
 		*out2 = result[0] * mGain;
 #else
@@ -497,13 +495,13 @@ void SpectralHarp::OnReset()
 	mNotes.clear();
 
 	// read control mappings from the INI if we are running standalone
-#if SA_API
+#if APP_API
 	for (int i = 0; i < kNumParams; ++i)
 	{
 		int defaultMapping = (int)controlChangeForParam[i];
 		char controlName[32];
 		sprintf(controlName, "control%u", i);
-		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, gINIPath);
+		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, GetINIPath());
 
 		BroadcastParamChange(i);
 	}
@@ -636,19 +634,19 @@ void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc
 {
 	controlChangeForParam[paramIdx] = cc;
 
-#if SA_API
+#if APP_API
 	char controlName[32];
 	sprintf(controlName, "control%u", paramIdx);
 	// remove the setting if they unmapped it
 	if (cc == kUnmappedParam)
 	{
-		WritePrivateProfileString(kMidiControlIni, controlName, 0, gINIPath);
+		WritePrivateProfileString(kMidiControlIni, controlName, 0, GetINIPath());
 	}
 	else
 	{
 		char ccString[100];
 		sprintf(ccString, "%u", (unsigned)cc);
-		WritePrivateProfileString(kMidiControlIni, controlName, ccString, gINIPath);
+		WritePrivateProfileString(kMidiControlIni, controlName, ccString, GetINIPath());
 	}
 #endif
 }
@@ -666,18 +664,18 @@ void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
 		if (controlChangeForParam[i] == cc)
 		{
 			const double value = pMsg.ControlChange(cc);
-			GetParam(i)->SetNormalized(value);
-			OnParamChange(i);
-			//GetGUI()->SetParameterFromPlug(i, GetParam(i)->GetNormalized(), true);
+      GetParam(i)->SetNormalized(value);
+      OnParamChange(i);
+      SendParameterValueFromAPI(i, value, true);
 		}
 	}
 }
 
 bool SpectralHarp::OnHostRequestingAboutBox()
 {
-#if SA_API
+#if APP_API
 #ifdef OS_WIN
-	GetGUI()->ShowMessageBox(kAboutBoxText, BUNDLE_NAME, MB_OK);
+	GetUI()->ShowMessageBox(kAboutBoxText, BUNDLE_NAME, kMB_OK);
 #else
 	// sadly, on osx, ShowMessageBox uses an alert style box that does not show the app icon,
 	// which is different from the default About window that is shown.

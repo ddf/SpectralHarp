@@ -111,7 +111,7 @@ void SpectralGen::reset()
 	phaseIdx = 0;
 	// spectral magnitude is relative to the fft size because shorter ffts make louder output (and vice-versa),
 	// so this helps maintain similar volume across all sample rates.
-#if SA_API
+#if APP_API
 	// spectral magnitude needs to be louder for standalone to balance this APP_MULT constant in app_resource.h
 	// adjust volume here gives better results than setting APP_MULT to 1 and using the same spectral amplitude.
 	spectralMagnitude = inverseSize / 8;
