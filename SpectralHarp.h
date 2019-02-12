@@ -26,6 +26,8 @@ public:
 
 	// catch the About menu item to display what we wants in a box
 	bool OnHostRequestingAboutBox() override;
+  // catch the Read Manual menu item to open the Manual
+  bool OnHostRequestingProductHelp() override;
 
 	void BroadcastParamChange(const int paramIdx);
 

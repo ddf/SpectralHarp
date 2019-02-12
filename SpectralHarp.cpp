@@ -691,6 +691,12 @@ bool SpectralHarp::OnHostRequestingAboutBox()
 	return false;
 }
 
+bool SpectralHarp::OnHostRequestingProductHelp()
+{
+  // #TODO try to figure out where the Manual is on disk and open it  
+  return false;
+}
+
 void SpectralHarp::BroadcastParamChange(const int paramIdx)
 {
 	// send MIDI CC messages with current param values for any mapped params,
