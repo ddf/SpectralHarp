@@ -555,8 +555,10 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		const double bandLast = GetParam(kBandLast)->Value();
 		if (bandFirst > bandLast - kBandMinDistance)
 		{
-			GetParam(kBandFirst)->Set(bandLast - kBandMinDistance);
+      const double value = bandLast - kBandMinDistance;
+			GetParam(kBandFirst)->Set(value);
 			InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
+      SendParameterValueFromAPI(kBandFirst, value, false);
 		}		
 	}
 	break;
@@ -567,8 +569,10 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		const double bandFirst = GetParam(kBandFirst)->Value();
 		if (bandLast < bandFirst + kBandMinDistance)
 		{
-			GetParam(kBandLast)->Set(bandFirst + kBandMinDistance);
-			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());			
+      const double value = bandFirst + kBandMinDistance;
+			GetParam(kBandLast)->Set(value);
+			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());
+      SendParameterValueFromAPI(kBandLast, value, false);
 		}	
 	}
 	break;
