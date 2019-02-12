@@ -7,7 +7,7 @@ class KnobLineCoronaControl : public IKnobControlBase
 public:
 	KnobLineCoronaControl(IRECT pR, int paramIdx,
 						  const IColor& lineColor, const IColor& coronaColor,
-						  float coronaThickness = 0.0f, double innerRadius = 0.0, double outerRadius = 0.0,
+						  float lineThickness = 1.0f, double innerRadius = 0.0, double outerRadius = 0.0,
 						  double minAngle = -0.75 * PI, double maxAngle = 0.75 * PI,
 						  EDirection direction = kVertical, double gearing = DEFAULT_GEARING);
 	
@@ -29,9 +29,8 @@ private:
 	float		  mCX, mCY;
 	bool		  mHasMouse;
   IColor    mColor;
-  IBlend    mBlend;
 	IColor    mCoronaColor;
-	IBlend    mCoronaBlend;
+  float     mLineThickness;
 
 	ITextControl* mLabelControl;
 	WDL_String	  mLabelString;

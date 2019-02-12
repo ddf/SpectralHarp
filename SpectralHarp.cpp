@@ -42,7 +42,7 @@ enum ELayout
 	kKnob_W = 48,
 	kKnob_H = 48,
 
-	kKnobCorona = 0,
+	kKnobLineThickness = 1,
 	kKnobSpacing = 77,
 
 	kVolumeX = PLUG_WIDTH - kKnob_W - 14,
@@ -202,7 +202,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
       pGraphics->AttachControl(new TextBox(highBandRect, kBandLast, bandLabel, pGraphics, "00000 Hz", true, 0.005));
     }
 
-    KnobLineCoronaControl* knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kVolumeX), kVolume, knobColor, knobColor, kKnobCorona);
+    KnobLineCoronaControl* knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kVolumeX), kVolume, knobColor, knobColor, kKnobLineThickness);
     ITextControl* text = new ITextControl(IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), "Volume", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
@@ -222,43 +222,43 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
       pGraphics->AttachControl(new ITextControl(rect, "Spectrum Selection", captionText));
     }
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), "Density", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
     pGraphics->AttachControl(text);
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kTuningX), kBandLinLogLerp, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kTuningX), kBandLinLogLerp, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kTuningX, kCaptionT, kTuningX + kCaptionW, kCaptionB), "Tuning", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
     pGraphics->AttachControl(text);
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kSpreadX), kBandSpread, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kSpreadX), kBandSpread, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kSpreadX, kCaptionT, kSpreadX + kCaptionW, kCaptionB), "Spread", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
     pGraphics->AttachControl(text);
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kBrightnessX), kBrightness, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kBrightnessX), kBrightness, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kBrightnessX, kCaptionT, kBrightnessX + kCaptionW, kCaptionB), "Brightness", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
     pGraphics->AttachControl(text);
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kPitchX), kPitch, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kPitchX), kPitch, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kPitchX, kCaptionT, kPitchX + kCaptionW, kCaptionB), "Pitch", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
     pGraphics->AttachControl(text);
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kDecayX), kDecay, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kDecayX), kDecay, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kDecayX, kCaptionT, kDecayX + kCaptionW, kCaptionB), "Decay", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
     pGraphics->AttachControl(text);
 
-    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kCrushX), kCrush, knobColor, knobColor, kKnobCorona);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kCrushX), kCrush, knobColor, knobColor, kKnobLineThickness);
     text = new ITextControl(IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), "Crush", captionText);
     knob->SetLabelControl(text);
     pGraphics->AttachControl(knob);
