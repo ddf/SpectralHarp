@@ -242,6 +242,7 @@ void SpectrumHandle::Draw(IGraphics& g)
 
 void SpectrumHandle::SetValueFromDelegate(double value)
 {
+  IControl::SetValueFromDelegate(value);
   if (mParent != nullptr)
   {
     mParent->SetAuxParamValueFromPlug(mParamIdx, value);
