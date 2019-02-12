@@ -560,9 +560,6 @@ void SpectralHarp::OnParamChange(int paramIdx)
 			GetParam(kBandFirst)->Set(bandLast - kBandMinDistance);
 			InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
 		}		
-		// we always push this back to the UI because we have multiple UI elements for this param
-    // #TODO how to push this back now?
-		//GetGUI()->SetParameterFromPlug(kBandFirst, GetParam(kBandFirst)->GetNormalized(), true);
 	}
 	break;
 
@@ -575,9 +572,6 @@ void SpectralHarp::OnParamChange(int paramIdx)
 			GetParam(kBandLast)->Set(bandFirst + kBandMinDistance);
 			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());			
 		}	
-		// we always push this back to the UI because we have multiple UI elements for this param
-    // #TODO how to push this back now?
-		//GetGUI()->SetParameterFromPlug(kBandLast, GetParam(kBandLast)->GetNormalized(), true);
 	}
 	break;
 
