@@ -167,6 +167,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
   mLayoutFunc = [&](IGraphics* pGraphics) {
 
     pGraphics->HandleMouseOver(true);
+    pGraphics->AttachCornerResizer();
     pGraphics->AttachPanelBackground(backColor);
     pGraphics->LoadFont(ROBOTTO_FN);
 
