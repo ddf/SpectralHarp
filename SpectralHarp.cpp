@@ -57,7 +57,7 @@ enum ELayout
 
 	kKnobFrames = 60,
 
-	kCaptionT = kKnob_Y + 50,
+	kCaptionT = kKnob_Y + 45,
 	kCaptionB = kCaptionT + 15,
 	kCaptionW = 50,
 
@@ -65,7 +65,7 @@ enum ELayout
 	kTextBoxH = kSpectrumSelect_H + 2,
 	
 	kTitleX = 10,
-	kTitleBottomMargin = 15
+	kTitleBottomMargin = 10
 };
 
 // background of entire window
