@@ -63,10 +63,12 @@ if %PLATFORM% == "Win32" (
     echo copying 32bit binary to VST3 BUNDLE ..
     call %CREATE_BUNDLE_SCRIPT% %BUILD_DIR%\%NAME%.vst3 %VST_ICON% %FORMAT%
     copy /y %BUILT_BINARY% %BUILD_DIR%\%NAME%.vst3\Contents\x86-win
-    if exist %VST3_32_PATH% ( 
-      echo copying VST3 bundle to 32bit VST3 Plugins folder ...
-      call %CREATE_BUNDLE_SCRIPT% %VST3_32_PATH%\%NAME%.vst3 %VST_ICON% %FORMAT%
-      xcopy /E /H /Y %BUILD_DIR%\%NAME%.vst3\Contents\*  %VST3_32_PATH%\%NAME%.vst3\Contents\
+    if exist %VST3_32_PATH% (
+      REM echo copying VST3 bundle to 32bit VST3 Plugins folder ...
+      REM call %CREATE_BUNDLE_SCRIPT% %VST3_32_PATH%\%NAME%.vst3 %VST_ICON% %FORMAT%
+      REM xcopy /E /H /Y %BUILD_DIR%\%NAME%.vst3\Contents\*  %VST3_32_PATH%\%NAME%.vst3\Contents\
+      echo copying VST3 binary to 32bit VST3 Plugins folder ...
+      copy /y %BUILT_BINARY% %VST3_32_PATH%
     )
   )
   

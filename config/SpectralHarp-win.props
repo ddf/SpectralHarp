@@ -12,6 +12,9 @@
     <EXTRA_INC_PATHS>$(SolutionDir)..\minim-cpp\src\;$(SolutionDir)..\minim-cpp\src\interfaces\;$(SolutionDir)..\minim-cpp\src\ugens\</EXTRA_INC_PATHS>
     <PDB_FILE>$(SolutionDir)build-win\pdbs\$(TargetName)_$(Platform).pdb</PDB_FILE>
     <BUILD_DIR>$(SolutionDir)build-win</BUILD_DIR>
+    <COPY_VST2>0</COPY_VST2>
+    <VST3_32_PATH>S:\VST</VST3_32_PATH>
+    <VST3_64_PATH>S:\VST\x64</VST3_64_PATH>
     <CREATE_BUNDLE_SCRIPT>$(SolutionDir)..\..\Scripts\create_bundle.bat</CREATE_BUNDLE_SCRIPT>
   </PropertyGroup>
   <PropertyGroup>
