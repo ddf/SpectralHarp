@@ -2,8 +2,6 @@
 
 #include "SpectralHarp.h"
 
-// #TODO knobs are not rendering!
-
 static const double kRadToDeg = 180.0 / PI;
 
 #pragma  region KnobLineCoronaControl
