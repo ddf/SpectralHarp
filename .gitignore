@@ -41,3 +41,4 @@ Icon?
 build-*
 ipch/*
 gui/*
+.vs/

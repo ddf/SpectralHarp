@@ -1,24 +1,42 @@
 #pragma once
 #include "IControl.h"
 
+class SpectrumSelection;
+
+class SpectrumHandle : public IControl
+{
+public:
+  SpectrumHandle(int paramId) : IControl(IRECT(), paramId), mParent(nullptr) {}
+
+  void SetParent(SpectrumSelection* parent) { mParent = parent; }
+
+  virtual void Draw(IGraphics& g) override;
+  virtual void SetValueFromDelegate(double value) override;
+
+private:
+  SpectrumSelection* mParent;
+};
+
 class SpectrumSelection : public IControl
 {
 public:
-	SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowParam, int bandHighParam, IColor back, IColor select, IColor handle);
+	SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle);
 	~SpectrumSelection();
 
-	virtual void OnMouseDown(int x, int y, IMouseMod* pMod) override;
-	virtual void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override;
-	virtual void OnMouseUp(int x, int y, IMouseMod* pMod) override;
+	virtual void OnMouseDown(float x, float y, const IMouseMod& pMod) override;
+	virtual void OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod) override;
+	virtual void OnMouseUp(float x, float y, const IMouseMod& pMod) override;
 
-	virtual bool Draw(IGraphics* pGraphics) override;
+	virtual void Draw(IGraphics& pGraphics) override;
 	
-	void SetAuxParamValueFromPlug(int auxParamIdx, double value) override;
+	void SetAuxParamValueFromPlug(int auxParamIdx, double value);
 
 private:
-	void DrawHandle(IGraphics* pGraphics, const IRECT& handle);
+	void DrawHandle(IGraphics& pGraphics, const IRECT& handle);
 	void SetParamFromHandle(const int paramIdx);
 	void SetHandleFromParam(const int paramIdx);
+
+  SpectrumHandle* mHandles[2];
 
 	IColor backgroundColor;
 	IColor selectedColor;
@@ -45,9 +63,9 @@ private:
 class SpectrumArrows : public IControl
 {
 public:
-	SpectrumArrows(IPlugBase* pPlug, IRECT rect, IColor color) : IControl(pPlug, rect), mColor(color) {}
+	SpectrumArrows(IRECT rect, IColor color) : IControl(rect), mColor(color) {}
 
-	bool Draw(IGraphics* pGraphics) override;
+	void Draw(IGraphics& pGraphics) override;
 
 private:
 	IColor mColor;

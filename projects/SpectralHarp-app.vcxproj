@@ -319,8 +319,14 @@
     <ClInclude Include="..\..\..\IPlug\IPlugUtilities.h" />
     <ClInclude Include="..\..\..\IPlug\IPlug_include_in_plug_hdr.h" />
     <ClInclude Include="..\..\..\IPlug\IPlug_include_in_plug_src.h" />
+    <ClInclude Include="..\KnobLineCoronaControl.h" />
+    <ClInclude Include="..\Params.h" />
+    <ClInclude Include="..\SpectralGen.h" />
     <ClInclude Include="..\SpectralHarp.h" />
     <ClInclude Include="..\resources\resource.h" />
+    <ClInclude Include="..\SpectrumSelection.h" />
+    <ClInclude Include="..\StringControl.h" />
+    <ClInclude Include="..\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Dependencies\IPlug\RTAudio\include\asio.cpp" />
@@ -401,7 +407,21 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\IPlug\IPlugTimer.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\AudioSource.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\FFT.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\FourierTransform.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\Logging.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\ugens\BitCrush.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\ugens\Frequency.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\ugens\TickRate.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\ugens\UGen.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\WindowFunction.cpp" />
+    <ClCompile Include="..\KnobLineCoronaControl.cpp" />
+    <ClCompile Include="..\SpectralGen.cpp" />
     <ClCompile Include="..\SpectralHarp.cpp" />
+    <ClCompile Include="..\SpectrumSelection.cpp" />
+    <ClCompile Include="..\StringControl.cpp" />
+    <ClCompile Include="..\TextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\resources\main.rc" />

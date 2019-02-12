@@ -2,16 +2,21 @@
 #include "SpectralHarp.h"
 #include "Params.h"
 
-SpectrumSelection::SpectrumSelection(IPlugBase* pPlug, IRECT rect, int bandLowParam, int bandHighParam, IColor back, IColor select, IColor handle) 
-	: IControl(pPlug, rect)
+// #TODO spectrum handles aren't working correctly
+
+SpectrumSelection::SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle) 
+	: IControl(rect)
 	, backgroundColor(back)
 	, selectedColor(select)
 	, handleColor(handle)
 	, handleWidth(16)
 	, dragParam(kDragNone)
 {
-	AddAuxParam(bandLowParam);
-	AddAuxParam(bandHighParam);
+  mHandles[0] = lowHandle;
+  mHandles[1] = highHandle;
+
+  lowHandle->SetParent(this);
+  highHandle->SetParent(this);
 
 	const int handT = rect.T;
 	const int handB = rect.B;
@@ -24,16 +29,23 @@ SpectrumSelection::~SpectrumSelection()
 {
 }
 
-void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
+void SpectrumSelection::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
 	if (handles[kDragLeft].Contains(x, y))
 	{
-		if (pMod->R)
+		if (pMod.R)
 		{
-			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
+			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(GetDelegate());
 			if (harp != nullptr)
 			{
-				harp->BeginMIDILearn(GetAuxParam(kDragLeft)->mParamIdx, -1, x, y);
+        for (int i = 0; i < GetUI()->NControls(); ++i)
+        {
+          if (GetUI()->GetControl(i) == this)
+          {
+            harp->BeginMIDILearn(i, mHandles[kDragLeft]->ParamIdx(), -1, x, y);
+            break;
+          }
+        }				
 			}
 		}
 		else
@@ -45,12 +57,19 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 	}
 	else if (handles[kDragRight].Contains(x, y))
 	{
-		if (pMod->R)
+		if (pMod.R)
 		{
-			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(mPlug);
+			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(GetDelegate());
 			if (harp != nullptr)
 			{
-				harp->BeginMIDILearn(GetAuxParam(kDragRight)->mParamIdx, -1, x, y);
+        for (int i = 0; i < GetUI()->NControls(); ++i)
+        {
+          if (GetUI()->GetControl(i) == this)
+          {
+            harp->BeginMIDILearn(i, mHandles[kDragRight]->ParamIdx(), -1, x, y);
+            break;
+          }
+        }
 			}
 		}
 		else
@@ -68,7 +87,7 @@ void SpectrumSelection::OnMouseDown(int x, int y, IMouseMod* pMod)
 	}
 }
 
-void SpectrumSelection::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
+void SpectrumSelection::OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod)
 {
 	if (dragParam != kDragNone) 
 	{
@@ -137,56 +156,54 @@ void SpectrumSelection::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMo
 	}
 }
 
-void SpectrumSelection::OnMouseUp(int x, int y, IMouseMod* pMod)
+void SpectrumSelection::OnMouseUp(float x, float y, const IMouseMod& pMod)
 {
 	dragParam = kDragNone;
 }
 
-bool SpectrumSelection::Draw(IGraphics* pGraphics)
+void SpectrumSelection::Draw(IGraphics& pGraphics)
 {
 	IRECT backRect = mRECT;
-	pGraphics->FillIRect(&backgroundColor, &backRect);
+	pGraphics.FillRect(backgroundColor, backRect);
 
-	pGraphics->DrawLine(&handleColor, backRect.L, backRect.MH(), handles[kDragLeft].L, backRect.MH());
-	pGraphics->DrawLine(&handleColor, handles[kDragRight].R, backRect.MH(), backRect.R, backRect.MH());
+	pGraphics.DrawLine(handleColor, backRect.L, backRect.MH(), handles[kDragLeft].L, backRect.MH());
+	pGraphics.DrawLine(handleColor, handles[kDragRight].R, backRect.MH(), backRect.R, backRect.MH());
 
-	pGraphics->FillIRect(&selectedColor, &handles[kDragBoth]);
+	pGraphics.FillRect(selectedColor, handles[kDragBoth]);
 
 	DrawHandle(pGraphics, handles[kDragLeft]);
 	DrawHandle(pGraphics, handles[kDragRight]);
-
-	return true;
 }
 
-void SpectrumSelection::DrawHandle(IGraphics* pGraphics, const IRECT& handle)
+void SpectrumSelection::DrawHandle(IGraphics& pGraphics, const IRECT& handle)
 {
-	int x[4] = { (int)handle.MW(), handle.R, (int)handle.MW(), handle.L };
-	int y[4] = { handle.T, (int)handle.MH(), handle.B, (int)handle.MH() };
+	float x[4] = { (int)handle.MW(), handle.R, (int)handle.MW(), handle.L };
+	float y[4] = { handle.T, (int)handle.MH(), handle.B, (int)handle.MH() };
 
 	//pGraphics->DrawLine(&handleColor, x[0], y[0], x[1], y[1], 0, true);
 	//pGraphics->DrawLine(&handleColor, x[1], y[1], x[2], y[2], 0, true);
 	//pGraphics->DrawLine(&handleColor, x[2], y[2], x[3], y[3], 0, true);
 	//pGraphics->DrawLine(&handleColor, x[3], y[3], x[0], y[0], 0, true);
 
-	pGraphics->FillIConvexPolygon(&handleColor, x, y, 4);
+	pGraphics.FillConvexPolygon(handleColor, x, y, 4);
 }
 
 void SpectrumSelection::SetParamFromHandle(const int paramIdx)
 {
 	float mw = handles[paramIdx].MW();
 	int hw = handleWidth / 2;
-	AuxParam* param = GetAuxParam(paramIdx);
-	param->mValue = Map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
-	mPlug->SetParameterFromGUI(param->mParamIdx, param->mValue);
+  float value = Map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
+  mHandles[paramIdx]->SetValueFromUserInput(value);
 }
 
 void SpectrumSelection::SetHandleFromParam(const int paramIdx)
 {
+  int id = mHandles[kDragLeft]->ParamIdx() == paramIdx ? kDragLeft : kDragRight;
 	int hw = handleWidth / 2;
-	int mw = (int)roundf(Map(GetAuxParam(paramIdx)->mValue, 0, 1, mRECT.L+hw, mRECT.R-hw));
-	handles[paramIdx].L = mw - hw;
-	handles[paramIdx].R = mw + hw;
-	switch(paramIdx)
+	int mw = (int)roundf(Map(mHandles[id]->GetValue(), 0, 1, mRECT.L+hw, mRECT.R-hw));
+	handles[id].L = mw - hw;
+	handles[id].R = mw + hw;
+	switch(id)
 	{
 	case kDragLeft:
 		handles[kDragBoth].L = mw;
@@ -200,23 +217,33 @@ void SpectrumSelection::SetHandleFromParam(const int paramIdx)
 
 void SpectrumSelection::SetAuxParamValueFromPlug(int auxParamIdx, double value)
 {
-	IControl::SetAuxParamValueFromPlug(auxParamIdx, value);
 	SetHandleFromParam(auxParamIdx);
+  SetDirty();
 }
 
-bool SpectrumArrows::Draw(IGraphics* pGraphics)
+void SpectrumArrows::Draw(IGraphics& pGraphics)
 {
 	const float a = 2;
 	float mid = mRECT.MH();
-	pGraphics->DrawLine(&mColor, mRECT.L + a, mid, mRECT.R - a, mid);
-	pGraphics->DrawLine(&mColor, mRECT.L + a, mid, mRECT.L + a, mRECT.T);
-	pGraphics->DrawLine(&mColor, mRECT.R - a, mid, mRECT.R - a, mRECT.T);
+	pGraphics.DrawLine(mColor, mRECT.L + a, mid, mRECT.R - a, mid);
+	pGraphics.DrawLine(mColor, mRECT.L + a, mid, mRECT.L + a, mRECT.T);
+	pGraphics.DrawLine(mColor, mRECT.R - a, mid, mRECT.R - a, mRECT.T);
 	// left arrow
-	pGraphics->DrawLine(&mColor, mRECT.L + a, mRECT.T, mRECT.L, mRECT.T + a);
-	pGraphics->DrawLine(&mColor, mRECT.L + a, mRECT.T, mRECT.L + a + a, mRECT.T + a);
+	pGraphics.DrawLine(mColor, mRECT.L + a, mRECT.T, mRECT.L, mRECT.T + a);
+	pGraphics.DrawLine(mColor, mRECT.L + a, mRECT.T, mRECT.L + a + a, mRECT.T + a);
 	// right arrow
-	pGraphics->DrawLine(&mColor, mRECT.R - a, mRECT.T, mRECT.R, mRECT.T + a);
-	pGraphics->DrawLine(&mColor, mRECT.R - a, mRECT.T, mRECT.R - a - a, mRECT.T + a);
+	pGraphics.DrawLine(mColor, mRECT.R - a, mRECT.T, mRECT.R, mRECT.T + a);
+	pGraphics.DrawLine(mColor, mRECT.R - a, mRECT.T, mRECT.R - a - a, mRECT.T + a);
+}
 
-	return true;
+void SpectrumHandle::Draw(IGraphics& g)
+{
+}
+
+void SpectrumHandle::SetValueFromDelegate(double value)
+{
+  if (mParent != nullptr)
+  {
+    mParent->SetAuxParamValueFromPlug(mParamIdx, value);
+  }
 }

@@ -1,8 +1,6 @@
-#ifndef __SPECTRALHARP__
-#define __SPECTRALHARP__
+#pragma once
 
 #include "IPlug_include_in_plug_hdr.h"
-#include "IMidiQueue.h"
 
 #include "Params.h"
 
@@ -17,17 +15,17 @@ public:
 	SpectralHarp(IPlugInstanceInfo instanceInfo);
 	~SpectralHarp();
 
-	void Reset() override;
+	void OnReset() override;
 	void OnParamChange(int paramIdx) override;
-	void ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames) override;
+	void ProcessBlock(sample** inputs, sample** outputs, int nFrames) override;
 	
-	int UnserializeState(ByteChunk* pChunk, int startPos) override;
+	int UnserializeState(const IByteChunk& chunk, int startPos) override;
 
-	void BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y);
-	void ProcessMidiMsg(IMidiMsg* pMsg) override;
+	void BeginMIDILearn(int controlId, int paramIdx1, int paramIdx2, float x, float y);
+	void ProcessMidiMsg(const IMidiMsg& msg) override;
 
 	// catch the About menu item to display what we wants in a box
-	bool HostRequestingAboutBox() override;
+	bool OnHostRequestingAboutBox() override;
 
 	void BroadcastParamChange(const int paramIdx);
 
@@ -41,7 +39,7 @@ public:
 private:
 
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
-	void HandleMidiControlChange(IMidiMsg* pMsg);	
+	void HandleMidiControlChange(const IMidiMsg& msg);	
 	void SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx);
 	float GetPluckAmp(const float pluckY) const;
 	void PluckSpectrum(const float freq, float mag);
@@ -66,5 +64,3 @@ private:
 	IMidiQueue				  mMidiQueue;
 	std::vector<IMidiMsg>	  mNotes;	
 };
-
-#endif

@@ -5,10 +5,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
     <BINARY_NAME>SpectralHarp</BINARY_NAME>
-    <EXTRA_ALL_DEFS>IGRAPHICS_NANOVG;IGRAPHICS_GL2</EXTRA_ALL_DEFS>
+    <EXTRA_ALL_DEFS>IGRAPHICS_NANOVG;IGRAPHICS_GL2;WINDOWS</EXTRA_ALL_DEFS>
     <EXTRA_DEBUG_DEFS />
     <EXTRA_RELEASE_DEFS />
     <EXTRA_TRACER_DEFS />
+    <EXTRA_INC_PATHS>$(SolutionDir)..\minim-cpp\src\;$(SolutionDir)..\minim-cpp\src\interfaces\;$(SolutionDir)..\minim-cpp\src\ugens\</EXTRA_INC_PATHS>
     <PDB_FILE>$(SolutionDir)build-win\pdbs\$(TargetName)_$(Platform).pdb</PDB_FILE>
     <BUILD_DIR>$(SolutionDir)build-win</BUILD_DIR>
     <CREATE_BUNDLE_SCRIPT>$(SolutionDir)..\..\Scripts\create_bundle.bat</CREATE_BUNDLE_SCRIPT>

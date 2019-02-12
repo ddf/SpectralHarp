@@ -2,51 +2,65 @@
 
 #include "SpectralHarp.h"
 
+// #TODO knobs are not rendering!
+
 #pragma  region KnobLineCoronaControl
-KnobLineCoronaControl::KnobLineCoronaControl(IPlugBase* pPlug, IRECT pR, int paramIdx,
-											 const IColor* pColor, const IColor* pCoronaColor,
+KnobLineCoronaControl::KnobLineCoronaControl(IRECT pR, int paramIdx,
+											 const IColor& color, const IColor& coronaColor,
 											 float coronaThickness,
 											 double innerRadius, double outerRadius,
 											 double minAngle, double maxAngle,
 											 EDirection direction, double gearing)
-: IKnobLineControl(pPlug, pR, paramIdx, pColor, innerRadius, outerRadius, minAngle, maxAngle, direction, gearing)
+: IKnobControlBase(pR, paramIdx, direction, gearing)
 , mCX(mRECT.MW())
 , mCY(mRECT.MH())
-, mCoronaColor(*pCoronaColor)
-, mCoronaBlend(IChannelBlend::kBlendAdd, coronaThickness)
+, mInnerRadius(innerRadius)
+, mOuterRadius(outerRadius)
+, mMinAngle(minAngle)
+, mMaxAngle(maxAngle)
+, mColor(color)
+, mCoronaColor(coronaColor)
+, mCoronaBlend(kBlendAdd, coronaThickness)
 , mLabelControl(nullptr)
 , mSharedLabel(false)
 , mHasMouse(false)
 {
 }
 
-bool KnobLineCoronaControl::Draw(IGraphics* pGraphics)
+void KnobLineCoronaControl::Draw(IGraphics& pGraphics)
 {
 	float v = mMinAngle + (float)mValue * (mMaxAngle - mMinAngle);
 	for (int i = 0; i <= mCoronaBlend.mWeight; ++i)
 	{
-		IColor color = mCoronaColor;
-		pGraphics->DrawArc(&color, mCX, mCY, mOuterRadius - i, mMinAngle, v, nullptr, true);
+    IColor color = mCoronaColor;
+		pGraphics.DrawArc(color, mCX, mCY, mOuterRadius - i, mMinAngle, v, nullptr, true);
 		color.R /= 2;
 		color.G /= 2;
 		color.B /= 2;
-		pGraphics->DrawArc(&color, mCX, mCY, mOuterRadius - i, v, mMaxAngle, nullptr, true);
+		pGraphics.DrawArc(color, mCX, mCY, mOuterRadius - i, v, mMaxAngle, nullptr, true);
 	}
 	float sinV = (float)sin(v);
 	float cosV = (float)cos(v);
 	float x1 = mCX + mInnerRadius * sinV, y1 = mCY - mInnerRadius * cosV;
 	float x2 = mCX + mOuterRadius * sinV, y2 = mCY - mOuterRadius * cosV;
-	return pGraphics->DrawLine(&mColor, x1, y1, x2, y2, &mBlend, true);
+	return pGraphics.DrawLine(mColor, x1, y1, x2, y2, &mBlend, true);
 }
 
-void KnobLineCoronaControl::OnMouseDown(int x, int y, IMouseMod* pMod)
+void KnobLineCoronaControl::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
-	if (pMod->R)
+	if (pMod.R)
 	{
-		SpectralHarp* plug = dynamic_cast<SpectralHarp*>(mPlug);
+		SpectralHarp* plug = dynamic_cast<SpectralHarp*>(GetDelegate());
 		if (plug != nullptr)
 		{
-			plug->BeginMIDILearn(mParamIdx, -1, x, y);
+      for (int i = 0; i < GetUI()->NControls(); ++i)
+      {
+        if (GetUI()->GetControl(i) == this)
+        {
+          plug->BeginMIDILearn(i, mParamIdx, -1, x, y);
+          break;
+        }
+      }			
 		}
 	}
 	else
@@ -55,7 +69,7 @@ void KnobLineCoronaControl::OnMouseDown(int x, int y, IMouseMod* pMod)
 	}
 }
 
-void KnobLineCoronaControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod)
+void KnobLineCoronaControl::OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod)
 {
 	double gearing = mGearing;
 	
@@ -66,7 +80,7 @@ void KnobLineCoronaControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod*
 	if (pMod->R) gearing *= 10.0;
 #endif
 #else
-	if (pMod->C || pMod->S) gearing *= 10.0;
+	if (pMod.C || pMod.S) gearing *= 10.0;
 #endif
 	
 	mValue += (double)dY / (double)(mRECT.T - mRECT.B) / gearing;
@@ -75,7 +89,7 @@ void KnobLineCoronaControl::OnMouseDrag(int x, int y, int dX, int dY, IMouseMod*
 	SetDirty();
 }
 
-void KnobLineCoronaControl::OnMouseUp(int x, int y, IMouseMod* pMod)
+void KnobLineCoronaControl::OnMouseUp(float x, float y, const IMouseMod& pMod)
 {
 	if (!mRECT.Contains(x, y))
 	{
@@ -85,7 +99,7 @@ void KnobLineCoronaControl::OnMouseUp(int x, int y, IMouseMod* pMod)
 	mHasMouse = false;
 }
 
-void KnobLineCoronaControl::OnMouseOver(int x, int y, IMouseMod* pMod)
+void KnobLineCoronaControl::OnMouseOver(float x, float y, const IMouseMod& pMod)
 {
 	ShowLabel();
 }
@@ -108,9 +122,9 @@ void KnobLineCoronaControl::ShowLabel()
 		{
 			IRECT targetRect = mRECT;
 			targetRect.T = targetRect.B - 16;
-			IRECT& labelRect = *mLabelControl->GetRECT();
+			IRECT labelRect = mLabelControl->GetRECT();
 			labelRect = targetRect;
-			mLabelControl->SetTargetArea(targetRect);
+      mLabelControl->SetTargetRECT(targetRect);
 		}
 		SetValDisplayControl(mLabelControl);
 		SetDirty();
@@ -122,7 +136,7 @@ void KnobLineCoronaControl::HideLabel()
 	SetValDisplayControl(nullptr);
 	if (mLabelControl != nullptr)
 	{
-		mLabelControl->SetTextFromPlug(mLabelString.Get());
+		mLabelControl->SetStr(mLabelString.Get());
 		SetDirty(false);
 	}
 }
@@ -133,7 +147,7 @@ void KnobLineCoronaControl::SetLabelControl(ITextControl* control, bool bShared)
 	mSharedLabel = bShared;
 	if (mLabelControl != nullptr)
 	{
-		mLabelString.Set(mLabelControl->GetTextForPlug());
+		mLabelString.Set(mLabelControl->GetStr());
 	}
 	else
 	{

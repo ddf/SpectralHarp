@@ -1,46 +1,44 @@
 #include "TextBox.h"
 #include "SpectralHarp.h"
 
-TextBox::TextBox(IPlugBase* pPlug, IRECT pR, int paramIdx, IText* pText, IGraphics* pGraphics, const char * maxText, bool showParamUnits, float scrollSpeed)
-	: ICaptionControl(pPlug, pR, paramIdx, pText, showParamUnits)
+TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphics, const char * maxText, bool showParamUnits, float scrollSpeed)
+	: ICaptionControl(pR, paramIdx, pText, showParamUnits)
 	, mTextRect(pR)
 	, mScrollSpeed(scrollSpeed)
 {
 	mTextRect = pR.GetHPadded(-3);
-	pGraphics->MeasureIText(pText, const_cast<char*>(maxText), &mTextRect);
+  pGraphics->MeasureText(pText, maxText, mTextRect);
 #ifdef OS_OSX
-	mTextRect.B -= 4;
+  mTextRect.B -= 4;
 #endif
-	const int offset = (mRECT.H() - mTextRect.H()) / 2;
-	mTextRect.T += offset;
-	mTextRect.B += offset;
+  const int offset = (mRECT.H() - mTextRect.H()) / 2;
+  mTextRect.T += offset;
+  mTextRect.B += offset;
 
 	SetTextEntryLength(strlen(maxText) - 1);
 }
 
-bool TextBox::Draw(IGraphics* pGraphics)
+void TextBox::Draw(IGraphics& pGraphics)
 {
-	pGraphics->FillIRect(&mText.mTextEntryBGColor, &mRECT);
-	IColor* borderColor = &mText.mTextEntryFGColor;
+	pGraphics.FillRect(mText.mTextEntryBGColor, mRECT);
+	IColor& borderColor = mText.mTextEntryFGColor;
 	const int bi = 2;
 	const int bt = mRECT.T;
 	const int bb = mRECT.B - 1;
 	// bracket on left side
-	pGraphics->DrawLine(borderColor, mRECT.L, bt, mRECT.L, bb);
-	pGraphics->DrawLine(borderColor, mRECT.L, bt, mRECT.L + bi, bt);
-	pGraphics->DrawLine(borderColor, mRECT.L, bb, mRECT.L + bi, bb);
+	pGraphics.DrawLine(borderColor, mRECT.L, bt, mRECT.L, bb);
+	pGraphics.DrawLine(borderColor, mRECT.L, bt, mRECT.L + bi, bt);
+	pGraphics.DrawLine(borderColor, mRECT.L, bb, mRECT.L + bi, bb);
 	// bracket on right side
-	pGraphics->DrawLine(borderColor, mRECT.R, bt, mRECT.R, bb);
-	pGraphics->DrawLine(borderColor, mRECT.R, bt, mRECT.R - bi, bt);
-	pGraphics->DrawLine(borderColor, mRECT.R, bb, mRECT.R - bi, bb);
+	pGraphics.DrawLine(borderColor, mRECT.R, bt, mRECT.R, bb);
+	pGraphics.DrawLine(borderColor, mRECT.R, bt, mRECT.R - bi, bt);
+	pGraphics.DrawLine(borderColor, mRECT.R, bb, mRECT.R - bi, bb);
 
 	IRECT ourRect = mRECT;
 	mRECT = mTextRect;
 	if (IsGrayed())
 	{
-		char display[32];
-		GetParam()->GetDisplayForHost(mValue, true, display, false);
-		mStr.Set(display);
+		GetParam()->GetDisplayForHost(mValue, true, mStr, false);
 		ITextControl::Draw(pGraphics);
 	}
 	else
@@ -48,13 +46,11 @@ bool TextBox::Draw(IGraphics* pGraphics)
 		ICaptionControl::Draw(pGraphics);
 	}
 	mRECT = ourRect;
-
-	return true;
 }
 
-void TextBox::OnMouseDown(int x, int y, IMouseMod* pMod)
+void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
-	if (pMod->L)
+	if (pMod.L)
 	{
 		IText ourText = mText;
 		IRECT promptRect = mTextRect;
@@ -62,21 +58,27 @@ void TextBox::OnMouseDown(int x, int y, IMouseMod* pMod)
 		mText.mSize -= 2;
 		promptRect.T -= 1;
 #endif
-		mPlug->GetGUI()->PromptUserInput(this, mPlug->GetParam(mParamIdx), &promptRect);
+    PromptUserInput(promptRect);
 		mText = ourText;
-		Redraw();
 	}
-	else if (pMod->R)
+	else if (pMod.R)
 	{
-		SpectralHarp* plug = static_cast<SpectralHarp*>(mPlug);
+		SpectralHarp* plug = static_cast<SpectralHarp*>(GetDelegate());
 		if (plug != nullptr)
 		{
-			plug->BeginMIDILearn(mParamIdx, -1, x, y);
+      for (int i = 0; i < GetUI()->NControls(); ++i)
+      {
+        if (GetUI()->GetControl(i) == this)
+        {
+          plug->BeginMIDILearn(i, mParamIdx, -1, x, y);
+          break;
+        }
+      }
 		}
 	}
 }
 
-void TextBox::OnMouseWheel(int x, int y, IMouseMod* pMod, int d)
+void TextBox::OnMouseWheel(float x, float y, const IMouseMod& pMod, float d)
 {
 #ifdef PROTOOLS
 	if (pMod->C)
@@ -84,7 +86,7 @@ void TextBox::OnMouseWheel(int x, int y, IMouseMod* pMod, int d)
 		mValue += GetParam()->GetStep() * mScrollSpeed/10 * d;
 	}
 #else
-	if (pMod->C || pMod->S)
+	if (pMod.C || pMod.S)
 	{
 		mValue += GetParam()->GetStep() * mScrollSpeed/10 * d;
 	}
@@ -101,5 +103,5 @@ void TextBox::GrayOut(bool gray)
 {
 	ICaptionControl::GrayOut(gray);
 
-	mText.mColor.A = gray ? 128 : 255;	
+  mText.mFGColor.A = gray ? 128 : 255;
 }

@@ -89,6 +89,38 @@
     <ClCompile Include="..\..\..\IPlug\IPlugPaths.cpp">
       <Filter>IPlug</Filter>
     </ClCompile>
+    <ClCompile Include="..\KnobLineCoronaControl.cpp" />
+    <ClCompile Include="..\SpectralGen.cpp" />
+    <ClCompile Include="..\SpectrumSelection.cpp" />
+    <ClCompile Include="..\StringControl.cpp" />
+    <ClCompile Include="..\TextBox.cpp" />
+    <ClCompile Include="..\..\minim-cpp\src\ugens\BitCrush.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\FFT.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\FourierTransform.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\ugens\Frequency.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\ugens\TickRate.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\ugens\UGen.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\AudioSource.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\Logging.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\minim-cpp\src\WindowFunction.cpp">
+      <Filter>minim</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SpectralHarp.h" />
@@ -276,6 +308,12 @@
     <ClInclude Include="..\..\..\IPlug\IPlugPaths.h">
       <Filter>IPlug</Filter>
     </ClInclude>
+    <ClInclude Include="..\KnobLineCoronaControl.h" />
+    <ClInclude Include="..\Params.h" />
+    <ClInclude Include="..\SpectralGen.h" />
+    <ClInclude Include="..\SpectrumSelection.h" />
+    <ClInclude Include="..\StringControl.h" />
+    <ClInclude Include="..\TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">
@@ -307,6 +345,9 @@
     </Filter>
     <Filter Include="IPlug\APP\RTAudioMidi\include">
       <UniqueIdentifier>{649c5de3-b4c2-4de9-8d57-3b1762646259}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="minim">
+      <UniqueIdentifier>{c66dcc30-911c-48e4-a766-41e6c10ef600}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

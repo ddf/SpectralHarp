@@ -23,8 +23,8 @@ const IMidiMsg::EControlChangeMsg kUnmappedParam = (IMidiMsg::EControlChangeMsg)
 
 enum ELayout
 {
-	kWidth = GUI_WIDTH,
-	kHeight = GUI_HEIGHT,
+	kWidth = PLUG_WIDTH,
+	kHeight = PLUG_HEIGHT,
 
 	kControlPanelHeight = 120,
 
@@ -45,7 +45,7 @@ enum ELayout
 	kKnobCorona = 0,
 	kKnobSpacing = 77,
 
-	kVolumeX = GUI_WIDTH - kKnob_W - 14,
+	kVolumeX = PLUG_WIDTH - kKnob_W - 14,
 
 	kSpreadX = kWidth/2 - kKnob_W/2,
 
@@ -86,11 +86,12 @@ static const int    labelSize  = 14;
 // text style
 static const IColor titleColor = IColor(255, 60, 60, 60);
 static const int titleSize = 16;
-static const char * titleString = PLUG_NAME " " VST3_VER_STR;
+static const char * titleString = PLUG_NAME " " PLUG_VERSION_STR;
+// #TODO how to we access these system fonts now? or do we just roll with Roboto?
 #if defined(OS_WIN)
-static char* titleFontName = "Segoe UI";
+static const char* titleFontName = nullptr; // "Segoe UI";
 #else
-static char* titleFontName = "Helvetica Neue";
+static const char* titleFontName = nullptr; // "Helvetica Neue";
 #endif
 
 // spectrum selection colors
@@ -130,22 +131,22 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label
 	GetParam(kVolume)->InitDouble("Volume", 25.0, 0.0, 100.0, 0.1, "%");
-	GetParam(kVolume)->SetShape(2.);
+	//GetParam(kVolume)->SetShape(2.);
 
 	GetParam(kPitch)->InitDouble("Pitch", kPitchDefault, kPitchMin, kPitchMax, 0.1, "%");
-	GetParam(kPitch)->SetShape(1.);
+	//GetParam(kPitch)->SetShape(1.);
 
 	GetParam(kDecay)->InitInt("Decay", kDecayDefault, kDecayMin, kDecayMax, "ms");
-	GetParam(kDecay)->SetShape(1.);
+	//GetParam(kDecay)->SetShape(1.);
 
 	GetParam(kCrush)->InitDouble("Crush", kCrushDefault, kCrushMin, kCrushMax, 0.1, "%");
-	GetParam(kCrush)->SetShape(1.);
+	//GetParam(kCrush)->SetShape(1.);
 
 	GetParam(kPluckX)->InitDouble("Pluck X", 0, 0., 100.0, 0.1, "%");
-	GetParam(kPluckX)->SetShape(1.);
+	//GetParam(kPluckX)->SetShape(1.);
 
 	GetParam(kPluckY)->InitDouble("Pluck Y", 100.0, 0., 100.0, 0.1, "%");
-	GetParam(kPluckY)->SetShape(1.);
+	//GetParam(kPluckY)->SetShape(1.);
 
 	InitBandParam("First Band", kBandFirst, kBandFirstDefault);
 	InitBandParam("Last Band", kBandLast, kBandLastDefault);
@@ -156,127 +157,136 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	// default of 0, which matches behavior of the first version.
 	GetParam(kBandSpread)->InitDouble("Spread", kBandSpreadMin, kBandSpreadMin, kBandSpreadMax, 1, "Hz");
-	GetParam(kBandSpread)->SetShape(2);
+	//GetParam(kBandSpread)->SetShape(2);
 
 	GetParam(kBrightness)->InitDouble("Brightness", 0, 0, 100, 0.1, "%");
 
-	IGraphics* pGraphics = MakeGraphics(this, kWidth, kHeight);
-	pGraphics->HandleMouseOver(true);
-	pGraphics->AttachPanelBackground(&backColor);
+#if IPLUG_EDITOR
+  mMakeGraphicsFunc = [&]() {
+    return MakeGraphics(*this, kWidth, kHeight, PLUG_FPS);
+  };
 
-	IText captionText = IText(labelSize, &labelColor);
-	captionText.mTextEntryBGColor = backColor;
-	captionText.mTextEntryFGColor = labelColor;
+  mLayoutFunc = [&](IGraphics* pGraphics) {
 
-	IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
-	pGraphics->AttachControl(new StringControl(specGen, this, strumRect, 10));
+    pGraphics->HandleMouseOver(true);
+    pGraphics->AttachPanelBackground(backColor);
+    pGraphics->LoadFont(ROBOTTO_FN);
 
-	IRECT stringShadowRect = IRECT(0, kPluckPadHeight - 5, kWidth, kPluckPadHeight);
-	pGraphics->AttachControl(new IPanelControl(this, stringShadowRect, &shadowColor));
+    IText captionText = IText(labelSize, labelColor);
+    captionText.mTextEntryBGColor = backColor;
+    captionText.mTextEntryFGColor = labelColor;
 
-	pGraphics->AttachControl(new IPanelControl(this, IRECT(0, kPluckPadHeight, kWidth, kHeight), &panelColor));
+    IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
+    pGraphics->AttachControl(new StringControl(specGen, strumRect, 10));
 
-	const int arrowMargin = 14;
-	IRECT arrowRect = IRECT(strumRect.L + arrowMargin, strumRect.B, strumRect.R - arrowMargin, strumRect.B + kSpectrumSelect_H + kPluckPadSpaceBottom + 5);
-	pGraphics->AttachControl(new SpectrumArrows(this, arrowRect, labelColor));
+    IRECT stringShadowRect = IRECT(0, kPluckPadHeight - 5, kWidth, kPluckPadHeight);
+    pGraphics->AttachControl(new IPanelControl(stringShadowRect, shadowColor));
 
-	// string Hz labels
-	{
-		IText bandLabel = captionText;
-		const int capMargin = 24;
-		const int textBoxTop = kSpectrumSelect_Y;
-		//bandLabel.mAlign = IText::kAlignNear;
-		IRECT lowBandRect = IRECT(strumRect.L + capMargin, textBoxTop, strumRect.L + kTextBoxW + capMargin, textBoxTop + kTextBoxH);
-		pGraphics->AttachControl(new TextBox(this, lowBandRect, kBandFirst, &bandLabel, pGraphics, "00000 Hz", true, 0.005));
+    pGraphics->AttachControl(new IPanelControl(IRECT(0, kPluckPadHeight, kWidth, kHeight), panelColor));
 
-		//bandLabel.mAlign = IText::kAlignFar;
-		IRECT highBandRect = IRECT(strumRect.R - kTextBoxW - capMargin, textBoxTop, strumRect.R - capMargin, textBoxTop + kTextBoxH);
-		pGraphics->AttachControl(new TextBox(this, highBandRect, kBandLast, &bandLabel, pGraphics, "00000 Hz", true, 0.005));
-	}
+    const int arrowMargin = 14;
+    IRECT arrowRect = IRECT(strumRect.L + arrowMargin, strumRect.B, strumRect.R - arrowMargin, strumRect.B + kSpectrumSelect_H + kPluckPadSpaceBottom + 5);
+    pGraphics->AttachControl(new SpectrumArrows(arrowRect, labelColor));
 
-	KnobLineCoronaControl* knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kVolumeX), kVolume, &knobColor, &knobColor, kKnobCorona);
-	ITextControl* text = new ITextControl(this, IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), &captionText, "Volume");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+    // string Hz labels
+    {
+      IText bandLabel = captionText;
+      const int capMargin = 24;
+      const int textBoxTop = kSpectrumSelect_Y;
+      //bandLabel.mAlign = IText::kAlignNear;
+      IRECT lowBandRect = IRECT(strumRect.L + capMargin, textBoxTop, strumRect.L + kTextBoxW + capMargin, textBoxTop + kTextBoxH);
+      pGraphics->AttachControl(new TextBox(lowBandRect, kBandFirst, bandLabel, pGraphics, "00000 Hz", true, 0.005));
 
-	// spectrum selection UI
-	{
-		IRECT rect = MakeIRect(kSpectrumSelect);
-		pGraphics->AttachControl(new SpectrumSelection(this, rect, kBandFirst, kBandLast, selectionBackColor, selectionSelectColor, selectionHandleColor));
-		
-		rect.T += kSpectrumSelect_H + 3;
-		rect.B += kSpectrumSelect_H + 3;
-		pGraphics->AttachControl(new ITextControl(this, rect, &captionText, "Spectrum Selection"));
-	}
+      //bandLabel.mAlign = IText::kAlignFar;
+      IRECT highBandRect = IRECT(strumRect.R - kTextBoxW - capMargin, textBoxTop, strumRect.R - capMargin, textBoxTop + kTextBoxH);
+      pGraphics->AttachControl(new TextBox(highBandRect, kBandLast, bandLabel, pGraphics, "00000 Hz", true, 0.005));
+    }
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), &captionText, "Density");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+    KnobLineCoronaControl* knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kVolumeX), kVolume, knobColor, knobColor, kKnobCorona);
+    ITextControl* text = new ITextControl(IRECT(kVolumeX, kCaptionT, kVolumeX + kCaptionW, kCaptionB), "Volume", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kTuningX), kBandLinLogLerp, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kTuningX, kCaptionT, kTuningX + kCaptionW, kCaptionB), &captionText, "Tuning");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+    // spectrum selection UI
+    {
+      IRECT rect = MakeIRect(kSpectrumSelect);
+      SpectrumHandle* low = new SpectrumHandle(kBandFirst);
+      SpectrumHandle* high = new SpectrumHandle(kBandLast);
+      pGraphics->AttachControl(new SpectrumSelection(rect, low, high, selectionBackColor, selectionSelectColor, selectionHandleColor));
+      pGraphics->AttachControl(low);
+      pGraphics->AttachControl(high);
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kSpreadX), kBandSpread, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kSpreadX, kCaptionT, kSpreadX + kCaptionW, kCaptionB), &captionText, "Spread");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+      rect.T += kSpectrumSelect_H + 3;
+      rect.B += kSpectrumSelect_H + 3;
+      pGraphics->AttachControl(new ITextControl(rect, "Spectrum Selection", captionText));
+    }
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kBrightnessX), kBrightness, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kBrightnessX, kCaptionT, kBrightnessX + kCaptionW, kCaptionB), &captionText, "Brightness");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kBandDensityX), kBandDensity, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kBandDensityX, kCaptionT, kBandDensityX + kCaptionW, kCaptionB), "Density", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kPitchX), kPitch, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kPitchX, kCaptionT, kPitchX + kCaptionW, kCaptionB), &captionText, "Pitch");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kTuningX), kBandLinLogLerp, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kTuningX, kCaptionT, kTuningX + kCaptionW, kCaptionB), "Tuning", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kDecayX), kDecay, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kDecayX, kCaptionT, kDecayX + kCaptionW, kCaptionB), &captionText, "Decay");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kSpreadX), kBandSpread, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kSpreadX, kCaptionT, kSpreadX + kCaptionW, kCaptionB), "Spread", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
 
-	knob = new KnobLineCoronaControl(this, MakeIRectHOffset(kKnob, kCrushX), kCrush, &knobColor, &knobColor, kKnobCorona);
-	text = new ITextControl(this, IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), &captionText, "Crush");
-	knob->SetLabelControl(text);
-	pGraphics->AttachControl(knob);
-	pGraphics->AttachControl(text);
-	
-	// logooo
-	
-	IText titleText( titleSize, &titleColor, titleFontName );
-	titleText.mAlign = IText::kAlignNear;
-	IRECT titleRect( kTitleX,
-					GUI_HEIGHT - kTitleBottomMargin - 10,
-					150,
-					GUI_HEIGHT - kTitleBottomMargin );
-	pGraphics->MeasureIText(&titleText, const_cast<char*>(titleString), &titleRect);
-	pGraphics->AttachControl(new ITextControl(this, titleRect, &titleText, titleString));
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kBrightnessX), kBrightness, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kBrightnessX, kCaptionT, kBrightnessX + kCaptionW, kCaptionB), "Brightness", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
 
-	AttachGraphics(pGraphics);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kPitchX), kPitch, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kPitchX, kCaptionT, kPitchX + kCaptionW, kCaptionB), "Pitch", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
 
-	//MakePreset("preset 1", ... );
-	MakeDefaultPreset((char *) "-", kNumPrograms);
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kDecayX), kDecay, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kDecayX, kCaptionT, kDecayX + kCaptionW, kCaptionB), "Decay", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
+
+    knob = new KnobLineCoronaControl(MakeIRectHOffset(kKnob, kCrushX), kCrush, knobColor, knobColor, kKnobCorona);
+    text = new ITextControl(IRECT(kCrushX, kCaptionT, kCrushX + kCaptionW, kCaptionB), "Crush", captionText);
+    knob->SetLabelControl(text);
+    pGraphics->AttachControl(knob);
+    pGraphics->AttachControl(text);
+
+    // logooo
+
+    IText titleText(titleSize, titleColor, titleFontName);
+    titleText.mAlign = IText::kAlignNear;
+    IRECT titleRect(kTitleX, PLUG_HEIGHT - kTitleBottomMargin - 10, 150, PLUG_HEIGHT - kTitleBottomMargin);
+    pGraphics->MeasureText(titleText, titleString, titleRect);
+    pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
+  };
+
+#endif // IPLUG_EDITOR
+
+  // do we stil need this?
+	//MakeDefaultPreset((char *) "-", kNumPrograms);
 
 	//-- AUDIO --------------------------------------
-	{
-		tickRate.value.setLastValue((float)GetParam(kPitch)->Value() / 100.0f);
-		tickRate.setInterpolation(true);
+#if IPLUG_DSP
+  tickRate.value.setLastValue((float)GetParam(kPitch)->Value() / 100.0f);
+  tickRate.setInterpolation(true);
 
-		specGen.patch(tickRate).patch(bitCrush);
-		bitCrush.setAudioChannelCount(1);
-		bitCrush.setSampleRate(44100);
-	}
+  specGen.patch(tickRate).patch(bitCrush);
+  bitCrush.setAudioChannelCount(1);
+  bitCrush.setSampleRate(44100);
+#endif
 }
 
 SpectralHarp::~SpectralHarp() {}
@@ -287,16 +297,16 @@ void SpectralHarp::InitBandParam(const char * name, const int paramIdx, const in
 	param->InitInt(name, defaultValue, kBandMin, kBandMax, "Hz");
 }
 
-void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int nFrames)
+void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 {
 	// Mutex is already locked for us.
 	const double crushBegin = GetSampleRate();
 	const double crushChange = 1000 - crushBegin;
 
-	double* in1 = inputs[0];
-	double* in2 = inputs[1];
-	double* out1 = outputs[0];
-	double* out2 = outputs[1];
+  sample* in1 = inputs[0];
+  sample* in2 = inputs[1];
+  sample* out1 = outputs[0];
+  sample* out2 = outputs[1];
 
 	// excite all of the held frequencies
 	for (auto& note : mNotes)
@@ -311,24 +321,24 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	{
 		while (!mMidiQueue.Empty())
 		{
-			IMidiMsg* pMsg = mMidiQueue.Peek();
-			if (pMsg->mOffset > s) break;
+			IMidiMsg& pMsg = mMidiQueue.Peek();
+			if (pMsg.mOffset > s) break;
 
-			switch (pMsg->StatusMsg())
+			switch (pMsg.StatusMsg())
 			{
 			case IMidiMsg::kControlChange:
 				HandleMidiControlChange(pMsg);
 				break;
 
 			case IMidiMsg::kNoteOn:
-				if (pMsg->Velocity() > 0)
+				if (pMsg.Velocity() > 0)
 				{
 					// pluck the string now
-					const Minim::Frequency freq = Minim::Frequency::ofMidiNote(pMsg->NoteNumber());
-					const float amp = GetPluckAmp((float)pMsg->Velocity() / 127.0f);
+					const Minim::Frequency freq = Minim::Frequency::ofMidiNote(pMsg.NoteNumber());
+					const float amp = GetPluckAmp((float)pMsg.Velocity() / 127.0f);
 					PluckSpectrum(freq.asHz(), amp);
 
-					mNotes.push_back(*pMsg);
+					mNotes.push_back(pMsg);
 					break;
 				}
 				// fallthru to handle note ons that are really note offs
@@ -337,7 +347,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 				// remove all notes with the same note number
 				for (auto iter = mNotes.begin(); iter != mNotes.end(); ++iter)
 				{
-					if (iter->NoteNumber() == pMsg->NoteNumber())
+					if (iter->NoteNumber() == pMsg.NoteNumber())
 					{
 						iter = mNotes.erase(iter);
 						if (iter == mNotes.end())
@@ -379,7 +389,7 @@ void SpectralHarp::ProcessDoubleReplacing(double** inputs, double** outputs, int
 	mMidiQueue.Flush(nFrames);
 }
 
-void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
+void SpectralHarp::BeginMIDILearn(int controlID, int paramIdx1, int paramIdx2, float x, float y)
 {
 	if (GetAPI() == kAPIVST3)
 	{
@@ -391,9 +401,13 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 			y = GUI_HEIGHT - y;
 		}
 #endif
-		PopupHostContextMenuForParam(paramIdx1, x, y);
+
+    if (GetUI() != nullptr)
+    {
+      GetUI()->PopupHostContextMenuForParam(controlID, paramIdx1, x, y);
+    }    
 	}
-	else if ( GetAPI() == kAPISA )
+	else if ( GetAPI() == kAPIAPP )
 	{
 		IPopupMenu menu;
 		menu.SetMultiCheck(true);
@@ -401,7 +415,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 		if (paramIdx1 != -1)
 		{
 			bool isMapped = controlChangeForParam[paramIdx1] != kUnmappedParam;
-			int flags = isMapped ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			int flags = isMapped ? IPopupMenu::Item::kChecked : IPopupMenu::Item::kNoFlags;
 			if (isMapped)
 			{
 				str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetParam(paramIdx1)->GetNameForHost(), (int)controlChangeForParam[paramIdx1]);
@@ -415,7 +429,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 		if (paramIdx2 != -1)
 		{
 			bool isMapped = controlChangeForParam[paramIdx2] != kUnmappedParam;
-			int flags = isMapped ? IPopupMenuItem::kChecked : IPopupMenuItem::kNoFlags;
+			int flags = isMapped ? IPopupMenu::Item::kChecked : IPopupMenu::Item::kNoFlags;
 			if (isMapped)
 			{
 				str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetParam(paramIdx2)->GetNameForHost(), (int)controlChangeForParam[paramIdx2]);
@@ -426,7 +440,7 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 			}
 			menu.AddItem(str.Get(), -1, flags);
 		}
-		if (GetGUI()->CreateIPopupMenu(&menu, x, y))
+		if (GetUI()->CreatePopupMenu(menu, x, y))
 		{
 			const int chosen = menu.GetChosenItemIdx();
 			if (chosen == 0)
@@ -459,24 +473,24 @@ void SpectralHarp::BeginMIDILearn(int paramIdx1, int paramIdx2, int x, int y)
 	}
 }
 
-void SpectralHarp::ProcessMidiMsg(IMidiMsg* pMsg)
+void SpectralHarp::ProcessMidiMsg(const IMidiMsg& msg)
 {
-	if (pMsg->StatusMsg() == IMidiMsg::kControlChange)
+	if (msg.StatusMsg() == IMidiMsg::kControlChange)
 	{
-		const IMidiMsg::EControlChangeMsg cc = pMsg->ControlChangeIdx();
+		const IMidiMsg::EControlChangeMsg cc = msg.ControlChangeIdx();
 		if (midiLearnParamIdx != -1)
 		{
 			SetControlChangeForParam(cc, midiLearnParamIdx);
 			midiLearnParamIdx = -1;
 		}
 	}
-	mMidiQueue.Add(pMsg);
+	mMidiQueue.Add(msg);
 }
 
-void SpectralHarp::Reset()
+void SpectralHarp::OnReset()
 {
 	TRACE;
-	IMutexLock lock(this);
+	//IMutexLock lock(this);
 	specGen.reset();
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
@@ -496,20 +510,20 @@ void SpectralHarp::Reset()
 #endif
 }
 
-int SpectralHarp::UnserializeState(ByteChunk* pChunk, int startPos)
+int SpectralHarp::UnserializeState(const IByteChunk& chunk, int startPos)
 {
 	TRACE;
-	IMutexLock lock(this);
+	//IMutexLock lock(this);
 	
 	mIsLoading = true;
-	int endPos = UnserializeParams(pChunk, startPos);
+	int endPos = UnserializeParams(chunk, startPos);
 	mIsLoading = false;
 	return endPos;
 }
 
 void SpectralHarp::OnParamChange(int paramIdx)
 {
-	IMutexLock lock(this);
+	//IMutexLock lock(this);
 
 	switch (paramIdx)
 	{
@@ -547,7 +561,8 @@ void SpectralHarp::OnParamChange(int paramIdx)
 			InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
 		}		
 		// we always push this back to the UI because we have multiple UI elements for this param
-		GetGUI()->SetParameterFromPlug(kBandFirst, GetParam(kBandFirst)->GetNormalized(), true);
+    // #TODO how to push this back now?
+		//GetGUI()->SetParameterFromPlug(kBandFirst, GetParam(kBandFirst)->GetNormalized(), true);
 	}
 	break;
 
@@ -561,7 +576,8 @@ void SpectralHarp::OnParamChange(int paramIdx)
 			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());			
 		}	
 		// we always push this back to the UI because we have multiple UI elements for this param
-		GetGUI()->SetParameterFromPlug(kBandLast, GetParam(kBandLast)->GetNormalized(), true);
+    // #TODO how to push this back now?
+		//GetGUI()->SetParameterFromPlug(kBandLast, GetParam(kBandLast)->GetNormalized(), true);
 	}
 	break;
 
@@ -648,22 +664,22 @@ float SpectralHarp::GetPluckAmp(const float pluckY) const
 	return kSpectralAmpMax*pluckY;
 }
 
-void SpectralHarp::HandleMidiControlChange(IMidiMsg* pMsg)
+void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
 {
-	const IMidiMsg::EControlChangeMsg cc = pMsg->ControlChangeIdx();
+	const IMidiMsg::EControlChangeMsg cc = pMsg.ControlChangeIdx();
 	for (int i = 0; i < kNumParams; ++i)
 	{
 		if (controlChangeForParam[i] == cc)
 		{
-			const double value = pMsg->ControlChange(cc);
+			const double value = pMsg.ControlChange(cc);
 			GetParam(i)->SetNormalized(value);
 			OnParamChange(i);
-			GetGUI()->SetParameterFromPlug(i, GetParam(i)->GetNormalized(), true);
+			//GetGUI()->SetParameterFromPlug(i, GetParam(i)->GetNormalized(), true);
 		}
 	}
 }
 
-bool SpectralHarp::HostRequestingAboutBox()
+bool SpectralHarp::OnHostRequestingAboutBox()
 {
 #if SA_API
 #ifdef OS_WIN
@@ -687,6 +703,6 @@ void SpectralHarp::BroadcastParamChange(const int paramIdx)
 	{
 		IMidiMsg msg;
 		msg.MakeControlChangeMsg(controlChangeForParam[paramIdx], GetParam(paramIdx)->GetNormalized(), 0);
-		SendMidiMsg(&msg);
+		SendMidiMsg(msg);
 	}
 }

@@ -2,22 +2,22 @@
 
 #include "IControl.h"
 
-class KnobLineCoronaControl : public IKnobLineControl
+class KnobLineCoronaControl : public IKnobControlBase
 {
 public:
-	KnobLineCoronaControl(IPlugBase* pPlug, IRECT pR, int paramIdx,
-						  const IColor* pLineColor, const IColor* pCoronaColor,
+	KnobLineCoronaControl(IRECT pR, int paramIdx,
+						  const IColor& lineColor, const IColor& coronaColor,
 						  float coronaThickness = 0.0f, double innerRadius = 0.0, double outerRadius = 0.0,
 						  double minAngle = -0.75 * PI, double maxAngle = 0.75 * PI,
 						  EDirection direction = kVertical, double gearing = DEFAULT_GEARING);
 	
-	bool Draw(IGraphics* pGraphics) override;
+	void Draw(IGraphics& pGraphics) override;
 
-	void OnMouseDown(int x, int y, IMouseMod* pMod) override;
-	void OnMouseDrag(int x, int y, int dX, int dY, IMouseMod* pMod) override;
-	void OnMouseUp(int x, int y, IMouseMod* pMod) override;
+	void OnMouseDown(float x, float y, const IMouseMod& pMod) override;
+	void OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod) override;
+	void OnMouseUp(float x, float y, const IMouseMod& pMod) override;
 
-	void OnMouseOver(int x, int y, IMouseMod* pMod) override;
+	void OnMouseOver(float x, float y, const IMouseMod& pMod) override;
 	void OnMouseOut() override;	
 
 	void SetLabelControl(ITextControl* control, bool bShared = false);
@@ -28,9 +28,16 @@ private:
 	
 	float		  mCX, mCY;
 	bool		  mHasMouse;
-	IColor        mCoronaColor;
-	IChannelBlend mCoronaBlend;
+  IColor    mColor;
+  IBlend    mBlend;
+	IColor    mCoronaColor;
+	IBlend    mCoronaBlend;
+
 	ITextControl* mLabelControl;
 	WDL_String	  mLabelString;
-	bool		  mSharedLabel;
+	bool		      mSharedLabel;
+  double mInnerRadius;
+  double mOuterRadius;
+  double mMinAngle;
+  double mMaxAngle;
 };
