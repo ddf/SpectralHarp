@@ -8,12 +8,12 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 {
 	mTextRect = pR.GetHPadded(-3);
   pGraphics->MeasureText(pText, maxText, mTextRect);
-#ifdef OS_OSX
-  mTextRect.B -= 4;
-#endif
-  const int offset = (mRECT.H() - mTextRect.H()) / 2;
-  mTextRect.T += offset;
-  mTextRect.B += offset;
+//#ifdef OS_OSX
+//  mTextRect.B -= 4;
+//#endif
+//  const int offset = (mRECT.H() - mTextRect.H()) / 2;
+//  mTextRect.T += offset;
+//  mTextRect.B += offset;
 
 	SetTextEntryLength(strlen(maxText) - 1);
 }
