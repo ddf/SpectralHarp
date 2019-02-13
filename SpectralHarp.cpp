@@ -127,24 +127,14 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	mNotes.reserve(32);
 
-	//arguments are: name, defaultVal, minVal, maxVal, step, label
-	GetParam(kVolume)->InitDouble("Volume", 25.0, 0.0, 100.0, 0.1, "%");
-	//GetParam(kVolume)->SetShape(2.);
-
+	//arguments are: name, defaultVal, minVal, maxVal, step, label, flags, group, shape.
+  // if no shape is provided, then it will be linearaly shaped
+	GetParam(kVolume)->InitDouble("Volume", 25.0, 0.0, 100.0, 0.1, "%", 0, "", new IParam::ShapePowCurve(2.));
 	GetParam(kPitch)->InitDouble("Pitch", kPitchDefault, kPitchMin, kPitchMax, 0.1, "%");
-	//GetParam(kPitch)->SetShape(1.);
-
-	GetParam(kDecay)->InitInt("Decay", kDecayDefault, kDecayMin, kDecayMax, "ms");
-	//GetParam(kDecay)->SetShape(1.);
-
+	GetParam(kDecay)->InitInt("Decay", kDecayDefault, kDecayMin, kDecayMax, "ms", 0);
 	GetParam(kCrush)->InitDouble("Crush", kCrushDefault, kCrushMin, kCrushMax, 0.1, "%");
-	//GetParam(kCrush)->SetShape(1.);
-
 	GetParam(kPluckX)->InitDouble("Pluck X", 0, 0., 100.0, 0.1, "%");
-	//GetParam(kPluckX)->SetShape(1.);
-
 	GetParam(kPluckY)->InitDouble("Pluck Y", 100.0, 0., 100.0, 0.1, "%");
-	//GetParam(kPluckY)->SetShape(1.);
 
 	InitBandParam("First Band", kBandFirst, kBandFirstDefault);
 	InitBandParam("Last Band", kBandLast, kBandLastDefault);
