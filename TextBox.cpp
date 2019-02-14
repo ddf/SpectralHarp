@@ -1,5 +1,5 @@
-#include "TextBox.h"
 #include "SpectralHarp.h"
+#include "TextBox.h"
 
 TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphics, const char * maxText, bool showParamUnits, float scrollSpeed)
 	: ICaptionControl(pR, paramIdx, pText, showParamUnits)

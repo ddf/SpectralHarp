@@ -1,6 +1,5 @@
-#include "KnobLineCoronaControl.h"
-
 #include "SpectralHarp.h"
+#include "KnobLineCoronaControl.h"
 
 static const double kRadToDeg = 180.0 / PI;
 

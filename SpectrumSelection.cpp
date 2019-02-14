@@ -1,5 +1,5 @@
-#include "SpectrumSelection.h"
 #include "SpectralHarp.h"
+#include "SpectrumSelection.h"
 #include "Params.h"
 
 SpectrumSelection::SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle) 

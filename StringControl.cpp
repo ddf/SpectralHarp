@@ -1,6 +1,6 @@
+#include "SpectralHarp.h"
 #include "StringControl.h"
 #include "SpectralGen.h"
-#include "SpectralHarp.h"
 #include "Params.h"
 
 const float kPadding = 16;
