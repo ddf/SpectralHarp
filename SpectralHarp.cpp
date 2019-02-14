@@ -264,7 +264,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     IText titleText(titleSize, titleColor, titleFontName);
     titleText.mAlign = IText::kAlignNear;
     IRECT titleRect(kTitleX, PLUG_HEIGHT - kTitleBottomMargin - 10, 150, PLUG_HEIGHT - kTitleBottomMargin);
-    pGraphics->MeasureText(titleText, titleString, titleRect);
+    //pGraphics->MeasureText(titleText, titleString, titleRect);
     pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
   };
 

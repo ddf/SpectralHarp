@@ -7,7 +7,7 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 	, mScrollSpeed(scrollSpeed)
 {
 	mTextRect = pR.GetHPadded(-3);
-  pGraphics->MeasureText(pText, maxText, mTextRect);
+  //pGraphics->MeasureText(pText, maxText, mTextRect);
 //#ifdef OS_OSX
 //  mTextRect.B -= 4;
 //#endif
