@@ -690,7 +690,6 @@ bool SpectralHarp::OnHostRequestingAboutBox()
 
 bool SpectralHarp::OnHostRequestingProductHelp()
 {
-  // #TODO try to figure out where the Manual is on disk and open it
   WDL_String filename("");
   bool success = false;
 
