@@ -25,9 +25,11 @@ void StringControl::Draw(IGraphics& pGraphics)
 
 	SpectralHarp* harp = static_cast<SpectralHarp*>(GetDelegate());
   if ( numBands > 0 && harp != nullptr)
-  {
+  {    
     for (int b = 0; b <= numBands; ++b)
     {
+      pGraphics.PathClear();
+
       const float freq = harp->FrequencyOfString(b);
       const float x = Map((float)b, 0, numBands, mRECT.L + kPadding, mRECT.R - kPadding);
       const float p = spectrum.getBandPhase(freq) + stringAnimation;
@@ -40,16 +42,18 @@ void StringControl::Draw(IGraphics& pGraphics)
       const float segments = 32;
       const float segLength = mRECT.H() / segments;
       float py0 = 0;
-      float px0 = x + w * sinf(p);
+      float px0 = x + w * sinf(p);      
       for (int i = 1; i < segments + 1; ++i)
       {
         const float py1 = i * segLength;
         const float s1 = py1 / mRECT.H() * (float)M_PI * 8 + p;
         const float px1 = x + w * sinf(s1);
-        pGraphics.DrawLine(color, px0, py0, px1, py1);
+        pGraphics.PathLine(px0, py0, px1, py1);
         px0 = px1;
         py0 = py1;
       }
+
+      pGraphics.PathStroke(color, 1);
     }
   }
     
