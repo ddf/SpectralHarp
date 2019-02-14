@@ -54,7 +54,7 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
 	{
 		IText ourText = mText;
 		IRECT promptRect = mTextRect;
-#if defined(OS_OSX)
+#if defined(OS_MAC)
 		mText.mSize -= 2;
 		promptRect.T -= 1;
 #endif

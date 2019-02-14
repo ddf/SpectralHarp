@@ -7,9 +7,9 @@
 	<key>CFBundleExecutable</key>
 	<string>SpectralHarp</string>
 	<key>CFBundleGetInfoString</key>
-	<string>SpectralHarp v1.0.0 Copyright 2019 Acme Inc</string>
+	<string>SpectralHarp v2.0.0 Copyright 2019 Damien Quartz</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.DamienQuartz.app.SpectralHarp.AUv3</string>
+	<string>net.compartmental.app.SpectralHarp.AUv3</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.12.0</string>
 	<key>NSExtension</key>
@@ -32,21 +32,21 @@
 					<key>description</key>
 					<string>SpectralHarp</string>
 					<key>manufacturer</key>
-					<string>Acme</string>
+					<string>Cpmt</string>
 					<key>name</key>
-					<string>DamienQuartz: SpectralHarp</string>
+					<string>Damien Quartz: SpectralHarp</string>
 					<key>sandboxSafe</key>
 					<true/>
 					<key>subtype</key>
-					<string>Ipef</string>
+					<string>Shrp</string>
 					<key>tags</key>
 					<array>
-						<string>Effects</string>
+						<string>Synth</string>
 					</array>
 					<key>type</key>
-					<string>aumf</string>
+					<string>aumu</string>
 					<key>version</key>
-					<integer>65536</integer>
+					<integer>131072</integer>
 				</dict>
 			</array>
 		</dict>

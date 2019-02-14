@@ -12,6 +12,11 @@
 
 #if APP_API
 static const char * kAboutBoxText = "Version " PLUG_VERSION_STR "\nCreated by Damien Quartz\nBuilt on " __DATE__;
+
+#ifdef OS_MAC
+#include "swell.h"
+#endif
+
 #endif
 
 const int kNumPrograms = 1;
@@ -390,10 +395,10 @@ void SpectralHarp::BeginMIDILearn(int controlID, int paramIdx1, int paramIdx2, f
 	{
 // in Reaper on OSX the popup's Y position is inverted.
 // not sure if this is true in other hosts on OSX, so we only modify for Reaper.
-#ifdef OS_OSX
+#ifdef OS_MAC
 		if ( GetHost() == kHostReaper )
 		{
-			y = GUI_HEIGHT - y;
+			y = PLUG_HEIGHT - y;
 		}
 #endif
 

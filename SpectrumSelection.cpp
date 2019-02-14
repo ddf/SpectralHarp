@@ -175,8 +175,8 @@ void SpectrumSelection::Draw(IGraphics& pGraphics)
 
 void SpectrumSelection::DrawHandle(IGraphics& pGraphics, const IRECT& handle)
 {
-	float x[4] = { (int)handle.MW(), handle.R, (int)handle.MW(), handle.L };
-	float y[4] = { handle.T, (int)handle.MH(), handle.B, (int)handle.MH() };
+	float x[4] = { handle.MW(), handle.R, handle.MW(), handle.L };
+	float y[4] = { handle.T, handle.MH(), handle.B, handle.MH() };
 
 	//pGraphics->DrawLine(&handleColor, x[0], y[0], x[1], y[1], 0, true);
 	//pGraphics->DrawLine(&handleColor, x[1], y[1], x[2], y[2], 0, true);

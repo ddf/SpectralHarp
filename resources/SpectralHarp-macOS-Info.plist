@@ -7,11 +7,11 @@
 	<key>CFBundleExecutable</key>
 	<string>SpectralHarp</string>
 	<key>CFBundleGetInfoString</key>
-	<string>SpectralHarp v1.0.0 Copyright 2019 Acme Inc</string>
+	<string>SpectralHarp v2.0.0 Copyright 2019 Damien Quartz</string>
 	<key>CFBundleIconFile</key>
 	<string>SpectralHarp.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.DamienQuartz.app.SpectralHarp</string>
+	<string>net.compartmental.app.SpectralHarp</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -19,11 +19,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>CFBundleSignature</key>
-	<string>Ipef</string>
+	<string>Shrp</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
 	<key>LSApplicationCategoryType</key>

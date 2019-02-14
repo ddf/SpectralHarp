@@ -277,6 +277,48 @@
 		4FFBB93020863B0E00DDD0E7 /* fbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8158C1205D50EB00393585 /* fbuffer.cpp */; };
 		4FFBB93420863B0E00DDD0E7 /* coreiids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8158E0205D50EB00393585 /* coreiids.cpp */; };
 		4FFBB93520863B0E00DDD0E7 /* vstnoteexpressiontypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F81588E205D50EB00393585 /* vstnoteexpressiontypes.cpp */; };
+		772125CF22150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
+		772125D022150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
+		772125D122150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
+		772125D222150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */; };
+		772125D322150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */; };
+		772125D422150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */; };
+		772125D522150B060034D2E3 /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C722150B050034D2E3 /* SpectralGen.cpp */; };
+		772125D622150B060034D2E3 /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C722150B050034D2E3 /* SpectralGen.cpp */; };
+		772125D722150B060034D2E3 /* SpectralGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C722150B050034D2E3 /* SpectralGen.cpp */; };
+		772125D822150B060034D2E3 /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CB22150B060034D2E3 /* StringControl.cpp */; };
+		772125D922150B060034D2E3 /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CB22150B060034D2E3 /* StringControl.cpp */; };
+		772125DA22150B060034D2E3 /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CB22150B060034D2E3 /* StringControl.cpp */; };
+		772125DB22150B060034D2E3 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CD22150B060034D2E3 /* SpectrumSelection.cpp */; };
+		772125DC22150B060034D2E3 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CD22150B060034D2E3 /* SpectrumSelection.cpp */; };
+		772125DD22150B060034D2E3 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CD22150B060034D2E3 /* SpectrumSelection.cpp */; };
+		772125E822150BD20034D2E3 /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125DF22150BD10034D2E3 /* BitCrush.cpp */; };
+		772125E922150BD20034D2E3 /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125DF22150BD10034D2E3 /* BitCrush.cpp */; };
+		772125EA22150BD20034D2E3 /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125DF22150BD10034D2E3 /* BitCrush.cpp */; };
+		772125EB22150BD20034D2E3 /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E022150BD10034D2E3 /* Logging.cpp */; };
+		772125EC22150BD20034D2E3 /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E022150BD10034D2E3 /* Logging.cpp */; };
+		772125ED22150BD20034D2E3 /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E022150BD10034D2E3 /* Logging.cpp */; };
+		772125EE22150BD20034D2E3 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E122150BD10034D2E3 /* WindowFunction.cpp */; };
+		772125EF22150BD20034D2E3 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E122150BD10034D2E3 /* WindowFunction.cpp */; };
+		772125F022150BD20034D2E3 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E122150BD10034D2E3 /* WindowFunction.cpp */; };
+		772125F122150BD20034D2E3 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E222150BD10034D2E3 /* AudioSource.cpp */; };
+		772125F222150BD20034D2E3 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E222150BD10034D2E3 /* AudioSource.cpp */; };
+		772125F322150BD20034D2E3 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E222150BD10034D2E3 /* AudioSource.cpp */; };
+		772125F422150BD20034D2E3 /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E322150BD10034D2E3 /* TickRate.cpp */; };
+		772125F522150BD20034D2E3 /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E322150BD10034D2E3 /* TickRate.cpp */; };
+		772125F622150BD20034D2E3 /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E322150BD10034D2E3 /* TickRate.cpp */; };
+		772125F722150BD20034D2E3 /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E422150BD10034D2E3 /* FourierTransform.cpp */; };
+		772125F822150BD20034D2E3 /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E422150BD10034D2E3 /* FourierTransform.cpp */; };
+		772125F922150BD20034D2E3 /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E422150BD10034D2E3 /* FourierTransform.cpp */; };
+		772125FA22150BD20034D2E3 /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E522150BD10034D2E3 /* UGen.cpp */; };
+		772125FB22150BD20034D2E3 /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E522150BD10034D2E3 /* UGen.cpp */; };
+		772125FC22150BD20034D2E3 /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E522150BD10034D2E3 /* UGen.cpp */; };
+		772125FD22150BD20034D2E3 /* Frequency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E622150BD10034D2E3 /* Frequency.cpp */; };
+		772125FE22150BD20034D2E3 /* Frequency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E622150BD10034D2E3 /* Frequency.cpp */; };
+		772125FF22150BD20034D2E3 /* Frequency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E622150BD10034D2E3 /* Frequency.cpp */; };
+		7721260022150BD20034D2E3 /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E722150BD20034D2E3 /* FFT.cpp */; };
+		7721260122150BD20034D2E3 /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E722150BD20034D2E3 /* FFT.cpp */; };
+		7721260222150BD20034D2E3 /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E722150BD20034D2E3 /* FFT.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -709,6 +751,26 @@
 		4FFBB94120863E9300DDD0E7 /* IPlugVST3_Parameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IPlugVST3_Parameter.h; path = ../../../IPlug/VST3/IPlugVST3_Parameter.h; sourceTree = "<group>"; };
 		4FFF72B8214BB71400839091 /* main.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = main.rc; path = ../resources/main.rc; sourceTree = "<group>"; };
 		52FBBED30D0CF143001C8B8A /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../config.h; sourceTree = "<group>"; tabWidth = 2; usesTabs = 0; };
+		772125C422150B050034D2E3 /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextBox.cpp; path = ../TextBox.cpp; sourceTree = "<group>"; };
+		772125C522150B050034D2E3 /* Params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Params.h; path = ../Params.h; sourceTree = "<group>"; };
+		772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KnobLineCoronaControl.cpp; path = ../KnobLineCoronaControl.cpp; sourceTree = "<group>"; };
+		772125C722150B050034D2E3 /* SpectralGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpectralGen.cpp; path = ../SpectralGen.cpp; sourceTree = "<group>"; };
+		772125C822150B050034D2E3 /* TextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextBox.h; path = ../TextBox.h; sourceTree = "<group>"; };
+		772125C922150B050034D2E3 /* KnobLineCoronaControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnobLineCoronaControl.h; path = ../KnobLineCoronaControl.h; sourceTree = "<group>"; };
+		772125CA22150B050034D2E3 /* SpectralGen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectralGen.h; path = ../SpectralGen.h; sourceTree = "<group>"; };
+		772125CB22150B060034D2E3 /* StringControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StringControl.cpp; path = ../StringControl.cpp; sourceTree = "<group>"; };
+		772125CC22150B060034D2E3 /* StringControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StringControl.h; path = ../StringControl.h; sourceTree = "<group>"; };
+		772125CD22150B060034D2E3 /* SpectrumSelection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SpectrumSelection.cpp; path = ../SpectrumSelection.cpp; sourceTree = "<group>"; };
+		772125CE22150B060034D2E3 /* SpectrumSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpectrumSelection.h; path = ../SpectrumSelection.h; sourceTree = "<group>"; };
+		772125DF22150BD10034D2E3 /* BitCrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BitCrush.cpp; path = "../../minim-cpp/src/ugens/BitCrush.cpp"; sourceTree = "<group>"; };
+		772125E022150BD10034D2E3 /* Logging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Logging.cpp; path = "../../minim-cpp/src/Logging.cpp"; sourceTree = "<group>"; };
+		772125E122150BD10034D2E3 /* WindowFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunction.cpp; path = "../../minim-cpp/src/WindowFunction.cpp"; sourceTree = "<group>"; };
+		772125E222150BD10034D2E3 /* AudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioSource.cpp; path = "../../minim-cpp/src/AudioSource.cpp"; sourceTree = "<group>"; };
+		772125E322150BD10034D2E3 /* TickRate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TickRate.cpp; path = "../../minim-cpp/src/ugens/TickRate.cpp"; sourceTree = "<group>"; };
+		772125E422150BD10034D2E3 /* FourierTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FourierTransform.cpp; path = "../../minim-cpp/src/FourierTransform.cpp"; sourceTree = "<group>"; };
+		772125E522150BD10034D2E3 /* UGen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UGen.cpp; path = "../../minim-cpp/src/ugens/UGen.cpp"; sourceTree = "<group>"; };
+		772125E622150BD10034D2E3 /* Frequency.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Frequency.cpp; path = "../../minim-cpp/src/ugens/Frequency.cpp"; sourceTree = "<group>"; };
+		772125E722150BD20034D2E3 /* FFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FFT.cpp; path = "../../minim-cpp/src/FFT.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -776,9 +838,21 @@
 		089C166AFE841209C02AAC07 /* IPlugExample */ = {
 			isa = PBXGroup;
 			children = (
+				772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */,
+				772125C922150B050034D2E3 /* KnobLineCoronaControl.h */,
+				772125C522150B050034D2E3 /* Params.h */,
+				772125C722150B050034D2E3 /* SpectralGen.cpp */,
+				772125CA22150B050034D2E3 /* SpectralGen.h */,
+				772125CD22150B060034D2E3 /* SpectrumSelection.cpp */,
+				772125CE22150B060034D2E3 /* SpectrumSelection.h */,
+				772125CB22150B060034D2E3 /* StringControl.cpp */,
+				772125CC22150B060034D2E3 /* StringControl.h */,
+				772125C422150B050034D2E3 /* TextBox.cpp */,
+				772125C822150B050034D2E3 /* TextBox.h */,
 				52FBBED30D0CF143001C8B8A /* config.h */,
 				4F3862EE2014BBEC0009F402 /* SpectralHarp.h */,
 				4F3862ED2014BBEC0009F402 /* SpectralHarp.cpp */,
+				772125DE22150B8E0034D2E3 /* minim */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C1671FE841209C02AAC07 /* Frameworks */,
@@ -1536,6 +1610,22 @@
 			name = WDL;
 			sourceTree = "<group>";
 		};
+		772125DE22150B8E0034D2E3 /* minim */ = {
+			isa = PBXGroup;
+			children = (
+				772125E222150BD10034D2E3 /* AudioSource.cpp */,
+				772125DF22150BD10034D2E3 /* BitCrush.cpp */,
+				772125E722150BD20034D2E3 /* FFT.cpp */,
+				772125E422150BD10034D2E3 /* FourierTransform.cpp */,
+				772125E622150BD10034D2E3 /* Frequency.cpp */,
+				772125E022150BD10034D2E3 /* Logging.cpp */,
+				772125E322150BD10034D2E3 /* TickRate.cpp */,
+				772125E522150BD10034D2E3 /* UGen.cpp */,
+				772125E122150BD10034D2E3 /* WindowFunction.cpp */,
+			);
+			name = minim;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1758,7 +1848,7 @@
 						CreatedOnToolsVersion = 9.2;
 					};
 					4FD16A0813B63081001D0217 = {
-						DevelopmentTeam = 686EDA2T8T;
+						DevelopmentTeam = 8245ZD8MCW;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
@@ -2055,22 +2145,36 @@
 				4F03A5AF20A4621100EBDFFB /* IGraphics.cpp in Sources */,
 				4F6369E020A464BB0022C370 /* IGraphicsNanoVG_src.m in Sources */,
 				4F6369EE20A466470022C370 /* IControl.cpp in Sources */,
+				772125D422150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */,
 				4F1A528C205D916F00CF2908 /* IPlugAU.cpp in Sources */,
 				4F63697020A463090022C370 /* IControls.cpp in Sources */,
 				4FD52131202A5B9B00A4D22A /* IPlugAU_view_factory.mm in Sources */,
 				4FA9F80721F760C1004E6FE2 /* IGraphicsLice_src.mm in Sources */,
+				772125FC22150BD20034D2E3 /* UGen.cpp in Sources */,
 				4FA9F81021F76177004E6FE2 /* IGraphicsAGG_src.mm in Sources */,
+				772125EA22150BD20034D2E3 /* BitCrush.cpp in Sources */,
 				4F8C10E320BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
+				7721260222150BD20034D2E3 /* FFT.cpp in Sources */,
+				772125DA22150B060034D2E3 /* StringControl.cpp in Sources */,
+				772125F922150BD20034D2E3 /* FourierTransform.cpp in Sources */,
 				4F9A82FA213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4FDAC0ED207D76C600299363 /* IPlugTimer.cpp in Sources */,
+				772125F322150BD20034D2E3 /* AudioSource.cpp in Sources */,
 				4F78D94513B63BA50032E0F3 /* IPlugAPIBase.cpp in Sources */,
 				4FB1F59320E4B013004157C8 /* IGraphicsMac_view.mm in Sources */,
+				772125ED22150BD20034D2E3 /* Logging.cpp in Sources */,
 				4FD52136202A5BD000A4D22A /* dfx-au-utilities.c in Sources */,
+				772125DD22150B060034D2E3 /* SpectrumSelection.cpp in Sources */,
 				4FCE29DA21D6ED70004BCBA1 /* ITextEntryControl.cpp in Sources */,
 				4F5F344420C0226200487201 /* IPlugPaths.mm in Sources */,
 				4F35DEB0207E5C5A00867D8F /* IPlugPluginBase.cpp in Sources */,
+				772125FF22150BD20034D2E3 /* Frequency.cpp in Sources */,
+				772125D722150B060034D2E3 /* SpectralGen.cpp in Sources */,
 				4F78D95C13B63BA50032E0F3 /* IPlugParameter.cpp in Sources */,
 				4FB1F58C20E4B006004157C8 /* IGraphicsMac.mm in Sources */,
+				772125F022150BD20034D2E3 /* WindowFunction.cpp in Sources */,
+				772125D122150B060034D2E3 /* TextBox.cpp in Sources */,
+				772125F622150BD20034D2E3 /* TickRate.cpp in Sources */,
 				4F3862F22014BBEC0009F402 /* SpectralHarp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2089,8 +2193,11 @@
 				4FA9F80621F760C1004E6FE2 /* IGraphicsLice_src.mm in Sources */,
 				4F9828B8140A9EB700F3FCC1 /* IPlugAPIBase.cpp in Sources */,
 				4F81597F205D50EB00393585 /* fdynlib.cpp in Sources */,
+				7721260122150BD20034D2E3 /* FFT.cpp in Sources */,
+				772125F222150BD20034D2E3 /* AudioSource.cpp in Sources */,
 				4F815919205D50EB00393585 /* memorystream.cpp in Sources */,
 				4F9828C1140A9EB700F3FCC1 /* IPlugParameter.cpp in Sources */,
+				772125D022150B060034D2E3 /* TextBox.cpp in Sources */,
 				4F81591A205D50EB00393585 /* pluginview.cpp in Sources */,
 				4F815982205D50EB00393585 /* fstring.cpp in Sources */,
 				4F815995205D51F000393585 /* vstpresetfile.cpp in Sources */,
@@ -2098,34 +2205,45 @@
 				4F815989205D50EB00393585 /* funknown.cpp in Sources */,
 				4FB1F58B20E4B006004157C8 /* IGraphicsMac.mm in Sources */,
 				4F81598E205D51F000393585 /* vstbus.cpp in Sources */,
+				772125F822150BD20034D2E3 /* FourierTransform.cpp in Sources */,
 				4F6369ED20A466470022C370 /* IControl.cpp in Sources */,
+				772125F522150BD20034D2E3 /* TickRate.cpp in Sources */,
+				772125FB22150BD20034D2E3 /* UGen.cpp in Sources */,
 				4F35DEAF207E5C5A00867D8F /* IPlugPluginBase.cpp in Sources */,
 				4F81591E205D50EB00393585 /* macmain.cpp in Sources */,
+				772125FE22150BD20034D2E3 /* Frequency.cpp in Sources */,
 				4F815986205D50EB00393585 /* flock.cpp in Sources */,
 				4FCE29D921D6ED70004BCBA1 /* ITextEntryControl.cpp in Sources */,
+				772125EF22150BD20034D2E3 /* WindowFunction.cpp in Sources */,
 				4F5F344320C0226200487201 /* IPlugPaths.mm in Sources */,
 				4F81598F205D51F000393585 /* vstbypassprocessor.cpp in Sources */,
 				4F81598A205D50EB00393585 /* ustring.cpp in Sources */,
 				4FA9F80F21F76177004E6FE2 /* IGraphicsAGG_src.mm in Sources */,
 				4F815980205D50EB00393585 /* fobject.cpp in Sources */,
+				772125D622150B060034D2E3 /* SpectralGen.cpp in Sources */,
 				4F815994205D51F000393585 /* vstparameters.cpp in Sources */,
 				4F6369DF20A464BB0022C370 /* IGraphicsNanoVG_src.m in Sources */,
 				4F815991205D51F000393585 /* vstcomponentbase.cpp in Sources */,
+				772125D922150B060034D2E3 /* StringControl.cpp in Sources */,
 				4F03A5AE20A4621100EBDFFB /* IGraphics.cpp in Sources */,
 				4F815987205D50EB00393585 /* conststringtable.cpp in Sources */,
 				4FB1F59220E4B012004157C8 /* IGraphicsMac_view.mm in Sources */,
 				4F81598D205D51F000393585 /* vstaudioeffect.cpp in Sources */,
+				772125DC22150B060034D2E3 /* SpectrumSelection.cpp in Sources */,
+				772125D322150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */,
 				4F81598C205D51CF00393585 /* vstsinglecomponenteffect.cpp in Sources */,
 				4F815984205D50EB00393585 /* updatehandler.cpp in Sources */,
 				4F815990205D51F000393585 /* vstcomponent.cpp in Sources */,
 				4F815981205D50EB00393585 /* fstreamer.cpp in Sources */,
 				4F815996205D51F000393585 /* vstrepresentation.cpp in Sources */,
 				4F815985205D50EB00393585 /* fcondition.cpp in Sources */,
+				772125E922150BD20034D2E3 /* BitCrush.cpp in Sources */,
 				4F9A82F9213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4F8C10E220BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
 				4F81597D205D50EB00393585 /* fbuffer.cpp in Sources */,
 				4F1A527E205D911A00CF2908 /* IPlugVST3.cpp in Sources */,
 				4F815988205D50EB00393585 /* coreiids.cpp in Sources */,
+				772125EC22150BD20034D2E3 /* Logging.cpp in Sources */,
 				4F815993205D51F000393585 /* vstnoteexpressiontypes.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2186,23 +2304,35 @@
 				4FA9F80421F760C1004E6FE2 /* IGraphicsLice_src.mm in Sources */,
 				4F6369DD20A464BB0022C370 /* IGraphicsNanoVG_src.m in Sources */,
 				4F6369EB20A466470022C370 /* IControl.cpp in Sources */,
+				772125F422150BD20034D2E3 /* TickRate.cpp in Sources */,
 				4FD16D0513B634AA001D0217 /* swell-dlg.mm in Sources */,
 				4FD16D1613B634D2001D0217 /* swell-ini.cpp in Sources */,
 				4F5C5F6921BED05B00E024A7 /* swellappmain.mm in Sources */,
+				772125D222150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */,
 				4FD16D3A13B63582001D0217 /* swell-kb.mm in Sources */,
+				772125E822150BD20034D2E3 /* BitCrush.cpp in Sources */,
 				4FCE29D721D6ED70004BCBA1 /* ITextEntryControl.cpp in Sources */,
+				772125DB22150B060034D2E3 /* SpectrumSelection.cpp in Sources */,
 				4F5F344120C0226200487201 /* IPlugPaths.mm in Sources */,
+				772125FD22150BD20034D2E3 /* Frequency.cpp in Sources */,
 				4FD16D3C13B6358C001D0217 /* swell-miscdlg.mm in Sources */,
 				4FA9F80D21F76177004E6FE2 /* IGraphicsAGG_src.mm in Sources */,
+				772125CF22150B060034D2E3 /* TextBox.cpp in Sources */,
 				4FD16D3E13B63595001D0217 /* swell-menu.mm in Sources */,
+				772125D522150B060034D2E3 /* SpectralGen.cpp in Sources */,
+				772125F122150BD20034D2E3 /* AudioSource.cpp in Sources */,
+				772125F722150BD20034D2E3 /* FourierTransform.cpp in Sources */,
 				4FB1F59120E4B011004157C8 /* IGraphicsMac_view.mm in Sources */,
 				4F5C5F6B21BED08700E024A7 /* swell-appstub.mm in Sources */,
+				7721260022150BD20034D2E3 /* FFT.cpp in Sources */,
 				4FD16D4013B635A0001D0217 /* swell-misc.mm in Sources */,
 				4FD16D4213B635AB001D0217 /* swell-wnd.mm in Sources */,
 				4FD16D4413B635B2001D0217 /* swell.cpp in Sources */,
 				4F690CA3203A45C700A4A13E /* IPlugAPP_host.cpp in Sources */,
 				4F1A5282205D913300CF2908 /* IPlugAPP.cpp in Sources */,
+				772125EE22150BD20034D2E3 /* WindowFunction.cpp in Sources */,
 				4F03A5AC20A4621100EBDFFB /* IGraphics.cpp in Sources */,
+				772125EB22150BD20034D2E3 /* Logging.cpp in Sources */,
 				4F2EA978203A50EA008E4850 /* IPlugAPP_dialog.cpp in Sources */,
 				4FAFFE5821495A4800A6E72D /* RtAudio.cpp in Sources */,
 				4F690C9B203A345100A4A13E /* IPlugAPP_main.cpp in Sources */,
@@ -2211,10 +2341,12 @@
 				4F3862EF2014BBEC0009F402 /* SpectralHarp.cpp in Sources */,
 				4F9A82F7213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
 				4F78D90B13B63BA50032E0F3 /* IPlugAPIBase.cpp in Sources */,
+				772125D822150B060034D2E3 /* StringControl.cpp in Sources */,
 				4F35DEAD207E5C5A00867D8F /* IPlugPluginBase.cpp in Sources */,
 				4F8C10E020BA2796006320CD /* IGraphicsEditorDelegate.cpp in Sources */,
 				4FF0A83221BE708700B2C9D1 /* swell-gdi.mm in Sources */,
 				4F78D91813B63BA50032E0F3 /* IPlugParameter.cpp in Sources */,
+				772125FA22150BD20034D2E3 /* UGen.cpp in Sources */,
 				4FDAC0EA207D76C600299363 /* IPlugTimer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3104,7 +3236,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "SpectralHarp-macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 686EDA2T8T;
+				DEVELOPMENT_TEAM = 8245ZD8MCW;
 				DSTROOT = "$(APP_PATH)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(EXTRA_APP_DEFS)",
@@ -3119,7 +3251,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.DamienQuartz.standalone.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.compartmental.app.SpectralHarp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3131,7 +3263,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "SpectralHarp-macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 686EDA2T8T;
+				DEVELOPMENT_TEAM = 8245ZD8MCW;
 				DSTROOT = "$(APP_PATH)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(EXTRA_APP_DEFS)",
@@ -3146,7 +3278,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.DamienQuartz.standalone.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.compartmental.app.SpectralHarp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
@@ -3158,7 +3290,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "SpectralHarp-macOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 686EDA2T8T;
+				DEVELOPMENT_TEAM = 8245ZD8MCW;
 				DSTROOT = "$(APP_PATH)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(EXTRA_APP_DEFS)",
@@ -3173,7 +3305,7 @@
 					"$(APP_FRAMEWORKS)",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.DamienQuartz.standalone.${BINARY_NAME}";
+				PRODUCT_BUNDLE_IDENTIFIER = net.compartmental.app.SpectralHarp;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
