@@ -690,8 +690,40 @@ bool SpectralHarp::OnHostRequestingAboutBox()
 
 bool SpectralHarp::OnHostRequestingProductHelp()
 {
-  // #TODO try to figure out where the Manual is on disk and open it  
-  return false;
+  // #TODO try to figure out where the Manual is on disk and open it
+  WDL_String filename("");
+  bool success = false;
+
+#if APP_API
+  HostPath(filename);
+  if (filename.GetLength())
+  {
+    filename.Append("/SpectralHarp_manual.pdf");
+    success = GetUI()->OpenURL(filename.Get());
+  }
+#endif
+
+  if (!success)
+  {
+#if defined(OS_WIN)
+    filename.SetLen(256);
+    GetPrivateProfileString("install", "support path", NULL, filename.Get(), 256, mIniPath.Get());
+#else
+    AppSupportPath(filename, true);
+    filename.Append("/Evaluator");
+#endif
+
+    filename.Append("/SpectralHarp_manual.pdf");
+    success = GetUI()->OpenURL(filename.Get());
+  }
+
+  if (!success)
+  {
+    const char* msg = "Strum the strings by clicking and dragging with the mouse or playing notes on a connected MIDI device.\n\nUse the Spectrum Selection controls to control which part of the spectrum the strings represent.\n\nUse the knobs to adjust the sound.\n\nVisit https://damikyu.itch.io/spectralharp for more info.";
+    GetUI()->ShowMessageBox(msg, "Basic Operation", kMB_OK);
+  }
+
+  return true;
 }
 
 void SpectralHarp::BroadcastParamChange(const int paramIdx)

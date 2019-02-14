@@ -55,6 +55,10 @@ Name: "{group}\Changelog"; Filename: "{app}\changelog.txt"
 ;Name: "{group}\readme"; Filename: "{app}\readme.rtf"
 Name: "{group}\Uninstall SpectralHarp"; Filename: "{app}\unins000.exe"
 
+[INI]
+Filename: "{localappdata}\SpectralHarp\settings.ini"; Section: "install"; Flags: uninsdeletesection
+Filename: "{localappdata}\SpectralHarp\settings.ini"; Section: "install"; Key: "support path"; String: "{app}"
+
 ;[Dirs] 
 ;Name: {cf}\Digidesign\DAE\Plugins\
 
