@@ -39,7 +39,7 @@ void StringControl::Draw(IGraphics& pGraphics)
       const IColor color(255, g, g, g);
 
       const float w = Map(m, 0, kSpectralAmpMax, 0, 6);
-      const float segments = 32;
+      const float segments = w > 0 ? 32 : 1;
       const float segLength = mRECT.H() / segments;
       float py0 = 0;
       float px0 = x + w * sinf(p);      
