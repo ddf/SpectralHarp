@@ -45,7 +45,8 @@ private:
 	void SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx);
 	float GetPluckAmp(const float pluckY) const;
 	void PluckSpectrum(const float freq, float mag);
-	
+
+  WDL_String      mIniPath;
 	bool 					  mIsLoading;
 
 	float					  mGain;

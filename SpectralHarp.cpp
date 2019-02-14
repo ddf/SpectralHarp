@@ -1,5 +1,6 @@
 #include "SpectralHarp.h"
 #include "IPlug_include_in_plug_src.h"
+#include "IPlugPaths.h"
 #include "IControl.h"
 #include "resource.h"
 #include "StringControl.h"
@@ -262,6 +263,11 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
   };
 
+  INIPath(mIniPath, BUNDLE_NAME);
+  if (mIniPath.GetLength())
+  {
+    mIniPath.Append("\\settings.ini");
+  }
 #endif // IPLUG_EDITOR
 
   // do we stil need this?
@@ -492,7 +498,7 @@ void SpectralHarp::OnReset()
 		int defaultMapping = (int)controlChangeForParam[i];
 		char controlName[32];
 		sprintf(controlName, "control%u", i);
-		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, GetINIPath());
+		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, mIniPath.Get());
 
 		BroadcastParamChange(i);
 	}
@@ -635,13 +641,13 @@ void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc
 	// remove the setting if they unmapped it
 	if (cc == kUnmappedParam)
 	{
-		WritePrivateProfileString(kMidiControlIni, controlName, 0, GetINIPath());
+		WritePrivateProfileString(kMidiControlIni, controlName, 0, mIniPath.Get());
 	}
 	else
 	{
 		char ccString[100];
 		sprintf(ccString, "%u", (unsigned)cc);
-		WritePrivateProfileString(kMidiControlIni, controlName, ccString, GetINIPath());
+		WritePrivateProfileString(kMidiControlIni, controlName, ccString, mIniPath.Get());
 	}
 #endif
 }
