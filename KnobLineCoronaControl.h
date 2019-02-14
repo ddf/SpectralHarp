@@ -20,7 +20,7 @@ public:
 	void OnMouseOver(float x, float y, const IMouseMod& pMod) override;
 	void OnMouseOut() override;	
 
-	void SetLabelControl(ITextControl* control, bool bShared = false);
+	void SetLabelControl(ITextControl* control, const char * label, bool bShared = false);
 
 private:
 	void ShowLabel();

@@ -140,13 +140,13 @@ void KnobLineCoronaControl::HideLabel()
 	}
 }
 
-void KnobLineCoronaControl::SetLabelControl(ITextControl* control, bool bShared)
+void KnobLineCoronaControl::SetLabelControl(ITextControl* control, const char * label, bool bShared)
 {
 	mLabelControl = control;
 	mSharedLabel = bShared;
 	if (mLabelControl != nullptr)
 	{
-		mLabelString.Set(mLabelControl->GetStr());
+		mLabelString.Set(label);
 	}
 	else
 	{
