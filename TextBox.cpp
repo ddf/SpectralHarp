@@ -54,9 +54,15 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
 	{
 		IText ourText = mText;
 		IRECT promptRect = mTextRect;
+    // IGraphicsMac scales text size by 0.75 when creating a native text entry,
+    // but when rendering with Cairo this causes the text entry text to be smaller than the rendered text.
+    // So we increase text size by the that ratio.
+    // Presumably this happens because Cairo renders text with Quartz, which is an Apple-provided API
 #ifdef OS_MAC
-		mText.mSize += 3;
+    mText.mSize = (int)round(mText.mSize*1.33333);
 #endif
+    // Platform text entry display does not take into account draw scale, so we have to do that here.
+    mText.mSize = (int)round(mText.mSize*GetUI()->GetDrawScale());
     PromptUserInput(promptRect);
 		mText = ourText;
 	}
