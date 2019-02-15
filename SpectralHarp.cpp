@@ -85,16 +85,17 @@ static const IColor labelColor = IColor(255, 200, 200, 200);
 #ifdef OS_WIN
 static const int    labelSize  = 12;
 #else
-static const int    labelSize  = 14;
+static const int    labelSize  = 8;
 #endif
 // text style
 static const IColor titleColor = IColor(255, 60, 60, 60);
-static const int titleSize = 16;
 static const char * titleString = PLUG_NAME " " PLUG_VERSION_STR;
 // #TODO how to we access these system fonts now? or do we just roll with Roboto?
 #if defined(OS_WIN)
+static const int titleSize = 16;
 static const char* titleFontName = nullptr; // "Segoe UI";
 #else
+static const int titleSize = 12;
 static const char* titleFontName = nullptr; // "Helvetica Neue";
 #endif
 
@@ -186,6 +187,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     // string Hz labels
     {
       IText bandLabel = captionText;
+      bandLabel.mAlign = IText::kAlignCenter;
+      bandLabel.mVAlign = IText::kVAlignMiddle;
       const int capMargin = 24;
       const int textBoxTop = kSpectrumSelect_Y;
       //bandLabel.mAlign = IText::kAlignNear;
@@ -260,12 +263,14 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     pGraphics->AttachControl(text);
 
     // logooo
-
-    IText titleText(titleSize, titleColor, titleFontName);
-    titleText.mAlign = IText::kAlignNear;
-    IRECT titleRect(kTitleX, PLUG_HEIGHT - kTitleBottomMargin - 10, 150, PLUG_HEIGHT - kTitleBottomMargin);
-    //pGraphics->MeasureText(titleText, titleString, titleRect);
-    pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
+    {
+      IText titleText(titleSize, titleColor, titleFontName);
+      titleText.mAlign = IText::kAlignNear;
+      titleText.mVAlign = IText::kVAlignBottom;
+      const float titleY = PLUG_HEIGHT - kTitleBottomMargin - 20;
+      IRECT titleRect(kTitleX, titleY, kTitleX + 150, PLUG_HEIGHT - kTitleBottomMargin);
+      pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
+    }
   };
 
   INIPath(mIniPath, BUNDLE_NAME);

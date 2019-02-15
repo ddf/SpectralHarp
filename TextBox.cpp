@@ -6,16 +6,16 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 	, mTextRect(pR)
 	, mScrollSpeed(scrollSpeed)
 {
-	mTextRect = pR.GetHPadded(-3);
+  mTextRect = pR.GetPadded(2, 1, -2, -1);
   //pGraphics->MeasureText(pText, maxText, mTextRect);
-//#ifdef OS_OSX
-//  mTextRect.B -= 4;
-//#endif
+#ifdef OS_MAC
+  mTextRect.B -= 1;
+#endif
 //  const int offset = (mRECT.H() - mTextRect.H()) / 2;
 //  mTextRect.T += offset;
 //  mTextRect.B += offset;
 
-	SetTextEntryLength(strlen(maxText) - 1);
+	SetTextEntryLength((int)strlen(maxText) - 1);
 }
 
 void TextBox::Draw(IGraphics& pGraphics)
@@ -54,9 +54,8 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
 	{
 		IText ourText = mText;
 		IRECT promptRect = mTextRect;
-#if defined(OS_MAC)
-		mText.mSize -= 2;
-		promptRect.T -= 1;
+#ifdef OS_MAC
+		mText.mSize += 3;
 #endif
     PromptUserInput(promptRect);
 		mText = ourText;
