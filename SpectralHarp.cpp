@@ -169,6 +169,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     pGraphics->LoadFont(ROBOTTO_FN);
 
     IText captionText = IText(labelSize, labelColor);
+    captionText.mVAlign = IText::kVAlignTop;
     captionText.mTextEntryBGColor = backColor;
     captionText.mTextEntryFGColor = labelColor;
 
@@ -266,9 +267,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     {
       IText titleText(titleSize, titleColor, titleFontName);
       titleText.mAlign = IText::kAlignNear;
-      titleText.mVAlign = IText::kVAlignBottom;
-      const float titleY = PLUG_HEIGHT - kTitleBottomMargin - 20;
-      IRECT titleRect(kTitleX, titleY, kTitleX + 150, PLUG_HEIGHT - kTitleBottomMargin);
+      titleText.mVAlign = IText::kVAlignTop;
+      IRECT titleRect(kTitleX, kCaptionT, kTitleX + 150, PLUG_HEIGHT);
       pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
     }
   };
