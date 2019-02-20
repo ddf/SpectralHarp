@@ -120,10 +120,7 @@ void StringControl::SnapToMouse(float x, float y)
 {
 	const float pluckX = Clip(Map((float)x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1), 0.f, 1.f);
 	const float pluckY = Clip(Map((float)y, mRECT.T, mRECT.B, 1, 0), 0.f, 1.f);
-	
-	SpectralHarp* harp = static_cast<SpectralHarp*>(GetDelegate());
-	if (harp != nullptr)
-	{
-		harp->Pluck(pluckX, pluckY);
-	}
+
+  PluckCoords coords(pluckX, pluckY);
+  GetDelegate()->SendArbitraryMsgFromUI(kPluckSpectrum, GetTag(), sizeof(PluckCoords), &coords);
 }

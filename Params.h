@@ -41,6 +41,7 @@ enum EParams
 enum EMessages
 {
   kSetMidiMapping,
+  kPluckSpectrum,
 };
 
 // data payload for the SetMidiMapping message
@@ -55,6 +56,13 @@ struct MidiMapping
   const CC midiCC;
 
   MidiMapping(int p, CC cc = kNone) : param(p), midiCC(cc) {}
+};
+
+struct PluckCoords
+{
+  const float x, y;
+
+  PluckCoords(float _x, float _y) : x(_x), y(_y) {}
 };
 
 // control tags

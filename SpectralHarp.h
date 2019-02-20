@@ -31,7 +31,7 @@ public:
   // update the UI with current midi mappings
   void OnUIOpen() override;
 
-  // handle the kSetMidiMapping message from the UI
+  // handle messages from the UI
   bool OnMessage(int messageTag, int controlTag, int dataSize, const void* pData) override;
 
 #if APP_API
@@ -40,16 +40,15 @@ public:
 
 	// given a string number between 0 and the current value of Density,
 	// return the current frequency based on related parameters like BandFirst and BandLast.
-	float FrequencyOfString(int stringNum);
-
-	// can be called directly from StringControl, but also used internally in response to param changes and midi.
-	void Pluck(const float pluckX, const float pluckY);	  
+	float FrequencyOfString(int stringNum);		  
 
 private:
 
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);
 
 	float GetPluckAmp(const float pluckY) const;
+  // figure out where to PluckSpectrum based on normalized xy coordinates
+  void Pluck(const float pluckX, const float pluckY);
 	void PluckSpectrum(const float freq, float mag);
 
 #if APP_API

@@ -575,14 +575,31 @@ float SpectralHarp::GetPluckAmp(const float pluckY) const
 
 bool SpectralHarp::OnMessage(int messageTag, int controlTag, int dataSize, const void* pData)
 {
-#if APP_API
-  if (messageTag == kSetMidiMapping && dataSize == sizeof(MidiMapping))
+  switch (messageTag)
   {
-    const MidiMapping* map = (MidiMapping*)pData;
-    SetControlChangeForParam((IMidiMsg::EControlChangeMsg)map->midiCC, map->param);
-    return true;
-  }
+    case kSetMidiMapping:
+    {
+#if APP_API
+      if (dataSize == sizeof(MidiMapping))
+      {
+        const MidiMapping* map = (MidiMapping*)pData;
+        SetControlChangeForParam((IMidiMsg::EControlChangeMsg)map->midiCC, map->param);
+        return true;
+      }
 #endif
+    }
+    break;
+
+    case kPluckSpectrum:
+    {
+      if (dataSize == sizeof(PluckCoords))
+      {
+        const PluckCoords* coords = (PluckCoords*)pData;
+        Pluck(coords->x, coords->y);
+      }
+    }
+    break;
+  }
 
   return false;
 }
