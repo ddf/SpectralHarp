@@ -277,6 +277,9 @@
 		4FFBB93020863B0E00DDD0E7 /* fbuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8158C1205D50EB00393585 /* fbuffer.cpp */; };
 		4FFBB93420863B0E00DDD0E7 /* coreiids.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8158E0205D50EB00393585 /* coreiids.cpp */; };
 		4FFBB93520863B0E00DDD0E7 /* vstnoteexpressiontypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F81588E205D50EB00393585 /* vstnoteexpressiontypes.cpp */; };
+		7719E0B8221DFCA20014DB78 /* MidiMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7719E0B7221DFCA20014DB78 /* MidiMapper.cpp */; };
+		7719E0B9221DFCA20014DB78 /* MidiMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7719E0B7221DFCA20014DB78 /* MidiMapper.cpp */; };
+		7719E0BA221DFCA20014DB78 /* MidiMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7719E0B7221DFCA20014DB78 /* MidiMapper.cpp */; };
 		772125CF22150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
 		772125D022150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
 		772125D122150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
@@ -751,6 +754,8 @@
 		4FFBB94120863E9300DDD0E7 /* IPlugVST3_Parameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IPlugVST3_Parameter.h; path = ../../../IPlug/VST3/IPlugVST3_Parameter.h; sourceTree = "<group>"; };
 		4FFF72B8214BB71400839091 /* main.rc */ = {isa = PBXFileReference; lastKnownFileType = text; name = main.rc; path = ../resources/main.rc; sourceTree = "<group>"; };
 		52FBBED30D0CF143001C8B8A /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../config.h; sourceTree = "<group>"; tabWidth = 2; usesTabs = 0; };
+		7719E0B6221DFC8F0014DB78 /* MidiMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MidiMapper.h; path = ../MidiMapper.h; sourceTree = "<group>"; };
+		7719E0B7221DFCA20014DB78 /* MidiMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MidiMapper.cpp; path = ../MidiMapper.cpp; sourceTree = "<group>"; };
 		772125C422150B050034D2E3 /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextBox.cpp; path = ../TextBox.cpp; sourceTree = "<group>"; };
 		772125C522150B050034D2E3 /* Params.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Params.h; path = ../Params.h; sourceTree = "<group>"; };
 		772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = KnobLineCoronaControl.cpp; path = ../KnobLineCoronaControl.cpp; sourceTree = "<group>"; };
@@ -838,6 +843,8 @@
 		089C166AFE841209C02AAC07 /* IPlugExample */ = {
 			isa = PBXGroup;
 			children = (
+				7719E0B7221DFCA20014DB78 /* MidiMapper.cpp */,
+				7719E0B6221DFC8F0014DB78 /* MidiMapper.h */,
 				772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */,
 				772125C922150B050034D2E3 /* KnobLineCoronaControl.h */,
 				772125C522150B050034D2E3 /* Params.h */,
@@ -2158,6 +2165,7 @@
 				772125DA22150B060034D2E3 /* StringControl.cpp in Sources */,
 				772125F922150BD20034D2E3 /* FourierTransform.cpp in Sources */,
 				4F9A82FA213DE80400BE63A4 /* IPopupMenuControl.cpp in Sources */,
+				7719E0BA221DFCA20014DB78 /* MidiMapper.cpp in Sources */,
 				4FDAC0ED207D76C600299363 /* IPlugTimer.cpp in Sources */,
 				772125F322150BD20034D2E3 /* AudioSource.cpp in Sources */,
 				4F78D94513B63BA50032E0F3 /* IPlugAPIBase.cpp in Sources */,
@@ -2185,6 +2193,7 @@
 			files = (
 				4F81597C205D50EB00393585 /* baseiids.cpp in Sources */,
 				4FDAC0EC207D76C600299363 /* IPlugTimer.cpp in Sources */,
+				7719E0B9221DFCA20014DB78 /* MidiMapper.cpp in Sources */,
 				4F3862F12014BBEC0009F402 /* SpectralHarp.cpp in Sources */,
 				4F81591F205D50EB00393585 /* pluginfactoryvst3.cpp in Sources */,
 				4F63696F20A463090022C370 /* IControls.cpp in Sources */,
@@ -2330,6 +2339,7 @@
 				4FD16D4413B635B2001D0217 /* swell.cpp in Sources */,
 				4F690CA3203A45C700A4A13E /* IPlugAPP_host.cpp in Sources */,
 				4F1A5282205D913300CF2908 /* IPlugAPP.cpp in Sources */,
+				7719E0B8221DFCA20014DB78 /* MidiMapper.cpp in Sources */,
 				772125EE22150BD20034D2E3 /* WindowFunction.cpp in Sources */,
 				4F03A5AC20A4621100EBDFFB /* IGraphics.cpp in Sources */,
 				772125EB22150BD20034D2E3 /* Logging.cpp in Sources */,
