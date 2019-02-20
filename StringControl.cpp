@@ -1,4 +1,3 @@
-#include "SpectralHarp.h"
 #include "StringControl.h"
 #include "MidiMapper.h"
 #include "SpectralGen.h"
@@ -18,18 +17,16 @@ StringControl::StringControl(const SpectralGen& rSpectrum, IRECT pR, int handleR
 
 void StringControl::Draw(IGraphics& pGraphics)
 {
-  // #TODO send these param changes a messages so we don't have to GetDelegate?
-	//const int numBands = (Settings::BandLast - Settings::BandFirst) * Settings::BandDensity;
-	const float numBands = (float)GetDelegate()->GetParam(kBandDensity)->Int();
-	const float bandFirst = (float)GetDelegate()->GetParam(kBandFirst)->Int();
-	const float bandLast = (float)GetDelegate()->GetParam(kBandLast)->Int();
+  const float numBands = (float)GetDelegate()->GetParam(kBandDensity)->Value();
+  const float bandFirst = (float)GetDelegate()->GetParam(kBandFirst)->Value();
+  const float bandLast = (float)GetDelegate()->GetParam(kBandLast)->Value();
+  const float linLogLerp = (float)GetDelegate()->GetParam(kBandLinLogLerp)->Value();
 
-	SpectralHarp* harp = static_cast<SpectralHarp*>(GetDelegate());
-  if ( numBands > 0 && harp != nullptr)
+  if ( numBands > 0 )
   {    
     for (int b = 0; b <= numBands; ++b)
     {
-      const float freq = harp->FrequencyOfString(b);
+      const float freq = FrequencyOfString(b, numBands, bandFirst, bandLast, linLogLerp);
       const float x = Map((float)b, 0, numBands, mRECT.L + kPadding, mRECT.R - kPadding);
       const float p = spectrum.getBandPhase(freq) + stringAnimation;
       const float m = spectrum.getBandMagnitude(freq);
@@ -38,7 +35,7 @@ void StringControl::Draw(IGraphics& pGraphics)
       const IColor color(255, g, g, g);
 
       const float w = Map(m, 0, kSpectralAmpMax, 0, 6);
-      const float segments = w > 0 ? 32 : 1;
+      const int segments = w > 0 ? 32 : 1;
       const float segLength = mRECT.H() / segments;
       float py0 = 0;
       float px0 = x + w * sinf(p);

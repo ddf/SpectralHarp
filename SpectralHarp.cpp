@@ -10,8 +10,6 @@
 #include "KnobLineCoronaControl.h"
 #include "TextBox.h"
 
-#include "Frequency.h"
-
 #if APP_API
 static const char * kAboutBoxText = "Version " PLUG_VERSION_STR "\nCreated by Damien Quartz\nBuilt on " __DATE__;
 
@@ -526,22 +524,6 @@ void SpectralHarp::OnParamChange(int paramIdx)
 #endif
 }
 
-
-float SpectralHarp::FrequencyOfString(int stringNum)
-{
-	const double t = (double)stringNum / GetParam(kBandDensity)->Value();
-	// convert first and last bands to midi notes and then do a linear interp, converting back to Hz at the end.
-	Minim::Frequency lowFreq = Minim::Frequency::ofHertz(GetParam(kBandFirst)->Value());
-	Minim::Frequency hiFreq = Minim::Frequency::ofHertz(GetParam(kBandLast)->Value());
-	const float linFreq = Map(t, 0, 1, lowFreq.asHz(), hiFreq.asHz());
-	const float midiNote = Map(t, 0, 1, lowFreq.asMidiNote(), hiFreq.asMidiNote());
-	const float logFreq = Minim::Frequency::ofMidiNote(midiNote).asHz();
-	// we lerp from logFreq up to linFreq because log spacing clusters frequencies
-	// towards the bottom of the range, which means that when holding down the mouse on a string
-	// and lowering this param, you'll hear the pitch drop, which makes more sense than vice-versa.
-	return Map(GetParam(kBandLinLogLerp)->Value(), 0, 1, logFreq, linFreq);
-}
-
 void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 {
 	if (!mIsLoading)
@@ -549,9 +531,12 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 		const float numBands = (float)GetParam(kBandDensity)->Int();		
 		if (numBands > 0)
 		{
+      const float lowFreq = (float)GetParam(kBandFirst)->Value();
+      const float hiFreq = (float)GetParam(kBandLast)->Value();
+      const float linLogLerp = (float)GetParam(kBandLinLogLerp)->Value();
 			for (int b = 0; b <= numBands; ++b)
 			{
-				const float freq = FrequencyOfString(b);
+				const float freq = FrequencyOfString(b, numBands, lowFreq, hiFreq, linLogLerp);
 				const float normBand = (float)b / numBands;
 				if (fabs(normBand - pluckX) < 0.005f)
 				{

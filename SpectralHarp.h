@@ -38,10 +38,6 @@ public:
 	void BroadcastParamChange(const int paramIdx);
 #endif
 
-	// given a string number between 0 and the current value of Density,
-	// return the current frequency based on related parameters like BandFirst and BandLast.
-	float FrequencyOfString(int stringNum);		  
-
 private:
 
 	void InitBandParam(const char * name, const int paramIdx, const int defaultValue);

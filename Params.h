@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "Frequency.h"
+
 enum EParams
 {
 	kVolume = 0,
@@ -115,4 +117,19 @@ enum ESettings
 static float Map(float value, float istart, float istop, float ostart, float ostop)
 {
 	return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+}
+
+static float FrequencyOfString(int stringNum, float stringCount, float lowFreqHz, float hiFreqHz, float linLogLerp)
+{
+  const float t = (float)stringNum / stringCount;
+  // convert first and last bands to midi notes and then do a linear interp, converting back to Hz at the end.
+  Minim::Frequency lowFreq = Minim::Frequency::ofHertz(lowFreqHz);
+  Minim::Frequency hiFreq = Minim::Frequency::ofHertz(hiFreqHz);
+  const float linFreq = Map(t, 0, 1, lowFreq.asHz(), hiFreq.asHz());
+  const float midiNote = Map(t, 0, 1, lowFreq.asMidiNote(), hiFreq.asMidiNote());
+  const float logFreq = Minim::Frequency::ofMidiNote(midiNote).asHz();
+  // we lerp from logFreq up to linFreq because log spacing clusters frequencies
+  // towards the bottom of the range, which means that when holding down the mouse on a string
+  // and lowering this param, you'll hear the pitch drop, which makes more sense than vice-versa.
+  return Map(linLogLerp, 0, 1, logFreq, linFreq);
 }
