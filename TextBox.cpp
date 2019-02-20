@@ -1,5 +1,5 @@
-#include "SpectralHarp.h"
 #include "TextBox.h"
+#include "MidiMapper.h"
 
 TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphics, const char * maxText, bool showParamUnits, float scrollSpeed)
 	: ICaptionControl(pR, paramIdx, pText, showParamUnits)
@@ -66,21 +66,6 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
     PromptUserInput(promptRect);
 		mText = ourText;
 	}
-	else if (pMod.R)
-	{
-		SpectralHarp* plug = static_cast<SpectralHarp*>(GetDelegate());
-		if (plug != nullptr)
-		{
-      for (int i = 0; i < GetUI()->NControls(); ++i)
-      {
-        if (GetUI()->GetControl(i) == this)
-        {
-          plug->BeginMIDILearn(i, mParamIdx, -1, x, y);
-          break;
-        }
-      }
-		}
-	}
 }
 
 void TextBox::OnMouseWheel(float x, float y, const IMouseMod& pMod, float d)
@@ -109,4 +94,22 @@ void TextBox::GrayOut(bool gray)
 	ICaptionControl::GrayOut(gray);
 
   mText.mFGColor.A = gray ? 128 : 255;
+}
+
+void TextBox::CreateContextMenu(IPopupMenu& contextMenu)
+{
+  MidiMapper* mapper = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (mapper != nullptr)
+  {
+    mapper->CreateContextMenu(contextMenu, mParamIdx);
+  }
+}
+
+void TextBox::OnContextSelection(int itemSelected)
+{
+  MidiMapper* mapper = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (mapper != nullptr)
+  {
+    mapper->OnContextSelection(itemSelected);
+  }
 }

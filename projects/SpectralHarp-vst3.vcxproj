@@ -336,6 +336,7 @@
     <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_Parameter.h" />
     <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_view.h" />
     <ClInclude Include="..\KnobLineCoronaControl.h" />
+    <ClInclude Include="..\MidiMapper.h" />
     <ClInclude Include="..\Params.h" />
     <ClInclude Include="..\SpectralGen.h" />
     <ClInclude Include="..\SpectralHarp.h" />
@@ -402,6 +403,7 @@
     <ClCompile Include="..\..\minim-cpp\src\ugens\UGen.cpp" />
     <ClCompile Include="..\..\minim-cpp\src\WindowFunction.cpp" />
     <ClCompile Include="..\KnobLineCoronaControl.cpp" />
+    <ClCompile Include="..\MidiMapper.cpp" />
     <ClCompile Include="..\SpectralGen.cpp" />
     <ClCompile Include="..\SpectralHarp.cpp" />
     <ClCompile Include="..\SpectrumSelection.cpp" />

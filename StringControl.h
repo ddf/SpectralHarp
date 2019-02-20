@@ -16,6 +16,9 @@ public:
 
 	void OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod) override;
 
+  void CreateContextMenu(IPopupMenu& contextMenu) override;
+  void OnContextSelection(int itemSelected) override;
+
 private:
 
 	void SnapToMouse(float x, float y);

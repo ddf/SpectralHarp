@@ -1,5 +1,5 @@
-#include "SpectralHarp.h"
 #include "SpectrumSelection.h"
+#include "MidiMapper.h"
 #include "Params.h"
 
 SpectrumSelection::SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle) 
@@ -27,26 +27,26 @@ SpectrumSelection::~SpectrumSelection()
 {
 }
 
+// since this control doesn't have it's own param index, we still get right-clicks.
+// so we need to reproduce the auto-right-click handling based on which handle is hit.
 void SpectrumSelection::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
 	if (handles[kDragLeft].Contains(x, y))
-	{
-		if (pMod.R)
-		{
-			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(GetDelegate());
-			if (harp != nullptr)
-			{
-        for (int i = 0; i < GetUI()->NControls(); ++i)
+	{    
+    if (pMod.R)
+    {
+      for (int i = 0; i < GetUI()->NControls(); ++i)
+      {
+        if (GetUI()->GetControl(i) == this)
         {
-          if (GetUI()->GetControl(i) == this)
-          {
-            harp->BeginMIDILearn(i, mHandles[kDragLeft]->ParamIdx(), -1, x, y);
-            break;
-          }
-        }				
-			}
-		}
-		else
+          contextParam = mHandles[kDragLeft]->ParamIdx();
+          GetUI()->ReleaseMouseCapture();
+          GetUI()->PopupHostContextMenuForParam(i, contextParam, x, y);
+          return;
+        }
+      }
+    }
+    else
 		{
 			dragParam = kDragLeft;
 			dragMinX = mRECT.L;
@@ -55,29 +55,27 @@ void SpectrumSelection::OnMouseDown(float x, float y, const IMouseMod& pMod)
 	}
 	else if (handles[kDragRight].Contains(x, y))
 	{
-		if (pMod.R)
-		{
-			SpectralHarp* harp = dynamic_cast<SpectralHarp*>(GetDelegate());
-			if (harp != nullptr)
-			{
-        for (int i = 0; i < GetUI()->NControls(); ++i)
+    if (pMod.R)
+    {
+      for (int i = 0; i < GetUI()->NControls(); ++i)
+      {
+        if (GetUI()->GetControl(i) == this)
         {
-          if (GetUI()->GetControl(i) == this)
-          {
-            harp->BeginMIDILearn(i, mHandles[kDragRight]->ParamIdx(), -1, x, y);
-            break;
-          }
+          contextParam = mHandles[kDragRight]->ParamIdx();
+          GetUI()->ReleaseMouseCapture();
+          GetUI()->PopupHostContextMenuForParam(i, contextParam, x, y);
+          return;
         }
-			}
-		}
-		else
+      }
+    }
+    else
 		{
 			dragParam = kDragRight;
 			dragMinX = handles[kDragLeft].R + handleWidth/2;
 			dragMaxX = mRECT.R;
 		}
 	}
-	else if (handles[kDragBoth].Contains(x, y))
+	else if (pMod.L && handles[kDragBoth].Contains(x, y))
 	{
 		dragParam = kDragBoth;
 		dragMinX = mRECT.L + handleWidth / 2;
@@ -157,6 +155,24 @@ void SpectrumSelection::OnMouseDrag(float x, float y, float dX, float dY, const 
 void SpectrumSelection::OnMouseUp(float x, float y, const IMouseMod& pMod)
 {
 	dragParam = kDragNone;
+}
+
+void SpectrumSelection::CreateContextMenu(IPopupMenu& contextMenu)
+{
+  MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (control != nullptr)
+  {
+    control->CreateContextMenu(contextMenu, contextParam);
+  }
+}
+
+void SpectrumSelection::OnContextSelection(int itemSelected)
+{
+  MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (control != nullptr)
+  {
+    control->OnContextSelection(itemSelected);
+  }
 }
 
 void SpectrumSelection::Draw(IGraphics& pGraphics)

@@ -121,6 +121,7 @@
     <ClCompile Include="..\..\minim-cpp\src\WindowFunction.cpp">
       <Filter>minim</Filter>
     </ClCompile>
+    <ClCompile Include="..\MidiMapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SpectralHarp.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="..\SpectrumSelection.h" />
     <ClInclude Include="..\StringControl.h" />
     <ClInclude Include="..\TextBox.h" />
+    <ClInclude Include="..\MidiMapper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="resources">

@@ -3,6 +3,8 @@
 #include "IPlugPaths.h"
 #include "IControl.h"
 #include "resource.h"
+
+#include "MidiMapper.h"
 #include "StringControl.h"
 #include "SpectrumSelection.h"
 #include "KnobLineCoronaControl.h"
@@ -23,7 +25,7 @@ const int kNumPrograms = 1;
 
 // name of the section of the INI file we save midi cc mappings to
 const char * kMidiControlIni = "midi";
-const IMidiMsg::EControlChangeMsg kUnmappedParam = (IMidiMsg::EControlChangeMsg)128;
+const IMidiMsg::EControlChangeMsg kUnmappedParam = (IMidiMsg::EControlChangeMsg)MidiMapping::kNone;
 
 enum ELayout
 {
@@ -123,14 +125,15 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
-	, midiLearnParamIdx(-1)
 {
 	TRACE;
 
+#if APP_API
 	for (int i = 0; i < kNumParams; ++i)
 	{
 		controlChangeForParam[i] = kUnmappedParam;
 	}
+#endif
 
 	mNotes.reserve(32);
 
@@ -166,6 +169,10 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     pGraphics->HandleMouseOver(true);
     pGraphics->AttachCornerResizer();
     pGraphics->AttachPanelBackground(backColor);
+    // only use the midi mapper in the App because otherwise we leave mapping up to the DAW
+#if APP_API
+    pGraphics->AttachControl(new MidiMapper(), kMidiMapper);
+#endif
     pGraphics->LoadFont(ROBOTTO_FN);
 
     IText captionText = IText(labelSize, labelColor);
@@ -278,6 +285,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
   {
     mIniPath.Append("\\settings.ini");
   }
+
 #endif // IPLUG_EDITOR
 
   // do we stil need this?
@@ -331,9 +339,11 @@ void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 
 			switch (pMsg.StatusMsg())
 			{
+#if APP_API
 			case IMidiMsg::kControlChange:
 				HandleMidiControlChange(pMsg);
 				break;
+#endif
 
 			case IMidiMsg::kNoteOn:
 				if (pMsg.Velocity() > 0)
@@ -394,101 +404,8 @@ void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 	mMidiQueue.Flush(nFrames);
 }
 
-void SpectralHarp::BeginMIDILearn(int controlID, int paramIdx1, int paramIdx2, float x, float y)
-{
-	if (GetAPI() == kAPIVST3)
-	{
-// in Reaper on OSX the popup's Y position is inverted.
-// not sure if this is true in other hosts on OSX, so we only modify for Reaper.
-#ifdef OS_MAC
-		if ( GetHost() == kHostReaper )
-		{
-			y = PLUG_HEIGHT - y;
-		}
-#endif
-
-    if (GetUI() != nullptr)
-    {
-      GetUI()->PopupHostContextMenuForParam(controlID, paramIdx1, x, y);
-    }    
-	}
-	else if ( GetAPI() == kAPIAPP )
-	{
-		IPopupMenu menu;
-		menu.SetMultiCheck(true);
-		WDL_String str;
-		if (paramIdx1 != -1)
-		{
-			bool isMapped = controlChangeForParam[paramIdx1] != kUnmappedParam;
-			int flags = isMapped ? IPopupMenu::Item::kChecked : IPopupMenu::Item::kNoFlags;
-			if (isMapped)
-			{
-				str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetParam(paramIdx1)->GetNameForHost(), (int)controlChangeForParam[paramIdx1]);
-			}
-			else
-			{
-				str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx1)->GetNameForHost());
-			}
-			menu.AddItem(str.Get(), -1, flags);
-		}
-		if (paramIdx2 != -1)
-		{
-			bool isMapped = controlChangeForParam[paramIdx2] != kUnmappedParam;
-			int flags = isMapped ? IPopupMenu::Item::kChecked : IPopupMenu::Item::kNoFlags;
-			if (isMapped)
-			{
-				str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetParam(paramIdx2)->GetNameForHost(), (int)controlChangeForParam[paramIdx2]);
-			}
-			else
-			{
-				str.SetFormatted(64, "MIDI Learn: %s", GetParam(paramIdx2)->GetNameForHost());
-			}
-			menu.AddItem(str.Get(), -1, flags);
-		}
-		if (GetUI()->CreatePopupMenu(menu, x, y))
-		{
-			const int chosen = menu.GetChosenItemIdx();
-			if (chosen == 0)
-			{			
-				if (menu.GetItem(chosen)->GetChecked())
-				{
-					SetControlChangeForParam(kUnmappedParam, paramIdx1);
-				}
-				else
-				{
-					midiLearnParamIdx = paramIdx1;
-				}
-			}
-			else if (chosen == 1)
-			{
-				if (menu.GetItem(chosen)->GetChecked())
-				{
-					SetControlChangeForParam(kUnmappedParam, paramIdx2);
-				}
-				else
-				{
-					midiLearnParamIdx = paramIdx2;
-				}
-			}
-			else
-			{
- 				midiLearnParamIdx = -1;
-			}
-		}
-	}
-}
-
 void SpectralHarp::ProcessMidiMsg(const IMidiMsg& msg)
 {
-	if (msg.StatusMsg() == IMidiMsg::kControlChange)
-	{
-		const IMidiMsg::EControlChangeMsg cc = msg.ControlChangeIdx();
-		if (midiLearnParamIdx != -1)
-		{
-			SetControlChangeForParam(cc, midiLearnParamIdx);
-			midiLearnParamIdx = -1;
-		}
-	}
 	mMidiQueue.Add(msg);
 }
 
@@ -500,18 +417,26 @@ void SpectralHarp::OnReset()
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
 	mNotes.clear();
+}
 
-	// read control mappings from the INI if we are running standalone
+void SpectralHarp::OnUIOpen()
+{
+  IPlug::OnUIOpen();
+  
 #if APP_API
-	for (int i = 0; i < kNumParams; ++i)
-	{
-		int defaultMapping = (int)controlChangeForParam[i];
-		char controlName[32];
-		sprintf(controlName, "control%u", i);
-		controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, mIniPath.Get());
+  // read control mappings from the INI if we are running standalone
+  for (int i = 0; i < kNumParams; ++i)
+  {
+    int defaultMapping = (int)controlChangeForParam[i];
+    char controlName[32];
+    sprintf(controlName, "control%u", i);
+    controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, mIniPath.Get());
 
-		BroadcastParamChange(i);
-	}
+    MidiMapping map(i, (MidiMapping::CC)controlChangeForParam[i]);
+    SendControlMsgFromDelegate(kMidiMapper, kSetMidiMapping, sizeof(MidiMapping), &map);
+
+    BroadcastParamChange(i);
+  }
 #endif
 }
 
@@ -596,7 +521,9 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		break;
 	}
 
+#if APP_API
 	BroadcastParamChange(paramIdx);
+#endif
 }
 
 
@@ -641,11 +568,30 @@ void SpectralHarp::PluckSpectrum(const float freq, float mag)
 	specGen.pluck(freq, mag);
 }
 
+float SpectralHarp::GetPluckAmp(const float pluckY) const
+{
+  return kSpectralAmpMax * pluckY;
+}
+
+bool SpectralHarp::OnMessage(int messageTag, int controlTag, int dataSize, const void* pData)
+{
+#if APP_API
+  if (messageTag == kSetMidiMapping && dataSize == sizeof(MidiMapping))
+  {
+    const MidiMapping* map = (MidiMapping*)pData;
+    SetControlChangeForParam((IMidiMsg::EControlChangeMsg)map->midiCC, map->param);
+    return true;
+  }
+#endif
+
+  return false;
+}
+
+#if APP_API
 void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
 {
 	controlChangeForParam[paramIdx] = cc;
 
-#if APP_API
 	char controlName[32];
 	sprintf(controlName, "control%u", paramIdx);
 	// remove the setting if they unmapped it
@@ -659,12 +605,6 @@ void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc
 		sprintf(ccString, "%u", (unsigned)cc);
 		WritePrivateProfileString(kMidiControlIni, controlName, ccString, mIniPath.Get());
 	}
-#endif
-}
-
-float SpectralHarp::GetPluckAmp(const float pluckY) const
-{
-	return kSpectralAmpMax*pluckY;
 }
 
 void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
@@ -681,6 +621,7 @@ void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
 		}
 	}
 }
+#endif
 
 bool SpectralHarp::OnHostRequestingAboutBox()
 {
@@ -714,9 +655,17 @@ bool SpectralHarp::OnHostRequestingProductHelp()
 
   if (!success)
   {
-#if defined(OS_WIN)
+#if defined(OS_WIN)    
+#if UNICODE
+    wchar_t wideFilename[1024];
+    wchar_t wideIniPath[1024];
+    UTF8ToUTF16(wideIniPath, mIniPath.Get(), mIniPath.GetLength());
+    GetPrivateProfileString(L"install", L"support path", NULL, wideFilename, 256, wideIniPath);
+    UTF16ToUTF8(filename, wideFilename);
+#else
     filename.SetLen(256);
     GetPrivateProfileString("install", "support path", NULL, filename.Get(), 256, mIniPath.Get());
+#endif
 #else
     AppSupportPath(filename, true);
     filename.Append("/Evaluator");
@@ -735,6 +684,7 @@ bool SpectralHarp::OnHostRequestingProductHelp()
   return true;
 }
 
+#if APP_API
 void SpectralHarp::BroadcastParamChange(const int paramIdx)
 {
 	// send MIDI CC messages with current param values for any mapped params,
@@ -746,3 +696,4 @@ void SpectralHarp::BroadcastParamChange(const int paramIdx)
 		SendMidiMsg(msg);
 	}
 }
+#endif

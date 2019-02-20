@@ -1,5 +1,5 @@
-#include "SpectralHarp.h"
 #include "KnobLineCoronaControl.h"
+#include "MidiMapper.h"
 
 static const double kRadToDeg = 180.0 / PI;
 
@@ -46,25 +46,7 @@ void KnobLineCoronaControl::Draw(IGraphics& pGraphics)
 
 void KnobLineCoronaControl::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
-	if (pMod.R)
-	{
-		SpectralHarp* plug = dynamic_cast<SpectralHarp*>(GetDelegate());
-		if (plug != nullptr)
-		{
-      for (int i = 0; i < GetUI()->NControls(); ++i)
-      {
-        if (GetUI()->GetControl(i) == this)
-        {
-          plug->BeginMIDILearn(i, mParamIdx, -1, x, y);
-          break;
-        }
-      }			
-		}
-	}
-	else
-	{
-		mHasMouse = true;
-	}
+  mHasMouse = true;
 }
 
 void KnobLineCoronaControl::OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod)
@@ -161,6 +143,24 @@ void KnobLineCoronaControl::SetLabelControl(ITextControl* control, const char * 
 		mRECT.R += 15;
 		mRECT.B += 15;
 	}
+}
+
+void KnobLineCoronaControl::CreateContextMenu(IPopupMenu& contextMenu)
+{
+  MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (control != nullptr)
+  {
+    control->CreateContextMenu(contextMenu, mParamIdx);
+  }
+}
+
+void KnobLineCoronaControl::OnContextSelection(int itemSelected)
+{
+  MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (control != nullptr)
+  {
+    control->OnContextSelection(itemSelected);
+  }
 }
 
 #pragma  endregion KnobLineCoronaControl

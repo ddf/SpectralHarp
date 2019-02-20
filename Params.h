@@ -37,43 +37,71 @@ enum EParams
 	kNumParams
 };
 
+// used by the UI to send messages to the main plugin class.
+enum EMessages
+{
+  kSetMidiMapping,
+};
+
+// data payload for the SetMidiMapping message
+struct MidiMapping
+{
+  enum CC
+  {
+    kNone = 128
+  };
+
+  const int param;
+  const CC midiCC;
+
+  MidiMapping(int p, CC cc = kNone) : param(p), midiCC(cc) {}
+};
+
+// control tags
+enum ETags
+{
+  kMidiMapper
+};
+
 enum ESettings
 {
-	// settings for the SpectralGen UGen
-	kSpectralAmpMax = 1,
+  // settings for the SpectralGen UGen
+  kSpectralAmpMax = 1,
 
-	// settings for kPitch, expressed as percent
-	kPitchMin = 50,
-	kPitchMax = 100,
-	kPitchDefault = kPitchMax,
+  // settings for kPitch, expressed as percent
+  kPitchMin = 50,
+  kPitchMax = 100,
+  kPitchDefault = kPitchMax,
 
-	// settings for kDecay, expressed in milliseconds
-	kDecayMin = 150,
-	kDecayMax = 5000,
-	kDecayDefault = 500,
+  // settings for kDecay, expressed in milliseconds
+  kDecayMin = 150,
+  kDecayMax = 5000,
+  kDecayDefault = 500,
 
-	// settings for kCrush, expressed as percent
-	kCrushMin = 0,
-	kCrushMax = 100,
-	kCrushDefault = kCrushMin,
+  // settings for kCrush, expressed as percent
+  kCrushMin = 0,
+  kCrushMax = 100,
+  kCrushDefault = kCrushMin,
 
-	// settings for kBandFirst and kBandLast params
-	kBandMin = 64,
-	kBandMax = 13000,
-	kBandMinDistance = 64,
+  // settings for kBandFirst and kBandLast params
+  kBandMin = 64,
+  kBandMax = 13000,
+  kBandMinDistance = 64,
 
-	kBandFirstDefault = kBandMin,
-	kBandLastDefault = kBandMax,
-	
-	// settings for kBandDensity
-	kBandDensityMinOrig = 16,
-	kBandDensityMaxOrig = 256,
-	kBandDensityMin = 12, // one string per semi-tone if low and high frequency are an octave apart
-	kBandDensityMax = 288, // 24 "octaves" of semi-tones
-	kBandDensityDefault = kBandDensityMax,
+  kBandFirstDefault = kBandMin,
+  kBandLastDefault = kBandMax,
 
-	kBandSpreadMin = 0,
-	kBandSpreadMax = 13000,
+  // settings for kBandDensity
+  kBandDensityMinOrig = 16,
+  kBandDensityMaxOrig = 256,
+  kBandDensityMin = 12, // one string per semi-tone if low and high frequency are an octave apart
+  kBandDensityMax = 288, // 24 "octaves" of semi-tones
+  kBandDensityDefault = kBandDensityMax,
+
+  kBandSpreadMin = 0,
+  kBandSpreadMax = 13000,
+
+  kUmappedParamCC = 128 // MIDI CC value we use as a stand-in for a parameter that does not have a midi mapping
 };
 
 static float Map(float value, float istart, float istop, float ostart, float ostop)

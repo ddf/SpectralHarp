@@ -1,6 +1,7 @@
 #pragma  once
 
 #include "IControl.h"
+#include "MidiMapper.h"
 
 class KnobLineCoronaControl : public IKnobControlBase
 {
@@ -21,6 +22,9 @@ public:
 	void OnMouseOut() override;	
 
 	void SetLabelControl(ITextControl* control, const char * label, bool bShared = false);
+
+  void CreateContextMenu(IPopupMenu& contextMenu) override;
+  void OnContextSelection(int itemSelected) override;
 
 private:
 	void ShowLabel();

@@ -14,6 +14,9 @@ public:
 
 	virtual void GrayOut(bool gray) override;
 
+  void CreateContextMenu(IPopupMenu& contextMenu) override;
+  void OnContextSelection(int itemSelected) override;
+
 private:
 	bool  mShowParamUnits;
 	float mScrollSpeed;

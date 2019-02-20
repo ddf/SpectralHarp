@@ -27,7 +27,9 @@ public:
 	virtual void OnMouseDrag(float x, float y, float dX, float dY, const IMouseMod& pMod) override;
 	virtual void OnMouseUp(float x, float y, const IMouseMod& pMod) override;
 
-	virtual void Draw(IGraphics& pGraphics) override;
+  void CreateContextMenu(IPopupMenu& contextMenu) override;
+  void OnContextSelection(int itemSelected) override;
+  virtual void Draw(IGraphics& pGraphics) override;
 	
 	void SetAuxParamValueFromPlug(int auxParamIdx, double value);
 
@@ -58,6 +60,9 @@ private:
 	int    dragMinX;
 	// the max x-coord we can drag to
 	int    dragMaxX;
+
+  // param index we use in CreateContextMenu
+  int contextParam;
 };
 
 class SpectrumArrows : public IControl

@@ -1,12 +1,13 @@
 #include "SpectralHarp.h"
 #include "StringControl.h"
+#include "MidiMapper.h"
 #include "SpectralGen.h"
 #include "Params.h"
 
 const float kPadding = 16;
 
 StringControl::StringControl(const SpectralGen& rSpectrum, IRECT pR, int handleRadius) 
-	: IControl(pR)
+	: IControl(pR, kPluckX) // note: we only set kPluckX as our param for the right-click context menu functionality
 	, spectrum(rSpectrum)
 	, mHandleRadius(handleRadius)
 	, mMouseX(-1)
@@ -73,21 +74,7 @@ void StringControl::Draw(IGraphics& pGraphics)
 
 void StringControl::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
-	if ( pMod.R )
-	{
-		SpectralHarp* harp = dynamic_cast<SpectralHarp*>(GetDelegate());
-		if (harp != nullptr)
-		{
-      for (int i = 0; i < GetUI()->NControls(); ++i)
-      {
-        if (GetUI()->GetControl(i) == this)
-        {
-          harp->BeginMIDILearn(i, kPluckX, kPluckY, x, y);
-        }
-      }			
-		}
-	}
-	else if ( pMod.L )
+  if ( pMod.L )
 	{
 		mMouseX = x;
 		mMouseY = y;
@@ -109,6 +96,24 @@ void StringControl::OnMouseDrag(float x, float y, float dX, float dY, const IMou
 		mMouseY = y;
 		SnapToMouse(x, y);
 	}
+}
+
+void StringControl::CreateContextMenu(IPopupMenu& contextMenu)
+{
+  MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (control != nullptr)
+  {
+    control->CreateContextMenu(contextMenu, kPluckX, kPluckY);
+  }
+}
+
+void StringControl::OnContextSelection(int itemSelected)
+{
+  MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
+  if (control != nullptr)
+  {
+    control->OnContextSelection(itemSelected);
+  }
 }
 
 void StringControl::SnapToMouse(float x, float y)
