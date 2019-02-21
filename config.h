@@ -17,7 +17,7 @@
 
 #define PLUG_LATENCY 0
 #define PLUG_TYPE 1
-#if APP_API
+#ifdef APP_API
 #define PLUG_DOES_MIDI_IN 1
 #define PLUG_DOES_MIDI_OUT 1
 #else
