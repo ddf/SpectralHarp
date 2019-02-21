@@ -17,13 +17,13 @@ static const char * kAboutBoxText = "Version " PLUG_VERSION_STR "\nCreated by Da
 #include "swell.h"
 #endif
 
-#endif
-
-const int kNumPrograms = 1;
-
 // name of the section of the INI file we save midi cc mappings to
 const char * kMidiControlIni = "midi";
 const IMidiMsg::EControlChangeMsg kUnmappedParam = (IMidiMsg::EControlChangeMsg)MidiMapping::kNone;
+
+#endif
+
+const int kNumPrograms = 1;
 
 enum ELayout
 {
