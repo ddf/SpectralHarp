@@ -116,7 +116,7 @@ float expoEaseOut(float t, float b, float c, float d)
 }
 #endif
 
-SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
+PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
 	, mIsLoading(false)
 #if IPLUG_DSP
@@ -138,8 +138,6 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 		controlChangeForParam[i] = kUnmappedParam;
 	}
 #endif
-
-	mNotes.reserve(32);
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label, flags, group, shape.
   // if no shape is provided, then it will be linearaly shaped
@@ -297,6 +295,8 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 
 	//-- AUDIO --------------------------------------
 #if IPLUG_DSP
+  mNotes.reserve(32);
+	
   tickRate.value.setLastValue((float)GetParam(kPitch)->Value() / 100.0f);
   tickRate.setInterpolation(true);
 
@@ -306,15 +306,13 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 #endif
 }
 
-SpectralHarp::~SpectralHarp() {}
-
-void SpectralHarp::InitBandParam(const char * name, const int paramIdx, const int defaultValue)
+void PLUG_CLASS_NAME::InitBandParam(const char * name, const int paramIdx, const int defaultValue)
 {
 	IParam* param = GetParam(paramIdx);
 	param->InitInt(name, defaultValue, kBandMin, kBandMax, "Hz");
 }
 
-void SpectralHarp::OnUIOpen()
+void PLUG_CLASS_NAME::OnUIOpen()
 {
   IPlug::OnUIOpen();
 
@@ -335,7 +333,7 @@ void SpectralHarp::OnUIOpen()
 #endif
 }
 
-int SpectralHarp::UnserializeState(const IByteChunk& chunk, int startPos)
+int PLUG_CLASS_NAME::UnserializeState(const IByteChunk& chunk, int startPos)
 {
   TRACE;
   //IMutexLock lock(this);
@@ -347,7 +345,7 @@ int SpectralHarp::UnserializeState(const IByteChunk& chunk, int startPos)
 }
 
 #if IPLUG_DSP
-void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
+void PLUG_CLASS_NAME::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 {
 	// Mutex is already locked for us.
 	const double crushBegin = GetSampleRate();
@@ -449,17 +447,17 @@ void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 	mMidiQueue.Flush(nFrames);
 }
 
-void SpectralHarp::OnIdle()
+void PLUG_CLASS_NAME::OnIdle()
 {
   spectrumCapture.TransmitData(*this);
 }
 
-void SpectralHarp::ProcessMidiMsg(const IMidiMsg& msg)
+void PLUG_CLASS_NAME::ProcessMidiMsg(const IMidiMsg& msg)
 {
 	mMidiQueue.Add(msg);
 }
 
-void SpectralHarp::OnReset()
+void PLUG_CLASS_NAME::OnReset()
 {
 	TRACE;
 	//IMutexLock lock(this);
@@ -469,7 +467,7 @@ void SpectralHarp::OnReset()
 	mNotes.clear();
 }
 
-void SpectralHarp::OnParamChange(int paramIdx)
+void PLUG_CLASS_NAME::OnParamChange(int paramIdx)
 {
 	//IMutexLock lock(this);
 
@@ -506,8 +504,12 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		if (bandFirst > bandLast - kBandMinDistance)
 		{
       const double value = bandLast - kBandMinDistance;
-			GetParam(kBandFirst)->Set(value);
-			InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
+			// this method calls the two methods below and then calls OnParamChanged.
+			// we don't need the OnParamChanged call, but it doesn't appear to present a problem.
+			// this was changed because InformHostOfParamChanged is a private method in the VST3P build.
+			SetParameterValue(kBandFirst, GetParam(kBandFirst)->ToNormalized(value));
+			//GetParam(kBandFirst)->Set(value);
+			//InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
       SendParameterValueFromAPI(kBandFirst, value, false);
 		}		
 	}
@@ -520,8 +522,10 @@ void SpectralHarp::OnParamChange(int paramIdx)
 		if (bandLast < bandFirst + kBandMinDistance)
 		{
       const double value = bandFirst + kBandMinDistance;
-			GetParam(kBandLast)->Set(value);
-			InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());
+			// see above for why we call this instead of the two commented out methods
+			SetParameterValue(kBandLast, GetParam(kBandLast)->ToNormalized(value));
+			//GetParam(kBandLast)->Set(value);
+			//InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());
       SendParameterValueFromAPI(kBandLast, value, false);
 		}	
 	}
@@ -544,7 +548,7 @@ void SpectralHarp::OnParamChange(int paramIdx)
 #endif
 }
 
-void SpectralHarp::Pluck(const float pluckX, const float pluckY)
+void PLUG_CLASS_NAME::Pluck(const float pluckX, const float pluckY)
 {
 	if (!mIsLoading)
 	{
@@ -568,17 +572,17 @@ void SpectralHarp::Pluck(const float pluckX, const float pluckY)
 	}
 }
 
-void SpectralHarp::PluckSpectrum(const float freq, float mag)
+void PLUG_CLASS_NAME::PluckSpectrum(const float freq, float mag)
 {
 	specGen.pluck(freq, mag);
 }
 
-float SpectralHarp::GetPluckAmp(const float pluckY) const
+float PLUG_CLASS_NAME::GetPluckAmp(const float pluckY) const
 {
   return kSpectralAmpMax * pluckY;
 }
 
-bool SpectralHarp::OnMessage(int messageTag, int controlTag, int dataSize, const void* pData)
+bool PLUG_CLASS_NAME::OnMessage(int messageTag, int controlTag, int dataSize, const void* pData)
 {
   switch (messageTag)
   {
@@ -611,7 +615,7 @@ bool SpectralHarp::OnMessage(int messageTag, int controlTag, int dataSize, const
 #endif // IPLUG_DSP
 
 #if APP_API
-void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
+void PLUG_CLASS_NAME::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
 {
 	controlChangeForParam[paramIdx] = cc;
 
@@ -630,7 +634,7 @@ void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc
 	}
 }
 
-void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
+void PLUG_CLASS_NAME::HandleMidiControlChange(const IMidiMsg& pMsg)
 {
 	const IMidiMsg::EControlChangeMsg cc = pMsg.ControlChangeIdx();
 	for (int i = 0; i < kNumParams; ++i)
@@ -646,7 +650,7 @@ void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
 }
 #endif // APP_API
 
-bool SpectralHarp::OnHostRequestingAboutBox()
+bool PLUG_CLASS_NAME::OnHostRequestingAboutBox()
 {
 #if APP_API
 #ifdef OS_WIN
@@ -662,7 +666,7 @@ bool SpectralHarp::OnHostRequestingAboutBox()
 	return false;
 }
 
-bool SpectralHarp::OnHostRequestingProductHelp()
+bool PLUG_CLASS_NAME::OnHostRequestingProductHelp()
 {
   WDL_String filename("");
   bool success = false;
@@ -708,7 +712,7 @@ bool SpectralHarp::OnHostRequestingProductHelp()
 }
 
 #if APP_API
-void SpectralHarp::BroadcastParamChange(const int paramIdx)
+void PLUG_CLASS_NAME::BroadcastParamChange(const int paramIdx)
 {
 	// send MIDI CC messages with current param values for any mapped params,
 	// which should enable some control surfaces to keep indicators in sync with the UI.

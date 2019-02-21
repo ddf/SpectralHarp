@@ -11,11 +11,10 @@
 
 #include <vector>
 
-class SpectralHarp : public IPlug
+class PLUG_CLASS_NAME : public IPlug
 {
 public:
-	SpectralHarp(IPlugInstanceInfo instanceInfo);
-	~SpectralHarp();
+	PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo);
 
 #if IPLUG_DSP
 	void OnReset() override;

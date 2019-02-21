@@ -309,6 +309,16 @@
 		7719E0D7221F3B330014DB78 /* SpectrumSelection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CD22150B060034D2E3 /* SpectrumSelection.cpp */; };
 		7719E0D8221F3B330014DB78 /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CB22150B060034D2E3 /* StringControl.cpp */; };
 		7719E0D9221F3B330014DB78 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
+		7719E0DA221F50260014DB78 /* AudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E222150BD10034D2E3 /* AudioSource.cpp */; };
+		7719E0DB221F50260014DB78 /* BitCrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125DF22150BD10034D2E3 /* BitCrush.cpp */; };
+		7719E0DC221F50260014DB78 /* FFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E722150BD20034D2E3 /* FFT.cpp */; };
+		7719E0DD221F50260014DB78 /* FourierTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E422150BD10034D2E3 /* FourierTransform.cpp */; };
+		7719E0DE221F50260014DB78 /* Frequency.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E622150BD10034D2E3 /* Frequency.cpp */; };
+		7719E0DF221F50260014DB78 /* Logging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E022150BD10034D2E3 /* Logging.cpp */; };
+		7719E0E0221F50260014DB78 /* TickRate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E322150BD10034D2E3 /* TickRate.cpp */; };
+		7719E0E1221F50260014DB78 /* UGen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E522150BD10034D2E3 /* UGen.cpp */; };
+		7719E0E2221F50260014DB78 /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125E122150BD10034D2E3 /* WindowFunction.cpp */; };
+		7719E0E3221F503D0014DB78 /* StringControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125CB22150B060034D2E3 /* StringControl.cpp */; };
 		772125CF22150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
 		772125D122150B060034D2E3 /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C422150B050034D2E3 /* TextBox.cpp */; };
 		772125D222150B060034D2E3 /* KnobLineCoronaControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772125C622150B050034D2E3 /* KnobLineCoronaControl.cpp */; };
@@ -2412,6 +2422,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7719E0DC221F50260014DB78 /* FFT.cpp in Sources */,
+				7719E0DE221F50260014DB78 /* Frequency.cpp in Sources */,
 				4FFBB90520863B0E00DDD0E7 /* baseiids.cpp in Sources */,
 				4FFBB90620863B0E00DDD0E7 /* IPlugTimer.cpp in Sources */,
 				4FFBB90720863B0E00DDD0E7 /* SpectralHarp.cpp in Sources */,
@@ -2421,6 +2433,7 @@
 				4FFBB90C20863B0E00DDD0E7 /* IPlugAPIBase.cpp in Sources */,
 				4FFBB90D20863B0E00DDD0E7 /* fdynlib.cpp in Sources */,
 				4FFBB90E20863B0E00DDD0E7 /* memorystream.cpp in Sources */,
+				7719E0DF221F50260014DB78 /* Logging.cpp in Sources */,
 				4FA9F81221F76177004E6FE2 /* IGraphicsAGG_src.mm in Sources */,
 				4FFBB90F20863B0E00DDD0E7 /* IPlugParameter.cpp in Sources */,
 				4FFBB91020863B0E00DDD0E7 /* pluginview.cpp in Sources */,
@@ -2429,13 +2442,19 @@
 				4FFBB91520863B0E00DDD0E7 /* timer.cpp in Sources */,
 				4FFBB91720863B0E00DDD0E7 /* funknown.cpp in Sources */,
 				7719E0BE221F39F40014DB78 /* SpectralGen.cpp in Sources */,
+				7719E0E3221F503D0014DB78 /* StringControl.cpp in Sources */,
+				7719E0DB221F50260014DB78 /* BitCrush.cpp in Sources */,
 				4FFBB91820863B0E00DDD0E7 /* vstbus.cpp in Sources */,
+				7719E0DA221F50260014DB78 /* AudioSource.cpp in Sources */,
+				7719E0DD221F50260014DB78 /* FourierTransform.cpp in Sources */,
+				7719E0E1221F50260014DB78 /* UGen.cpp in Sources */,
 				4FFBB91920863B0E00DDD0E7 /* IPlugPluginBase.cpp in Sources */,
 				4FFBB91A20863B0E00DDD0E7 /* macmain.cpp in Sources */,
 				4FFBB91B20863B0E00DDD0E7 /* flock.cpp in Sources */,
 				4FFBB91C20863B0E00DDD0E7 /* vstbypassprocessor.cpp in Sources */,
 				4FA9F80B21F760C4004E6FE2 /* IGraphicsNanoVG_src.m in Sources */,
 				4FFBB91D20863B0E00DDD0E7 /* ustring.cpp in Sources */,
+				7719E0E0221F50260014DB78 /* TickRate.cpp in Sources */,
 				4FFBB91E20863B0E00DDD0E7 /* fobject.cpp in Sources */,
 				4FFBB91F20863B0E00DDD0E7 /* vstparameters.cpp in Sources */,
 				4FFBB92120863B0E00DDD0E7 /* vstcomponentbase.cpp in Sources */,
@@ -2443,6 +2462,7 @@
 				4FFBB92320863B0E00DDD0E7 /* conststringtable.cpp in Sources */,
 				4FFBB92420863B0E00DDD0E7 /* vstaudioeffect.cpp in Sources */,
 				4FFBB92520863B0E00DDD0E7 /* vstsinglecomponenteffect.cpp in Sources */,
+				7719E0E2221F50260014DB78 /* WindowFunction.cpp in Sources */,
 				4FFBB92620863B0E00DDD0E7 /* updatehandler.cpp in Sources */,
 				4FFBB92820863B0E00DDD0E7 /* vstcomponent.cpp in Sources */,
 				4FFBB92C20863B0E00DDD0E7 /* fstreamer.cpp in Sources */,
