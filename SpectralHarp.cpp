@@ -25,6 +25,7 @@ const IMidiMsg::EControlChangeMsg kUnmappedParam = (IMidiMsg::EControlChangeMsg)
 
 const int kNumPrograms = 1;
 
+#if IPLUG_EDITOR
 enum ELayout
 {
 	kWidth = PLUG_WIDTH,
@@ -106,15 +107,19 @@ static const IColor selectionHandleColor = IColor(255, 200, 200, 200);
 
 // knob colors
 static const IColor knobColor = IColor(255, 200, 200, 200);
+#endif
 
+#if IPLUG_DSP // used in ProcessBlock
 float expoEaseOut(float t, float b, float c, float d)
 {
 	return c * (-powf(2, -10 * t / d) + 1) + b;
 }
+#endif
 
 SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
 	, mIsLoading(false)
+#if IPLUG_DSP
 	, mGain(1.)
 	, mPluckX(0)
 	, mPluckY(0)
@@ -123,6 +128,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
+#endif
 {
 	TRACE;
 
@@ -308,6 +314,39 @@ void SpectralHarp::InitBandParam(const char * name, const int paramIdx, const in
 	param->InitInt(name, defaultValue, kBandMin, kBandMax, "Hz");
 }
 
+void SpectralHarp::OnUIOpen()
+{
+  IPlug::OnUIOpen();
+
+#if APP_API
+  // read control mappings from the INI if we are running standalone
+  for (int i = 0; i < kNumParams; ++i)
+  {
+    int defaultMapping = (int)controlChangeForParam[i];
+    char controlName[32];
+    sprintf(controlName, "control%u", i);
+    controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, mIniPath.Get());
+
+    MidiMapping map(i, (MidiMapping::CC)controlChangeForParam[i]);
+    SendControlMsgFromDelegate(kMidiMapper, kSetMidiMapping, sizeof(MidiMapping), &map);
+
+    BroadcastParamChange(i);
+  }
+#endif
+}
+
+int SpectralHarp::UnserializeState(const IByteChunk& chunk, int startPos)
+{
+  TRACE;
+  //IMutexLock lock(this);
+
+  mIsLoading = true;
+  int endPos = UnserializeParams(chunk, startPos);
+  mIsLoading = false;
+  return endPos;
+}
+
+#if IPLUG_DSP
 void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 {
 	// Mutex is already locked for us.
@@ -428,38 +467,6 @@ void SpectralHarp::OnReset()
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
 	mNotes.clear();
-}
-
-void SpectralHarp::OnUIOpen()
-{
-  IPlug::OnUIOpen();
-  
-#if APP_API
-  // read control mappings from the INI if we are running standalone
-  for (int i = 0; i < kNumParams; ++i)
-  {
-    int defaultMapping = (int)controlChangeForParam[i];
-    char controlName[32];
-    sprintf(controlName, "control%u", i);
-    controlChangeForParam[i] = (IMidiMsg::EControlChangeMsg)GetPrivateProfileInt(kMidiControlIni, controlName, defaultMapping, mIniPath.Get());
-
-    MidiMapping map(i, (MidiMapping::CC)controlChangeForParam[i]);
-    SendControlMsgFromDelegate(kMidiMapper, kSetMidiMapping, sizeof(MidiMapping), &map);
-
-    BroadcastParamChange(i);
-  }
-#endif
-}
-
-int SpectralHarp::UnserializeState(const IByteChunk& chunk, int startPos)
-{
-	TRACE;
-	//IMutexLock lock(this);
-	
-	mIsLoading = true;
-	int endPos = UnserializeParams(chunk, startPos);
-	mIsLoading = false;
-	return endPos;
 }
 
 void SpectralHarp::OnParamChange(int paramIdx)
@@ -601,6 +608,7 @@ bool SpectralHarp::OnMessage(int messageTag, int controlTag, int dataSize, const
 
   return false;
 }
+#endif // IPLUG_DSP
 
 #if APP_API
 void SpectralHarp::SetControlChangeForParam(const IMidiMsg::EControlChangeMsg cc, const int paramIdx)
@@ -636,7 +644,7 @@ void SpectralHarp::HandleMidiControlChange(const IMidiMsg& pMsg)
 		}
 	}
 }
-#endif
+#endif // APP_API
 
 bool SpectralHarp::OnHostRequestingAboutBox()
 {
