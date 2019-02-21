@@ -25,6 +25,13 @@ public:
 	
 	float getBandMagnitude( const float freq ) const;
 	float getBandPhase( const float freq ) const;
+
+  int getSpecSize() const { return specSize; }
+  float getBandWidth() const { return fft->getBandWidth(); }
+  float getBandMagnitude(const int idx) const { return specMag[idx]/spectralMagnitude; }
+  float getBandPhase(const int idx) const { return bands[idx].phase; }
+
+  bool didGenerateOutput() const { return generateOutput; }
     
 	UGenInput decay;
 	// [0-1] how "bright" should the spectrum be
@@ -101,6 +108,9 @@ private:
 	int		phaseIdx;
 	// the fixed magnitude we use to scale up bands before performing the inverse
 	int    spectralMagnitude;
+
+  // true immediately after uGenerate produces a new buffer of output samples
+  bool generateOutput;
 };
 
 #endif

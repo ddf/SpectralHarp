@@ -179,7 +179,7 @@ SpectralHarp::SpectralHarp(IPlugInstanceInfo instanceInfo)
     captionText.mTextEntryFGColor = labelColor;
 
     IRECT strumRect = IRECT(kPluckPadMargin, 0, kWidth - kPluckPadMargin, kPluckPadHeight);
-    pGraphics->AttachControl(new StringControl(specGen, strumRect, 10));
+    pGraphics->AttachControl(new StringControl(strumRect, 10), kStringControl);
 
     IRECT stringShadowRect = IRECT(0, kPluckPadHeight - 5, kWidth, kPluckPadHeight);
     pGraphics->AttachControl(new IPanelControl(stringShadowRect, shadowColor));
@@ -327,6 +327,7 @@ void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 		PluckSpectrum(freq.asHz(), amp);
 	}
 
+  bool processSpectrum = false;
 	float result[1];
 	for (int s = 0; s < nFrames; ++s, ++in1, ++in2, ++out1, ++out2)
 	{
@@ -397,9 +398,21 @@ void SpectralHarp::ProcessBlock(sample** inputs, sample** outputs, int nFrames)
 		*out1 = *in1 + result[0] * mGain;
 		*out2 = *in2 + result[0] * mGain;
 #endif
+
+    processSpectrum = processSpectrum | specGen.didGenerateOutput();
 	}
 
+  if (processSpectrum)
+  {
+    spectrumCapture.ProcessSpectrum(specGen);
+  }
+
 	mMidiQueue.Flush(nFrames);
+}
+
+void SpectralHarp::OnIdle()
+{
+  spectrumCapture.TransmitData(*this);
 }
 
 void SpectralHarp::ProcessMidiMsg(const IMidiMsg& msg)

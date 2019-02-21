@@ -70,13 +70,15 @@ struct PluckCoords
 // control tags
 enum ETags
 {
-  kMidiMapper
+  kMidiMapper,
+  kStringControl,
 };
 
 enum ESettings
 {
   // settings for the SpectralGen UGen
   kSpectralAmpMax = 1,
+  kSpectralSizeMax = 1<<18,
 
   // settings for kPitch, expressed as percent
   kPitchMin = 50,

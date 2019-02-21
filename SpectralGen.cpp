@@ -31,6 +31,7 @@ SpectralGen::SpectralGen()
 , inverse(nullptr)
 , output(nullptr)
 , phaseIdx(0)
+, generateOutput(false)
 {
 }
 
@@ -47,7 +48,7 @@ void SpectralGen::reset()
 	// find the nearest power of two greater than or equal to bufferSizeNP2
 	// so that our spectrum and overlap behave nicely.
 	int bufferSize = 32;
-	while (bufferSize < bufferSizeNP2) bufferSize <<= 1;
+	while (bufferSize < bufferSizeNP2 && bufferSize < kSpectralSizeMax) bufferSize <<= 1;
 
 	if (inverseSize != bufferSize)
 	{
@@ -165,7 +166,9 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		return;
 	}
 
-    if ( outIndex % overlapSize == 0 )
+  generateOutput = outIndex % overlapSize == 0;
+
+    if ( generateOutput )
     {
 		// DQ (2/20/18)
 		// now pull the decay from a UGenInput and pass it in to the band struct instead of using a static var.

@@ -7,6 +7,8 @@
 #include "SpectralGen.h"
 #include "BitCrush.h"
 #include "TickRate.h"
+#include "StringControl.h"
+
 #include <vector>
 
 class SpectralHarp : public IPlug
@@ -18,6 +20,7 @@ public:
 	void OnReset() override;
 	void OnParamChange(int paramIdx) override;
 	void ProcessBlock(sample** inputs, sample** outputs, int nFrames) override;
+  void OnIdle() override;
 	
 	int UnserializeState(const IByteChunk& chunk, int startPos) override;
 
@@ -63,6 +66,7 @@ private:
 	SpectralGen               specGen;
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;
+  StringControl::Capture    spectrumCapture;
 
 #if APP_API  
 	// for each param, which midi control change should set its value

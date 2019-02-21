@@ -1,13 +1,13 @@
 #include "StringControl.h"
 #include "MidiMapper.h"
-#include "SpectralGen.h"
 #include "Params.h"
+
+#include "SpectralGen.h"
 
 const float kPadding = 16;
 
-StringControl::StringControl(const SpectralGen& rSpectrum, IRECT pR, int handleRadius) 
+StringControl::StringControl(IRECT pR, int handleRadius) 
 	: IControl(pR, kPluckX) // note: we only set kPluckX as our param for the right-click context menu functionality
-	, spectrum(rSpectrum)
 	, mHandleRadius(handleRadius)
 	, mMouseX(-1)
 	, mMouseY(-1)
@@ -28,8 +28,9 @@ void StringControl::Draw(IGraphics& pGraphics)
     {
       const float freq = FrequencyOfString(b, numBands, bandFirst, bandLast, linLogLerp);
       const float x = Map((float)b, 0, numBands, mRECT.L + kPadding, mRECT.R - kPadding);
-      const float p = spectrum.getBandPhase(freq) + stringAnimation;
-      const float m = spectrum.getBandMagnitude(freq);
+      const int bidx = mSpectrum.freqToIndex(freq);
+      const float p = mSpectrum.phase[bidx] + stringAnimation;
+      const float m = mSpectrum.mag[bidx];
 
       const int g = (int)(255.f * Map(m, 0, kSpectralAmpMax, 0.4f, 1.f));
       const IColor color(255, g, g, g);
@@ -113,6 +114,21 @@ void StringControl::OnContextSelection(int itemSelected)
   }
 }
 
+void StringControl::OnMsgFromDelegate(int messageTag, int dataSize, const void* pData)
+{
+  if (dataSize == sizeof(Data))
+  {
+    const Data* data = (Data*)pData;
+    mSpectrum.specSize = data->specSize;
+    mSpectrum.sampleRate = data->sampleRate;
+    mSpectrum.bandWidth = data->bandWidth;
+    memcpy(mSpectrum.phase, data->phase, data->specSize * sizeof(float));
+    memcpy(mSpectrum.mag, data->mag, data->specSize * sizeof(float));
+
+    SetDirty(false);
+  }
+}
+
 void StringControl::SnapToMouse(float x, float y)
 {
 	const float pluckX = Clip(Map((float)x, mRECT.L + kPadding, mRECT.R - kPadding, 0, 1), 0.f, 1.f);
@@ -120,4 +136,28 @@ void StringControl::SnapToMouse(float x, float y)
 
   PluckCoords coords(pluckX, pluckY);
   GetDelegate()->SendArbitraryMsgFromUI(kPluckSpectrum, GetTag(), sizeof(PluckCoords), &coords);
+}
+
+// Called from DSP thread
+void StringControl::Capture::ProcessSpectrum(const SpectralGen& spectrum)
+{
+  mData.specSize = spectrum.getSpecSize();
+  mData.bandWidth = spectrum.getBandWidth();
+  mData.sampleRate = spectrum.sampleRate();
+  for (int i = 0; i < mData.specSize; ++i)
+  {
+    mData.phase[i] = spectrum.getBandPhase(i);
+    mData.mag[i] = spectrum.getBandMagnitude(i);
+  }
+  mTransmit = true;
+}
+
+// Called from DSP thread
+void StringControl::Capture::TransmitData(IEditorDelegate& dlg)
+{
+  if (mTransmit)
+  {
+    dlg.SendControlMsgFromDelegate(kStringControl, 0, sizeof(Data), &mData);
+    mTransmit = false;
+  }
 }
