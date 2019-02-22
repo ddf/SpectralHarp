@@ -26,6 +26,8 @@ public:
   void CreateContextMenu(IPopupMenu& contextMenu) override;
   void OnContextSelection(int itemSelected) override;
 
+  void SetDirty(bool triggerAction = true) override;
+
 private:
 	void ShowLabel();
 	void HideLabel();

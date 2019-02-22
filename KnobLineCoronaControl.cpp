@@ -163,4 +163,24 @@ void KnobLineCoronaControl::OnContextSelection(int itemSelected)
   }
 }
 
+void KnobLineCoronaControl::SetDirty(bool triggerAction /*= true*/)
+{
+  IKnobControlBase::SetDirty(triggerAction);
+
+  if (triggerAction && mLabelControl != nullptr && mValDisplayControl == mLabelControl)
+  {
+    const IParam* pParam = GetParam();
+
+    if (pParam)
+    {
+      WDL_String str;
+      pParam->GetDisplayForHost(str);
+      str.Append(" ");
+      str.Append(pParam->GetLabelForHost());
+      mLabelControl->SetStr(str.Get());
+    }
+  }
+}
+
+
 #pragma  endregion KnobLineCoronaControl
