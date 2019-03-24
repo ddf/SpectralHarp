@@ -141,7 +141,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 
 	//arguments are: name, defaultVal, minVal, maxVal, step, label, flags, group, shape.
   // if no shape is provided, then it will be linearaly shaped
-	GetParam(kVolume)->InitDouble("Volume", 25.0, 0.0, 100.0, 0.1, "%", 0, "", new IParam::ShapePowCurve(2.));
+	GetParam(kVolume)->InitDouble("Volume", 25.0, 0.0, 100.0, 0.1, "%", 0, "", IParam::ShapePowCurve(2.));
 	GetParam(kPitch)->InitDouble("Pitch", kPitchDefault, kPitchMin, kPitchMax, 0.1, "%");
 	GetParam(kDecay)->InitInt("Decay", kDecayDefault, kDecayMin, kDecayMax, "ms", 0);
 	GetParam(kCrush)->InitDouble("Crush", kCrushDefault, kCrushMin, kCrushMax, 0.1, "%");
