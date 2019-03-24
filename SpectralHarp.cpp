@@ -84,7 +84,7 @@ static const IColor shadowColor = IColor(200, 10, 10, 10);
 // text color for labels under the knobs
 static const IColor labelColor = IColor(255, 200, 200, 200);
 #ifdef OS_WIN
-static const int    labelSize  = 12;
+static const int    labelSize  = 10;
 #else
 static const int    labelSize  = 8;
 #endif
@@ -93,8 +93,8 @@ static const IColor titleColor = IColor(255, 60, 60, 60);
 static const char * titleString = PLUG_NAME " " PLUG_VERSION_STR;
 // #TODO how to we access these system fonts now? or do we just roll with Roboto?
 #if defined(OS_WIN)
-static const int titleSize = 16;
-static const char* titleFontName = nullptr; // "Segoe UI";
+static const int titleSize = 14;
+static const char* titleFontName = "Segoe UI";
 #else
 static const int titleSize = 12;
 static const char* titleFontName = nullptr; // "Helvetica Neue";
@@ -177,7 +177,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 #endif
     pGraphics->LoadFont(ROBOTTO_FN);
 
-    IText captionText = IText(labelSize, labelColor);
+    IText captionText = IText(labelSize, labelColor, titleFontName);
     captionText.mVAlign = IText::kVAlignTop;
     captionText.mTextEntryBGColor = backColor;
     captionText.mTextEntryFGColor = labelColor;

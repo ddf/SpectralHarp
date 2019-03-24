@@ -6,14 +6,14 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 	, mTextRect(pR)
 	, mScrollSpeed(scrollSpeed)
 {
-  mTextRect = pR.GetPadded(2, 1, -2, -1);
-  //pGraphics->MeasureText(pText, maxText, mTextRect);
+  mTextRect = pR.GetPadded(-5, -2, -5, -2);
+  //pGraphics->MeasureText(pText, maxText, mr);
 #ifdef OS_MAC
   mTextRect.B -= 1;
 #endif
-//  const int offset = (mRECT.H() - mTextRect.H()) / 2;
-//  mTextRect.T += offset;
-//  mTextRect.B += offset;
+  //const int offset = (pR.H() - mr.H()) / 2;
+  //mTextRect.T += offset;
+  //mTextRect.B += offset;
 
 	SetTextEntryLength((int)strlen(maxText) - 1);
 }
@@ -33,6 +33,9 @@ void TextBox::Draw(IGraphics& pGraphics)
 	pGraphics.DrawLine(borderColor, mRECT.R, bt, mRECT.R, bb);
 	pGraphics.DrawLine(borderColor, mRECT.R, bt, mRECT.R - bi, bt);
 	pGraphics.DrawLine(borderColor, mRECT.R, bb, mRECT.R - bi, bb);
+
+  // debugging to see exactly where the text rect is
+  //pGraphics.FillRect(COLOR_GREEN, mTextRect);
 
 	IRECT ourRect = mRECT;
 	mRECT = mTextRect;
@@ -58,11 +61,15 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
     // but when rendering with Cairo this causes the text entry text to be smaller than the rendered text.
     // So we increase text size by the that ratio.
     // Presumably this happens because Cairo renders text with Quartz, which is an Apple-provided API
+    double textSize = mText.mSize;
 #ifdef OS_MAC
-    mText.mSize = (int)round(mText.mSize*1.33333);
+    textSize = textSize*1.33333;
+#elif IGRAPHICS_CAIRO
+    // due to what I assume is a bug in the Cairo implementation, we need to increase the size of the font for the platform text entry to render correctly
+    textSize = textSize * 1.15;
 #endif
     // Platform text entry display does not take into account draw scale, so we have to do that here.
-    mText.mSize = (int)round(mText.mSize*GetUI()->GetDrawScale());
+    mText.mSize = (int)round(textSize*GetUI()->GetDrawScale());
     PromptUserInput(promptRect);
 		mText = ourText;
 	}
