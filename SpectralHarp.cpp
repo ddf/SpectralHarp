@@ -81,23 +81,15 @@ static const IColor backColor = IColor(255, 15, 15, 15);
 static const IColor panelColor = IColor(255, 30, 30, 30);
 // color of shadow cast on strings by the knob panel
 static const IColor shadowColor = IColor(200, 10, 10, 10);
+static const char * interfaceFontId = "interfaceFont";
+static const char * interfaceFontName = ROBOTTO_FN;
 // text color for labels under the knobs
 static const IColor labelColor = IColor(255, 200, 200, 200);
-#ifdef OS_WIN
 static const int    labelSize  = 12;
-#else
-static const int    labelSize  = 8;
-#endif
 // text style
 static const IColor titleColor = IColor(255, 60, 60, 60);
 static const char * titleString = PLUG_NAME " " PLUG_VERSION_STR;
-#if defined(OS_WIN)
 static const int titleSize = 16;
-static const char* titleFontName = "Segoe UI";
-#else
-static const int titleSize = 12;
-static const char* titleFontName = "Helvetica Neue";
-#endif
 
 // spectrum selection colors
 static const IColor selectionBackColor = backColor;
@@ -174,9 +166,9 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 #if APP_API
     pGraphics->AttachControl(new MidiMapper(), kMidiMapper);
 #endif
-    pGraphics->LoadFont(titleFontName, titleFontName, kTextStyleNormal);
+    pGraphics->LoadFont(interfaceFontId, interfaceFontName);
 
-    IText captionText = IText(labelSize, labelColor, titleFontName);
+    IText captionText = IText(labelSize, labelColor, interfaceFontId);
     captionText.mVAlign = IText::kVAlignTop;
     captionText.mTextEntryBGColor = backColor;
     captionText.mTextEntryFGColor = labelColor;
@@ -273,7 +265,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 
     // logooo
     {
-      IText titleText(titleSize, titleColor, titleFontName);
+      IText titleText(titleSize, titleColor, interfaceFontId);
       titleText.mAlign = IText::kAlignNear;
       titleText.mVAlign = IText::kVAlignTop;
       IRECT titleRect(kTitleX, kCaptionT, kTitleX + 150, PLUG_HEIGHT);
