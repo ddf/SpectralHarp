@@ -7,13 +7,14 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 	, mScrollSpeed(scrollSpeed)
 {
   mTextRect = pR.GetPadded(-5, -2, -5, -2);
-  //pGraphics->MeasureText(pText, maxText, mr);
+  IRECT mr;
+  pGraphics->MeasureText(pText, maxText, mr);
 #ifdef OS_MAC
   mTextRect.B -= 1;
 #endif
-  //const int offset = (pR.H() - mr.H()) / 2;
-  //mTextRect.T += offset;
-  //mTextRect.B += offset;
+  const int offset = (mTextRect.H() - mr.H()) / 2;
+  mTextRect.T += offset;
+  mTextRect.B -= offset;
 
 	SetTextEntryLength((int)strlen(maxText) - 1);
 }
