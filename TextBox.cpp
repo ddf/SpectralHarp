@@ -7,14 +7,16 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 	, mScrollSpeed(scrollSpeed)
 {
   mTextRect = pR.GetPadded(-5, -2, -5, -2);
+  // windows native text edits don't do vertical alignment
+  // so we have to clamp the text rect to the height of the text
+  // and center it manually so that our text and native text are vertically aligned
+#ifdef OS_WIN
   IRECT mr;
   pGraphics->MeasureText(pText, maxText, mr);
-#ifdef OS_MAC
-  mTextRect.B -= 1;
-#endif
   const int offset = (mTextRect.H() - mr.H()) / 2;
   mTextRect.T += offset;
   mTextRect.B -= offset;
+#endif
 
 	SetTextEntryLength((int)strlen(maxText) - 1);
 }
