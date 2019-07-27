@@ -1,6 +1,7 @@
 #pragma  once
 
 #include "IControl.h"
+#include "IGraphicsConstants.h"
 #include "MidiMapper.h"
 
 class KnobLineCoronaControl : public IKnobControlBase
@@ -10,7 +11,7 @@ public:
 						  const IColor& lineColor, const IColor& coronaColor,
 						  float lineThickness = 1.0f, double innerRadius = 0.0, double outerRadius = 0.0,
 						  double minAngle = -0.75 * PI, double maxAngle = 0.75 * PI,
-						  EDirection direction = kVertical, double gearing = DEFAULT_GEARING);
+						  EDirection direction = EDirection::Vertical, double gearing = DEFAULT_GEARING);
 	
 	void Draw(IGraphics& pGraphics) override;
 
@@ -26,11 +27,12 @@ public:
   void CreateContextMenu(IPopupMenu& contextMenu) override;
   void OnContextSelection(int itemSelected) override;
 
-  void SetDirty(bool triggerAction = true) override;
+  void SetDirty(bool triggerAction = true, int valIdx = kNoValIdx) override;
 
 private:
 	void ShowLabel();
 	void HideLabel();
+  void UpdateLabel();
 	
 	float		  mCX, mCY;
 	bool		  mHasMouse;

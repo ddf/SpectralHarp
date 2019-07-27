@@ -32,7 +32,7 @@ KnobLineCoronaControl::KnobLineCoronaControl(IRECT pR, int paramIdx,
 
 void KnobLineCoronaControl::Draw(IGraphics& pGraphics)
 {
-	float v = mMinAngle + (float)mValue * (mMaxAngle - mMinAngle);
+	float v = mMinAngle + (float)GetValue() * (mMaxAngle - mMinAngle);
   pGraphics.DrawArc(mCoronaColor, mCX, mCY, mOuterRadius, mMinAngle*kRadToDeg, v*kRadToDeg, 0, mLineThickness);
   IColor color(mCoronaColor.A, mCoronaColor.R / 2, mCoronaColor.G / 2, mCoronaColor.B / 2);
   pGraphics.DrawArc(color, mCX, mCY, mOuterRadius, v*kRadToDeg, mMaxAngle*kRadToDeg, 0, mLineThickness);
@@ -62,9 +62,11 @@ void KnobLineCoronaControl::OnMouseDrag(float x, float y, float dX, float dY, co
 #else
 	if (pMod.C || pMod.S) gearing *= 10.0;
 #endif
-	
-	mValue += (double)dY / (double)(mRECT.T - mRECT.B) / gearing;
-	mValue += (double)dX / (double)(mRECT.R - mRECT.L) / gearing;
+
+  float value = GetValue();
+	value += (double)dY / (double)(mRECT.T - mRECT.B) / gearing;
+	value += (double)dX / (double)(mRECT.R - mRECT.L) / gearing;
+  SetValue(value);
 	
 	SetDirty();
 }
@@ -106,19 +108,34 @@ void KnobLineCoronaControl::ShowLabel()
 			labelRect = targetRect;
       mLabelControl->SetTargetRECT(targetRect);
 		}
-		SetValDisplayControl(mLabelControl);
-		SetDirty();
+    UpdateLabel();
 	}
 }
 
 void KnobLineCoronaControl::HideLabel()
 {
-	SetValDisplayControl(nullptr);
 	if (mLabelControl != nullptr)
 	{
 		mLabelControl->SetStr(mLabelString.Get());
-		SetDirty(false);
+    SetDirty(false);
 	}
+}
+
+void KnobLineCoronaControl::UpdateLabel()
+{
+  if (mLabelControl != nullptr)
+  {
+    const IParam* pParam = GetParam();
+
+    if (pParam)
+    {
+      WDL_String str;
+      pParam->GetDisplayForHost(str);
+      str.Append(" ");
+      str.Append(pParam->GetLabelForHost());
+      mLabelControl->SetStr(str.Get());
+    }
+  }
 }
 
 void KnobLineCoronaControl::SetLabelControl(ITextControl* control, const char * label, bool bShared)
@@ -150,7 +167,7 @@ void KnobLineCoronaControl::CreateContextMenu(IPopupMenu& contextMenu)
   MidiMapper* control = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
   if (control != nullptr)
   {
-    control->CreateContextMenu(contextMenu, mParamIdx);
+    control->CreateContextMenu(contextMenu, GetParamIdx());
   }
 }
 
@@ -163,22 +180,13 @@ void KnobLineCoronaControl::OnContextSelection(int itemSelected)
   }
 }
 
-void KnobLineCoronaControl::SetDirty(bool triggerAction /*= true*/)
+void KnobLineCoronaControl::SetDirty(bool triggerAction /*= true*/, int valIdx)
 {
-  IKnobControlBase::SetDirty(triggerAction);
+  IKnobControlBase::SetDirty(triggerAction, valIdx);
 
-  if (triggerAction && mLabelControl != nullptr && mValDisplayControl == mLabelControl)
+  if (triggerAction && mHasMouse)
   {
-    const IParam* pParam = GetParam();
-
-    if (pParam)
-    {
-      WDL_String str;
-      pParam->GetDisplayForHost(str);
-      str.Append(" ");
-      str.Append(pParam->GetLabelForHost());
-      mLabelControl->SetStr(str.Get());
-    }
+    UpdateLabel();
   }
 }
 

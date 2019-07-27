@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ImportGroup Label="PropertySheets">
-    <Import Project="$(SolutionDir)..\..\common-win.props" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros">
+    <IPLUG2_ROOT>$(ProjectDir)..\..\..</IPLUG2_ROOT>
     <BINARY_NAME>SpectralHarp</BINARY_NAME>
     <EXTRA_ALL_DEFS>IGRAPHICS_CAIRO;WINDOWS</EXTRA_ALL_DEFS>
     <EXTRA_DEBUG_DEFS />
@@ -15,8 +13,11 @@
     <COPY_VST2>0</COPY_VST2>
     <VST3_32_PATH>S:\VST</VST3_32_PATH>
     <VST3_64_PATH>S:\VST\x64</VST3_64_PATH>
-    <CREATE_BUNDLE_SCRIPT>$(SolutionDir)..\..\Scripts\create_bundle.bat</CREATE_BUNDLE_SCRIPT>
+    <CREATE_BUNDLE_SCRIPT>$(IPLUG2_ROOT)\Scripts\create_bundle.bat</CREATE_BUNDLE_SCRIPT>
   </PropertyGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(IPLUG2_ROOT)\common-win.props" />
+  </ImportGroup>
   <PropertyGroup>
     <TargetName>$(BINARY_NAME)</TargetName>
   </PropertyGroup>

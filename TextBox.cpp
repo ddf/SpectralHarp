@@ -44,7 +44,7 @@ void TextBox::Draw(IGraphics& pGraphics)
 	mRECT = mTextRect;
 	if (IsGrayed())
 	{
-		GetParam()->GetDisplayForHost(mValue, true, mStr, false);
+		GetParam()->GetDisplayForHost(GetValue(), true, mStr, false);
 		ITextControl::Draw(pGraphics);
 	}
 	else
@@ -70,22 +70,24 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
 
 void TextBox::OnMouseWheel(float x, float y, const IMouseMod& pMod, float d)
 {
+  float value = GetValue();
 #ifdef PROTOOLS
 	if (pMod->C)
 	{
-		mValue += GetParam()->GetStep() * mScrollSpeed/10 * d;
+		value += GetParam()->GetStep() * mScrollSpeed/10 * d;
 	}
 #else
 	if (pMod.C || pMod.S)
 	{
-		mValue += GetParam()->GetStep() * mScrollSpeed/10 * d;
+		value += GetParam()->GetStep() * mScrollSpeed/10 * d;
 	}
 #endif
 	else
 	{
-		mValue += GetParam()->GetStep() * mScrollSpeed * d;
+		value += GetParam()->GetStep() * mScrollSpeed * d;
 	}
 
+  SetValue(value);
 	SetDirty();
 }
 
@@ -101,7 +103,7 @@ void TextBox::CreateContextMenu(IPopupMenu& contextMenu)
   MidiMapper* mapper = dynamic_cast<MidiMapper*>(GetUI()->GetControlWithTag(kMidiMapper));
   if (mapper != nullptr)
   {
-    mapper->CreateContextMenu(contextMenu, mParamIdx);
+    mapper->CreateContextMenu(contextMenu, GetParamIdx());
   }
 }
 

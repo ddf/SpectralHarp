@@ -169,7 +169,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
     pGraphics->LoadFont(interfaceFontId, interfaceFontName);
 
     IText captionText = IText(labelSize, labelColor, interfaceFontId);
-    captionText.mVAlign = IText::kVAlignTop;
+    captionText.mVAlign = EVAlign::Top;
     captionText.mTextEntryBGColor = backColor;
     captionText.mTextEntryFGColor = labelColor;
 
@@ -188,8 +188,8 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
     // string Hz labels
     {
       IText bandLabel = captionText;
-      bandLabel.mAlign = IText::kAlignCenter;
-      bandLabel.mVAlign = IText::kVAlignMiddle;
+      bandLabel.mAlign = EAlign::Center;
+      bandLabel.mVAlign = EVAlign::Middle;
       const int capMargin = 24;
       const int textBoxTop = kSpectrumSelect_Y;
       //bandLabel.mAlign = IText::kAlignNear;
@@ -210,11 +210,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
     // spectrum selection UI
     {
       IRECT rect = MakeIRect(kSpectrumSelect);
-      SpectrumHandle* low = new SpectrumHandle(kBandFirst);
-      SpectrumHandle* high = new SpectrumHandle(kBandLast);
-      pGraphics->AttachControl(new SpectrumSelection(rect, low, high, selectionBackColor, selectionSelectColor, selectionHandleColor));
-      pGraphics->AttachControl(low);
-      pGraphics->AttachControl(high);
+      pGraphics->AttachControl(new SpectrumSelection(rect, kBandFirst, kBandLast, selectionBackColor, selectionSelectColor, selectionHandleColor));
 
       rect.T += kSpectrumSelect_H + 3;
       rect.B += kSpectrumSelect_H + 3;
@@ -266,8 +262,8 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
     // logooo
     {
       IText titleText(titleSize, titleColor, interfaceFontId);
-      titleText.mAlign = IText::kAlignNear;
-      titleText.mVAlign = IText::kVAlignTop;
+      titleText.mAlign = EAlign::Near;
+      titleText.mVAlign = EVAlign::Top;
       IRECT titleRect(kTitleX, kCaptionT, kTitleX + 150, PLUG_HEIGHT);
       pGraphics->AttachControl(new ITextControl(titleRect, titleString, titleText));
     }

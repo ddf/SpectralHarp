@@ -2,20 +2,14 @@
 #include "MidiMapper.h"
 #include "Params.h"
 
-SpectrumSelection::SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle) 
-	: IControl(rect)
+SpectrumSelection::SpectrumSelection(IRECT rect, int lowParamIdx, int highParamIdx, IColor back, IColor select, IColor handle) 
+  : IControl(rect, { lowParamIdx, highParamIdx })
 	, backgroundColor(back)
 	, selectedColor(select)
 	, handleColor(handle)
 	, handleWidth(16)
 	, dragParam(kDragNone)
 {
-  mHandles[0] = lowHandle;
-  mHandles[1] = highHandle;
-
-  lowHandle->SetParent(this);
-  highHandle->SetParent(this);
-
 	const int handT = rect.T;
 	const int handB = rect.B;
 	handles[kDragLeft] = IRECT(rect.L, handT, rect.L + handleWidth, handB);
@@ -39,7 +33,7 @@ void SpectrumSelection::OnMouseDown(float x, float y, const IMouseMod& pMod)
       {
         if (GetUI()->GetControl(i) == this)
         {
-          contextParam = mHandles[kDragLeft]->ParamIdx();
+          contextParam = GetParamIdx(kDragLeft);
           GetUI()->ReleaseMouseCapture();
           GetUI()->PopupHostContextMenuForParam(i, contextParam, x, y);
           return;
@@ -61,7 +55,7 @@ void SpectrumSelection::OnMouseDown(float x, float y, const IMouseMod& pMod)
       {
         if (GetUI()->GetControl(i) == this)
         {
-          contextParam = mHandles[kDragRight]->ParamIdx();
+          contextParam = GetParamIdx(kDragRight);
           GetUI()->ReleaseMouseCapture();
           GetUI()->PopupHostContextMenuForParam(i, contextParam, x, y);
           return;
@@ -207,14 +201,14 @@ void SpectrumSelection::SetParamFromHandle(const int paramIdx)
 	float mw = handles[paramIdx].MW();
 	int hw = handleWidth / 2;
   float value = Map(mw, mRECT.L + hw, mRECT.R - hw, 0, 1);
-  mHandles[paramIdx]->SetValueFromUserInput(value);
+  SetValueFromUserInput(value, paramIdx);
 }
 
 void SpectrumSelection::SetHandleFromParam(const int paramIdx)
 {
-  int id = mHandles[kDragLeft]->ParamIdx() == paramIdx ? kDragLeft : kDragRight;
+  int id = GetParamIdx(kDragLeft) == paramIdx ? kDragLeft : kDragRight;
 	int hw = handleWidth / 2;
-	int mw = (int)roundf(Map(mHandles[id]->GetValue(), 0, 1, mRECT.L+hw, mRECT.R-hw));
+	int mw = (int)roundf(Map(GetValue(id), 0, 1, mRECT.L+hw, mRECT.R-hw));
 	handles[id].L = mw - hw;
 	handles[id].R = mw + hw;
 	switch(id)
@@ -248,17 +242,4 @@ void SpectrumArrows::Draw(IGraphics& pGraphics)
 	// right arrow
 	pGraphics.DrawLine(mColor, mRECT.R - a, mRECT.T, mRECT.R, mRECT.T + a);
 	pGraphics.DrawLine(mColor, mRECT.R - a, mRECT.T, mRECT.R - a - a, mRECT.T + a);
-}
-
-void SpectrumHandle::Draw(IGraphics& g)
-{
-}
-
-void SpectrumHandle::SetValueFromDelegate(double value)
-{
-  IControl::SetValueFromDelegate(value);
-  if (mParent != nullptr)
-  {
-    mParent->SetAuxParamValueFromPlug(mParamIdx, value);
-  }
 }

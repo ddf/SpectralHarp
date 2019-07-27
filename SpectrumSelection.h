@@ -1,26 +1,10 @@
 #pragma once
 #include "IControl.h"
 
-class SpectrumSelection;
-
-class SpectrumHandle : public IControl
-{
-public:
-  SpectrumHandle(int paramId) : IControl(IRECT(), paramId), mParent(nullptr) {}
-
-  void SetParent(SpectrumSelection* parent) { mParent = parent; }
-
-  virtual void Draw(IGraphics& g) override;
-  virtual void SetValueFromDelegate(double value) override;
-
-private:
-  SpectrumSelection* mParent;
-};
-
 class SpectrumSelection : public IControl
 {
 public:
-	SpectrumSelection(IRECT rect, SpectrumHandle* lowHandle, SpectrumHandle* highHandle, IColor back, IColor select, IColor handle);
+	SpectrumSelection(IRECT rect, int lowParamIdx, int highParamIdx, IColor back, IColor select, IColor handle);
 	~SpectrumSelection();
 
 	virtual void OnMouseDown(float x, float y, const IMouseMod& pMod) override;
@@ -37,8 +21,6 @@ private:
 	void DrawHandle(IGraphics& pGraphics, const IRECT& handle);
 	void SetParamFromHandle(const int paramIdx);
 	void SetHandleFromParam(const int paramIdx);
-
-  SpectrumHandle* mHandles[2];
 
 	IColor backgroundColor;
 	IColor selectedColor;
