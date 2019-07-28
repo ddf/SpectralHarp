@@ -17,6 +17,7 @@ SpectralGen::SpectralGen()
 , decay( *this, CONTROL, 0 )
 , brightness( *this, CONTROL, 0 )
 , spread( *this, CONTROL, 0 )
+, shift( *this, CONTROL, 0 )
 , inverseSize(0)
 , specSize(0)
 , outputSize(0)
@@ -57,6 +58,7 @@ void SpectralGen::reset()
 		inverseSize = bufferSize;
 		specSize = inverseSize / 2;
 		outputSize = inverseSize * 2;
+    // #TODO figure out how to do bigger overlap correctly. this could be as high as 32.
 		overlapSize = inverseSize / 2;
 
 		fft = new Minim::FFT(inverseSize, sampleRate());
@@ -184,6 +186,8 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 		const float falloff = brightness.getLastValue();
 		const float halfSpread = spread.getLastValue() * 0.5f;
 
+    const float freqMult = 1.0f + shift.getLastValue();
+
 		// we *do not* memset specMag because it will be directly set once we accumulate all amplitudes.
 		// this keeps it more consistent for rendering the strings in the UI
 		memset(specSpread, 0, specSize * sizeof(float));
@@ -197,11 +201,12 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 			if (b.decay > 0)
 			{				
 				const float a = b.decay*b.amplitude;
-				const float bandFreq = fft->indexToFreq(i);
+        const float bandFreq = fft->indexToFreq(i) * freqMult;
 				// get low and high frequencies for spread
+        const int midx = freqToIndex(bandFreq);
 				const int lidx = freqToIndex(bandFreq - halfSpread);
 				const int hidx = freqToIndex(bandFreq + halfSpread);
-				addSinusoidWithSpread(i, a, lidx, hidx);
+				addSinusoidWithSpread(midx, a, lidx, hidx);
 			}
         }
 		
@@ -235,6 +240,10 @@ void SpectralGen::uGenerate(float* out, const int numChannels)
 
 			// copy accumulated result into the magnitude array, scaling by our max amplitude
 			specMag[i] = fmin(specReal[i] * spectralMagnitude, spectralMagnitude);
+
+      // #TODO probably sounds better to do the pitch-shift here?
+      // At this point we have gAnaMagn and gAnaFreq from
+      // http://blogs.zynaptiq.com/bernsee/pitch-shifting-using-the-ft/
 			
 			// done with this band, we can construct the complex representation.
 			specReal[i] = specMag[i] * bands[i].real[phaseIdx];

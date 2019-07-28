@@ -39,6 +39,7 @@ public:
 	// the spread, in Hz, for each plucked frequency,
 	// this smears the spectral content outward from the frequency with an exponential falloff
 	UGenInput spread;
+  UGenInput shift;
     
 protected:
 

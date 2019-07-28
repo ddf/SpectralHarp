@@ -3,6 +3,7 @@
 #include "IPlug_include_in_plug_hdr.h"
 
 #include "Params.h"
+#include "Smoothers.h"
 
 #include "SpectralGen.h"
 #include "BitCrush.h"
@@ -65,6 +66,7 @@ private:
 	float					  mPluckY;
 	float					  mSpread;
 	float					  mBrightness;
+  LogParamSmooth<float>  mShift;
 	SpectralGen               specGen;
 	Minim::BitCrush           bitCrush;
 	Minim::TickRate           tickRate;

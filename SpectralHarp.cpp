@@ -116,6 +116,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
 	, mPluckY(0)
 	, mSpread(0)
 	, mBrightness(0)
+  , mShift(10, 0)
 	, specGen()
 	, bitCrush(24, 44100)
 	, tickRate(1)
@@ -287,7 +288,8 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
   tickRate.value.setLastValue((float)GetParam(kPitch)->Value() / 100.0f);
   tickRate.setInterpolation(true);
 
-  specGen.patch(tickRate).patch(bitCrush);
+  //specGen.patch(tickRate).patch(bitCrush);
+  specGen.patch(bitCrush);
   bitCrush.setAudioChannelCount(1);
   bitCrush.setSampleRate(44100);
 #endif
@@ -410,9 +412,11 @@ void PLUG_CLASS_NAME::ProcessBlock(sample** inputs, sample** outputs, int nFrame
 		bitCrush.bitRate.setLastValue(crush);
 		tickRate.value.setLastValue(rate);
 		// slower tick rate means we have to decrease decay by same ratio so Pitch doesn't change Decay duration
-		specGen.decay.setLastValue(decay * rate);
+		specGen.decay.setLastValue(decay);
 		specGen.brightness.setLastValue(mBrightness);
 		specGen.spread.setLastValue(mSpread);
+    float shift = mShift.Process(-1.f + rate);
+    specGen.shift.setLastValue(shift);
 
 		bitCrush.tick(result, 1);
 #ifdef APP_API
@@ -448,6 +452,7 @@ void PLUG_CLASS_NAME::OnReset()
 {
 	TRACE;
 	//IMutexLock lock(this);
+  mShift.SetSmoothTime(100, GetSampleRate());
 	specGen.reset();
 	bitCrush.setSampleRate((float)GetSampleRate());
 	mMidiQueue.Resize(GetBlockSize());
