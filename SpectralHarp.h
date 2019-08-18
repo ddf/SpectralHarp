@@ -12,10 +12,13 @@
 
 #include <vector>
 
-class PLUG_CLASS_NAME : public IPlug
+using namespace iplug;
+using namespace igraphics;
+
+class PLUG_CLASS_NAME : public Plugin
 {
 public:
-	PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo);
+	PLUG_CLASS_NAME(const InstanceInfo& instanceInfo);
 
 #if IPLUG_DSP
 	void OnReset() override;

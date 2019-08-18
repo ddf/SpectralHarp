@@ -1,6 +1,9 @@
 #pragma once
 #include "IControl.h"
 
+using namespace iplug;
+using namespace igraphics;
+
 class SpectrumSelection : public IControl
 {
 public:

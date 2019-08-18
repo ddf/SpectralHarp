@@ -107,8 +107,8 @@ float expoEaseOut(float t, float b, float c, float d)
 }
 #endif
 
-PLUG_CLASS_NAME::PLUG_CLASS_NAME(IPlugInstanceInfo instanceInfo)
-	: IPLUG_CTOR(kNumParams, kNumPrograms, instanceInfo)
+PLUG_CLASS_NAME::PLUG_CLASS_NAME(const InstanceInfo& instanceInfo)
+	: Plugin(instanceInfo, MakeConfig(kNumParams, kNumPrograms))
 	, mIsLoading(false)
 #if IPLUG_DSP
 	, mGain(1.)
@@ -303,7 +303,7 @@ void PLUG_CLASS_NAME::InitBandParam(const char * name, const int paramIdx, const
 
 void PLUG_CLASS_NAME::OnUIOpen()
 {
-  IPlug::OnUIOpen();
+  Plugin::OnUIOpen();
 
 #if APP_API
   // read control mappings from the INI if we are running standalone

@@ -2,6 +2,9 @@
 
 #include "IControl.h"
 
+using namespace iplug;
+using namespace igraphics;
+
 class TextBox : public ICaptionControl
 {
 public:

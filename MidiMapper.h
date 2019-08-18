@@ -3,6 +3,9 @@
 #include "IControl.h"
 #include "Params.h"
 
+using namespace iplug;
+using namespace igraphics;
+
 // class that implements Midi Learn functionality in a generic way for use by our IControl subclasses.
 // they will delegate the callback work by retrieving the single instance of this control using GetControlWithTag.
 class MidiMapper : public IControl

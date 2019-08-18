@@ -275,10 +275,32 @@
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\base\source\timer.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\base\source\updatehandler.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\conststringtable.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\doc.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\falignpop.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\falignpush.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\fplatform.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\fstrdefs.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ftypes.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\funknown.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\futils.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\fvariant.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\geoconstants.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ibstream.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\icloneable.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ierrorcontext.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ipersistent.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ipluginbase.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\istringresult.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\iupdatehandler.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\keycodes.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\pluginbasefwd.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\smartpointer.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\typesizecheck.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ucolorspec.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ustring.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\common\memorystream.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\common\pluginview.h" />
+    <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\main\pluginfactory.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\vst\vstaudioeffect.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\vst\vstbus.h" />
     <ClInclude Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\vst\vstcomponent.h" />
@@ -333,8 +355,11 @@
     <ClInclude Include="..\..\..\IPlug\IPlug_include_in_plug_hdr.h" />
     <ClInclude Include="..\..\..\IPlug\IPlug_include_in_plug_src.h" />
     <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3.h" />
+    <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_Common.h" />
+    <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_ControllerBase.h" />
     <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_Parameter.h" />
-    <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_view.h" />
+    <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_ProcessorBase.h" />
+    <ClInclude Include="..\..\..\IPlug\VST3\IPlugVST3_View.h" />
     <ClInclude Include="..\KnobLineCoronaControl.h" />
     <ClInclude Include="..\MidiMapper.h" />
     <ClInclude Include="..\Params.h" />
@@ -361,10 +386,11 @@
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\coreiids.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\funknown.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\pluginterfaces\base\ustring.cpp" />
+    <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\common\commoniids.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\common\memorystream.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\common\pluginview.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\main\dllmain.cpp" />
-    <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\main\pluginfactoryvst3.cpp" />
+    <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\main\pluginfactory.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\vst\vstaudioeffect.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\vst\vstbus.cpp" />
     <ClCompile Include="..\..\..\Dependencies\IPlug\VST3_SDK\public.sdk\source\vst\vstcomponent.cpp" />
@@ -383,16 +409,10 @@
     <ClCompile Include="..\..\..\IPlug\IPlugParameter.cpp" />
     <ClCompile Include="..\..\..\IPlug\IPlugPaths.cpp" />
     <ClCompile Include="..\..\..\IPlug\IPlugPluginBase.cpp" />
-    <ClCompile Include="..\..\..\IPlug\IPlugProcessor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tracer|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tracer|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\..\IPlug\IPlugProcessor.cpp" />
     <ClCompile Include="..\..\..\IPlug\IPlugTimer.cpp" />
     <ClCompile Include="..\..\..\IPlug\VST3\IPlugVST3.cpp" />
+    <ClCompile Include="..\..\..\IPlug\VST3\IPlugVST3_ProcessorBase.cpp" />
     <ClCompile Include="..\..\minim-cpp\src\AudioSource.cpp" />
     <ClCompile Include="..\..\minim-cpp\src\FFT.cpp" />
     <ClCompile Include="..\..\minim-cpp\src\FourierTransform.cpp" />

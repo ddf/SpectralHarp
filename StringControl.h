@@ -2,6 +2,9 @@
 #include "IControl.h"
 #include "Params.h"
 
+using namespace iplug;
+using namespace igraphics;
+
 class SpectralGen;
 
 class StringControl : public IControl

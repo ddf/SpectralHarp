@@ -4,6 +4,9 @@
 #include "IGraphicsConstants.h"
 #include "MidiMapper.h"
 
+using namespace iplug;
+using namespace igraphics;
+
 class KnobLineCoronaControl : public IKnobControlBase
 {
 public:
