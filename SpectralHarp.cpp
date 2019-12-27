@@ -162,6 +162,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(const InstanceInfo& instanceInfo)
 
     pGraphics->HandleMouseOver(true);
     pGraphics->AttachCornerResizer();
+    pGraphics->AttachTextEntryControl();
     pGraphics->AttachPanelBackground(backColor);
     // only use the midi mapper in the App because otherwise we leave mapping up to the DAW
 #if APP_API

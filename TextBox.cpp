@@ -7,17 +7,6 @@ TextBox::TextBox(IRECT pR, int paramIdx, const IText& pText, IGraphics* pGraphic
 	, mScrollSpeed(scrollSpeed)
 {
   mTextRect = pR.GetPadded(-5, -2, -5, -2);
-  // windows native text edits don't do vertical alignment
-  // so we have to clamp the text rect to the height of the text
-  // and center it manually so that our text and native text are vertically aligned
-#ifdef OS_WIN
-  IRECT mr;
-  pGraphics->MeasureText(pText, maxText, mr);
-  const int offset = (mTextRect.H() - mr.H()) / 2;
-  mTextRect.T += offset;
-  mTextRect.B -= offset;
-#endif
-
 	SetTextEntryLength((int)strlen(maxText) - 1);
 }
 
@@ -25,9 +14,9 @@ void TextBox::Draw(IGraphics& pGraphics)
 {
 	pGraphics.FillRect(mText.mTextEntryBGColor, mRECT);
 	IColor& borderColor = mText.mTextEntryFGColor;
-	const int bi = 2;
-	const int bt = mRECT.T;
-	const int bb = mRECT.B - 1;
+	const float bi = 2;
+	const float bt = mRECT.T;
+	const float bb = mRECT.B - 1;
 	// bracket on left side
 	pGraphics.DrawLine(borderColor, mRECT.L, bt, mRECT.L, bb);
 	pGraphics.DrawLine(borderColor, mRECT.L, bt, mRECT.L + bi, bt);
@@ -58,19 +47,13 @@ void TextBox::OnMouseDown(float x, float y, const IMouseMod& pMod)
 {
 	if (pMod.L)
 	{
-		IText ourText = mText;
-		IRECT promptRect = mTextRect;
-    double textSize = mText.mSize;
-    // Platform text entry display does not take into account draw scale, so we have to do that here.
-    mText.mSize = (int)round(textSize*GetUI()->GetDrawScale());
-    PromptUserInput(promptRect);
-		mText = ourText;
+    PromptUserInput(mTextRect);
 	}
 }
 
 void TextBox::OnMouseWheel(float x, float y, const IMouseMod& pMod, float d)
 {
-  float value = GetValue();
+  double value = GetValue();
 #ifdef PROTOOLS
 	if (pMod->C)
 	{
