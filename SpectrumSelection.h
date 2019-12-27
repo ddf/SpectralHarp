@@ -18,7 +18,7 @@ public:
   void OnContextSelection(int itemSelected) override;
   virtual void Draw(IGraphics& pGraphics) override;
 	
-	void SetAuxParamValueFromPlug(int auxParamIdx, double value);
+  void SetValueFromDelegate(double value, int valIdx /* = 0 */) override;
 
 private:
 	void DrawHandle(IGraphics& pGraphics, const IRECT& handle);

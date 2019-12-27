@@ -183,6 +183,12 @@ void SpectrumSelection::Draw(IGraphics& pGraphics)
 	DrawHandle(pGraphics, handles[kDragRight]);
 }
 
+void SpectrumSelection::SetValueFromDelegate(double value, int valIdx)
+{
+  IControl::SetValueFromDelegate(value, valIdx);
+  SetHandleFromParam(GetParamIdx(valIdx));
+}
+
 void SpectrumSelection::DrawHandle(IGraphics& pGraphics, const IRECT& handle)
 {
 	float x[4] = { handle.MW(), handle.R, handle.MW(), handle.L };
@@ -221,12 +227,6 @@ void SpectrumSelection::SetHandleFromParam(const int paramIdx)
 		handles[kDragBoth].R = mw;
 		break;
 	}
-}
-
-void SpectrumSelection::SetAuxParamValueFromPlug(int auxParamIdx, double value)
-{
-	SetHandleFromParam(auxParamIdx);
-  SetDirty();
 }
 
 void SpectrumArrows::Draw(IGraphics& pGraphics)
