@@ -42,7 +42,7 @@ void TextBox::Draw(IGraphics& pGraphics)
 
 	IRECT ourRect = mRECT;
 	mRECT = mTextRect;
-	if (IsGrayed())
+	if (IsDisabled())
 	{
 		GetParam()->GetDisplayForHost(GetValue(), true, mStr, false);
 		ITextControl::Draw(pGraphics);
@@ -91,11 +91,11 @@ void TextBox::OnMouseWheel(float x, float y, const IMouseMod& pMod, float d)
 	SetDirty();
 }
 
-void TextBox::GrayOut(bool gray)
+void TextBox::SetDisabled(bool disabled)
 {
-	ICaptionControl::GrayOut(gray);
+	ICaptionControl::SetDisabled(disabled);
 
-  mText.mFGColor.A = gray ? 128 : 255;
+  mText.mFGColor.A = disabled ? 128 : 255;
 }
 
 void TextBox::CreateContextMenu(IPopupMenu& contextMenu)

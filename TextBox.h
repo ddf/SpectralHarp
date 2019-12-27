@@ -15,7 +15,7 @@ public:
 	void OnMouseWheel(float x, float y, const IMouseMod& pMod, float d) override;
 
 
-	virtual void GrayOut(bool gray) override;
+	virtual void SetDisabled(bool disable) override;
 
   void CreateContextMenu(IPopupMenu& contextMenu) override;
   void OnContextSelection(int itemSelected) override;
