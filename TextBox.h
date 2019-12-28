@@ -20,6 +20,8 @@ public:
   void CreateContextMenu(IPopupMenu& contextMenu) override;
   void OnContextSelection(int itemSelected) override;
 
+  void SetValueFromUserInput(double value, int valIdx = 0) override;
+
 private:
 	bool  mShowParamUnits;
 	float mScrollSpeed;

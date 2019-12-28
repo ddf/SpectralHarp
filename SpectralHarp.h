@@ -64,6 +64,8 @@ private:
 	bool 					  mIsLoading;
 
 #if IPLUG_DSP
+  float           mBandFirst;
+  float           mBandLast;
 	float					  mGain;
 	float					  mPluckX;
 	float					  mPluckY;

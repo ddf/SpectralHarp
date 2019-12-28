@@ -98,3 +98,35 @@ void TextBox::OnContextSelection(int itemSelected)
     mapper->OnContextSelection(itemSelected);
   }
 }
+
+void TextBox::SetValueFromUserInput(double value, int valIdx /*= 0*/)
+{
+  const auto plug = GetDelegate();
+  // possibly clamp the value if we are setting Band First or Band Last
+  switch (GetParamIdx(valIdx))
+  {
+    case kBandFirst:
+    {
+      const double bandFirst = plug->GetParam(kBandFirst)->FromNormalized(value);
+      const double bandLast = plug->GetParam(kBandLast)->Value();
+      if (bandFirst > bandLast - kBandMinDistance)
+      {
+        value = plug->GetParam(kBandFirst)->ToNormalized(bandLast - kBandMinDistance);
+      }
+    }
+    break;
+
+    case kBandLast:
+    {
+      const double bandLast = plug->GetParam(kBandLast)->FromNormalized(value);
+      const double bandFirst = plug->GetParam(kBandFirst)->Value();
+      if (bandLast < bandFirst + kBandMinDistance)
+      {
+        value = plug->GetParam(kBandLast)->ToNormalized(bandFirst + kBandMinDistance);
+      }
+    }
+    break;
+  }
+
+  ICaptionControl::SetValueFromUserInput(value, valIdx);
+}

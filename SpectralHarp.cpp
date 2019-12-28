@@ -111,6 +111,8 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(const InstanceInfo& instanceInfo)
 	: Plugin(instanceInfo, MakeConfig(kNumParams, kNumPrograms))
 	, mIsLoading(false)
 #if IPLUG_DSP
+  , mBandFirst(kBandFirstDefault)
+  , mBandLast(kBandLastDefault)
 	, mGain(1.)
 	, mPluckX(0)
 	, mPluckY(0)
@@ -494,17 +496,7 @@ void PLUG_CLASS_NAME::OnParamChange(int paramIdx)
 	{
 		const double bandFirst = GetParam(kBandFirst)->Value();
 		const double bandLast = GetParam(kBandLast)->Value();
-		if (bandFirst > bandLast - kBandMinDistance)
-		{
-      const double value = bandLast - kBandMinDistance;
-			// this method calls the two methods below and then calls OnParamChanged.
-			// we don't need the OnParamChanged call, but it doesn't appear to present a problem.
-			// this was changed because InformHostOfParamChanged is a private method in the VST3P build.
-			SetParameterValue(kBandFirst, GetParam(kBandFirst)->ToNormalized(value));
-			//GetParam(kBandFirst)->Set(value);
-			//InformHostOfParamChange(kBandFirst, GetParam(kBandFirst)->GetNormalized());
-      SendParameterValueFromAPI(kBandFirst, value, false);
-		}		
+    mBandFirst = static_cast<float>((bandFirst > bandLast - kBandMinDistance) ? (bandLast - kBandMinDistance) : bandFirst);
 	}
 	break;
 
@@ -512,15 +504,7 @@ void PLUG_CLASS_NAME::OnParamChange(int paramIdx)
 	{
 		const double bandLast = GetParam(kBandLast)->Value();
 		const double bandFirst = GetParam(kBandFirst)->Value();
-		if (bandLast < bandFirst + kBandMinDistance)
-		{
-      const double value = bandFirst + kBandMinDistance;
-			// see above for why we call this instead of the two commented out methods
-			SetParameterValue(kBandLast, GetParam(kBandLast)->ToNormalized(value));
-			//GetParam(kBandLast)->Set(value);
-			//InformHostOfParamChange(kBandLast, GetParam(kBandLast)->GetNormalized());
-      SendParameterValueFromAPI(kBandLast, value, false);
-		}	
+    mBandLast = static_cast<float>((bandLast < bandFirst + kBandMinDistance) ? (bandFirst + kBandMinDistance) : bandLast);
 	}
 	break;
 
@@ -548,8 +532,8 @@ void PLUG_CLASS_NAME::Pluck(const float pluckX, const float pluckY)
 		const float numBands = (float)GetParam(kBandDensity)->Int();		
 		if (numBands > 0)
 		{
-      const float lowFreq = (float)GetParam(kBandFirst)->Value();
-      const float hiFreq = (float)GetParam(kBandLast)->Value();
+      const float lowFreq = mBandFirst;
+      const float hiFreq = mBandLast;
       const float linLogLerp = (float)GetParam(kBandLinLogLerp)->Value();
 			for (int b = 0; b <= numBands; ++b)
 			{
