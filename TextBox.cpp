@@ -33,7 +33,7 @@ void TextBox::Draw(IGraphics& pGraphics)
 	mRECT = mTextRect;
 	if (IsDisabled())
 	{
-		GetParam()->GetDisplayForHost(GetValue(), true, mStr, false);
+		GetParam()->GetDisplay(GetValue(), true, mStr, false);
 		ITextControl::Draw(pGraphics);
 	}
 	else

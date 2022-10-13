@@ -130,9 +130,7 @@ void KnobLineCoronaControl::UpdateLabel()
     if (pParam)
     {
       WDL_String str;
-      pParam->GetDisplayForHost(str);
-      str.Append(" ");
-      str.Append(pParam->GetLabelForHost());
+      pParam->GetDisplayWithLabel(str);
       mLabelControl->SetStr(str.Get());
     }
   }

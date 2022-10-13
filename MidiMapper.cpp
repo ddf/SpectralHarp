@@ -11,7 +11,6 @@ MidiMapper::MidiMapper()
 , mItemIndex2(-1)
 , mLearnParamIdx(-1)
 {
-  SetTag(kMidiMapper);
 }
 
 MidiMapper::~MidiMapper()
@@ -32,11 +31,11 @@ void MidiMapper::CreateContextMenu(IPopupMenu& contextMenu, const int paramIdx1,
     int flags = isMapped ? IPopupMenu::Item::kChecked : IPopupMenu::Item::kNoFlags;
     if (isMapped)
     {
-      str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetDelegate()->GetParam(paramIdx1)->GetNameForHost(), (int)controlChangeForParam[paramIdx1]);
+      str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetDelegate()->GetParam(paramIdx1)->GetName(), (int)controlChangeForParam[paramIdx1]);
     }
     else
     {
-      str.SetFormatted(64, "MIDI Learn: %s", GetDelegate()->GetParam(paramIdx1)->GetNameForHost());
+      str.SetFormatted(64, "MIDI Learn: %s", GetDelegate()->GetParam(paramIdx1)->GetName());
     }
     mItemIndex1 = contextMenu.NItems();
     contextMenu.AddItem(str.Get(), -1, flags);
@@ -48,11 +47,11 @@ void MidiMapper::CreateContextMenu(IPopupMenu& contextMenu, const int paramIdx1,
     int flags = isMapped ? IPopupMenu::Item::kChecked : IPopupMenu::Item::kNoFlags;
     if (isMapped)
     {
-      str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetDelegate()->GetParam(paramIdx2)->GetNameForHost(), (int)controlChangeForParam[paramIdx2]);
+      str.SetFormatted(64, "MIDI Learn: %s (CC %d)", GetDelegate()->GetParam(paramIdx2)->GetName(), (int)controlChangeForParam[paramIdx2]);
     }
     else
     {
-      str.SetFormatted(64, "MIDI Learn: %s", GetDelegate()->GetParam(paramIdx2)->GetNameForHost());
+      str.SetFormatted(64, "MIDI Learn: %s", GetDelegate()->GetParam(paramIdx2)->GetName());
     }
     mItemIndex2 = contextMenu.NItems();
     contextMenu.AddItem(str.Get(), -1, flags);

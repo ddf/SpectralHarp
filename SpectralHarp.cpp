@@ -10,7 +10,7 @@
 #include "KnobLineCoronaControl.h"
 #include "TextBox.h"
 
-#if APP_API
+#ifdef APP_API
 static const char * kAboutBoxText = "Version " PLUG_VERSION_STR "\nCreated by Damien Quartz\nBuilt on " __DATE__;
 
 #ifdef OS_MAC
@@ -162,7 +162,7 @@ PLUG_CLASS_NAME::PLUG_CLASS_NAME(const InstanceInfo& instanceInfo)
 
   mLayoutFunc = [&](IGraphics* pGraphics) {
 
-    pGraphics->HandleMouseOver(true);
+    pGraphics->EnableMouseOver(true);
     pGraphics->AttachCornerResizer();
     pGraphics->AttachTextEntryControl();
     pGraphics->AttachPanelBackground(backColor);
@@ -343,8 +343,10 @@ void PLUG_CLASS_NAME::ProcessBlock(sample** inputs, sample** outputs, int nFrame
 	const double crushBegin = GetSampleRate();
 	const double crushChange = 1000 - crushBegin;
 
+#ifndef APP_API
   sample* in1 = inputs[0];
   sample* in2 = inputs[1];
+#endif
   sample* out1 = outputs[0];
   sample* out2 = outputs[1];
 
@@ -358,7 +360,11 @@ void PLUG_CLASS_NAME::ProcessBlock(sample** inputs, sample** outputs, int nFrame
 
   bool processSpectrum = false;
 	float result[1];
-	for (int s = 0; s < nFrames; ++s, ++in1, ++in2, ++out1, ++out2)
+#ifndef APP_API
+  for (int s = 0; s < nFrames; ++s, ++in1, ++in2, ++out1, ++out2)
+#else
+  for (int s = 0; s < nFrames; ++s, ++out1, ++out2)
+#endif
 	{
 		while (!mMidiQueue.Empty())
 		{
